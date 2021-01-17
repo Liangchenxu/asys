@@ -32,12 +32,6 @@ For more details see [GitHub Flavored Markdown](https://guides.github.com/featur
 
 Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/Liangchenxu/asys/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
 
-### Support or Contact
-
-
-ASYS中国官方交流群：1061084341
-
-
 
 
 
@@ -48,5 +42,15 @@ window.οnlοad=function()
 {
 clock_id=setInterval("document.form1.txtclock.value=(new Date);",1000)
 }
-</SCRIPT>
-{html}
+</SCRIPT>//
+### Support or Contact
+
+
+ASYS中国官方交流群：1061084341
+
+
+
+
+
+
+
