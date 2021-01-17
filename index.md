@@ -33,54 +33,7 @@ ASYS中国官方交流群：1061084341
 
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
-<title>水平导航菜单（DIV+CSS）</title>
-<style type="text/css">
-body{
-	background: #FFF;
-	font-family: Arial, Helvetica, sans-serif;
-	color: #666666;
-	padding: 0px;
-	margin: 5px;
-	text-align: center;	
-	font-size: 12px;
-}
 
-#nav{
-	height: 44px;
-	width: 425px;
-	background: #FFF;
-	margin:10px auto;
-	}
-.vline{
-	background: #999;
-	width: 1px;
-	height: 20px;
-	}
-#nav ul{
-	margin:0px;
-	padding: 0px;
-	list-style-type: none;
-}
-#nav li{
-	float: left;
-	font-family: Arial;
-	font-weight: bold;
-	font-size: 12px;
-	text-align: center;
-}
-#nav li a{
-	display: block;
-	width: 84px;
-	line-height: 28px;
-	color:  #666;	
-	text-decoration: none;
-	border-top: 4px solid #0F35A5;
-	}
-#nav li a:hover{
-	color:  #7C8DD9;
-	border-top: 4px solid #7C8DD9;	
-}
-</style>
 </head>
 
 <body><div id="nav"><ul><li><a href="#">产品介绍</a></li><li class="vline"></li>
