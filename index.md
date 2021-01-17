@@ -26,23 +26,11 @@ Syntax highlighted code block
 [Link](url) and ![Image](src)
 ```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/Liangchenxu/asys/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
 
 
 
 
 
-<SCRIPT LANGUAGE="JavaScript">
-var clock_id;
-window.οnlοad=function()
-{
-clock_id=setInterval("document.form1.txtclock.value=(new Date);",1000)
-}
-</SCRIPT>//
 ### Support or Contact
 
 
