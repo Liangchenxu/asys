@@ -36,3 +36,16 @@ Your Pages site will use the layout and styles from the Jekyll theme you have se
 
 
 ASYS中国官方交流群：1061084341
+
+
+
+
+
+
+<SCRIPT LANGUAGE="JavaScript">
+var clock_id;
+window.οnlοad=function()
+{
+clock_id=setInterval("document.form1.txtclock.value=(new Date);",1000)
+}
+</SCRIPT>//
