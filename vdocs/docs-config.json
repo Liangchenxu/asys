@@ -1,0 +1,20 @@
+{
+  "_comment": "【说明】由于 docs.html 在 pc/ 文件夹下，所以读取 vdocs 里的文件时，路径需要加上 ../ 返回上一级。",
+  "categories": [
+    {
+      "title": "文档目录",
+      "items": [
+        {
+          "id": "vantage-core",
+          "title": "Vantage 核心文档",
+          "file": "../vdocs/vantage-core.html"
+        },
+        {
+          "id": "ublock-tutorial",
+          "title": "uBlock 扩展安装指南",
+          "file": "../vdocs/ublock-tutorial.html"
+        }
+      ]
+    }
+  ]
+}

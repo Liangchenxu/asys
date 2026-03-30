@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>驱动下载 - 赛思科技 工作室</title>
+    <link rel="icon" href="../img/ASYS-3.png" type="image/png">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif; }
+        body { background: #f8fafc; color: #1e293b; line-height: 1.6; }
+        .container { width: 90%; max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        
+        header { background: white; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #e2e8f0; }
+        nav { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; }
+        
+        /* ★★★ 修改点：增加去下划线样式 ★★★ */
+        .logo { 
+            display: flex; 
+            align-items: center; 
+            gap: 10px; 
+            flex-shrink: 0; /* 这个页面特有的属性要保留 */
+            text-decoration: none; 
+            color: inherit; 
+        }
+        .logo img { height: 40px; }
+        .logo h1 { font-size: 1.3rem; font-weight: 700; color: #0f172a; }
+        
+        .nav-links { display: flex; gap: 25px; }
+        .nav-links a { color: #475569; text-decoration: none; font-weight: 500; transition: color 0.3s; position: relative; }
+        .nav-links a:hover, .nav-links a.active { color: #4f46e5; }
+        .nav-links a.active::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 100%; height: 2px; background-color: #4f46e5; }
+        
+        .hero-section { background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); text-align: center; padding: 80px 0; border-bottom: 1px solid #bae6fd; }
+        
+        /* 驱动选择区域 */
+        .service-block { background: white; border-radius: 16px; padding: 40px; margin-bottom: 60px; border: 1px solid #e2e8f0; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05); }
+        .block-header { border-bottom: 2px solid #f1f5f9; padding-bottom: 20px; margin-bottom: 30px; display: flex; align-items: center; gap: 15px; }
+        .block-icon { font-size: 1.8rem; background: #eff6ff; color: #4f46e5; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; border-radius: 12px; flex-shrink: 0; }
+        .block-title { font-size: 1.5rem; color: #1e293b; font-weight: 700; }
+        
+        .device-type-selection { display: flex; gap: 30px; margin-bottom: 40px; justify-content: center; }
+        .device-type-btn { display: flex; flex-direction: column; align-items: center; padding: 25px; border: 2px solid #e2e8f0; border-radius: 12px; background: white; cursor: pointer; transition: all 0.3s; min-width: 160px; }
+        .device-type-btn:hover { border-color: #4f46e5; transform: translateY(-5px); }
+        .device-type-btn.active { border-color: #4f46e5; background: #eff6ff; color: #4f46e5; }
+        .device-icon { font-size: 2.5rem; margin-bottom: 10px; }
+        
+        .selection-panel { display: none; background: #f8fafc; border-radius: 12px; padding: 30px; border: 1px solid #e2e8f0; }
+        .selection-panel.active { display: block; animation: fadeIn 0.4s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .brand-options, .series-options, .model-options { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 15px; margin-bottom: 25px; }
+        .brand-btn, .series-btn, .model-btn { padding: 10px 18px; border: 1px solid #cbd5e1; border-radius: 6px; background: white; cursor: pointer; transition: all 0.2s; font-size: 0.95rem; color: #475569; }
+        .brand-btn:hover, .series-btn:hover, .model-btn:hover { border-color: #4f46e5; color: #4f46e5; }
+        .brand-btn.active, .series-btn.active, .model-btn.active { background: #4f46e5; color: white; border-color: #4f46e5; }
+        
+        .download-link-area { display: none; background: #ecfeff; border-radius: 8px; padding: 25px; margin-top: 20px; border-left: 5px solid #06b6d4; animation: slideDown 0.3s ease; }
+        .download-link-area.active { display: block; }
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .download-link { display: inline-block; background: #06b6d4; color: white; padding: 12px 30px; border-radius: 6px; text-decoration: none; font-weight: 600; margin-top: 10px; transition: background 0.3s; }
+        
+        footer { background: #f1f5f9; padding: 40px 0; text-align: center; border-top: 1px solid #e2e8f0; color: #64748b; margin-top: 80px; }
+        
+        /* --- 手机端适配 --- */
+        @media (max-width: 768px) {
+            nav { flex-direction: column; gap: 15px; }
+            .nav-links { flex-wrap: wrap; justify-content: center; width: 100%; gap: 10px; }
+            
+            .hero-section h1 { font-size: 2rem; }
+            .service-block { padding: 20px; }
+            
+            .device-type-selection { flex-direction: column; gap: 15px; }
+            .device-type-btn { width: 100%; flex-direction: row; justify-content: center; gap: 15px; padding: 15px; }
+            .device-icon { margin-bottom: 0; font-size: 2rem; }
+            
+            /* 选项按钮让它在手机上占满宽度或者 50% */
+            .brand-btn, .series-btn, .model-btn { flex: 1 1 100%; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <a href="index.html" class="logo">
+                    <img src="../img/ASYS-3.png" alt="赛思科技 Logo">
+                    <h1>赛思科技</h1>
+                </a>
+                
+                <div class="nav-links">
+                    <a href="index.html">首页</a>
+                    <a href="service-guide.html" class="active">自助服务</a>
+                    <a href="products.html">产品</a>
+                    <a href="tutorials.html">教程</a>
+                    <a href="vantage.html">Vantage浏览器</a>
+                    <a href="about.html">关于 & 联系</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero-section">
+        <div class="container">
+            <h1 style="font-size: 3rem; margin-bottom: 20px; color: #0f172a;">驱动程序下载</h1>
+            <p style="font-size: 1.2rem; color: #475569; max-width: 600px; margin: 0 auto;">
+                官方认证驱动，完美兼容您的硬件设备。
+            </p>
+        </div>
+    </section>
+
+    <section style="padding: 60px 0;">
+        <div class="container">
+            <div style="margin-bottom: 20px;">
+                <a href="service-guide.html" style="color: #64748b; text-decoration: none;">&lt; 返回自助服务中心</a>
+            </div>
+            
+            <div class="service-block" id="driver-downloads">
+                <div class="block-header">
+                    <div class="block-icon">💾</div>
+                    <div class="block-title">硬件驱动选择器</div>
+                </div>
+
+                <div class="device-type-selection">
+                    <div class="device-type-btn active" data-device="desktop">
+                        <div class="device-icon">🖥️</div>
+                        <span style="font-size: 1.1rem; font-weight: 600;">台式机驱动</span>
+                    </div>
+                    
+                    <div class="device-type-btn" data-device="laptop">
+                        <div class="device-icon">💻</div>
+                        <span style="font-size: 1.1rem; font-weight: 600;">笔记本驱动</span>
+                    </div>
+                </div>
+                
+                <div class="selection-panel active" id="desktop-panel">
+                    <h4 style="margin-bottom: 15px; color: #334155;">第 1 步：选择组件类型</h4>
+                    <div class="brand-selection">
+                        <div class="brand-options">
+                            <button class="brand-btn" data-brand="realtek">瑞昱 (Realtek) 声卡</button>
+                            <button class="brand-btn" data-brand="chipset">主板芯片组</button>
+                            <button class="brand-btn" data-brand="gpu">独立显卡</button>
+                        </div>
+                    </div>
+                    
+                    <div class="series-selection" id="desktop-realtek-series" style="display: none;">
+                        <h4 style="margin-bottom: 15px; color: #334155; margin-top: 20px;">第 2 步：选择系列</h4>
+                        <div class="series-options">
+                            <button class="series-btn" data-series="realtek-hd" data-brand="realtek">High Definition Audio</button>
+                        </div>
+                    </div>
+                    
+                    <div class="series-selection" id="desktop-chipset-series" style="display: none;">
+                        <h4 style="margin-bottom: 15px; color: #334155; margin-top: 20px;">第 2 步：选择平台</h4>
+                        <div class="series-options">
+                            <button class="series-btn" data-series="amd-chipset" data-brand="chipset">AMD 平台</button>
+                            <button class="series-btn" data-series="intel-chipset" data-brand="chipset">Intel 平台</button>
+                        </div>
+                    </div>
+                    
+                    <div class="series-selection" id="desktop-gpu-series" style="display: none;">
+                        <h4 style="margin-bottom: 15px; color: #334155; margin-top: 20px;">第 2 步：选择显卡厂商</h4>
+                        <div class="series-options">
+                            <button class="series-btn" data-series="nvidia-desktop" data-brand="gpu">NVIDIA (英伟达)</button>
+                            <button class="series-btn" data-series="amd-desktop" data-brand="gpu">AMD (Radeon)</button>
+                            <button class="series-btn" data-series="intel-desktop" data-brand="gpu">Intel (Arc)</button>
+                        </div>
+                    </div>
+                    
+                    <div class="model-selection" style="display: none;">
+                        <h4 style="margin-bottom: 15px; color: #334155; margin-top: 20px;">第 3 步：确认版本</h4>
+                        <div class="model-options" id="desktop-models">
+                            <button class="model-btn" data-model="realtek-hd-64" data-series="realtek-hd" data-download-url="https://www.realtek.com/Download/List?cate_id=593&menu_id=298">Realtek HD Audio (64位)</button>
+                            <button class="model-btn" data-model="amd-chipset" data-series="amd-chipset" data-download-url="https://www.amd.com/en/support/download/drivers.html">AMD 芯片组驱动包</button>
+                            <button class="model-btn" data-model="intel-chipset" data-series="intel-chipset" data-download-url="https://www.intel.com/content/www/us/en/download-center/home.html">Intel 芯片组 INF</button>
+                            <button class="model-btn" data-model="nvidia-game-ready" data-series="nvidia-desktop" data-download-url="https://www.nvidia.com/en-us/geforce/drivers/">GeForce Game Ready 驱动</button>
+                            <button class="model-btn" data-model="amd-adrenalin" data-series="amd-desktop" data-download-url="https://www.amd.com/en/support/download/drivers.html">Adrenalin Edition 驱动</button>
+                            <button class="model-btn" data-model="intel-arc" data-series="intel-desktop" data-download-url="https://www.intel.com/content/www/us/en/download-center/home.html">Intel Arc Graphics 驱动</button>
+                        </div>
+                    </div>
+                    
+                    <div class="download-link-area" id="desktop-download">
+                        <h5 style="font-size: 1.2rem; margin-bottom: 10px; color: #0891b2;">🚀 准备就绪</h5>
+                        <p style="margin-bottom: 15px; font-size: 0.95rem;">您已选择：<span id="desktop-selected-model" style="font-weight: 700; color: #0f172a;">--</span></p>
+                        <a href="#" class="download-link" id="desktop-download-link" target="_blank">点击下载官方驱动</a>
+                    </div>
+                </div>
+
+                <div class="selection-panel" id="laptop-panel">
+                     <h4 style="margin-bottom: 15px; color: #334155;">第 1 步：选择组件类型</h4>
+                    <div class="brand-selection">
+                        <div class="brand-options">
+                            <button class="brand-btn" data-brand="realtek">瑞昱 (Realtek) 声卡</button>
+                            <button class="brand-btn" data-brand="chipset">主板芯片组</button>
+                            <button class="brand-btn" data-brand="gpu">笔记本显卡</button>
+                        </div>
+                    </div>
+
+                    <div class="series-selection" id="laptop-realtek-series" style="display: none;">
+                        <h4 style="margin-bottom: 15px; color: #334155; margin-top: 20px;">第 2 步：选择系列</h4>
+                        <div class="series-options">
+                            <button class="series-btn" data-series="realtek-hd" data-brand="realtek">High Definition Audio</button>
+                        </div>
+                    </div>
+
+                    <div class="series-selection" id="laptop-chipset-series" style="display: none;">
+                        <h4 style="margin-bottom: 15px; color: #334155; margin-top: 20px;">第 2 步：选择平台</h4>
+                        <div class="series-options">
+                            <button class="series-btn" data-series="amd-chipset" data-brand="chipset">AMD 平台</button>
+                            <button class="series-btn" data-series="intel-chipset" data-brand="chipset">Intel 平台</button>
+                        </div>
+                    </div>
+
+                    <div class="series-selection" id="laptop-gpu-series" style="display: none;">
+                         <h4 style="margin-bottom: 15px; color: #334155; margin-top: 20px;">第 2 步：选择显卡厂商</h4>
+                        <div class="series-options">
+                            <button class="series-btn" data-series="nvidia-mobile" data-brand="gpu">NVIDIA (移动版)</button>
+                            <button class="series-btn" data-series="amd-mobile-gpu" data-brand="gpu">AMD (移动版)</button>
+                            <button class="series-btn" data-series="intel-mobile-gpu" data-brand="gpu">Intel (移动版)</button>
+                        </div>
+                    </div>
+
+                    <div class="model-selection" style="display: none;">
+                        <h4 style="margin-bottom: 15px; color: #334155; margin-top: 20px;">第 3 步：确认版本</h4>
+                        <div class="model-options" id="laptop-models">
+                            <button class="model-btn" data-model="realtek-hd-laptop-64" data-series="realtek-hd" data-download-url="https://www.realtek.com/Download/List?cate_id=593&menu_id=298">Realtek HD Audio (Laptop)</button>
+                            <button class="model-btn" data-model="amd-chipset-laptop" data-series="amd-chipset" data-download-url="https://www.amd.com/en/support/download/drivers.html">AMD Mobile Chipset</button>
+                            <button class="model-btn" data-model="intel-chipset-laptop" data-series="intel-chipset" data-download-url="https://www.intel.com/content/www/us/en/download-center/home.html">Intel Mobile Chipset</button>
+                            <button class="model-btn" data-model="nvidia-mobile-game" data-series="nvidia-mobile" data-download-url="https://www.nvidia.com/Download/index.aspx">GeForce Mobile 驱动</button>
+                            <button class="model-btn" data-model="amd-mobile-adrenalin" data-series="amd-mobile-gpu" data-download-url="https://www.amd.com/en/support/download/drivers.html">Adrenalin Mobile 驱动</button>
+                            <button class="model-btn" data-model="intel-mobile-gpu-driver" data-series="intel-mobile-gpu" data-download-url="https://www.intel.com/content/www/us/en/download-center/home.html">Intel Arc/Iris Mobile</button>
+                        </div>
+                    </div>
+                    
+                    <div class="download-link-area" id="laptop-download">
+                        <h5 style="font-size: 1.2rem; margin-bottom: 10px; color: #0891b2;">🚀 准备就绪</h5>
+                        <p style="margin-bottom: 15px; font-size: 0.95rem;">您已选择：<span id="laptop-selected-model" style="font-weight: 700; color: #0f172a;">--</span></p>
+                        <a href="#" class="download-link" id="laptop-download-link" target="_blank">点击下载官方驱动</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>© 2023 赛思科技 工作室. 保留所有权利。</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            initHardwareSelection();
+        });
+
+        function initHardwareSelection() {
+            const deviceTypeBtns = document.querySelectorAll('.device-type-btn');
+            const selectionPanels = document.querySelectorAll('.selection-panel');
+            
+            deviceTypeBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const deviceType = this.getAttribute('data-device');
+                    deviceTypeBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    selectionPanels.forEach(panel => panel.classList.remove('active'));
+                    document.getElementById(`${deviceType}-panel`).classList.add('active');
+                    resetSelection(deviceType);
+                });
+            });
+            
+            const brandBtns = document.querySelectorAll('.brand-btn');
+            brandBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const brand = this.getAttribute('data-brand');
+                    const deviceType = getCurrentDeviceType();
+                    document.querySelectorAll(`#${deviceType}-panel .brand-btn`).forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    showSeriesByBrand(deviceType, brand);
+                    document.querySelectorAll(`#${deviceType}-panel .model-selection`).forEach(el => el.style.display = 'none');
+                    document.getElementById(`${deviceType}-download`).classList.remove('active');
+                });
+            });
+            
+            const seriesBtns = document.querySelectorAll('.series-btn');
+            seriesBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const series = this.getAttribute('data-series');
+                    const deviceType = getCurrentDeviceType();
+                    document.querySelectorAll(`#${deviceType}-panel .series-btn`).forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    showModelsBySeries(deviceType, series);
+                    document.getElementById(`${deviceType}-download`).classList.remove('active');
+                });
+            });
+            
+            const modelBtns = document.querySelectorAll('.model-btn');
+            modelBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const modelName = this.textContent;
+                    const downloadUrl = this.getAttribute('data-download-url');
+                    const deviceType = getCurrentDeviceType();
+                    document.querySelectorAll(`#${deviceType}-panel .model-btn`).forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    showDownloadArea(deviceType, modelName, downloadUrl);
+                });
+            });
+            
+            resetSelection('desktop');
+            resetSelection('laptop');
+        }
+        
+        function getCurrentDeviceType() {
+            const activeDeviceBtn = document.querySelector('.device-type-btn.active');
+            return activeDeviceBtn ? activeDeviceBtn.getAttribute('data-device') : 'desktop';
+        }
+        
+        function showSeriesByBrand(deviceType, brand) {
+            document.querySelectorAll(`#${deviceType}-panel .series-selection`).forEach(s => s.style.display = 'none');
+            if (brand === 'realtek') {
+                document.getElementById(`${deviceType}-realtek-series`).style.display = 'block';
+            } else if (brand === 'chipset') {
+                document.getElementById(`${deviceType}-chipset-series`).style.display = 'block';
+            } else if (brand === 'gpu') {
+                document.getElementById(`${deviceType}-gpu-series`).style.display = 'block';
+            }
+            document.querySelectorAll(`#${deviceType}-panel .series-btn`).forEach(b => b.classList.remove('active'));
+            document.querySelectorAll(`#${deviceType}-panel .model-btn`).forEach(b => b.classList.remove('active'));
+        }
+        
+        function showModelsBySeries(deviceType, series) {
+            const allModels = document.querySelectorAll(`#${deviceType}-models .model-btn`);
+            allModels.forEach(model => {
+                if (model.getAttribute('data-series') === series) {
+                    model.style.display = 'inline-block';
+                } else {
+                    model.style.display = 'none';
+                }
+            });
+            document.querySelectorAll(`#${deviceType}-panel .model-selection`).forEach(el => el.style.display = 'block');
+            document.querySelectorAll(`#${deviceType}-panel .model-btn`).forEach(b => b.classList.remove('active'));
+        }
+        
+        function showDownloadArea(deviceType, modelName, downloadUrl) {
+            const downloadArea = document.getElementById(`${deviceType}-download`);
+            const selectedModelSpan = document.getElementById(`${deviceType}-selected-model`);
+            const downloadLink = document.getElementById(`${deviceType}-download-link`);
+            selectedModelSpan.textContent = modelName;
+            downloadLink.href = downloadUrl;
+            downloadArea.classList.add('active');
+        }
+        
+        function resetSelection(deviceType) {
+            document.querySelectorAll(`#${deviceType}-panel .brand-btn`).forEach(b => b.classList.remove('active'));
+            document.querySelectorAll(`#${deviceType}-panel .series-selection`).forEach(s => s.style.display = 'none');
+            document.querySelectorAll(`#${deviceType}-panel .model-selection`).forEach(s => s.style.display = 'none');
+            document.getElementById(`${deviceType}-download`).classList.remove('active');
+        }
+    </script>
+</body>
+</html>

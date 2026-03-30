@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Office 安装程序下载 - 赛思科技 工作室</title>
+    <link rel="icon" href="../img/ASYS-3.png" type="image/png">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif; }
+        body { background: #f8fafc; color: #1e293b; line-height: 1.6; }
+        .container { width: 90%; max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        
+        /* 导航栏 */
+        header { background: white; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #e2e8f0; }
+        nav { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; }
+        
+        .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: inherit; }
+        .logo img { height: 40px; }
+        .logo h1 { font-size: 1.3rem; font-weight: 700; color: #0f172a; }
+        
+        .nav-links { display: flex; gap: 25px; }
+        .nav-links a { color: #475569; text-decoration: none; font-weight: 500; transition: color 0.3s; position: relative;}
+        .nav-links a:hover, .nav-links a.active { color: #4f46e5; }
+        .nav-links a.active::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 100%; height: 2px; background-color: #4f46e5; }
+
+        .hero-section { background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); text-align: center; padding: 80px 0; border-bottom: 1px solid #bae6fd; }
+
+        /* 内容区块 */
+        .service-block { background: white; border-radius: 16px; padding: 40px; margin-bottom: 60px; border: 1px solid #e2e8f0; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05); }
+        .block-header { border-bottom: 2px solid #f1f5f9; padding-bottom: 20px; margin-bottom: 25px; display: flex; align-items: center; gap: 15px; }
+        .block-icon { font-size: 1.8rem; background: #eff6ff; color: #4f46e5; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; border-radius: 12px; }
+        .block-title { font-size: 1.5rem; color: #1e293b; font-weight: 700; }
+
+        /* 搜索和分类控件区 */
+        .tools-controls { margin-bottom: 30px; display: flex; flex-direction: column; gap: 15px; }
+        
+        .search-box input {
+            width: 100%;
+            padding: 14px 20px;
+            font-size: 1.05rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            outline: none;
+            transition: all 0.3s;
+            color: #1e293b;
+        }
+        .search-box input:focus { border-color: #4f46e5; box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1); }
+        .search-box input::placeholder { color: #94a3b8; }
+
+        .category-filters { display: flex; gap: 10px; flex-wrap: wrap; }
+        .filter-btn {
+            padding: 8px 18px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 20px;
+            color: #475569;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        .filter-btn:hover { background: #e2e8f0; color: #1e293b; }
+        .filter-btn.active { background: #4f46e5; color: white; border-color: #4f46e5; box-shadow: 0 2px 4px rgba(79, 70, 229, 0.3); }
+
+        /* 工具列表样式 */
+        .tools-list { display: flex; flex-direction: column; gap: 30px; min-height: 200px;}
+        .tool-item { display: flex; background: white; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; transition: all 0.3s ease; animation: fadeIn 0.4s; }
+        .tool-item:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,0,0,0.08); border-color: #cbd5e1; }
+        .tool-visual { flex: 0 0 200px; background: #f8fafc; display: flex; align-items: center; justify-content: center; border-right: 1px solid #e2e8f0; padding: 20px; }
+        .tool-icon-large { font-size: 4rem; }
+        .tool-details { flex: 1; padding: 30px; display: flex; flex-direction: column; justify-content: center; }
+        .tool-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px; }
+        .tool-title { font-size: 1.4rem; font-weight: 700; color: #1e293b; margin-bottom: 5px; }
+        .tool-desc { color: #64748b; margin-bottom: 20px; line-height: 1.6; }
+        
+        .tool-action { display: flex; gap: 15px; }
+        .btn-download { background: #1e293b; color: white; padding: 10px 25px; border-radius: 6px; text-decoration: none; font-weight: 600; transition: all 0.3s; display: inline-flex; align-items: center; gap: 8px; }
+        .btn-download:hover { background: #334155; transform: translateY(-2px); }
+        .btn-outline { background: transparent; color: #475569; border: 1px solid #cbd5e1; padding: 10px 25px; border-radius: 6px; text-decoration: none; font-weight: 600; transition: all 0.3s; }
+        .btn-outline:hover { border-color: #475569; color: #1e293b; background: #f1f5f9; }
+
+        .loading-text { text-align: center; color: #64748b; padding: 50px; font-size: 1.1rem; }
+        
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        footer { background: #f1f5f9; padding: 40px 0; text-align: center; border-top: 1px solid #e2e8f0; color: #64748b; margin-top: 80px; }
+
+        /* 手机端适配 */
+        @media (max-width: 768px) {
+            nav { flex-direction: column; gap: 15px; }
+            .nav-links { flex-wrap: wrap; justify-content: center; width: 100%; gap: 10px; }
+            
+            .hero-section h1 { font-size: 2rem; }
+            .service-block { padding: 20px; } 
+
+            .tool-item { flex-direction: column; }
+            .tool-visual { flex: 0 0 auto; padding: 30px; border-right: none; border-bottom: 1px solid #e2e8f0; }
+            .tool-details { padding: 20px; }
+            
+            .tool-action { flex-direction: column; }
+            .btn-download, .btn-outline { width: 100%; justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <a href="index.html" class="logo">
+                    <img src="../img/ASYS-3.png" alt="赛思科技 Logo">
+                    <h1>赛思科技</h1>
+                </a>
+                
+                <div class="nav-links">
+                    <a href="index.html">首页</a>
+                    <a href="service-guide.html" class="active">自助服务</a>
+                    <a href="products.html">产品</a>
+                    <a href="tutorials.html">教程</a>
+                    <a href="vantage.html">Vantage浏览器</a>
+                    <a href="about.html">关于 & 联系</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero-section">
+        <div class="container">
+            <h1 style="font-size: 3rem; margin-bottom: 20px; color: #0f172a;">Office 安装程序下载</h1>
+            <p style="font-size: 1.2rem; color: #475569; max-width: 600px; margin: 0 auto;">
+                提供各版本 Microsoft Office 官方原版镜像与安装包，纯净无毒，安全稳定。
+            </p>
+        </div>
+    </section>
+
+    <section style="padding: 60px 0;">
+        <div class="container">
+            <div style="margin-bottom: 20px;">
+                <a href="service-guide.html" style="color: #64748b; text-decoration: none;">&lt; 返回自助服务中心</a>
+            </div>
+
+            <div class="service-block">
+                <div class="block-header">
+                    <img src="../img/windows11.png" style="width:30px; height:30px; margin-right:5px;" alt="windows">
+                    <img src="../img/apple.svg" style="width:30px; height:30px;" alt="apple">
+                    <div class="block-title" style="margin-left: 10px;">版本列表</div>
+                </div>
+
+                <div class="tools-controls">
+                    <div class="search-box">
+                        <input type="text" id="searchInput" placeholder="🔍 模糊搜索 (例如：2024、Mac、365)...">
+                    </div>
+                    <div class="category-filters" id="categoryFilters">
+                        <button class="filter-btn active" data-filter="all">全部版本</button>
+                        <button class="filter-btn" data-filter="m365">Microsoft 365</button>
+                        <button class="filter-btn" data-filter="2024">Office 2024</button>
+                        <button class="filter-btn" data-filter="2021">Office 2021</button>
+                        <button class="filter-btn" data-filter="2019">Office 2019</button>
+                        <button class="filter-btn" data-filter="2016">Office 2016</button>
+                        <button class="filter-btn" data-filter="mac">Mac 专属版</button>
+                    </div>
+                </div>
+
+                <div class="tools-list" id="tools-list-container">
+                    <div class="loading-text">正在加载列表...</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>© 2026 赛思科技. 保留所有权利。</p>
+        </div>
+    </footer>
+
+    <script>
+        let allToolsData = [];
+        let currentFilter = 'all';
+        
+        const toolsContainer = document.getElementById('tools-list-container');
+        const searchInput = document.getElementById('searchInput');
+        const filterBtns = document.querySelectorAll('.filter-btn');
+
+        // ★★★ 核心修改：全部替换为正确的 Mac 系统分类，并更新了 Logo 路径 ★★★
+        const officeData = [
+            {
+                title: "Microsoft 365 (Windows)",
+                desc: "包含 Word, Excel, PowerPoint 等最新版组件。按订阅持续更新（原 Office 365）。",
+                category: "m365",
+                iconImg: "../img/windows11.png", // 读取同一目录下的 windows11.png
+                downloadUrl: "https://officecdn.microsoft.com/db/492350f6-3a01-4f97-b9c0-c7c6ddf67d60/media/zh-cn/O365ProPlusRetail.img",
+                tutorialUrl: "",
+                keywords: ["m365", "365", "windows", "最新"]
+            },
+            {
+                title: "Office 2024 专业增强版 (Windows)",
+                desc: "最新的买断制版本，Office 2024 Professional Plus 官方原版安装包（包含 Retail/Volume 版）。",
+                category: "2024",
+                iconImg: "../img/windows11.png",
+                downloadUrl: "https://officecdn.microsoft.com/db/492350f6-3a01-4f97-b9c0-c7c6ddf67d60/media/zh-cn/ProPlus2024Retail.img",
+                tutorialUrl: "",
+                keywords: ["2024", "pro plus", "windows", "专业版"]
+            },
+            {
+                title: "Office 2021 专业增强版 (Windows)",
+                desc: "Office 2021 Professional Plus 官方原版安装包，兼顾新功能与稳定性，适合日常办公。",
+                category: "2021",
+                iconImg: "../img/windows11.png",
+                downloadUrl: "https://officecdn.microsoft.com/db/492350f6-3a01-4f97-b9c0-c7c6ddf67d60/media/zh-cn/ProPlus2021Retail.img",
+                tutorialUrl: "",
+                keywords: ["2021", "pro plus", "windows", "专业版"]
+            },
+            {
+                title: "Office 2019 专业增强版 (Windows)",
+                desc: "Office 2019 Professional Plus 官方原版安装包，经典稳定版本。",
+                category: "2019",
+                iconImg: "../img/windows11.png",
+                downloadUrl: "https://officecdn.microsoft.com/db/492350f6-3a01-4f97-b9c0-c7c6ddf67d60/media/zh-cn/ProPlus2019Retail.img",
+                tutorialUrl: "",
+                keywords: ["2019", "pro plus", "windows", "专业版"]
+            },
+            {
+                title: "Office 2016 专业增强版 (Windows)",
+                desc: "Office 2016 Professional Plus 官方原版安装包，适合较老的电脑配置，流畅不卡顿。",
+                category: "2016",
+                iconImg: "../img/windows11.png",
+                downloadUrl: "https://officecdn.microsoft.com/db/492350f6-3a01-4f97-b9c0-c7c6ddf67d60/media/zh-cn/ProPlusRetail.img",
+                tutorialUrl: "",
+                keywords: ["2016", "pro plus", "windows", "专业版", "老电脑"]
+            },
+
+            // ================= MAC 版本分类 =================
+            {
+                title: "Office for Mac 最新版 (适用于 macOS 13 及以上)",
+                desc: "这是微软官方随时保持最新的通用安装包。安装后可根据账号激活为 365 或 2024。适用于 macOS Ventura (13), Sonoma (14), Sequoia (15) 等最新系统。",
+                category: "mac",
+                iconImg: "../img/apple.svg", // 读取同一目录下的 apple.svg
+                // 这个是微软官网永久获取 Mac 最新版 Office 的直链
+                downloadUrl: "https://go.microsoft.com/fwlink/?linkid=2009112",
+                tutorialUrl: "",
+                keywords: ["mac", "macos", "ventura", "sonoma", "sequoia", "最新", "苹果"]
+            },
+            {
+                title: "Office for Mac (macOS 12 Monterey 专属版)",
+                desc: "这是 macOS 12 Monterey 系统所能支持的最终版本 (16.89)。由于微软停更策略，此系统无法安装更高版本的 Office。",
+                category: "mac",
+                iconImg: "../img/apple.svg",
+                // 提取自微软官方最终版历史记录的 16.89 独立安装包
+                downloadUrl: "https://officecdn.microsoft.com/pr/C1297A47-86C4-4C1F-97FA-950631F94777/MacAutoupdate/Microsoft_365_and_Office_16.89.24091630_BusinessPro_Installer.pkg",
+                tutorialUrl: "",
+                keywords: ["mac", "macos", "monterey", "12", "苹果"]
+            },
+            {
+                title: "Office for Mac (macOS 11 Big Sur 专属版)",
+                desc: "这是 macOS 11 Big Sur 老系统所能支持的最终版本 (16.77)。此安装包专为无法升级系统的老 Mac 准备。",
+                category: "mac",
+                iconImg: "../img/apple.svg",
+                // 提取自微软官方最终版历史记录的 16.77 独立安装包
+                downloadUrl: "https://officecdn.microsoft.com/pr/C1297A47-86C4-4C1F-97FA-950631F94777/MacAutoupdate/Microsoft_Office_16.77.23091003_BusinessPro_Installer.pkg",
+                tutorialUrl: "",
+                keywords: ["mac", "macos", "big sur", "11", "苹果"]
+            }
+        ];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            allToolsData = officeData;
+            renderTools(allToolsData);
+        });
+
+        function renderTools(toolsToRender) {
+            toolsContainer.innerHTML = ''; 
+
+            if (toolsToRender.length === 0) {
+                toolsContainer.innerHTML = '<div class="loading-text">没有找到匹配的版本 😢</div>';
+                return;
+            }
+
+            toolsToRender.forEach(tool => {
+                const tutorialButton = tool.tutorialUrl 
+                    ? `<a href="${tool.tutorialUrl}" class="btn-outline" target="_blank">安装教程</a>` 
+                    : '';
+
+                // ★ 修改了这里的路径：去掉了原本的 "icons/"，直接读取相对路径下的图片文件
+                const iconDisplay = tool.iconImg 
+                    ? `<img src="${tool.iconImg}" alt="${tool.title}" style="width: 70px; height: 70px; object-fit: contain;">`
+                    : `<div class="tool-icon-large">${tool.icon}</div>`;
+
+                const htmlStr = `
+                    <div class="tool-item">
+                        <div class="tool-visual">
+                            ${iconDisplay}
+                        </div>
+                        <div class="tool-details">
+                            <div class="tool-header"><div><h3 class="tool-title">${tool.title}</h3></div></div>
+                            <p class="tool-desc">${tool.desc}</p>
+                            <div class="tool-action">
+                                <a href="${tool.downloadUrl}" class="btn-download" target="_blank"><span>⬇</span> 立即下载 </a>
+                                ${tutorialButton}
+                            </div>
+                        </div>
+                    </div>
+                `;
+                toolsContainer.insertAdjacentHTML('beforeend', htmlStr);
+            });
+        }
+
+        function filterAndSearchTools() {
+            const keyword = searchInput.value.trim().toLowerCase();
+
+            const filtered = allToolsData.filter(tool => {
+                const matchCategory = (currentFilter === 'all') || (tool.category === currentFilter);
+                let matchSearch = true;
+                if (keyword !== '') {
+                    const titleMatch = tool.title.toLowerCase().includes(keyword);
+                    const descMatch = tool.desc.toLowerCase().includes(keyword);
+                    const keywordMatch = tool.keywords ? tool.keywords.some(k => k.toLowerCase().includes(keyword)) : false;
+                    matchSearch = titleMatch || descMatch || keywordMatch;
+                }
+                return matchCategory && matchSearch;
+            });
+
+            renderTools(filtered);
+        }
+
+        searchInput.addEventListener('input', filterAndSearchTools);
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                currentFilter = e.target.getAttribute('data-filter');
+                filterAndSearchTools();
+            });
+        });
+    </script>
+</body>
+</html>

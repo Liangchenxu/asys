@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>赛思科技 工作室 | 专业系统解决方案</title>
+    <link rel="icon" href="../img/ASYS-3.png" type="image/png">
+    
+    <style>
+        /* --- 全局通用样式 --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif; }
+        body { background: #f8fafc; color: #1e293b; line-height: 1.6; }
+        
+        .container { width: 90%; max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        
+        /* 导航栏 */
+        header { background: white; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #e2e8f0; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        nav { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; }
+        
+        /* ★★★ 修改点 1 (CSS)：增加了 text-decoration: none; ★★★ */
+        /* 这样变成链接后，文字下面才不会有蓝色的下划线 */
+        .logo { 
+            display: flex; 
+            align-items: center; 
+            gap: 10px; 
+            text-decoration: none; /* 去掉下划线 */
+            cursor: pointer;       /* 鼠标放上去变小手 */
+        }
+        
+        .logo img { height: 40px; }
+        .logo h1 { font-size: 1.3rem; font-weight: 700; color: #0f172a; }
+        
+        .nav-links { display: flex; gap: 25px; }
+        .nav-links a { color: #475569; text-decoration: none; font-weight: 500; transition: color 0.3s; position: relative; }
+        .nav-links a:hover, .nav-links a.active { color: #4f46e5; }
+        .nav-links a.active::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 100%; height: 2px; background-color: #4f46e5; }
+        
+        /* --- Hero 区域 --- */
+        .hero-section { background: linear-gradient(135deg, #f0f5ff 0%, #e0e7ff 100%); text-align: center; padding: 100px 0; }
+        
+        .hero-title { 
+            font-size: 2.6rem; 
+            margin-bottom: 10px; 
+            font-weight: 800; 
+            color: #353535; 
+            letter-spacing: 12px; 
+            line-height: 1.2;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            padding-left: 12px; 
+        }
+        
+        .hero-subtitle { 
+            font-size: 2.2rem; 
+            margin-bottom: 40px; 
+            color: #000; 
+            font-weight: 700; 
+            font-family: 'Segoe UI', sans-serif; 
+            letter-spacing: 1px; 
+            opacity: 0.9;
+        }
+        
+        .brand-char { color: #4f46e5; font-weight: 800; }
+        .brand-char.red { color: #e11d48; }
+        
+        /* 按钮组 */
+        .btn-group { margin-top: 40px; }
+        .primary-btn { display: inline-block; background: #4f46e5; color: white; padding: 12px 30px; border-radius: 6px; text-decoration: none; font-weight: 600; transition: background 0.3s; margin: 0 10px; box-shadow: 0 4px 6px rgba(79, 70, 229, 0.2); }
+        .primary-btn:hover { background: #4338ca; transform: translateY(-2px); }
+        .secondary-btn { display: inline-block; background: #0ea5e9; color: white; padding: 12px 30px; border-radius: 6px; text-decoration: none; font-weight: 600; transition: background 0.3s; margin: 0 10px; box-shadow: 0 4px 6px rgba(14, 165, 233, 0.2); }
+        .secondary-btn:hover { background: #0284c7; transform: translateY(-2px); }
+        
+        /* 核心服务区块 */
+        section { padding: 80px 0; }
+        .section-title { text-align: center; margin-bottom: 50px; font-size: 2.5rem; color: #0f172a; }
+        
+        .services-grid { 
+            display: grid; 
+            grid-template-columns: repeat(3, 1fr); 
+            gap: 40px; 
+        }
+        
+        /* 卡片样式 */
+        .service-card { 
+            background: white; border-radius: 12px; padding: 40px; 
+            border: 1px solid #e2e8f0; 
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); 
+            transition: transform 0.3s ease, border-color 0.3s ease; 
+            cursor: default; 
+        }
+        .service-card:hover { 
+            transform: translateY(-5px); 
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); 
+            border-color: #4f46e5; 
+        }
+        .service-card h3 { font-size: 1.5rem; margin-bottom: 15px; color: #0f172a; display: flex; align-items: center; gap: 10px; }
+        .service-card p { color: #64748b; font-size: 1rem; }
+        
+        .card-icon { font-size: 2rem; margin-bottom: 15px; display: block; }
+
+        footer { background: #f1f5f9; padding: 40px 0; text-align: center; border-top: 1px solid #e2e8f0; color: #64748b; }
+
+        /* 手机端适配 */
+        @media (max-width: 768px) {
+            nav { flex-direction: column; gap: 15px; }
+            .nav-links { flex-wrap: wrap; justify-content: center; gap: 15px; width: 100%; }
+            .nav-links a { background: #fff; padding: 5px 10px; border-radius: 4px; font-size: 14px; border: 1px solid #eee; }
+            .nav-links a.active { border-color: #4f46e5; color: #4f46e5; }
+            .nav-links a.active::after { display: none; }
+
+            .hero-section { padding: 60px 0; }
+            .hero-title { font-size: 1.8rem; letter-spacing: 5px; padding-left: 5px; }
+            .hero-subtitle { font-size: 1.2rem; padding: 0 10px; letter-spacing: 0px; }
+            
+            .btn-group { display: flex; flex-direction: column; gap: 15px; padding: 0 20px; }
+            .primary-btn, .secondary-btn { margin: 0; width: 100%; text-align: center; }
+
+            .services-grid { grid-template-columns: 1fr; gap: 20px; }
+            .service-card { padding: 30px; }
+            
+            section { padding: 50px 0; }
+            .section-title { font-size: 1.8rem; margin-bottom: 30px; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <a href="index.html" class="logo">
+                    <img src="../img/ASYS-3.png" alt="赛思科技 Logo">
+                    <h1>赛思科技</h1>
+                </a>
+                
+                <div class="nav-links">
+                    <a href="index.html" class="active">首页</a>
+                    <a href="service-guide.html">自助服务</a>
+                    <a href="products.html">产品</a>
+                    <a href="tutorials.html">教程</a>
+                    <a href="vantage.html">Vantage浏览器</a>
+                    <a href="about.html">关于 & 联系</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero-section">
+        <div class="container">
+            <h1 class="hero-title">助您迈向成功的卓越解决方案</h1>
+            
+            <p class="hero-subtitle">
+                <span class="brand-char red">A</span>dvanced 
+                <span class="brand-char">S</span>olutions 
+                for 
+                <span class="brand-char">Y</span>our 
+                <span class="brand-char">S</span>uccess
+            </p>
+            
+            <div class="btn-group">
+                <a href="products.html" class="primary-btn">产品中心</a>
+                <a href="service-guide.html" class="secondary-btn">自助服务</a>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <h2 class="section-title">核心业务</h2>
+            
+            <div class="services-grid">
+                
+                <div class="service-card">
+                    <span class="card-icon">🚑</span>
+                    <h3>系统维护与急救</h3>
+                    <p>电脑蓝屏、中毒、无法开机？我们的系统急救 U 盘和专业维护工具，助您快速恢复系统，挽救珍贵数据，让电脑重获新生。</p>
+                </div>
+                
+                <div class="service-card">
+                    <span class="card-icon">💻</span>
+                    <h3>电脑定制与优化</h3>
+                    <p>提供高性能台式机与笔记本定制服务。我们不仅懂硬件，更懂服务——为您提供从配置咨询到<b>终身技术支持</b>的贴心管家式售后。</p>
+                </div>
+                
+                <div class="service-card">
+                    <span class="card-icon">🛡️</span>
+                    <h3>正版软件与安全</h3>
+                    <p>拒绝盗版风险，提供 Windows、Office 等正版软件授权与安装服务。构建安全稳定的数字环境，让您用得放心。</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>© 2026 赛思科技. 保留所有权利。</p>
+        </div>
+    </footer>
+</body>
+</html>

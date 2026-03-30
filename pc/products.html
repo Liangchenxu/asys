@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>产品中心 - 赛思科技 工作室</title>
+    <link rel="icon" href="../img/ASYS-3.png" type="image/png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background: #f8fafc;
+            color: #1e293b;
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background: white;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        /* Logo 链接样式 */
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .logo img {
+            height: 40px;
+        }
+        
+        .logo h1 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #0f172a;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 25px;
+        }
+        
+        .nav-links a {
+            color: #475569;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+        
+        .nav-links a:hover, .nav-links a.active {
+            color: #4f46e5;
+        }
+        
+        .nav-links a.active::after { 
+            content: ''; 
+            position: absolute; 
+            bottom: -5px; 
+            left: 0; 
+            width: 100%; 
+            height: 2px; 
+            background-color: #4f46e5; 
+        }
+        
+        .primary-btn {
+            display: inline-block;
+            background: #4f46e5;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .primary-btn:hover {
+            background: #4338ca;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(79, 70, 229, 0.3);
+        }
+        
+        section {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+            font-size: 2.5rem;
+            color: #0f172a;
+        }
+        
+        .hero-section {
+            background: linear-gradient(135deg, #f0f5ff 0%, #e0e7ff 100%);
+            text-align: center;
+            padding: 80px 0;
+        }
+        
+        /* 产品网格样式 */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+        }
+        
+        .product-card {
+            background: white;
+            border-radius: 16px;
+            border: 1px solid #e2e8f0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        
+        /* --- 产品图片样式 --- */
+        .product-image {
+            width: 100%;
+            height: 0;
+            padding-bottom: 100%; /* 正方形容器 */
+            background: #f8fafc;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .product-image img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover; 
+            transition: transform 0.5s ease;
+        }
+        
+        .product-card:hover .product-image img {
+            transform: scale(1.1);
+        }
+        
+        /* 产品信息样式 */
+        .product-info {
+            padding: 30px;
+        }
+        
+        .product-info h3 {
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+            color: #0f172a;
+            font-weight: 600;
+        }
+        
+        .product-info p {
+            color: #64748b;
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        
+        .product-price {
+            color: #4f46e5;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        
+        .product-features {
+            list-style: none;
+            margin-bottom: 20px;
+        }
+        
+        .product-features li {
+            padding: 8px 0;
+            color: #64748b;
+            position: relative;
+            padding-left: 20px;
+        }
+        
+        .product-features li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #10b981;
+            font-weight: bold;
+        }
+        
+        footer {
+            background: #f1f5f9;
+            padding: 40px 0;
+            text-align: center;
+            border-top: 1px solid #e2e8f0;
+            color: #64748b;
+        }
+
+        /* 手机端适配 */
+        @media (max-width: 768px) {
+            .products-grid {
+                /* 手机强制单列 */
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            nav {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <a href="index.html" class="logo">
+                    <img src="../img/ASYS-3.png" alt="赛思科技 Logo">
+                    <h1>赛思科技</h1>
+                </a>
+                
+                <div class="nav-links">
+                    <a href="index.html">首页</a>
+                    <a href="service-guide.html">自助服务</a>
+                    <a href="products.html" class="active">产品</a>
+                    <a href="tutorials.html">教程</a>
+                    <a href="vantage.html">Vantage浏览器</a>
+                    <a href="about.html">关于 & 联系</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero-section">
+        <div class="container">
+            <h1 style="font-size: 3rem; margin-bottom: 20px; color: #0f172a;">产品中心</h1>
+            <p style="font-size: 1.2rem; color: #475569; max-width: 600px; margin: 0 auto;">
+                我们提供各种专业硬件和软件产品，满足企业级系统部署需求。
+            </p>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <h2 class="section-title">我们的产品</h2>
+            
+            <div class="products-grid">
+                
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="../img/ASYSHELPUSB.jpg" alt="ASYS科技 系统急救U盘">
+                    </div>
+                    <div class="product-info">
+                        <h3>ASYS科技 系统急救U盘</h3>
+                        <p>专业级系统维护工具，集成多种实用功能，是重装系统和数据备份的必备神器。</p>
+                        <ul class="product-features">
+                            <li>快速系统安装与恢复</li>
+                            <li>数据备份与恢复功能</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="../img/ASYSDIYPC.jpg" alt="ASYS 定制电脑">
+                    </div>
+                    <div class="product-info">
+                        <h3>ASYS 定制电脑</h3>
+                        <p>根据您的具体需求定制专属电脑，提供贴心的售前咨询和售后服务。</p>
+                        <ul class="product-features">
+                            <li>个性化硬件配置</li>
+                            <li>专业性能优化</li>
+                            <li>整机稳定性测试</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <a href="debian.html" style="text-decoration: none; color: inherit; display: block; height: 100%;">
+                        <div class="product-image">
+                            <img src="../img/main2dvd.png" alt="Debian 安装介质" style="object-fit: contain; padding: 20px;">
+                        </div>
+                        <div class="product-info">
+                            <h3>Debian GNU/Linux 安装介质</h3>
+                            <p>专为系统管理员和开发者打造的官方纯净离线安装方案，告别网络限制与繁琐配置。</p>
+                            <ul class="product-features">
+                                <li>官方原版纯净无篡改</li>
+                                <li>支持全离线物理部署</li>
+                                <li>强力系统急救盘功能</li>
+                            </ul>
+                        </div>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>© 2026 赛思科技. 保留所有权利。</p>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>自助服务中心 - 赛思科技 工作室</title>
+    <link rel="icon" href="../img/ASYS-3.png" type="image/png">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif; }
+        body { background: #f8fafc; color: #1e293b; line-height: 1.6; display: flex; flex-direction: column; min-height: 100vh; }
+        .container { width: 90%; max-width: 1200px; margin: 0 auto; padding: 0 20px; flex: 1; }
+        
+        /* 导航栏 */
+        header { background: white; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #e2e8f0; }
+        nav { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; }
+        
+        .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: inherit; }
+        .logo img { height: 40px; }
+        .logo h1 { font-size: 1.3rem; font-weight: 700; color: #0f172a; }
+        
+        .nav-links { display: flex; gap: 25px; }
+        .nav-links a { color: #475569; text-decoration: none; font-weight: 500; transition: color 0.3s; position: relative; }
+        .nav-links a:hover, .nav-links a.active { color: #4f46e5; }
+        .nav-links a.active::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 100%; height: 2px; background-color: #4f46e5; }
+
+        /* Hero 区域 */
+        .hero-section { background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); text-align: center; padding: 100px 0; border-bottom: 1px solid #bae6fd; }
+
+        /* 分类入口卡片 */
+        .category-grid {
+            display: grid;
+            /* ★ 智能布局：原来是固定3列，现在改成自适应，4个卡片能完美对齐 ★ */
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+            gap: 30px;
+            margin-top: -60px;
+            padding-bottom: 80px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .category-card {
+            background: white;
+            border-radius: 16px;
+            padding: 40px 30px;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .category-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 30px -10px rgba(79, 70, 229, 0.15);
+            border-color: #4f46e5;
+        }
+
+        .cat-icon {
+            width: 80px; height: 80px;
+            background: #eff6ff; color: #4f46e5;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 2.5rem;
+            margin-bottom: 25px;
+            transition: all 0.3s;
+        }
+
+        .category-card:hover .cat-icon { background: #4f46e5; color: white; transform: scale(1.1); }
+        .cat-title { font-size: 1.35rem; font-weight: 700; color: #0f172a; margin-bottom: 15px; }
+        .cat-desc { color: #64748b; font-size: 0.95rem; line-height: 1.6; }
+
+        footer { background: #f1f5f9; padding: 40px 0; text-align: center; border-top: 1px solid #e2e8f0; color: #64748b; margin-top: auto;}
+
+        /* --- 手机端适配 --- */
+        @media (max-width: 768px) {
+            nav { flex-direction: column; gap: 15px; }
+            .nav-links { flex-wrap: wrap; justify-content: center; width: 100%; gap: 15px; }
+            .hero-section { padding: 60px 0 80px 0; }
+            .hero-section h1 { font-size: 2rem; }
+            .category-grid { grid-template-columns: 1fr; margin-top: -40px; gap: 20px; }
+            .category-card { padding: 30px; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <a href="index.html" class="logo">
+                    <img src="../img/ASYS-3.png" alt="赛思科技 Logo">
+                    <h1>赛思科技</h1>
+                </a>
+                
+                <div class="nav-links">
+                    <a href="index.html">首页</a>
+                    <a href="service-guide.html" class="active">自助服务</a>
+                    <a href="products.html">产品</a>
+                    <a href="tutorials.html">教程</a>
+                    <a href="vantage.html">Vantage浏览器</a>
+                    <a href="about.html">关于 & 联系</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero-section">
+        <div class="container">
+            <h1 style="font-size: 3rem; margin-bottom: 20px; color: #0f172a;">自助服务中心</h1>
+            <p style="font-size: 1.2rem; color: #475569; max-width: 600px; margin: 0 auto 60px;">
+                请选择您需要的服务类型，我们将提供最专业的资源支持。
+            </p>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="category-grid">
+            <a href="system-download.html" class="category-card">
+                <div class="cat-icon">💿</div>
+                <h3 class="cat-title">系统镜像下载</h3>
+                <p class="cat-desc">提供 Windows 10/11 官方原版镜像，纯净无毒，安全稳定，支持高速下载。</p>
+            </a>
+
+            <a href="drivers-download.html" class="category-card">
+                <div class="cat-icon">💾</div>
+                <h3 class="cat-title">驱动程序下载</h3>
+                <p class="cat-desc">智能匹配台式机与笔记本驱动，涵盖显卡、声卡、芯片组等核心硬件。</p>
+            </a>
+
+            <a href="tools-download.html" class="category-card">
+                <div class="cat-icon">🛠️</div>
+                <h3 class="cat-title">常用工具箱</h3>
+                <p class="cat-desc">精选系统优化、故障修复、卸载清理等实用小工具，解决电脑疑难杂症。</p>
+            </a>
+            
+            <a href="office.html" class="category-card">
+                <div class="cat-icon">📄</div>
+                <h3 class="cat-title">Office程序下载</h3>
+                <p class="cat-desc">提供 Microsoft Office 官方原版安装包，满足日常办公与文档处理需求。</p>
+            </a>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>© 2026 赛思科技. 保留所有权利。</p>
+        </div>
+    </footer>
+</body>
+</html>

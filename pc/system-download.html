@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>系统下载 - 赛思科技 工作室</title>
+    <link rel="icon" href="../img/ASYS-3.png" type="image/png">
+    <style>
+        /* --- 基础样式 --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif; }
+        body { background: #f8fafc; color: #1e293b; line-height: 1.6; }
+        .container { width: 90%; max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        
+        /* 导航栏 */
+        header { background: white; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #e2e8f0; }
+        nav { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; }
+        
+        /* Logo 链接样式 */
+        .logo { 
+            display: flex; 
+            align-items: center; 
+            gap: 10px; 
+            text-decoration: none; 
+            color: inherit; 
+        }
+        .logo img { height: 40px; }
+        .logo h1 { font-size: 1.3rem; font-weight: 700; color: #0f172a; }
+        
+        .nav-links { display: flex; gap: 25px; }
+        .nav-links a { color: #475569; text-decoration: none; font-weight: 500; transition: color 0.3s; position: relative; }
+        .nav-links a:hover, .nav-links a.active { color: #4f46e5; }
+        .nav-links a.active::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 100%; height: 2px; background-color: #4f46e5; }
+        
+        /* Hero 区域 */
+        .hero-section { background: linear-gradient(135deg, #f0f5ff 0%, #e0e7ff 100%); text-align: center; padding: 80px 0; border-bottom: 1px solid #bae6fd; }
+        
+        /* --- 系统列表区域 --- */
+        .service-block { 
+            background: white; border-radius: 16px; padding: 40px; margin-bottom: 60px; 
+            border: 1px solid #e2e8f0; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05); 
+        }
+        
+        .block-header { border-bottom: 2px solid #f1f5f9; padding-bottom: 20px; margin-bottom: 10px; display: flex; align-items: center; gap: 15px; }
+        .block-icon { font-size: 1.8rem; background: #eff6ff; color: #4f46e5; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; border-radius: 12px; }
+        .block-title { font-size: 1.5rem; color: #1e293b; font-weight: 700; }
+
+        /* 列表项样式 */
+        .system-item {
+            display: flex;
+            align-items: center;
+            padding: 30px 0;
+            border-bottom: 1px solid #f1f5f9;
+            transition: background 0.3s;
+        }
+        .system-item:last-child { border-bottom: none; }
+
+        /* ★★★ 修正1：全局改回原来的 80px 小尺寸 ★★★ */
+        .sys-logo {
+            width: 80px; 
+            height: 80px;
+            display: flex; align-items: center; justify-content: center;
+            margin-right: 30px; flex-shrink: 0;
+        }
+        
+        /* ★★★ 修正2：图片改回原来的 64px ★★★ */
+        .sys-logo img {
+            width: 64px; 
+            height: 64px; 
+            object-fit: contain; /* 保持比例 */
+        }
+
+        /* 中间信息 */
+        .sys-info { flex: 1; padding-right: 20px; }
+        .sys-name { font-size: 1.5rem; font-weight: 700; color: #1e293b; margin-bottom: 5px; }
+        .sys-desc { color: #64748b; font-size: 0.95rem; margin-bottom: 5px; }
+        .sys-meta { font-size: 0.85rem; color: #94a3b8; }
+
+        /* 右侧按钮组 */
+        .sys-actions {
+            display: flex;
+            flex-direction: row; 
+            gap: 15px;
+            align-items: center;
+        }
+
+        /* 按钮样式 */
+        .btn-pan { 
+            display: inline-flex; align-items: center; justify-content: center;
+            background: #ff4d4f; /* 红色按钮 */
+            color: white; padding: 10px 20px; 
+            border-radius: 6px; text-decoration: none; font-weight: 600; 
+            transition: all 0.3s; box-shadow: 0 4px 6px -1px rgba(239, 68, 68, 0.2);
+            white-space: nowrap; 
+        }
+        .btn-pan:hover { background: #d9363e; transform: translateY(-2px); }
+
+        .btn-official { 
+            display: inline-flex; align-items: center; justify-content: center;
+            background: white; color: #ff4d4f; padding: 8px 18px; 
+            border: 1px solid #ff4d4f; /* 红色描边 */
+            border-radius: 6px; text-decoration: none; 
+            font-weight: 600; transition: all 0.3s;
+            white-space: nowrap; 
+        }
+        .btn-official:hover { background: #fff1f0; }
+
+        footer { background: #f1f5f9; padding: 40px 0; text-align: center; border-top: 1px solid #e2e8f0; color: #64748b; margin-top: 80px; }
+
+        /* --- 手机端适配 --- */
+        @media (max-width: 768px) {
+            .container { width: 95%; padding: 0 15px; }
+            nav { flex-direction: column; gap: 15px; }
+            .nav-links { flex-wrap: wrap; justify-content: center; }
+            
+            .system-item { flex-direction: column; text-align: center; padding: 30px 10px; }
+            .sys-logo { margin-right: 0; margin-bottom: 15px; }
+            .sys-info { margin-bottom: 20px; padding-right: 0; }
+            
+            .sys-actions { width: 100%; justify-content: center; }
+            .btn-pan, .btn-official { flex: 1; font-size: 0.9rem; padding: 10px 5px; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <a href="index.html" class="logo">
+                    <img src="../img/ASYS-3.png" alt="赛思科技 Logo">
+                    <h1>赛思科技</h1>
+                </a>
+                
+                <div class="nav-links">
+                    <a href="index.html">首页</a>
+                    <a href="service-guide.html" class="active">自助服务</a>
+                    <a href="products.html">产品</a>
+                    <a href="tutorials.html">教程</a>
+                    <a href="vantage.html">Vantage浏览器</a>
+                    <a href="about.html">关于 & 联系</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero-section">
+        <div class="container">
+            <h1 style="font-size: 3rem; margin-bottom: 20px; color: #0f172a;">系统镜像下载</h1>
+            <p style="font-size: 1.2rem; color: #475569; max-width: 600px; margin: 0 auto;">
+                提供官方原版纯净镜像，支持官网直连与高速网盘分流。
+            </p>
+        </div>
+    </section>
+
+    <section style="padding: 60px 0;">
+        <div class="container">
+            <div style="margin-bottom: 20px;">
+                <a href="service-guide.html" style="color: #64748b; text-decoration: none; font-weight: 500; display: inline-flex; align-items: center; gap: 5px; transition: color 0.3s;">
+                    <span>&lt;</span> 返回自助服务中心
+                </a>
+            </div>
+
+            <div class="service-block">
+                <div class="block-header">
+                    <div class="block-icon">💿</div>
+                    <div class="block-title">Windows 操作系统</div>
+                </div>
+                
+                <div class="system-item">
+                    <div class="sys-logo">
+                        <img src="../img/windows11.png" alt="Win11">
+                    </div>
+                    <div class="sys-info">
+                        <div class="sys-name">Windows 11</div>
+                        <div class="sys-desc">发布于2021年10月5日，微软最新一代操作系统。全新UI设计，支持安卓子系统。</div>
+                        <div class="sys-meta">版本：23H2 / 24H2 (消费者版/商业版)</div>
+                    </div>
+                    <div class="sys-actions">
+                        <a href="https://pan.quark.cn/s/0697272bc37d" class="btn-pan" target="_blank">网盘下载</a>
+                        <a href="https://www.microsoft.com/zh-cn/software-download/windows11" class="btn-official" target="_blank">官网下载</a>
+                    </div>
+                </div>
+
+                <div class="system-item">
+                    <div class="sys-logo">
+                        <img src="../img/windows10.png" alt="Win10">
+                    </div>
+                    <div class="sys-info">
+                        <div class="sys-name">Windows 10</div>
+                        <div class="sys-desc">发布于2015年7月29日，经典稳定，兼容性极佳。</div>
+                        <div class="sys-meta">版本：22H2 (最终稳定版)</div>
+                    </div>
+                    <div class="sys-actions">
+                        <a href="https://pan.quark.cn/s/0697272bc37d" class="btn-pan" target="_blank">网盘下载</a>
+                        <a href="https://www.microsoft.com/zh-cn/software-download/windows10" class="btn-official" target="_blank">官网下载</a>
+                    </div>
+                </div>
+
+                <div class="system-item">
+                    <div class="sys-logo">
+                        <img src="../img/windows10.png" alt="Win10 LTSC">
+                    </div>
+                    <div class="sys-info">
+                        <div class="sys-name">Windows 10 企业版 LTSC/LTSB</div>
+                        <div class="sys-desc">长期服务分支，无应用商店、无Edge、无小娜，极度纯净，适合追求极致稳定的用户。</div>
+                        <div class="sys-meta">包含版本：LTSC 2021 / LTSC 2019 / LTSB 2016</div>
+                    </div>
+                    <div class="sys-actions">
+                        <a href="https://pan.quark.cn/s/0697272bc37d" class="btn-pan" target="_blank">网盘下载</a>
+                    </div>
+                </div>
+
+                <div class="system-item">
+                    <div class="sys-logo">
+                        <img src="../img/windows10.png" alt="Win8">
+                    </div>
+                    <div class="sys-info">
+                        <div class="sys-name">Windows 8.1</div>
+                        <div class="sys-desc">微软的一大变革之作，虽然已停止支持，但仍有特定用途。</div>
+                        <div class="sys-meta">状态：微软已停止主流支持</div>
+                    </div>
+                    <div class="sys-actions">
+                        <a href="https://pan.quark.cn/s/0697272bc37d" class="btn-pan" target="_blank">网盘下载</a>
+                    </div>
+                </div>
+
+                <div class="system-item">
+                    <div class="sys-logo">
+                        <img src="../img/windows7.png" alt="Win7">
+                    </div>
+                    <div class="sys-info">
+                        <div class="sys-name">Windows 7 SP1</div>
+                        <div class="sys-desc">一代经典，虽然微软已停止更新，但仍被许多老旧设备需要。</div>
+                        <div class="sys-meta">包含版本：旗舰版 / 专业版 (集成USB3.0/NVMe驱动)</div>
+                    </div>
+                    <div class="sys-actions">
+                        <a href="https://pan.quark.cn/s/0697272bc37d" class="btn-pan" target="_blank">网盘下载</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>© 2026 赛思科技. 保留所有权利。</p>
+        </div>
+    </footer>
+</body>
+</html>

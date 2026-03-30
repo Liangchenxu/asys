@@ -1,0 +1,171 @@
+[
+    {
+        "id": "office-2016",
+        "icon": "⚙️",
+        
+        "title": "Office 2016 多合一安装程序",
+        "desc": "Office 2016 MSI大全套官方原版安装",
+        "downloadUrl": "https://pan.quark.cn/s/7cb581c16fa9",
+        "tutorialUrl": "https://www.bilibili.com/video/BV1Ssf2BZE6A/?share_source=copy_web&vd_source=0b97d0dc3d162ecbd1aaf7e1fa43568e",
+        "category": "software",
+        "keywords": ["office", "word", "excel", "ppt", "办公软件", "文档"]
+    },
+    {
+        "id": "win10-menu",
+        
+        "icon": "⚙️",
+        "title": "切换Windows10菜单工具",
+        "desc": "win11原版菜单太丑太卡？这个工具解决你的问题！",
+        "downloadUrl": "https://pan.quark.cn/s/9cc6f4e59452",
+        "tutorialUrl": "https://www.bilibili.com/video/BV1hxCQBzES6/",
+        "category": "system",
+        "keywords": ["开始菜单", "美化", "win11变win10", "右键菜单"]
+    },
+    {
+        "id": "win11-patch",
+
+        "icon": "⚙️",
+        "title": "Win11 25H2 KB5054156补丁",
+        "desc": "Windows 11 25H2，KB5054156补丁",
+        "downloadUrl": "https://pan.quark.cn/s/2a07b5ddf5ed",
+        "tutorialUrl": "https://www.bilibili.com/video/BV13Tx8znE1N/",
+        "category": "maintain",
+        "keywords": ["补丁", "更新", "修复", "25h2"]
+    },
+    {
+        "id": "pause-update",
+
+        "icon": "🚑",
+        "title": "暂停Windows更新工具",
+        "desc": "一键暂停Windows系统的烦人自动更新。",
+        "downloadUrl": "https://pan.quark.cn/s/a98842cdb04f",
+        "tutorialUrl": "https://www.bilibili.com/video/BV1QMePzAEH3/",
+        "category": "system",
+        "keywords": ["更新", "升级", "停止更新", "拦截", "自动更新"]
+    },
+    {
+        "id": "win10-ltsc-iso",
+        
+        "icon": "💿",
+        "title": "Windows 10 LTSC 官方镜像",
+        "desc": "Windows 10换到LTSC，纯净无冗余。",
+        "downloadUrl": "https://pan.quark.cn/s/877f438d3fd2",
+        "tutorialUrl": "https://www.bilibili.com/video/BV14wgezjEJr/",
+        "category": "maintain",
+        "keywords": ["系统", "镜像", "重装", "ltsc", "iso"]
+    },
+    {
+        "id": "ltsc-tools",
+
+        "icon": "🧰",
+        "title": "更换 Windows 10 LTSC 工具包",
+        "desc": "微软宣布Windows 10即将停止支持！！换到LTSC强行续命！(配套工具)",
+        "downloadUrl": "https://pan.quark.cn/s/cb8562eba1e0",
+        "tutorialUrl": "https://www.bilibili.com/video/BV14wgezjEJr/",
+        "category": "maintain",
+        "keywords": ["续命", "升级", "转换", "系统工具"]
+    },
+    {
+        "id": "downgrade-win10",
+
+        "icon": "🔧",
+        "title": "Win11无损降级Win10工具",
+        "desc": "Windows 11保留所有资料无损回退/降级到Windows 10！",
+        "downloadUrl": "https://pan.quark.cn/s/e33029b2f7dc",
+        "tutorialUrl": "https://www.bilibili.com/video/BV1AAgXztEFf/",
+        "category": "maintain",
+        "keywords": ["降级", "回退", "重装", "无损", "win11到win10"]
+    },
+    {
+        "id": "pro-to-home",
+
+        "icon": "🔧",
+        "title": "专业版回退家庭版工具",
+        "desc": "Windows 10/11专业版完美回退家庭版",
+        "downloadUrl": "https://pan.quark.cn/s/cb8562eba1e0",
+        "tutorialUrl": "https://www.bilibili.com/video/BV1fETBzuE52/",
+        "category": "maintain",
+        "keywords": ["降级", "回退", "版本转换", "专业版", "家庭版"]
+    },
+    {
+        "id": "geek-uninstaller",
+
+        "icon": "🗑️",
+        "title": "Geek",
+        "desc": "最好用的轻量级软件彻底卸载工具。",
+        "downloadUrl": "https://pan.quark.cn/s/3ac2c3b4c716",
+        "tutorialUrl": "https://www.bilibili.com/video/BV1fAjHzmEwH/",
+        "category": "cleanup",
+        "keywords": ["卸载", "清理", "流氓软件", "注册表清理"]
+    },
+    {
+        "id": "stop-update",
+
+        "icon": "🛡️",
+        "title": "关闭自动更新工具",
+        "desc": "win10和win11关闭自动更新工具，彻底告别后台偷偷下载。",
+        "downloadUrl": "https://pan.quark.cn/s/a98842cdb04f",
+        "tutorialUrl": "https://www.bilibili.com/video/BV1jnEMz2EV7/",
+        "category": "system",
+        "keywords": ["更新", "自动更新", "拦截", "关闭更新"]
+    },
+    {
+        "id": "office-uninstall",
+
+        "icon": "🗑️",
+        "title": "Office彻底卸载工具",
+        "desc": "一键彻底卸载Office和Microsoft 365，解决安装报错问题。",
+        "downloadUrl": "https://pan.quark.cn/s/c27a2a5daf3a",
+        "tutorialUrl": "https://www.bilibili.com/video/BV1z1dSYDEED/",
+        "category": "cleanup",
+        "keywords": ["office", "卸载", "365", "报错", "彻底删除"]
+    },
+    {
+        "id": "block-outlook",
+
+        "icon": "📧",
+        "title": "阻止新版Outlook工具",
+        "desc": "阻止新版Outlook应用，使用旧版邮件APP或者旧版Outlook。",
+        "downloadUrl": "https://pan.quark.cn/s/fdfb1b1ca58f",
+        "tutorialUrl": "https://www.bilibili.com/video/BV13A9SYYE8z/",
+        "category": "system",
+        "keywords": ["邮箱", "outlook", "还原", "旧版"]
+    },
+    {
+        "id": "taskbar-fix",
+
+        "icon": "💻",
+        "title": "任务栏修复工具",
+        "desc": "解决win11任务栏显示“文件资源管理器”字样的问题。",
+        "downloadUrl": "https://pan.quark.cn/s/d53d6039210c",
+        "tutorialUrl": "https://www.bilibili.com/video/BV1YLqaYCEUX/",
+        "category": "maintain",
+        "keywords": ["任务栏", "修复", "bug", "文件资源管理器"]
+    },
+    {
+        "id": "mem-reduct",
+
+        "icon": "🚀",
+        "title": "内存清理工具 (Mem Reduct)",
+        "desc": "非常好用的内存清理小工具，可以平替360加速球。",
+        "downloadUrl": "https://pan.quark.cn/s/f76dbb518c24",
+        "tutorialUrl": "https://www.bilibili.com/video/BV1TZ421M7Z8/",
+        "category": "system",
+        "keywords": ["内存", "加速", "清理", "卡顿", "优化"]
+    },
+    {
+        "id": "7-zip",
+
+        "icon": "📦",
+        "title": "解压缩工具 (7-Zip)",
+        "desc": "一款知名免费、纯净的解压/压缩软件。",
+        "downloadUrl": "https://pan.quark.cn/s/b0994efc5cd1",
+        "tutorialUrl": "https://www.bilibili.com/video/BV1xZ4y1v7pU/",
+        "category": "software",
+        "keywords": ["解压", "压缩", "rar", "zip", "装机必备"]
+    }
+
+]
+
+
+

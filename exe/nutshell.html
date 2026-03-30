@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRC Immunotherapy - Project in a Nutshell</title>
+    <style>
+        :root {
+            --primary: #ffffff;
+            --secondary: #f8fafc;
+            --accent: #e0f2fe;
+            --highlight: #e11d48;
+            --blue: #0ea5e9;
+            --teal: #14b8a6;
+            --purple: #8b5cf6;
+            --orange: #f97316;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --border: #e2e8f0;
+            --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --gradient-4: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: var(--primary);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Light background pattern */
+        .bg-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: 
+                radial-gradient(ellipse at 10% 20%, rgba(14, 165, 233, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 80%, rgba(20, 184, 166, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(139, 92, 246, 0.05) 0%, transparent 70%),
+                linear-gradient(180deg, #f0f9ff 0%, #ffffff 50%, #fdf4ff 100%);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+            background: linear-gradient(180deg, #e0f2fe 0%, #ffffff 100%);
+        }
+
+        .badge {
+            display: inline-block;
+            background: var(--gradient-2);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 15px rgba(240, 147, 251, 0.3);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #1e293b 0%, #0ea5e9 50%, #e11d48 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero .subtitle {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            max-width: 700px;
+            margin-bottom: 3rem;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-15px); }
+            60% { transform: translateX(-50%) translateY(-7px); }
+        }
+
+        .scroll-indicator svg {
+            width: 30px;
+            height: 30px;
+            stroke: var(--blue);
+        }
+
+        /* Stats Bar */
+        .stats-bar {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+            padding: 3rem 2rem;
+            background: linear-gradient(90deg, #f0f9ff, #fdf4ff, #f0fdf4);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            background: var(--gradient-3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--text);
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: var(--gradient-2);
+            margin: 1rem auto 0;
+            border-radius: 2px;
+        }
+
+        /* Problem Section */
+        .problem-section {
+            padding: 4rem 0;
+        }
+
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .problem-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .problem-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.1);
+        }
+
+        .problem-card .icon {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-4);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .problem-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+
+        .problem-card p {
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+
+        /* Tumor Types */
+        .tumor-section {
+            padding: 4rem 0;
+        }
+
+        .tumor-comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .tumor-comparison {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .tumor-card {
+            position: relative;
+            border-radius: 25px;
+            padding: 2.5rem;
+            overflow: hidden;
+        }
+
+        .tumor-card.hot {
+            background: linear-gradient(145deg, #fff1f2, #ffe4e6);
+            border: 2px solid #fda4af;
+        }
+
+        .tumor-card.cold {
+            background: linear-gradient(145deg, #e0f2fe, #cffafe);
+            border: 2px solid #7dd3fc;
+        }
+
+        .tumor-card .percentage {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            font-size: 2.5rem;
+            font-weight: 800;
+            opacity: 0.2;
+        }
+
+        .tumor-card.hot .percentage { color: var(--highlight); }
+        .tumor-card.cold .percentage { color: var(--blue); }
+
+        .tumor-card h3 {
+            font-size: 1.6rem;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+
+        .tumor-card .type {
+            font-size: 1rem;
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+        }
+
+        .tumor-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .tumor-card li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            font-size: 0.95rem;
+            color: var(--text);
+        }
+
+        .tumor-card li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        .tumor-card.hot li::before { color: var(--highlight); }
+        .tumor-card.cold li::before { color: var(--blue); }
+
+        /* Therapies Timeline */
+        .therapies-section {
+            padding: 4rem 0;
+            background: linear-gradient(180deg, transparent, #f8fafc, transparent);
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--teal), var(--purple));
+            border-radius: 2px;
+        }
+
+        @media (max-width: 768px) {
+            .timeline::before {
+                left: 20px;
+            }
+        }
+
+        .timeline-item {
+            display: flex;
+            justify-content: flex-end;
+            padding: 1rem 0;
+            width: 50%;
+        }
+
+        .timeline-item:nth-child(odd) {
+            align-self: flex-end;
+            justify-content: flex-start;
+            margin-left: 50%;
+            padding-left: 3rem;
+        }
+
+        .timeline-item:nth-child(even) {
+            padding-right: 3rem;
+        }
+
+        @media (max-width: 768px) {
+            .timeline-item,
+            .timeline-item:nth-child(odd) {
+                width: 100%;
+                margin-left: 0;
+                padding-left: 4rem;
+                padding-right: 0;
+            }
+        }
+
+        .timeline-content {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 1.5rem;
+            position: relative;
+            max-width: 350px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .timeline-content::before {
+            content: '';
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background: var(--teal);
+            border-radius: 50%;
+            top: 50%;
+            transform: translateY(-50%);
+            box-shadow: 0 0 0 4px white, 0 0 0 6px var(--teal);
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content::before {
+            left: -2.1rem;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content::before {
+            right: -2.1rem;
+        }
+
+        @media (max-width: 768px) {
+            .timeline-content::before {
+                left: -2.6rem !important;
+                right: auto !important;
+            }
+        }
+
+        .timeline-content h4 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: var(--teal);
+        }
+
+        .timeline-content p {
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        /* Emerging Therapies */
+        .emerging-section {
+            padding: 4rem 0;
+        }
+
+        .emerging-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .emerging-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid var(--border);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .emerging-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-1);
+        }
+
+        .emerging-card:nth-child(2)::before { background: var(--gradient-2); }
+        .emerging-card:nth-child(3)::before { background: var(--gradient-3); }
+
+        .emerging-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.1);
+        }
+
+        .emerging-card h4 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+
+        .emerging-card p {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+
+        .tag {
+            display: inline-block;
+            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+            color: var(--blue);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+            border: 1px solid #bae6fd;
+        }
+
+        /* Biomarkers */
+        .biomarkers-section {
+            padding: 4rem 0;
+            background: linear-gradient(180deg, #f8fafc, white);
+        }
+
+        .biomarker-list {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .biomarker-item {
+            text-align: center;
+            padding: 2rem;
+            background: white;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            min-width: 180px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .biomarker-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            border-color: var(--teal);
+        }
+
+        .biomarker-icon {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 1rem;
+            background: var(--gradient-4);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+        }
+
+        .biomarker-item h4 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+
+        .biomarker-item p {
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+
+        /* Challenges */
+        .challenges-section {
+            padding: 4rem 0;
+        }
+
+        .challenge-banner {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            padding: 3rem;
+            background: linear-gradient(145deg, #fff7ed, #ffedd5);
+            border: 2px solid #fed7aa;
+            border-radius: 25px;
+        }
+
+        .challenge-banner h3 {
+            font-size: 1.6rem;
+            margin-bottom: 1.5rem;
+            color: var(--orange);
+        }
+
+        .challenge-banner p {
+            font-size: 1.05rem;
+            color: var(--text);
+            line-height: 1.8;
+        }
+
+        /* Conclusion */
+        .conclusion-section {
+            padding: 4rem 0;
+        }
+
+        .conclusion-box {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 3rem;
+            background: linear-gradient(145deg, #ecfdf5, #d1fae5);
+            border: 2px solid #6ee7b7;
+            border-radius: 25px;
+            text-align: center;
+        }
+
+        .conclusion-box p {
+            font-size: 1.1rem;
+            line-height: 1.9;
+            color: var(--text);
+        }
+
+        .conclusion-box strong {
+            color: #059669;
+            font-weight: 600;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 3rem 2rem;
+            border-top: 1px solid var(--border);
+            margin-top: 2rem;
+            background: var(--secondary);
+        }
+
+        footer p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        footer .author {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--teal);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Decorative circles */
+        .deco-circle {
+            position: fixed;
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0.08;
+        }
+
+        .deco-circle-1 {
+            width: 500px;
+            height: 500px;
+            background: var(--gradient-3);
+            top: -150px;
+            right: -150px;
+            filter: blur(60px);
+        }
+
+        .deco-circle-2 {
+            width: 400px;
+            height: 400px;
+            background: var(--gradient-2);
+            bottom: 10%;
+            left: -100px;
+            filter: blur(60px);
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-pattern"></div>
+    <div class="deco-circle deco-circle-1"></div>
+    <div class="deco-circle deco-circle-2"></div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <span class="badge">Research Review</span>
+        <h1>Colorectal Cancer<br>Immunotherapy</h1>
+        <p class="subtitle">Current Status and Emerging Research — A comprehensive review of immunotherapeutic advances and the path toward precision medicine in CRC treatment</p>
+        <div class="scroll-indicator">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M7 13l5 5 5-5M7 6l5 5 5-5"/>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Stats Bar -->
+    <div class="stats-bar">
+        <div class="stat-item">
+            <div class="stat-number">3rd</div>
+            <div class="stat-label">Most Common Cancer</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">2nd</div>
+            <div class="stat-label">Leading Cause of Death</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">65%</div>
+            <div class="stat-label">5-Year Survival Rate</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">16%</div>
+            <div class="stat-label">Survival with Metastasis</div>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <!-- Problem Section -->
+        <section class="problem-section">
+            <h2 class="section-title">The Challenge</h2>
+            <div class="problem-grid">
+                <div class="problem-card">
+                    <div class="icon">📈</div>
+                    <h3>Rising Incidence</h3>
+                    <p>CRC incidence is increasing among young adults under 50, with China accounting for ~28.8% of new cases worldwide and ~30.6% of global CRC-related deaths.</p>
+                </div>
+                <div class="problem-card">
+                    <div class="icon">🎯</div>
+                    <h3>Limited Response</h3>
+                    <p>~85% of CRC patients have MSS/pMMR tumors that respond poorly to current immune checkpoint inhibitors due to immunologically "cold" tumor microenvironments.</p>
+                </div>
+                <div class="problem-card">
+                    <div class="icon">🧬</div>
+                    <h3>Complex Biology</h3>
+                    <p>Tumor microenvironment heterogeneity, immunosuppressive networks (Tregs, MDSCs, CAFs), and acquired resistance mechanisms limit treatment efficacy.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tumor Types -->
+        <section class="tumor-section">
+            <h2 class="section-title">Two Immunophenotypes</h2>
+            <div class="tumor-comparison">
+                <div class="tumor-card hot">
+                    <span class="percentage">~15%</span>
+                    <h3>🔥 "Hot" Tumors</h3>
+                    <div class="type">MSI-H / dMMR</div>
+                    <ul>
+                        <li>High tumor mutational burden (TMB)</li>
+                        <li>Rich in neoantigens</li>
+                        <li>Strong T-cell infiltration (TILs)</li>
+                        <li>Excellent ICI response</li>
+                        <li>FDA-approved first-line immunotherapy</li>
+                    </ul>
+                </div>
+                <div class="tumor-card cold">
+                    <span class="percentage">~85%</span>
+                    <h3>❄️ "Cold" Tumors</h3>
+                    <div class="type">MSS / pMMR</div>
+                    <ul>
+                        <li>Low tumor mutational burden</li>
+                        <li>Limited neoantigen production</li>
+                        <li>Sparse immune infiltration</li>
+                        <li>Immunosuppressive TME</li>
+                        <li>Poor ICI monotherapy response</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Current Therapies -->
+        <section class="therapies-section">
+            <h2 class="section-title">Current Therapeutic Strategies</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h4>PD-1/PD-L1 Inhibitors</h4>
+                        <p>Pembrolizumab (KEYNOTE-177) established as first-line treatment for MSI-H/dMMR mCRC with significant PFS improvement and 11.1% CR rate.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h4>Dual Checkpoint Blockade</h4>
+                        <p>Nivolumab + Ipilimumab achieved 69% ORR and 13% CR rate in first-line MSI-H/dMMR patients (CheckMate 142).</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h4>Neoadjuvant Immunotherapy</h4>
+                        <p>NICHE study: 100% pathological response, 60% pCR in early-stage dMMR colon cancer. Dostarlimab: 100% cCR in locally advanced dMMR rectal cancer.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h4>Anti-angiogenic Combinations</h4>
+                        <p>REGONIVO trial: Regorafenib + Nivolumab achieved 33.3% ORR in MSS/pMMR CRC through TME remodeling and vascular normalization.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h4>Radiotherapy + Immunotherapy</h4>
+                        <p>VOLTAGE study: CRT + Nivolumab achieved 30% pCR in MSS locally advanced rectal cancer by inducing immunogenic cell death.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h4>Targeted + Immune Combinations</h4>
+                        <p>BRAF/MEK inhibitors + PD-1 blockade (DTP regimen): 25% cORR in MSS BRAF-V600E CRC through MAPK pathway modulation.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Emerging Therapies -->
+        <section class="emerging-section">
+            <h2 class="section-title">Emerging Frontiers</h2>
+            <div class="emerging-grid">
+                <div class="emerging-card">
+                    <h4>🧪 Adoptive Cell Therapy</h4>
+                    <p>CAR-T cells targeting CEA, EGFR, HER2, GUCY2C; TCR-T therapy based on neoantigen recognition; NK cell therapies for personalized immune intervention.</p>
+                    <span class="tag">CAR-T</span>
+                    <span class="tag">TCR-T</span>
+                    <span class="tag">NK cells</span>
+                </div>
+                <div class="emerging-card">
+                    <h4>💉 Cancer Vaccines</h4>
+                    <p>Dendritic cell vaccines targeting tumor vasculature; Personalized peptide vaccines (PPVs) based on individual neoantigen profiles and MHC haplotypes.</p>
+                    <span class="tag">DC Vaccines</span>
+                    <span class="tag">Neoantigen PPVs</span>
+                    <span class="tag">TLR Agonists</span>
+                </div>
+                <div class="emerging-card">
+                    <h4>🔗 Bispecific Antibodies</h4>
+                    <p>T-cell engagers (TCEs) like Cibisatamab (CEA-CD3); Amivantamab (EGFR-MET) for overcoming resistance mechanisms in refractory mCRC.</p>
+                    <span class="tag">Cibisatamab</span>
+                    <span class="tag">Amivantamab</span>
+                    <span class="tag">TCEs</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Biomarkers -->
+        <section class="biomarkers-section">
+            <h2 class="section-title">Biomarkers & Precision Medicine</h2>
+            <div class="biomarker-list">
+                <div class="biomarker-item">
+                    <div class="biomarker-icon">🧬</div>
+                    <h4>MSI Status</h4>
+                    <p>Gold standard for ICI eligibility</p>
+                </div>
+                <div class="biomarker-item">
+                    <div class="biomarker-icon">📊</div>
+                    <h4>TMB</h4>
+                    <p>Tumor mutational burden assessment</p>
+                </div>
+                <div class="biomarker-item">
+                    <div class="biomarker-icon">🎯</div>
+                    <h4>Immunoscore</h4>
+                    <p>CD3⁺/CD8⁺ T cell quantification</p>
+                </div>
+                <div class="biomarker-item">
+                    <div class="biomarker-icon">🤖</div>
+                    <h4>AI Pathology</h4>
+                    <p>Deep learning WSI analysis</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Challenges -->
+        <section class="challenges-section">
+            <h2 class="section-title">Global Accessibility Challenge</h2>
+            <div class="challenge-banner">
+                <h3>⚠️ The Equity Gap</h3>
+                <p>Despite breakthrough efficacy, immunotherapies face significant accessibility barriers worldwide. High treatment costs place them beyond reach for most patients in low- and middle-income countries (LMICs). Even in high-income countries, restrictive reimbursement policies often delay or deny access. Structural challenges including lack of biosimilars, cold-chain logistics, and shortages of specialized personnel further exacerbate global disparities.</p>
+            </div>
+        </section>
+
+        <!-- Conclusion -->
+        <section class="conclusion-section">
+            <h2 class="section-title">Conclusion</h2>
+            <div class="conclusion-box">
+                <p>Immunotherapy has ushered in a <strong>transformative era</strong> for MSI-H/dMMR CRC patients (~15%), establishing new standards of care with unprecedented response rates and durable remissions. However, the <strong>vast majority (~85%)</strong> with MSS/pMMR tumors remain largely refractory due to immunologically "cold" microenvironments. The path forward demands a <strong>dual commitment</strong>: deepening mechanistic understanding of immune resistance to develop <strong>biomarker-informed combinatorial regimens</strong>, while ensuring that scientific advances are <strong>accessible to all patients</strong>, regardless of geography or socioeconomic status.</p>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p class="author">Examination Number: B294684</p>
+        <p>Project in a Nutshell — Colorectal Cancer Immunotherapy Review</p>
+        <p>University of Edinburgh · Deanery of Biomedical Sciences</p>
+    </footer>
+
+</body>
+</html>

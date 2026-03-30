@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>关于 & 联系 - 赛思科技 工作室</title>
+    <link rel="icon" href="../img/ASYS-3.png" type="image/png">
+    <style>
+        /* --- 基础全局样式 --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif; }
+        body { background: #f8fafc; color: #1e293b; line-height: 1.6; }
+        .container { width: 90%; max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        
+        /* --- 导航栏样式 --- */
+        header { background: white; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #e2e8f0; }
+        nav { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; }
+        
+        /* Logo 链接样式 (已修改) */
+        .logo { 
+            display: flex; 
+            align-items: center; 
+            gap: 10px; 
+            text-decoration: none; /* 去掉下划线 */
+            color: inherit;        /* 继承字体颜色 */
+        }
+        .logo img { height: 40px; }
+        .logo h1 { font-size: 1.3rem; font-weight: 700; color: #0f172a; }
+        
+        /* 导航链接 */
+        .nav-links { display: flex; gap: 25px; }
+        .nav-links a { color: #475569; text-decoration: none; font-weight: 500; transition: color 0.3s; position: relative; }
+        .nav-links a:hover, .nav-links a.active { color: #4f46e5; }
+        .nav-links a.active::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 100%; height: 2px; background-color: #4f46e5; }
+        
+        /* --- 页面区块通用 --- */
+        section { padding: 60px 0; }
+        .section-title { text-align: center; margin-bottom: 40px; font-size: 2rem; color: #0f172a; }
+        
+        /* --- 关于我们特定样式 --- */
+        .about-content { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+        .about-image img { width: 100%; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        
+        /* --- 联系方式特定样式 (从 contact.html 搬过来的) --- */
+        .contact-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+            gap: 40px; 
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+        }
+        .contact-detail { display: flex; gap: 15px; margin-bottom: 20px; }
+        .contact-icon { color: #4f46e5; font-size: 1.5rem; }
+        .contact-detail a { color: #4f46e5; text-decoration: none; }
+        .contact-detail a:hover { text-decoration: underline; }
+        
+        footer { background: #f1f5f9; padding: 25px 0; text-align: center; border-top: 1px solid #e2e8f0; }
+        
+        /* --- 手机端适配 --- */
+        @media (max-width: 768px) {
+            nav { flex-direction: column; gap: 15px; }
+            .nav-links { flex-wrap: wrap; justify-content: center; width: 100%; gap: 10px; }
+            
+            /* 关于我们和联系方式都变为单列 */
+            .about-content { grid-template-columns: 1fr; }
+            .contact-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <a href="index.html" class="logo">
+                    <img src="../img/ASYS-3.png" alt="赛思科技 Logo">
+                    <h1>赛思科技</h1>
+                </a>
+                
+                <div class="nav-links">
+                    <a href="index.html">首页</a>
+                    <a href="service-guide.html">自助服务</a>
+                    <a href="products.html">产品</a>
+                    <a href="tutorials.html">教程</a>
+                    <a href="vantage.html">Vantage浏览器</a>
+                    <a href="about.html" class="active">关于 & 联系</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <section style="background: #f0f5ff; text-align: center;">
+        <div class="container">
+            <h2>关于 赛思科技 工作室</h2>
+            <p style="max-width: 600px; margin: 20px auto;">成立于 2018 年，我们是一支由资深系统工程师组成的团队。</p>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="about-content">
+                <div>
+                    <h3>使命与愿景</h3>
+                    <br>
+                    <p>赛思科技成立于 2018 年，我们的使命是让系统更安全、更高效、更易用。</p>
+                    <br>
+                    <p></p>
+                </div>
+                <div class="about-image">
+                    <img src="../img/asys-2.png" alt="赛思科技 团队">
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <hr style="border: 0; border-top: 1px solid #e2e8f0; margin: 0;">
+
+    <section id="contact">
+        <div class="container">
+            <h2 class="section-title">联系我们</h2>
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <h3 style="margin-bottom: 20px;">联系方式</h3>
+                    <div class="contact-detail">
+                        <div class="contact-icon">📧</div>
+                        <div>
+                            <strong>技术支持</strong><br>
+                            <a href="mailto:augustwkr@outlook.com">augustwkr@outlook.com</a>
+                        </div>
+                    </div>
+                    <div class="contact-detail">
+                        <div class="contact-icon">📧</div>
+                        <div>
+                            <strong>商务合作</strong><br>
+                            <a href="mailto:augustwkr@outlook.com">augustwkr@outlook.com</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="contact-extra" style="display: flex; align-items: center; justify-content: center; background: #f8fafc; border-radius: 8px; padding: 20px;">
+                    <p style="color: #64748b; text-align: center;">
+                        期待与您的交流！<br>
+                        我们通常会在 24 小时内回复邮件。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>© 2026 赛思科技. 保留所有权利。</p>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文档与教程 - Vantage</title>
+    <link rel="icon" href="../img/ASYS-3.png?v=2" type="image/png">
+    <style>
+        :root {
+            --vantage-blue: #0078d4;
+            --bg-main: #ffffff;
+            --text-main: #111827;
+            --text-sub: #4b5563;
+            --border: #e5e7eb;
+            --bg-card: #ffffff;
+            --warning-bg: #fffbeb;
+            --warning-border: #fef08a;
+            --warning-text: #92400e;
+        }
+
+        body {
+            margin: 0;
+            font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 15%;
+            background: #fff;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .nav-left { display: flex; align-items: center; gap: 2rem; }
+        .nav-logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.3rem; text-decoration: none; color: var(--text-main); }
+        .nav-logo img { height: 28px; display: block; }
+        .nav-links { display: flex; gap: 1.5rem; }
+        .nav-links a { text-decoration: none; color: var(--text-sub); font-size: 0.95rem; font-weight: 500; transition: color 0.2s ease; }
+        .nav-links a:hover, .nav-links a.active { color: var(--vantage-blue); }
+        .asys-main-link { display: flex; align-items: center; text-decoration: none; padding: 5px; transition: 0.2s; }
+        .asys-main-link:hover { opacity: 0.7; }
+        .asys-main-link img { height: 38px; display: block; }
+
+        .docs-layout {
+            display: flex;
+            max-width: 1200px;
+            margin: 0 auto;
+            min-height: calc(100vh - 150px);
+        }
+
+        .docs-sidebar {
+            width: 280px;
+            padding: 40px 20px;
+            border-right: 1px solid var(--border);
+            background: #fbfbfc;
+            position: sticky;
+            top: 70px;
+            height: calc(100vh - 70px);
+            overflow-y: auto;
+        }
+        .docs-sidebar h3 { font-size: 0.9rem; text-transform: uppercase; color: #9ca3af; letter-spacing: 1px; margin-bottom: 15px; margin-top: 25px; }
+        .docs-sidebar h3:first-child { margin-top: 0; }
+        .docs-sidebar ul { list-style: none; padding: 0; margin: 0 0 30px 0; }
+        .docs-sidebar li { margin-bottom: 6px; }
+        .docs-sidebar a { text-decoration: none; color: var(--text-sub); font-weight: 500; transition: 0.2s; display: block; padding: 8px 12px; border-radius: 6px; cursor: pointer;}
+        .docs-sidebar a:hover, .docs-sidebar a.active { background: #eff6ff; color: var(--vantage-blue); }
+
+        .docs-content {
+            flex: 1;
+            padding: 40px 60px;
+            max-width: 850px;
+        }
+        .docs-content h1 { font-size: 2.2rem; margin-top: 0; margin-bottom: 20px; border-bottom: 2px solid var(--border); padding-bottom: 15px; }
+        .docs-content h2 { font-size: 1.5rem; margin-top: 40px; margin-bottom: 15px; color: var(--vantage-blue); }
+        .docs-content p { font-size: 1.05rem; color: var(--text-sub); margin-bottom: 20px; line-height: 1.7; }
+        .docs-content code { background: #f1f5f9; padding: 3px 6px; border-radius: 4px; font-family: Consolas, monospace; font-size: 0.9em; color: #d946ef; }
+        .docs-link { color: var(--vantage-blue); font-weight: bold; text-decoration: none; }
+        .docs-link:hover { text-decoration: underline; }
+
+        .step-block { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 24px; margin-bottom: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.02); }
+        .step-title { font-size: 1.1rem; font-weight: 600; margin: 0 0 12px 0; display: flex; align-items: center; gap: 10px; color: #111827; }
+        .step-number { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; background: var(--vantage-blue); color: white; border-radius: 50%; font-size: 0.85rem; }
+        .step-content p { margin: 0 0 16px 0; color: var(--text-sub); }
+        .highlight-code { background: #f1f5f9; padding: 2px 6px; border-radius: 4px; font-family: monospace; font-size: 0.9em; color: #0f172a; }
+        .download-btn { display: inline-block; background: #f3f4f6; color: #111827; border: 1px solid #d1d5db; padding: 8px 16px; border-radius: 6px; text-decoration: none; font-weight: 500; font-size: 0.95rem; margin-bottom: 16px; transition: 0.2s; }
+        .download-btn:hover { background: #e5e7eb; }
+        .tutorial-img { width: 100%; max-width: 600px; height: auto; border: 1px solid var(--border); border-radius: 6px; display: block; margin-top: 15px; background-color: #f9fafb; }
+        .reason-box { background-color: var(--warning-bg); border: 1px solid var(--warning-border); border-radius: 8px; padding: 24px; margin-top: 3rem; }
+        .reason-box h3 { margin: 0 0 12px 0; color: var(--warning-text); font-size: 1.2rem; display: flex; align-items: center; gap: 8px; }
+        .reason-box p { margin: 0 0 12px 0; color: var(--warning-text); font-size: 0.95rem; }
+
+        .loading-text { text-align: center; color: #9ca3af; margin-top: 50px; font-size: 1.1rem; }
+
+        footer { padding: 40px 20px; text-align: center; font-size: 0.85rem; color: #9ca3af; border-top: 1px solid var(--border); }
+
+        /* ————————————————
+           ★★★ 手机端全套适配同步 ★★★
+           ———————————————— */
+        @media (max-width: 768px) {
+            /* 1. 导航栏完全对标 vantage.html */
+            nav { flex-direction: column; gap: 15px; padding: 15px 20px; position: relative; }
+            .nav-left { flex-direction: column; gap: 15px; width: 100%; }
+            .nav-links { flex-wrap: wrap; justify-content: center; gap: 10px; width: 100%; }
+            .nav-links a { background: #f8fafc; padding: 5px 12px; border-radius: 4px; border: 1px solid #e2e8f0; font-size: 14px; }
+            .nav-links a.active { border-color: var(--vantage-blue); color: var(--vantage-blue); }
+            
+            /* 右上角 ASYS 标志控制 */
+            .asys-main-link { position: absolute; top: 26px; right: 20px; }
+            .asys-main-link img { height: 18px !important; }
+            
+            /* 2. 文档主体布局变为堆叠 */
+            .docs-layout { flex-direction: column; min-height: auto; }
+            
+            /* 侧边栏移到上方变成横向药丸按钮 */
+            .docs-sidebar { 
+                width: 100%; 
+                height: auto; 
+                position: static; 
+                padding: 20px 15px 5px; 
+                border-right: none; 
+                border-bottom: 1px solid var(--border); 
+            }
+            .docs-sidebar h3 { text-align: center; margin-top: 10px; margin-bottom: 10px; }
+            .docs-sidebar h3:first-child { margin-top: 0; }
+            .docs-sidebar ul { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 15px; }
+            .docs-sidebar li { margin-bottom: 0; }
+            .docs-sidebar a { background: #f3f4f6; border: 1px solid #e5e7eb; padding: 6px 12px; font-size: 13px; display: inline-block; }
+            
+            /* 文本区域适配 */
+            .docs-content { padding: 30px 15px; width: 100%; }
+            .docs-content h1 { font-size: 1.8rem; text-align: center; }
+            .docs-content h2 { font-size: 1.4rem; margin-top: 30px; }
+            .docs-content p { font-size: 1rem; }
+            .step-block { padding: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="nav-left">
+            <a href="vantage.html" class="nav-logo">
+                <img src="../img/icon.svg" alt="Vantage Logo">
+                <span>Vantage</span>
+            </a>
+            <div class="nav-links">
+                <a href="vantage.html">主页</a>
+                <a href="vdownload.html">下载</a>
+                <a href="docs.html" class="active">文档</a>
+            </div>
+        </div>
+        <a href="../index.html" class="asys-main-link" title="返回首页">
+            <img src="../img/asys.svg" alt="ASYS 科技">
+        </a>
+    </nav>
+
+    <div class="docs-layout">
+        <aside class="docs-sidebar" id="sidebar-container">
+            <div style="color: #9ca3af; font-size: 0.9rem;">加载目录中...</div>
+        </aside>
+
+        <main class="docs-content" id="main-content">
+            <div class="loading-text">正在加载文档内容，请稍候...</div>
+        </main>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 ASYS 科技 - Vantage 浏览器项目</p>
+    </footer>
+
+    <script>
+        const sidebarContainer = document.getElementById('sidebar-container');
+        const mainContent = document.getElementById('main-content');
+        let docsConfig = []; 
+
+        // 跨级读取 ../vdocs/ 目录下的 json
+        fetch('../vdocs/docs-config.json')
+            .then(response => response.json())
+            .then(data => {
+                docsConfig = data.categories;
+                renderSidebar();
+                loadDocFromHash(); 
+            })
+            .catch(err => {
+                sidebarContainer.innerHTML = '<p style="color:red;">配置读取失败</p>';
+                mainContent.innerHTML = '<div class="loading-text" style="color:red;">❌ 无法读取文档列表，请检查 ../vdocs/docs-config.json 路径及文件是否存在。</div>';
+            });
+
+        function renderSidebar() {
+            let html = '';
+            docsConfig.forEach(category => {
+                html += `<h3>${category.title}</h3><ul>`;
+                category.items.forEach(item => {
+                    html += `<li><a onclick="loadDoc('${item.id}', '${item.file}')" id="link-${item.id}">${item.title}</a></li>`;
+                });
+                html += `</ul>`;
+            });
+            sidebarContainer.innerHTML = html;
+        }
+
+        function loadDoc(id, filePath) {
+            document.querySelectorAll('.docs-sidebar a').forEach(a => a.classList.remove('active'));
+            const activeLink = document.getElementById(`link-${id}`);
+            if (activeLink) activeLink.classList.add('active');
+
+            window.history.pushState(null, null, `#${id}`);
+
+            mainContent.innerHTML = '<div class="loading-text">加载中...</div>';
+
+            fetch(filePath)
+                .then(response => {
+                    if (!response.ok) throw new Error('找不到文件');
+                    return response.text();
+                })
+                .then(html => {
+                    mainContent.innerHTML = html;
+                    window.scrollTo(0, 0); 
+                })
+                .catch(err => {
+                    mainContent.innerHTML = `<div class="loading-text" style="color:red;">❌ 无法加载文档内容。请确保 <strong>${filePath}</strong> 文件存在。</div>`;
+                });
+        }
+
+        function loadDocFromHash() {
+            const hash = window.location.hash.replace('#', '');
+            let targetItem = null;
+
+            if (hash) {
+                docsConfig.forEach(cat => {
+                    const found = cat.items.find(item => item.id === hash);
+                    if (found) targetItem = found;
+                });
+            }
+
+            if (!targetItem) {
+                targetItem = docsConfig[0].items[0];
+            }
+
+            loadDoc(targetItem.id, targetItem.file);
+        }
+
+        window.addEventListener('popstate', loadDocFromHash);
+    </script>
+
+</body>
+</html>

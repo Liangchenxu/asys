@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>教程中心 - 赛思科技 工作室</title>
+    <link rel="icon" href="../img/ASYS-3.png" type="image/png">
+    <style>
+        /* --- 基础样式 --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+
+        /* ★★★ 核心修复1：强制始终显示滚动条轨道，锁死页面宽度，防止抖动 ★★★ */
+        html {
+            overflow-y: scroll; /* 无论内容多少，永远显示滚动条轨道 */
+            scrollbar-gutter: stable; /* 现代浏览器专用：预留滚动条空间 */
+        }
+        
+        body {
+            background: #f8fafc;
+            color: #1e293b;
+            line-height: 1.6;
+            min-height: 100vh; /* 确保页面至少占满一屏 */
+        }
+        
+        /* ★★★ 核心修复2：宽度锁定 1200px ★★★ */
+        .container {
+            width: 90%;
+            max-width: 1200px; 
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background: white;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid #e2e8f0;
+            width: 100%;
+        }
+        
+        nav {
+            display: flex;
+            align-items: center;
+            padding: 15px 0;
+            width: 100%;
+        }
+        
+        /* ★★★ 修改点：增加去下划线样式 ★★★ */
+        .logo { 
+            display: flex; 
+            align-items: center; 
+            gap: 10px; 
+            text-decoration: none; 
+            color: inherit; 
+        }
+        .logo img { height: 40px; }
+        .logo h1 { font-size: 1.3rem; font-weight: 700; color: #0f172a; }
+        
+        /* ★★★ 核心修复3：强制菜单靠右 ★★★ */
+        .nav-links {
+            display: flex;
+            gap: 25px;
+            margin-left: auto; /* 强制挤到最右边 */
+        }
+        
+        .nav-links a {
+            color: #475569;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+        
+        .nav-links a:hover, .nav-links a.active {
+            color: #4f46e5;
+        }
+        
+        .nav-links a.active::after { 
+            content: ''; 
+            position: absolute; 
+            bottom: -5px; 
+            left: 0; 
+            width: 100%; 
+            height: 2px; 
+            background-color: #4f46e5; 
+        }
+        
+        /* --- 页面主体 --- */
+        section { padding: 60px 0; }
+        
+        .hero-section {
+            background: linear-gradient(135deg, #f0f5ff 0%, #e0e7ff 100%);
+            text-align: center;
+            padding: 60px 0;
+        }
+        
+        .tutorial-layout {
+            display: flex;
+            gap: 40px;
+            margin-top: 40px;
+        }
+        
+        /* 左侧侧边栏 */
+        .tutorial-sidebar {
+            width: 280px;
+            flex-shrink: 0;
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+        
+        .tutorial-sidebar h3 {
+            margin-bottom: 20px;
+            color: #0f172a;
+            font-size: 1.2rem;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        
+        .toc-list { list-style: none; }
+        .toc-item { margin-bottom: 10px; }
+        
+        .toc-link {
+            color: #475569;
+            text-decoration: none;
+            display: block;
+            padding: 8px 12px;
+            border-radius: 6px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .toc-link:hover { background: #f1f5f9; color: #4f46e5; }
+        .toc-link.active { background: #4f46e5; color: white; }
+        
+        /* 右侧内容 */
+        .tutorial-content {
+            flex: 1;
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            min-height: 500px;
+        }
+        
+        /* 嵌入内容样式 */
+        .embedded-content img { max-width: 100%; height: auto; border-radius: 8px; margin: 20px 0; }
+        .embedded-content h1 { font-size: 2.2rem; margin-bottom: 20px; color: #0f172a; border-bottom: 2px solid #e2e8f0; padding-bottom: 15px; }
+        .embedded-content h2 { font-size: 1.8rem; margin: 40px 0 20px 0; color: #0f172a; padding-bottom: 10px; border-bottom: 1px solid #e2e8f0; }
+        .embedded-content h3 { font-size: 1.4rem; margin: 30px 0 15px 0; color: #0f172a; }
+        .embedded-content p { margin-bottom: 15px; }
+        .embedded-content pre { background: #1e293b; color: #fff; padding: 15px; border-radius: 8px; overflow-x: auto; margin: 20px 0; }
+        .embedded-content code { background: #f1f5f9; padding: 2px 6px; border-radius: 4px; font-family: monospace; }
+        .embedded-content ul, .embedded-content ol { padding-left: 20px; margin: 20px 0; }
+        
+        /* 加载状态 */
+        .content-placeholder { text-align: center; color: #94a3b8; padding: 100px 0; }
+        .content-placeholder .icon { font-size: 3rem; margin-bottom: 15px; }
+        .loading { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px; }
+        .loading-spinner { width: 40px; height: 40px; border: 4px solid #e2e8f0; border-top: 4px solid #4f46e5; border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 15px; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        
+        footer {
+            background: #f1f5f9;
+            padding: 40px 0;
+            text-align: center;
+            border-top: 1px solid #e2e8f0;
+            color: #64748b;
+        }
+        
+        /* 手机适配 */
+        @media (max-width: 768px) {
+            .container { width: 95%; padding: 0 15px; }
+            nav { flex-direction: column; gap: 15px; }
+            .nav-links { width: 100%; justify-content: center; margin-left: 0; flex-wrap: wrap; gap: 10px; }
+            .nav-links a { font-size: 0.9rem; padding: 5px 10px; }
+            .nav-links a.active::after { display: none; }
+            
+            .tutorial-layout { flex-direction: column; }
+            .tutorial-sidebar { width: 100%; position: static; margin-bottom: 20px; }
+            .tutorial-content { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <a href="index.html" class="logo">
+                    <img src="../img/ASYS-3.png" alt="赛思科技 Logo">
+                    <h1>赛思科技</h1>
+                </a>
+                
+                <div class="nav-links">
+                    <a href="index.html">首页</a>
+                    <a href="service-guide.html">自助服务</a>
+                    <a href="products.html">产品</a>
+                    <a href="tutorials.html" class="active">教程</a>
+                    <a href="vantage.html">Vantage浏览器</a>
+                    <a href="about.html">关于 & 联系</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero-section">
+        <div class="container">
+            <h1 style="font-size: 2.5rem; margin-bottom: 15px; color: #0f172a;">教程中心</h1>
+            <p style="font-size: 1.1rem; color: #475569; max-width: 600px; margin: 0 auto;">
+                学习系统安装、驱动配置和各种技术教程，提升您的技术能力。
+            </p>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="tutorial-layout">
+                <aside class="tutorial-sidebar">
+                    <h3>教程目录</h3>
+                    <div id="sidebar-loading" class="loading">
+                        <div class="loading-spinner"></div>
+                        <p>正在加载目录...</p>
+                    </div>
+                    <ul class="toc-list" id="tutorial-list" style="display: none;"></ul>
+                    <div id="sidebar-error" style="display: none; text-align: center; color: #ef4444;"><p>❌ 无法加载目录</p></div>
+                </aside>
+                
+                <main class="tutorial-content">
+                    <div class="content-placeholder" id="content-placeholder">
+                        <div class="icon">📚</div>
+                        <h3>选择教程</h3>
+                        <p>点击左侧目录中的教程标题开始阅读</p>
+                    </div>
+                    <div id="tutorial-content" class="embedded-content" style="display: none;"></div>
+                    <div id="content-loading" class="loading" style="display: none;">
+                        <div class="loading-spinner"></div>
+                        <p>正在加载内容...</p>
+                    </div>
+                    <div id="content-error" class="content-placeholder" style="display: none;">
+                        <div class="icon">❌</div>
+                        <h3>加载失败</h3>
+                        <p>无法加载教程内容，请稍后重试</p>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>© 2026 赛思科技. 保留所有权利。</p>
+        </div>
+    </footer>
+
+    <script>
+        const TUTORIALS_LIST_URL = `https://asystech.cn/jc/tutorials-list.json`;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            loadTutorialsList();
+        });
+
+        function loadTutorialsList() {
+            fetch(TUTORIALS_LIST_URL)
+                .then(response => response.ok ? response.json() : Promise.reject(response.status))
+                .then(tutorials => {
+                    document.getElementById('sidebar-loading').style.display = 'none';
+                    generateTutorialsList(tutorials);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById('sidebar-loading').style.display = 'none';
+                    document.getElementById('sidebar-error').style.display = 'block';
+                });
+        }
+
+        function generateTutorialsList(tutorials) {
+            const tutorialList = document.getElementById('tutorial-list');
+            tutorialList.innerHTML = '';
+            
+            tutorials.forEach(tutorial => {
+                const listItem = document.createElement('li');
+                listItem.className = 'toc-item';
+                const link = document.createElement('a');
+                link.className = 'toc-link';
+                link.textContent = tutorial.title;
+                link.onclick = (e) => {
+                    e.preventDefault();
+                    document.querySelectorAll('.toc-link').forEach(l => l.classList.remove('active'));
+                    link.classList.add('active');
+                    loadTutorialContent(tutorial.filePath);
+                    
+                    if (window.innerWidth <= 768) {
+                        document.querySelector('.tutorial-content').scrollIntoView({behavior: 'smooth'});
+                    }
+                };
+                listItem.appendChild(link);
+                tutorialList.appendChild(listItem);
+            });
+            tutorialList.style.display = 'block';
+            
+            if (tutorials.length > 0) {
+                tutorialList.querySelector('.toc-link').click();
+            }
+        }
+
+        function loadTutorialContent(filePath) {
+            document.getElementById('content-placeholder').style.display = 'none';
+            document.getElementById('tutorial-content').style.display = 'none';
+            document.getElementById('content-error').style.display = 'none';
+            document.getElementById('content-loading').style.display = 'flex';
+            
+            fetch(filePath)
+                .then(response => response.ok ? response.text() : Promise.reject(response.status))
+                .then(htmlContent => {
+                    document.getElementById('content-loading').style.display = 'none';
+                    const container = document.getElementById('tutorial-content');
+                    container.innerHTML = htmlContent;
+                    container.style.display = 'block';
+                    
+                    container.querySelectorAll('img').forEach(img => {
+                        if (!img.style.width) { img.style.maxWidth = '100%'; img.style.height = 'auto'; }
+                    });
+                })
+                .catch(error => {
+                    document.getElementById('content-loading').style.display = 'none';
+                    document.getElementById('content-error').style.display = 'flex';
+                });
+        }
+    </script>
+</body>
+</html>
