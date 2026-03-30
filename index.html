@@ -2,74 +2,13 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>正在进入赛思科技...</title>
-    <link rel="icon" href="../img/ASYS-3.png" type="image/png">
-    
-    <style>
-        /* --- 极简 CSS 动画样式 (资源占用几乎为0) --- */
-        body {
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-            background-color: #f8fafc; /* 淡蓝灰色背景，护眼 */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-        }
-
-        .loader-container {
-            text-align: center;
-        }
-
-        /* 动画圆环 */
-        .spinner {
-            width: 50px;
-            height: 50px;
-            margin: 0 auto 20px;
-            border: 4px solid #e2e8f0;       /* 浅色底环 */
-            border-top: 4px solid #4f46e5;   /* 深色动环 */
-            border-radius: 50%;
-            animation: spin 1s linear infinite; /* 旋转动画 */
-        }
-
-        /* 文字呼吸效果 */
-        .loading-text {
-            color: #64748b;
-            font-size: 16px;
-            font-weight: 500;
-            letter-spacing: 1px;
-            animation: pulse 1.5s ease-in-out infinite; /* 呼吸动画 */
-        }
-
-        /* 动画关键帧定义 */
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 0.6; }
-            50% { opacity: 1; }
-        }
-    </style>
-
+    <title>正在跳转...</title>
     <script>
-        // --- 跳转逻辑 ---
-        // 这里的 800 代表 800毫秒 (0.8秒)
-        // 稍微停顿一下是为了让用户能看到那个精美的动画，显得网站很有质感
-        // 如果想更快，可以把 800 改成 100，或者 0
-        setTimeout(function() {
-            // 跳转到您的主页 (假设您的主页在 pc 文件夹里)
-            window.location.replace("pc/index.html");
-        }, 800);
+        // 使用 replace 而不是 href，这样用户按浏览器的“返回”键时不会卡死在跳转页
+        // 这里已经改成了绝对路径，直接跨目录跳转到 pc 文件夹下的小写页面
+        window.location.replace("./pc/index.html");
     </script>
 </head>
 <body>
-    <div class="loader-container">
-        <div class="spinner"></div>
-        <div class="loading-text">正在进入赛思科技官网...</div>
-    </div>
 </body>
 </html>

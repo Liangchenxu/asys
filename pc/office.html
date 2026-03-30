@@ -156,7 +156,9 @@
                         <button class="filter-btn" data-filter="2021">Office 2021</button>
                         <button class="filter-btn" data-filter="2019">Office 2019</button>
                         <button class="filter-btn" data-filter="2016">Office 2016</button>
-                        <button class="filter-btn" data-filter="mac">Mac 专属版</button>
+						<button class="filter-btn" data-filter="2013">Office 2013</button>
+						<button class="filter-btn" data-filter="2010">Office 2010</button>
+                        <button class="filter-btn" data-filter="mac">Office for Mac</button>
                     </div>
                 </div>
 
@@ -184,11 +186,20 @@
         // ★★★ 核心修改：全部替换为正确的 Mac 系统分类，并更新了 Logo 路径 ★★★
         const officeData = [
             {
-                title: "Microsoft 365 (Windows)",
-                desc: "包含 Word, Excel, PowerPoint 等最新版组件。按订阅持续更新（原 Office 365）。",
+                title: "Microsoft 365 商业版(Windows)",
+                desc: "适用于企业，包含 Word, Excel, PowerPoint 等最新版组件。按订阅持续更新（原 Office 365）。",
                 category: "m365",
-                iconImg: "../img/windows11.png", // 读取同一目录下的 windows11.png
+                iconImg: "../img/copilot.png", // 读取同一目录下的 windows11.png
                 downloadUrl: "https://officecdn.microsoft.com/db/492350f6-3a01-4f97-b9c0-c7c6ddf67d60/media/zh-cn/O365ProPlusRetail.img",
+                tutorialUrl: "",
+                keywords: ["m365", "365", "windows", "最新"]
+            },
+            {
+                title: "Microsoft 365 家庭/个人版(Windows)",
+                desc: "适用于家庭和个人包含 Word, Excel, PowerPoint 等最新版组件。按订阅持续更新（原 Office 365）。",
+                category: "m365",
+                iconImg: "../img/copilot.png", // 读取同一目录下的 windows11.png
+                downloadUrl: "https://officecdn.microsoft.com/db/492350f6-3a01-4f97-b9c0-c7c6ddf67d60/media/zh-cn/O365HomePremRetail.img",
                 tutorialUrl: "",
                 keywords: ["m365", "365", "windows", "最新"]
             },
@@ -196,37 +207,55 @@
                 title: "Office 2024 专业增强版 (Windows)",
                 desc: "最新的买断制版本，Office 2024 Professional Plus 官方原版安装包（包含 Retail/Volume 版）。",
                 category: "2024",
-                iconImg: "../img/windows11.png",
+                iconImg: "../img/365.png",
                 downloadUrl: "https://officecdn.microsoft.com/db/492350f6-3a01-4f97-b9c0-c7c6ddf67d60/media/zh-cn/ProPlus2024Retail.img",
                 tutorialUrl: "",
                 keywords: ["2024", "pro plus", "windows", "专业版"]
             },
             {
                 title: "Office 2021 专业增强版 (Windows)",
-                desc: "Office 2021 Professional Plus 官方原版安装包，兼顾新功能与稳定性，适合日常办公。",
+                desc: "Office 2021 Professional Plus 官方原版安装包。",
                 category: "2021",
-                iconImg: "../img/windows11.png",
+                iconImg: "../img/o19.png",
                 downloadUrl: "https://officecdn.microsoft.com/db/492350f6-3a01-4f97-b9c0-c7c6ddf67d60/media/zh-cn/ProPlus2021Retail.img",
                 tutorialUrl: "",
                 keywords: ["2021", "pro plus", "windows", "专业版"]
             },
             {
                 title: "Office 2019 专业增强版 (Windows)",
-                desc: "Office 2019 Professional Plus 官方原版安装包，经典稳定版本。",
+                desc: "Office 2019 Professional Plus 官方原版安装包。已经停止支持，建议切换到Office 2021或者Office 2024。",
                 category: "2019",
-                iconImg: "../img/windows11.png",
+                iconImg: "../img/o19.png",
                 downloadUrl: "https://officecdn.microsoft.com/db/492350f6-3a01-4f97-b9c0-c7c6ddf67d60/media/zh-cn/ProPlus2019Retail.img",
                 tutorialUrl: "",
                 keywords: ["2019", "pro plus", "windows", "专业版"]
             },
             {
                 title: "Office 2016 专业增强版 (Windows)",
-                desc: "Office 2016 Professional Plus 官方原版安装包，适合较老的电脑配置，流畅不卡顿。",
+                desc: "Office 2016 Professional Plus 官方原版安装包，也是最后一个支持Windows 7/8/8.1的版本，同时也是最后一个支持MSI安装程序，可以自定义安装位置的版本。已停止支持。",
                 category: "2016",
-                iconImg: "../img/windows11.png",
+                iconImg: "../img/o16.png",
                 downloadUrl: "https://officecdn.microsoft.com/db/492350f6-3a01-4f97-b9c0-c7c6ddf67d60/media/zh-cn/ProPlusRetail.img",
                 tutorialUrl: "",
                 keywords: ["2016", "pro plus", "windows", "专业版", "老电脑"]
+            },
+            {
+                title: "Office 2013 专业版 (Windows)",
+                desc: "Office 2013 Professional 官方原版安装包。已停止支持。",
+                category: "2013",
+                iconImg: "../img/o16.png",
+                downloadUrl: "https://officecdn.microsoft.com/db/39168d7e-077b-48e7-872c-b232c3e72675/media/zh-cn/ProfessionalRetail.img",
+                tutorialUrl: "",
+                keywords: ["2013", "pro plus", "windows", "专业版", "老电脑"]
+            },
+            {
+                title: "Office 2010 专业增强版 (Windows)",
+                desc: "Office 2010 Professional Plus 官方原版安装包，同时也是最后一个支持Windows XP和Windows Vista的版本。已停止支持。此处仅提供32位(x86)版本下载。",
+                category: "2010",
+                iconImg: "../img/o10.png",
+                downloadUrl: "https://buzzheavier.com/qgas55t4r8jy",
+                tutorialUrl: "",
+                keywords: ["2013", "pro plus", "windows", "专业版", "老电脑","xp"]
             },
 
             // ================= MAC 版本分类 =================

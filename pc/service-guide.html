@@ -68,6 +68,12 @@
             margin-bottom: 25px;
             transition: all 0.3s;
         }
+		.cat-icon img {
+			width: 70% !important;      /* 强制占满父容器宽度 */
+			height: 70% !important;     /* 强制占满父容器高度 */
+			object-fit: contain !important; /* 保持图片比例，不拉伸 */
+			display: block;
+}
 
         .category-card:hover .cat-icon { background: #4f46e5; color: white; transform: scale(1.1); }
         .cat-title { font-size: 1.35rem; font-weight: 700; color: #0f172a; margin-bottom: 15px; }
@@ -119,8 +125,10 @@
     <div class="container">
         <div class="category-grid">
             <a href="system-download.html" class="category-card">
-                <div class="cat-icon">💿</div>
-                <h3 class="cat-title">系统镜像下载</h3>
+                <div class="cat-icon">
+				<img src="../img/windows11s.png" alt="Windows镜像下载">
+				</div>
+                <h3 class="cat-title">Windows 系统镜像下载</h3>
                 <p class="cat-desc">提供 Windows 10/11 官方原版镜像，纯净无毒，安全稳定，支持高速下载。</p>
             </a>
 
@@ -137,8 +145,10 @@
             </a>
             
             <a href="office.html" class="category-card">
-                <div class="cat-icon">📄</div>
-                <h3 class="cat-title">Office程序下载</h3>
+                <div class="cat-icon">
+					<img src="../img/o19.png" alt="Office 程序下载">
+				</div>
+                <h3 class="cat-title">Office官方原版软件下载</h3>
                 <p class="cat-desc">提供 Microsoft Office 官方原版安装包，满足日常办公与文档处理需求。</p>
             </a>
         </div>
