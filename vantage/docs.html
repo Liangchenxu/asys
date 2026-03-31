@@ -100,25 +100,18 @@
 
         footer { padding: 40px 20px; text-align: center; font-size: 0.85rem; color: #9ca3af; border-top: 1px solid var(--border); }
 
-        /* ————————————————
-           ★★★ 手机端全套适配同步 ★★★
-           ———————————————— */
         @media (max-width: 768px) {
-            /* 1. 导航栏完全对标 vantage.html */
             nav { flex-direction: column; gap: 15px; padding: 15px 20px; position: relative; }
             .nav-left { flex-direction: column; gap: 15px; width: 100%; }
             .nav-links { flex-wrap: wrap; justify-content: center; gap: 10px; width: 100%; }
             .nav-links a { background: #f8fafc; padding: 5px 12px; border-radius: 4px; border: 1px solid #e2e8f0; font-size: 14px; }
             .nav-links a.active { border-color: var(--vantage-blue); color: var(--vantage-blue); }
             
-            /* 右上角 ASYS 标志控制 */
             .asys-main-link { position: absolute; top: 26px; right: 20px; }
             .asys-main-link img { height: 18px !important; }
             
-            /* 2. 文档主体布局变为堆叠 */
             .docs-layout { flex-direction: column; min-height: auto; }
             
-            /* 侧边栏移到上方变成横向药丸按钮 */
             .docs-sidebar { 
                 width: 100%; 
                 height: auto; 
@@ -133,7 +126,6 @@
             .docs-sidebar li { margin-bottom: 0; }
             .docs-sidebar a { background: #f3f4f6; border: 1px solid #e5e7eb; padding: 6px 12px; font-size: 13px; display: inline-block; }
             
-            /* 文本区域适配 */
             .docs-content { padding: 30px 15px; width: 100%; }
             .docs-content h1 { font-size: 1.8rem; text-align: center; }
             .docs-content h2 { font-size: 1.4rem; margin-top: 30px; }
@@ -222,6 +214,10 @@
                 .then(html => {
                     mainContent.innerHTML = html;
                     window.scrollTo(0, 0); 
+                    
+                    if (id === 'changelog') {
+                        renderChangelogFromJson();
+                    }
                 })
                 .catch(err => {
                     mainContent.innerHTML = `<div class="loading-text" style="color:red;">❌ 无法加载文档内容。请确保 <strong>${filePath}</strong> 文件存在。</div>`;
@@ -244,6 +240,54 @@
             }
 
             loadDoc(targetItem.id, targetItem.file);
+        }
+
+        function renderChangelogFromJson() {
+            fetch('../vdocs/changelog.json')
+                .then(res => res.json())
+                .then(data => {
+                    let html = '';
+                    data.forEach(ver => {
+                        let badge = ver.isLatest ? `<span style="font-size: 0.8rem; background: #dbeafe; color: var(--vantage-blue); padding: 3px 8px; border-radius: 12px; font-weight: normal;">最新版本</span>` : '';
+                        
+                        let featuresHtml = '';
+                        if (ver.features && ver.features.length > 0) {
+                            featuresHtml += `<p><strong>✨ ${ver.featuresTitle || '更新内容：'}</strong></p><ul>`;
+                            ver.features.forEach(f => { featuresHtml += `<li>${f}</li>`; });
+                            featuresHtml += `</ul>`;
+                        }
+
+                        let descHtml = ver.desc ? `<p style="color: var(--text-sub); margin-bottom: 20px;">${ver.desc}</p>` : '';
+
+                        let issuesHtml = '';
+                        if (ver.issues && ver.issues.length > 0) {
+                            issuesHtml += `<p><strong>⚠️ 已知问题 - ${ver.issueTitle}：</strong></p><ul>`;
+                            ver.issues.forEach(i => { issuesHtml += `<li>${i}</li>`; });
+                            issuesHtml += `</ul>`;
+                        }
+
+                        html += `
+                        <div class="step-block">
+                            <h2 style="margin-top: 0; color: #111827; font-size: 1.4rem; display: flex; align-items: center; gap: 10px;">
+                                ${ver.version} ${badge}
+                            </h2>
+                            <div class="step-content">
+                                ${featuresHtml}
+                                ${descHtml}
+                                ${issuesHtml}
+                                <div style="margin-top: 25px;">
+                                    <a href="${ver.link}" target="_blank" class="docs-link">🔗 在 GitHub 查看完整 Release 页面</a>
+                                </div>
+                            </div>
+                        </div>`;
+                    });
+                    const container = document.getElementById('changelog-container');
+                    if(container) container.innerHTML = html;
+                })
+                .catch(err => {
+                    const container = document.getElementById('changelog-container');
+                    if(container) container.innerHTML = '<p style="color:red;">日志数据拉取失败，请检查 changelog.json 文件路径是否正确。</p>';
+                });
         }
 
         window.addEventListener('popstate', loadDocFromHash);

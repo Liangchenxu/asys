@@ -13,6 +13,11 @@
           "id": "ublock-tutorial",
           "title": "uBlock 扩展安装指南",
           "file": "../vdocs/ublock-tutorial.html"
+        },
+        {
+          "id": "changelog",
+          "title": "更新日志",
+          "file": "../vdocs/changelog.html"
         }
       ]
     }

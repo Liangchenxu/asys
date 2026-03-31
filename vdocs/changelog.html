@@ -1,0 +1,82 @@
+<h1>更新日志 (Changelog)</h1>
+<p>在这里，您可以查看 Vantage 浏览器的所有版本更新历史，了解我们最新的改进与修复。</p>
+<hr style="border: none; border-top: 1px dashed var(--border); margin: 30px 0;">
+
+<div class="step-block">
+    <h2 style="margin-top: 0; color: #111827; font-size: 1.4rem; display: flex; align-items: center; gap: 10px;">
+        v149.0-1
+        <span style="font-size: 0.8rem; background: #dbeafe; color: var(--vantage-blue); padding: 3px 8px; border-radius: 12px; font-weight: normal;">最新版本</span>
+    </h2>
+    <div class="step-content">
+        
+        <p><strong>✨ 更新内容：</strong></p>
+        <ul>
+            <li>合并上游补丁，更新版本号到 149.0</li>
+            <li>修复增强型跟踪保护的 bug，现在将会默认启用严格保护，并修复严重网站问题</li>
+            <li>现在开始默认启用 DRM 以兼容一些视频网站</li>
+            <li>调节了一些其他配置，增强了易用性</li>
+            <li>中国大陆用户现在应该无需额外下载 uBlock Origin 插件了，插件将会自动安装到浏览器中</li>
+        </ul>
+
+        <p><strong>⚠️ 已知问题 - 部分文字显示异常，显示为英文或者繁体中文：</strong></p>
+        <ul>
+            <li>此问题由 Librewolf 上游引起，根源是 Librewolf 为一些功能添加了一些新的文本说明，但是尚未给这些文本说明准备好简体中文版本，我们正在尝试翻译和测试，如果一切顺利，我们会尽快向 Librewolf 提 PR</li>
+        </ul>
+
+        <div style="margin-top: 25px;">
+            <a href="https://github.com/asystech-chen/Vantage/releases/tag/v149.0-1" target="_blank" class="docs-link">🔗 在 GitHub 查看完整 Release 页面</a>
+        </div>
+    </div>
+</div>
+
+<div class="step-block">
+    <h2 style="margin-top: 0; color: #111827; font-size: 1.4rem; display: flex; align-items: center; gap: 10px;">
+        v148.0.2-2
+    </h2>
+    <div class="step-content">
+        
+        <p><strong>✨ 更新日志：</strong></p>
+        <ul>
+            <li>合并上游补丁</li>
+            <li>增加更新检查功能，由用户自己决定是否更新</li>
+        </ul>
+
+        <p><strong>⚠️ 已知问题 - 广告拦截插件丢失：</strong></p>
+        <ul>
+            <li>Ublock Origin广告拦截在中国大陆地区可能未能自动下载到浏览器中，此问题源自Mozilla不被中国的广告商允许向中国大陆提供此类广告拦截插件，因此无法解决。</li>
+            <li>在中国大陆的用户需要手动下载，前往 <a href="https://github.com/gorhill/uBlock/releases" target="_blank" class="docs-link">Ublock Origin的仓库</a> 下载正式版的XPI文件然后拖到浏览器里面就可以安装了（文件末尾带有 <code>signed</code> 的标记的就是正式版）。<br>
+            关于这个问题，可以在<a href="#" class="docs-link">这里</a>查看到相关信息</li>
+        </ul>
+
+        <div style="margin-top: 25px;">
+            <a href="https://github.com/asystech-chen/Vantage/releases/tag/v148.0.2-2" target="_blank" class="docs-link">🔗 在 GitHub 查看完整 Release 页面</a>
+        </div>
+    </div>
+</div>
+
+<div class="step-block">
+    <h2 style="margin-top: 0; color: #111827; font-size: 1.4rem; display: flex; align-items: center; gap: 10px;">
+        148.0-1
+    </h2>
+    <div class="step-content">
+        
+        <p><strong>✨ 第一个正式release，感谢大家的支持（点个star吧）</strong></p>
+        <p style="color: var(--text-sub); margin-bottom: 20px;">
+            任何bug反馈或者新的需求和建议都可以提Issue或者PR<br>
+            现在支持：Windows和Linux<br>
+            不做macOS主要是手里没有macOS系统可以拿来测试<br>
+            真的不是歧视macOS！真的！
+        </p>
+
+        <p><strong>⚠️ 已知问题 - 广告拦截插件丢失：</strong></p>
+        <ul>
+            <li>Ublock Origin广告拦截在中国大陆地区可能未能自动下载到浏览器中，此问题源自Mozilla不被中国的广告商允许向中国大陆提供此类广告拦截插件，因此无法解决。</li>
+            <li>在中国大陆的用户需要手动下载，前往 <a href="https://github.com/gorhill/uBlock/releases" target="_blank" class="docs-link">Ublock Origin的仓库</a> 下载正式版的XPI文件然后拖到浏览器里面就可以安装了（文件末尾带有 <code>signed</code> 的标记的就是正式版）。<br>
+            关于这个问题，可以在<a href="#" class="docs-link">这里</a>查看到相关信息</li>
+        </ul>
+
+        <div style="margin-top: 25px;">
+            <a href="https://github.com/asystech-chen/Vantage/releases/tag/v148.0-1" target="_blank" class="docs-link">🔗 在 GitHub 查看完整 Release 页面</a>
+        </div>
+    </div>
+</div>
