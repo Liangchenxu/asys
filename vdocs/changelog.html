@@ -4,8 +4,47 @@
 
 <div class="step-block">
     <h2 style="margin-top: 0; color: #111827; font-size: 1.4rem; display: flex; align-items: center; gap: 10px;">
-        v149.0-1
+        v149.0.-2
         <span style="font-size: 0.8rem; background: #dbeafe; color: var(--vantage-blue); padding: 3px 8px; border-radius: 12px; font-weight: normal;">最新版本</span>
+    </h2>
+    <div class="step-content">
+        
+        <p><strong style="color: #d97706; font-size: 1.1rem;">🚨 重要更新，请所有vantage旧版用户尽快升级！</strong></p>
+
+        <p><strong>✨ 更新日志：</strong></p>
+        <ul>
+            <li>补全 WebGL 权限相关翻译。</li>
+            <li>将 Vantage 的配置文件夹迁移，不再和 Librewolf 共享目录。</li>
+            <li>现在开始的一段时间内，Windows版安装程序将会集成配置文件迁移功能。</li>
+            <li>添加了默认浏览器检测，现在可以在浏览器设置里面查看当前是否是默认浏览器了。</li>
+            <li>修复设置中的配置项说明链接，现在这些配置项指向 Mozilla 的页面。</li>
+            <li>修复 Windows 主题加载问题。</li>
+            <li>繁体中文已经重新启用并可用。</li>
+            <li>重新配置更新检查，后台每 24 小时检查一次更新，支持忽略特定版本，检查到更新后将提醒。</li>
+            <li>设置面板新增“更新”区块 —— 可手动启用/禁用更新检查，“关于”页面的手动检查更新依然保留。</li>
+            <li>移除打包目标对 package 的冗余依赖，加速重复打包流程。</li>
+        </ul>
+
+        <p><strong>⚠️ 已知问题：</strong></p>
+        <ul>
+            <li>NSIS 安装器语言 —— 强制中文的 patch 未生效，安装器界面仍为英文。</li>
+            <li>卸载残留 —— 卸载器保留用户 profile 目录（Firefox 行业惯例）如果使用geek卸载，则可以彻底清除。</li>
+            <li>设置中依然有少量文本为繁体中文。</li>
+        </ul>
+
+        <p style="color: var(--text-sub); margin-bottom: 20px;">
+            任何bug反馈或者新的需求和建议都可以提Issue或者PR
+        </p>
+
+        <div style="margin-top: 25px;">
+            <a href="https://github.com/asystech-chen/Vantage/releases/tag/v149.0.-2" target="_blank" class="docs-link">🔗 在 GitHub 查看完整 Release 页面</a>
+        </div>
+    </div>
+</div>
+
+<div class="step-block">
+    <h2 style="margin-top: 0; color: #111827; font-size: 1.4rem; display: flex; align-items: center; gap: 10px;">
+        v149.0-1
     </h2>
     <div class="step-content">
         
