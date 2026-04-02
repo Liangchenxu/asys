@@ -1,22 +1,238 @@
-<h1>欢迎查阅 Vantage 文档</h1>
-<p>Vantage 是一款致力于为您提供绝对隐私、安全和纯净浏览体验的定制版浏览器。本页面包含了详细的配置指南和常见问题解答。</p>
+<h1>Vantage 浏览器</h1>
+<p style="font-size: 1.2rem; color: var(--vantage-blue); font-weight: 600; margin-top: -10px;">隐私 · 快速 · 易用</p>
 
-<h2>为什么选择 Vantage？</h2>
-<p>市面上的许多浏览器在后台收集了大量的用户行为数据（遥测）。Vantage 在源码层面剔除了这些跟踪模块，并默认开启了最高级别的反追踪与广告拦截策略。</p>
+<p style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 30px;">
+    <a href="../vantage/vdownload.html" target="_blank"><img src="https://img.shields.io/badge/下载-最新版-blue?style=for-the-badge" alt="Download"></a>
+    <a href="https://github.com/asystech-chen/Vantage/blob/main/LICENSE" target="_blank"><img src="https://img.shields.io/badge/许可证-MPL--2.0-green?style=for-the-badge" alt="License"></a>
+    <a href="https://github.com/asystech-chen/Vantage" target="_blank"><img src="https://img.shields.io/badge/GitHub-源码-181717?style=for-the-badge&logo=github" alt="GitHub"></a>
+</p>
 
-<h2>跨端同步指南</h2>
-<p>要在多台设备之间同步您的书签和密码：</p>
-<p>1. 打开浏览器右上角的菜单，选择 <code>设置</code>。<br>
-   2. 点击左侧的 <code>同步</code> 选项卡。<br>
-   3. 登录您的 Mozilla 账号即可无缝同步配置。</p>
+<h2 id="screenshot">软件截图</h2>
+<img src="../_resources/10LTSC-2026-03-14-14-34-51.png" alt="Vantage 软件截图" class="tutorial-img" onerror="this.style.display='none'">
 
-<h2>参与贡献</h2>
-<p>如果您发现了 Bug，或者希望为 Vantage 编写新的功能，欢迎前往我们的 <a href="https://github.com/asystech-chen/Vantage" target="_blank" class="docs-link">GitHub 仓库</a> 提交 Issue 或 Pull Request。</p>
+<hr style="border: none; border-top: 1px dashed var(--border); margin: 40px 0;">
 
-<h2>Vantage 许可与免责声明</h2>
-<p>Vantage 的源代码本身采用以下许可协议 <a href="https://www.mozilla.org/en-US/MPL/2.0/" target="_blank" class="docs-link">MPL 2.0</a>。</p>
-<p>请注意，我们与 Mozilla 或 LibreWolf <strong>没有</strong>任何商业合作或隶属关系，Mozilla 是 Firefox 浏览器的开发者。Firefox 是 Mozilla 基金会的商标。LibreWolf 是 Firefox 的独立定制版。</p>
+<h2 id="what-is">🔍 什么是 Vantage？</h2>
+<p><strong>Vantage</strong> 是一款由 <strong>ASYS 科技</strong> 深度定制的 Firefox 浏览器，基于 LibreWolf 代码实现，专注于<strong>隐私 · 快速 · 易用</strong>。</p>
 
-<h2>隐私政策</h2>
-<p>Vantage 的一个目标是去除数据收集和遥测。因此我们不会在 Vantage 中收集用户的任何数据浏览或访问 LibreWolf 网站。</p>
-<p>我们无法总确保浏览器不会向 Mozilla 或其他平台发送数据，但我们会尽力实现这一点。在这种情况下，我们建议您检查<a href="https://www.mozilla.org/en-US/privacy/firefox/" target="_blank" class="docs-link">Firefox 隐私声明</a>。</p>
+<div class="reason-box" style="margin-top: 20px; margin-bottom: 20px;">
+    <p style="margin: 0;">⚠️ <strong>注意：</strong>Vantage 与 LibreWolf 或 Mozilla 官方无任何隶属关系或商业合作。</p>
+</div>
+
+<p>我们的目标：在保留 Firefox 强大扩展生态的同时，为用户提供开箱即用的隐私增强体验，摆脱追踪、遥测与不必要的干扰。</p>
+
+<h2 id="features">✨ 核心特性</h2>
+<table style="width: 100%; border-collapse: collapse; margin-bottom: 30px; background: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+    <thead>
+        <tr style="background: #f8fafc; border-bottom: 2px solid var(--border);">
+            <th style="padding: 15px; text-align: left; width: 140px; color: var(--text-main);">特性</th>
+            <th style="padding: 15px; text-align: left; color: var(--text-main);">说明</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr style="border-bottom: 1px solid var(--border);">
+            <td style="padding: 15px;">🚫 <strong>无遥测</strong></td>
+            <td style="padding: 15px; color: var(--text-sub);">完全禁用 Firefox 遥测、实验功能、广告推送及数据收集模块</td>
+        </tr>
+        <tr style="border-bottom: 1px solid var(--border);">
+            <td style="padding: 15px;">🔍 <strong>灵活搜索</strong></td>
+            <td style="padding: 15px; color: var(--text-sub);">默认集成 Microsoft Bing，支持一键切换百度、谷歌、DuckDuckGo 等引擎</td>
+        </tr>
+        <tr style="border-bottom: 1px solid var(--border);">
+            <td style="padding: 15px;">🛡️ <strong>内置拦截</strong></td>
+            <td style="padding: 15px; color: var(--text-sub);">预装 uBlock Origin 等广告/追踪器拦截规则，提升页面加载速度与纯净度</td>
+        </tr>
+        <tr style="border-bottom: 1px solid var(--border);">
+            <td style="padding: 15px;">🔒 <strong>隐私加固</strong></td>
+            <td style="padding: 15px; color: var(--text-sub);">启用 RFP（Resist Fingerprinting）、禁用 WebRTC 泄露、强制 HTTPS 等硬核隐私策略</td>
+        </tr>
+        <tr style="border-bottom: 1px solid var(--border);">
+            <td style="padding: 15px;">🔄 <strong>跨端同步</strong></td>
+            <td style="padding: 15px; color: var(--text-sub);">支持登录 Mozilla 账号，无缝同步书签、扩展、主题及配置（可选启用）</td>
+        </tr>
+        <tr style="border-bottom: 1px solid var(--border);">
+            <td style="padding: 15px;">🔓 <strong>开源透明</strong></td>
+            <td style="padding: 15px; color: var(--text-sub);">全部源码公开，欢迎审计、复刻与二次开发</td>
+        </tr>
+    </tbody>
+</table>
+
+<h2 id="requirements">🖥️ 系统要求</h2>
+<h3 style="color: var(--text-main); margin-bottom: 10px; font-size: 1.1rem;">Windows</h3>
+<ul style="color: var(--text-sub); margin-bottom: 20px; padding-left: 20px;">
+    <li><strong>操作系统</strong>：Windows 10 / 11 (64 位)</li>
+    <li><strong>处理器</strong>：x64 兼容处理器</li>
+    <li><strong>内存</strong>：≥ 4 GB RAM</li>
+    <li><strong>存储</strong>：≥ 500 MB 可用空间</li>
+    <li><strong>显卡</strong>：支持 DirectX 11 的 GPU（硬件加速）</li>
+</ul>
+
+<h3 style="color: var(--text-main); margin-bottom: 10px; font-size: 1.1rem;">Linux</h3>
+<ul style="color: var(--text-sub); margin-bottom: 20px; padding-left: 20px;">
+    <li><strong>发行版</strong>：大多数主流发行版</li>
+    <li><strong>依赖库</strong>：安装包已包含常见依赖</li>
+</ul>
+
+<h3 style="color: var(--text-main); margin-bottom: 10px; font-size: 1.1rem;">macOS（开发中）</h3>
+<p style="color: #d97706; background: #fffbeb; padding: 10px 15px; border-radius: 6px; border: 1px solid #fef08a; display: inline-block; margin-top: 0;">🚧 macOS 版本正在适配中，敬请期待</p>
+
+<h2 id="install">📦 安装指南</h2>
+
+<h3 style="color: var(--text-main); margin-bottom: 10px; font-size: 1.1rem;">Windows 用户</h3>
+<div class="step-block" style="padding: 15px 20px;">
+    <div class="step-content">
+        <p style="margin-bottom: 8px;">1. 访问官网下载页面：<a href="../pc/vdownload.html" class="docs-link">点击前往下载页</a></p>
+        <p style="margin-bottom: 8px;">2. 下载安装包</p>
+        <p style="margin-bottom: 8px;">3. 双击运行，按向导完成安装</p>
+        <p style="margin-bottom: 0;">4. 启动 Vantage，开始隐私浏览之旅 ✨</p>
+    </div>
+</div>
+
+<h3 style="color: var(--text-main); margin-bottom: 10px; font-size: 1.1rem;">Linux 用户</h3>
+
+<p><strong>方式一：Debian、Ubuntu 等使用 APT 包管理器的发行版</strong></p>
+<div style="background: #f1f5f9; padding: 15px; border-radius: 8px; overflow-x: auto; margin-bottom: 20px;">
+<pre style="margin: 0; color: #0f172a; font-family: Consolas, monospace; font-size: 0.9em; line-height: 1.5;"><code>cd ~
+# 通过官网下载（推荐）
+wget https://asystech.cn/vantage/vantage-latest.deb 
+# 或通过 GitHub 下载
+# wget https://github.com/asystech-chen/Vantage/releases/download/v148.0-1/vantage_148.0-1_amd64.deb 
+
+sudo apt update
+sudo apt install -y ./vantage-latest.deb</code></pre>
+</div>
+
+<p><strong>方式二：Rocky 等 RHEL 发行版</strong></p>
+<div style="background: #f1f5f9; padding: 15px; border-radius: 8px; overflow-x: auto; margin-bottom: 20px;">
+<pre style="margin: 0; color: #0f172a; font-family: Consolas, monospace; font-size: 0.9em; line-height: 1.5;"><code>cd ~
+# 通过 GitHub 下载
+wget https://github.com/asystech-chen/Vantage/releases/download/v148.0-1/vantage-148.0_1-1.x86_64.rpm 
+
+sudo yum update
+sudo yum install -y ./vantage-148.0_1-1.x86_64.rpm</code></pre>
+</div>
+
+<p><strong>方式三：其他发行版（使用 AppImage 包）</strong></p>
+<div style="background: #f1f5f9; padding: 15px; border-radius: 8px; overflow-x: auto; margin-bottom: 20px;">
+<pre style="margin: 0; color: #0f172a; font-family: Consolas, monospace; font-size: 0.9em; line-height: 1.5;"><code>cd ~
+wget https://github.com/asystech-chen/Vantage/releases/download/v148.0-1/vantage-148.0-1.x86_64.AppImage
+chmod +x vantage-148.0-1.x86_64.AppImage
+./vantage-148.0-1.x86_64.AppImage</code></pre>
+</div>
+
+<p><strong>方式四：使用压缩包手动安装</strong></p>
+<div style="background: #f1f5f9; padding: 15px; border-radius: 8px; overflow-x: auto; margin-bottom: 30px;">
+<pre style="margin: 0; color: #0f172a; font-family: Consolas, monospace; font-size: 0.9em; line-height: 1.5;"><code>tar -xjf Vantage-linux-x86_64.tar.bz2 -C /opt/
+ln -s /opt/vantage/vantage /usr/local/bin/vantage</code></pre>
+</div>
+
+
+<h2 id="config">⚙️ 配置与使用</h2>
+
+<h3 style="color: var(--text-main); margin-bottom: 10px; font-size: 1.1rem;">首次启动建议</h3>
+<ul style="color: var(--text-sub); margin-bottom: 20px; padding-left: 20px;">
+    <li>✅ 检查 <code>about:preferences#privacy</code> 中的隐私设置</li>
+    <li>✅ 根据需要启用/禁用 Mozilla 同步功能</li>
+    <li>✅ 安装常用扩展（Vantage 兼容 Firefox 扩展商店）</li>
+</ul>
+
+<h3 style="color: var(--text-main); margin-bottom: 10px; font-size: 1.1rem;">高级配置（about:config）</h3>
+<p style="color: #b45309; font-size: 0.95rem; margin-top: 0;">⚠️ 修改前请备份配置，不当设置可能影响浏览器稳定性</p>
+<div style="background: #f1f5f9; padding: 15px; border-radius: 8px; overflow-x: auto; margin-bottom: 20px;">
+<pre style="margin: 0; color: #0f172a; font-family: Consolas, monospace; font-size: 0.9em; line-height: 1.5;"><code># 示例：进一步禁用遥测（默认已禁用，供参考）
+datareporting.healthreport.uploadEnabled = false
+toolkit.telemetry.enabled = false
+browser.ping-centre.telemetry = false
+
+# 示例：增强 DNS over HTTPS
+network.trr.mode = 3
+network.trr.uri = "https://mozilla.cloudflare-dns.com/dns-query"</code></pre>
+</div>
+
+<h3 style="color: var(--text-main); margin-bottom: 10px; font-size: 1.1rem;">快捷键速查</h3>
+<table style="width: 100%; max-width: 600px; border-collapse: collapse; margin-bottom: 30px; background: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+    <thead>
+        <tr style="background: #f8fafc; border-bottom: 2px solid var(--border);">
+            <th style="padding: 12px; text-align: left; width: 180px; color: var(--text-main);">快捷键</th>
+            <th style="padding: 12px; text-align: left; color: var(--text-main);">功能</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr style="border-bottom: 1px solid var(--border);">
+            <td style="padding: 12px;"><code>Ctrl+Shift+P</code></td>
+            <td style="padding: 12px; color: var(--text-sub);">打开隐私浏览窗口</td>
+        </tr>
+        <tr style="border-bottom: 1px solid var(--border);">
+            <td style="padding: 12px;"><code>Ctrl+Shift+Delete</code></td>
+            <td style="padding: 12px; color: var(--text-sub);">快速清除浏览数据</td>
+        </tr>
+        <tr style="border-bottom: 1px solid var(--border);">
+            <td style="padding: 12px;"><code>Ctrl+L</code></td>
+            <td style="padding: 12px; color: var(--text-sub);">聚焦地址栏</td>
+        </tr>
+        <tr style="border-bottom: 1px solid var(--border);">
+            <td style="padding: 12px;"><code>F11</code></td>
+            <td style="padding: 12px; color: var(--text-sub);">全屏模式</td>
+        </tr>
+    </tbody>
+</table>
+
+<h2 id="contribute">🤝 贡献指南</h2>
+<p>我们欢迎任何形式的贡献！🎉</p>
+<h3 style="color: var(--text-main); margin-bottom: 10px; font-size: 1.1rem;">你可以：</h3>
+<ul style="color: var(--text-sub); margin-bottom: 20px; padding-left: 20px;">
+    <li>🐛 提交 Bug 报告（请附复现步骤与环境信息）</li>
+    <li>💡 提出新功能建议</li>
+    <li>🔧 提交 Pull Request 修复问题或增强功能</li>
+    <li>🌍 帮助翻译本地化内容</li>
+    <li>📝 完善文档与使用教程</li>
+</ul>
+
+<h3 style="color: var(--text-main); margin-bottom: 10px; font-size: 1.1rem;">贡献流程</h3>
+<ol style="color: var(--text-sub); margin-bottom: 15px; padding-left: 20px;">
+    <li style="margin-bottom: 5px;">Fork 本仓库</li>
+    <li style="margin-bottom: 5px;">创建特性分支：<code>git checkout -b feat/your-feature</code></li>
+    <li style="margin-bottom: 5px;">提交更改：<code>git commit -am 'feat: 添加 XXX 功能'</code></li>
+    <li style="margin-bottom: 5px;">推送分支：<code>git push origin feat/your-feature</code></li>
+    <li style="margin-bottom: 5px;">发起 Pull Request</li>
+</ol>
+<p style="color: #64748b; font-size: 0.95rem; background: #f8fafc; padding: 10px 15px; border-left: 4px solid #94a3b8;">📌 请确保代码符合 <a href="https://firefox-source-docs.mozilla.org/code-quality/" target="_blank" class="docs-link">Mozilla 代码规范</a>，并通过基础测试。</p>
+
+
+<h2 id="faq">❓ 常见问题</h2>
+<div style="margin-bottom: 15px;">
+    <p style="margin-bottom: 5px; color: var(--text-main);"><strong>Q: Vantage 和 Firefox / LibreWolf 有什么区别？</strong></p>
+    <p style="color: var(--text-sub); margin-top: 0;">A: Vantage 基于 LibreWolf 代码基线，由 ASYS 科技针对中文用户习惯与隐私需求进行二次定制，预置更适合本地使用的搜索与拦截策略。</p>
+</div>
+
+<div style="margin-bottom: 15px;">
+    <p style="margin-bottom: 5px; color: var(--text-main);"><strong>Q: 扩展兼容吗？</strong></p>
+    <p style="color: var(--text-sub); margin-top: 0;">A: ✅ 完全兼容 Firefox 扩展商店（addons.mozilla.org）中的扩展，可直接安装使用。</p>
+</div>
+
+<div style="margin-bottom: 15px;">
+    <p style="margin-bottom: 5px; color: var(--text-main);"><strong>Q: 同步功能会泄露隐私吗？</strong></p>
+    <p style="color: var(--text-sub); margin-top: 0;">A: 同步功能默认关闭。如启用，数据将通过 Mozilla 服务器加密传输，我们不会额外收集同步内容。</p>
+</div>
+
+<div style="margin-bottom: 15px;">
+    <p style="margin-bottom: 5px; color: var(--text-main);"><strong>Q: 如何反馈问题？</strong></p>
+    <p style="color: var(--text-sub); margin-top: 0;">A: 请通过 <a href="https://github.com/asystech-chen/Vantage/issues" target="_blank" class="docs-link">GitHub Issues</a> 提交，或访问官网联系客服。</p>
+</div>
+
+
+<h2 id="license">📄 许可证</h2>
+<p>Vantage 浏览器主体代码遵循 <strong>Mozilla Public License 2.0</strong> 开源。<br>部分预置扩展与资源遵循其各自许可证。</p>
+<p style="color: #94a3b8; font-style: italic; background: #f8fafc; padding: 10px; border-radius: 6px;">📜 本软件按「原样」提供，不提供任何明示或暗示的担保。</p>
+
+<h2 id="links">🔗 相关链接</h2>
+<ul style="color: var(--text-sub); margin-bottom: 30px; padding-left: 20px;">
+    <li style="margin-bottom: 8px;">🌐 官网：<a href="https://asystech.cn/vantage" target="_blank" class="docs-link">https://asystech.cn/vantage</a></li>
+    <li style="margin-bottom: 8px;">💻 源码：<a href="https://github.com/asystech-chen/Vantage" target="_blank" class="docs-link">GitHub 仓库</a></li>
+    <li style="margin-bottom: 8px;">🐛 问题反馈：<a href="https://github.com/asystech-chen/Vantage/issues" target="_blank" class="docs-link">提交 Issue</a></li>
+    <li style="margin-bottom: 8px;">📚 Firefox 文档：<a href="https://developer.mozilla.org/" target="_blank" class="docs-link">MDN Web Docs</a></li>
+</ul>
+
+<div style="text-align: center; color: #94a3b8; border-top: 1px solid var(--border); padding-top: 25px; margin-top: 40px; font-weight: 500;">
+    <p>❤️ 感谢 Mozilla、LibreWolf 社区及所有开源贡献者！</p>
+</div>
