@@ -243,643 +243,199 @@
     }
 
     body.wallpaper-enabled .glass {
-      box-shadow: 
-        0 8px 32px rgba(0, 0, 0, 0.3),
-        0 0 0 1px rgba(255, 255, 255, 0.1);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.1);
     }
-
     body.wallpaper-enabled .clock-display {
-      text-shadow: 
-        0 2px 4px rgba(0, 0, 0, 0.5),
-        0 4px 8px rgba(0, 0, 0, 0.3),
-        0 0 20px rgba(0, 0, 0, 0.2);
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5), 0 4px 8px rgba(0, 0, 0, 0.3), 0 0 20px rgba(0, 0, 0, 0.2);
       -webkit-text-stroke: 0.5px rgba(0, 0, 0, 0.3);
     }
-
-    body.wallpaper-enabled .logo svg {
-      filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4));
-    }
-
-    body.wallpaper-enabled .theme-toggle {
-      box-shadow: 
-        0 8px 32px rgba(0, 0, 0, 0.3),
-        0 0 0 1px rgba(255, 255, 255, 0.1);
-    }
-
-    body.wallpaper-enabled .engine-btn {
-      box-shadow: 
-        0 4px 16px rgba(0, 0, 0, 0.25),
-        0 0 0 1px rgba(255, 255, 255, 0.1);
-    }
-
-    body.wallpaper-enabled .search-input {
-      box-shadow: 
-        0 8px 32px rgba(0, 0, 0, 0.3),
-        0 0 0 1px rgba(255, 255, 255, 0.1);
-    }
-
-    body.wallpaper-enabled .search-icon-btn {
-      box-shadow: 
-        0 4px 16px rgba(0, 0, 0, 0.25);
-    }
-
-    body.wallpaper-enabled .suggestions-container {
-      box-shadow: 
-        0 8px 32px rgba(0, 0, 0, 0.4),
-        0 0 0 1px rgba(255, 255, 255, 0.1);
-    }
+    body.wallpaper-enabled .logo svg { filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4)); }
+    body.wallpaper-enabled .theme-toggle { box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.1); }
+    body.wallpaper-enabled .engine-btn { box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.1); }
+    body.wallpaper-enabled .search-input { box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.1); }
+    body.wallpaper-enabled .search-icon-btn { box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25); }
+    body.wallpaper-enabled .suggestions-container { box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.1); }
 
     .wallpaper-bg {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: -1;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.5s ease;
+      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+      z-index: -1; opacity: 0; pointer-events: none; transition: opacity 0.5s ease;
     }
-
-    .wallpaper-bg.show {
-      opacity: 1;
-    }
-
+    .wallpaper-bg.show { opacity: 1; }
     .wallpaper-bg img {
-      width: 100vw;
-      height: 100vh;
-      object-fit: cover;
-      display: block;
-      transition: filter 0.5s ease, -webkit-filter 0.5s ease;
-      will-change: filter;
+      width: 100vw; height: 100vh; object-fit: cover; display: block;
+      transition: filter 0.5s ease, -webkit-filter 0.5s ease; will-change: filter;
     }
-
-    [data-theme*="light"] .wallpaper-bg img {
-      filter: blur(0) brightness(1);
-    }
-
-    [data-theme*="light"] .wallpaper-bg.blurred img {
-      filter: blur(20px) brightness(0.85);
-    }
-
-    [data-theme*="dark"] .wallpaper-bg img {
-      filter: blur(0) brightness(0.5);
-    }
-
-    [data-theme*="dark"] .wallpaper-bg.blurred img {
-      filter: blur(20px) brightness(0.4);
-    }
+    [data-theme*="light"] .wallpaper-bg img { filter: blur(0) brightness(1); }
+    [data-theme*="light"] .wallpaper-bg.blurred img { filter: blur(20px) brightness(0.85); }
+    [data-theme*="dark"] .wallpaper-bg img { filter: blur(0) brightness(0.5); }
+    [data-theme*="dark"] .wallpaper-bg.blurred img { filter: blur(20px) brightness(0.4); }
 
     .glass {
-      background: var(--bg-secondary);
-      backdrop-filter: blur(var(--glass-blur));
-      -webkit-backdrop-filter: blur(var(--glass-blur));
-      border: 1px solid var(--glass-border);
-      box-shadow: var(--shadow);
-      transition: box-shadow 0.3s ease;
+      background: var(--bg-secondary); backdrop-filter: blur(var(--glass-blur));
+      -webkit-backdrop-filter: blur(var(--glass-blur)); border: 1px solid var(--glass-border);
+      box-shadow: var(--shadow); transition: box-shadow 0.3s ease;
     }
 
     header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0.75rem 1.5rem;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      height: 56px;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0.75rem 1.5rem; position: sticky; top: 0; z-index: 100; height: 56px;
     }
-
-    .logo {
-      display: flex;
-      align-items: center;
-      height: 100%;
-      text-decoration: none;
-      color: var(--text-primary);
-    }
-
-    .logo svg {
-      height: 100%;
-      width: auto;
-      max-width: 140px;
-      display: block;
-      transition: filter 0.3s ease;
-    }
-
-    .logo svg path[data-adaptive="true"] {
-      fill: currentColor;
-      transition: filter 0.25s ease;
-    }
-    
-    [data-theme*="dark"] .logo svg path[data-adaptive="true"] {
-      filter: var(--logo-dark-filter, none);
-    }
+    .logo { display: flex; align-items: center; height: 100%; text-decoration: none; color: var(--text-primary); }
+    .logo svg { height: 100%; width: auto; max-width: 140px; display: block; transition: filter 0.3s ease; }
+    .logo svg path[data-adaptive="true"] { fill: currentColor; transition: filter 0.25s ease; }
+    [data-theme*="dark"] .logo svg path[data-adaptive="true"] { filter: var(--logo-dark-filter, none); }
 
     .theme-toggle {
-      position: relative;
-      background: var(--bg-secondary);
-      border: 1px solid var(--border-color);
-      width: 42px;
-      height: 42px;
-      border-radius: 50%;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.2s ease;
-      box-shadow: var(--shadow);
-      padding: 0;
+      position: relative; background: var(--bg-secondary); border: 1px solid var(--border-color);
+      width: 42px; height: 42px; border-radius: 50%; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s ease; box-shadow: var(--shadow); padding: 0;
     }
-
-    .theme-toggle:hover {
-      border-color: var(--accent);
-      transform: translateY(-1px);
-    }
-
-    .theme-toggle svg {
-      width: 18px;
-      height: 18px;
-      color: var(--text-secondary);
-      transition: color 0.2s;
-    }
-
-    .theme-toggle:hover svg {
-      color: var(--accent);
-    }
+    .theme-toggle:hover { border-color: var(--accent); transform: translateY(-1px); }
+    .theme-toggle svg { width: 18px; height: 18px; color: var(--text-secondary); transition: color 0.2s; }
+    .theme-toggle:hover svg { color: var(--accent); }
 
     .theme-panel {
-      position: absolute;
-      top: calc(100% + 10px);
-      right: 0;
-      width: 300px;
-      border-radius: 16px;
-      padding: 16px;
-      display: none;
-      flex-direction: column;
-      gap: 14px;
-      z-index: 101;
+      position: absolute; top: calc(100% + 10px); right: 0; width: 300px;
+      border-radius: 16px; padding: 16px; display: none; flex-direction: column;
+      gap: 12px; z-index: 101;
+    }
+    .theme-panel.show { display: flex; animation: slideDown 0.2s ease-out; }
+    @keyframes slideDown { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
+
+    .mode-switch-section { padding-bottom: 10px; border-bottom: 1px solid var(--border-color); }
+    .mode-switch-label { display: flex; align-items: center; justify-content: space-between; font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px; }
+    
+    /* 🔧 自动切换样式 */
+    .auto-theme-section { padding: 8px 0; border-bottom: 1px solid var(--border-color); }
+    .auto-theme-options { display: flex; gap: 6px; margin-bottom: 8px; flex-wrap: wrap; }
+    .auto-radio {
+      flex: 1; display: flex; align-items: center; justify-content: center;
+      padding: 5px 4px; border: 1px solid var(--border-color); border-radius: 8px;
+      cursor: pointer; transition: all 0.2s; font-size: 0.82rem; color: var(--text-secondary); min-width: 0;
+    }
+    .auto-radio:hover { border-color: var(--accent); }
+    .auto-radio input { display: none; }
+    .auto-radio input:checked + span { font-weight: 500; color: white; }
+    .auto-radio:has(input:checked) { background: var(--accent); border-color: var(--accent); color: white; }
+    
+    .time-settings {
+      display: none; gap: 8px; margin-top: 4px; justify-content: space-between; 
+      background: rgba(0,0,0,0.04); padding: 10px; border-radius: 8px;
+    }
+    .time-settings.show { display: flex; }
+    .time-settings label { flex: 1; display: flex; flex-direction: column; gap: 4px; font-size: 0.8rem; color: var(--text-secondary); }
+    .time-settings input[type="time"] { 
+      padding: 4px; border: 1px solid var(--border-color); border-radius: 4px; 
+      background: var(--input-bg); color: var(--text-primary); font-family: inherit;
     }
 
-    .theme-panel.show {
-      display: flex;
-      animation: slideDown 0.2s ease-out;
-    }
-
-    @keyframes slideDown {
-      from { opacity: 0; transform: translateY(-8px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .mode-switch-section {
-      padding-bottom: 12px;
-      border-bottom: 1px solid var(--border-color);
-    }
-
-    .mode-switch-label {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-size: 0.9rem;
-      color: var(--text-secondary);
-      margin-bottom: 12px;
-    }
-
-    .mode-toggle {
-      position: relative;
-      display: inline-flex;
-      align-items: center;
-      cursor: pointer;
-    }
-
-    .mode-toggle input {
-      opacity: 0;
-      width: 0;
-      height: 0;
-    }
-
-    .mode-slider {
-      position: relative;
-      width: 44px;
-      height: 24px;
-      background: var(--input-border);
-      border-radius: 12px;
-      transition: background 0.3s;
-    }
-
+    .mode-toggle { position: relative; display: inline-flex; align-items: center; cursor: pointer; }
+    .mode-toggle input { opacity: 0; width: 0; height: 0; }
+    .mode-slider { position: relative; width: 44px; height: 24px; background: var(--input-border); border-radius: 12px; transition: background 0.3s; }
     .mode-slider::before {
-      content: "";
-      position: absolute;
-      width: 20px;
-      height: 20px;
-      left: 2px;
-      top: 2px;
-      background: var(--bg-secondary);
-      border-radius: 50%;
-      transition: transform 0.3s ease, background 0.3s;
+      content: ""; position: absolute; width: 20px; height: 20px; left: 2px; top: 2px;
+      background: var(--bg-secondary); border-radius: 50%; transition: transform 0.3s ease, background 0.3s;
       box-shadow: 0 2px 4px rgba(0,0,0,0.2);
     }
+    .mode-toggle input:checked + .mode-slider { background: var(--accent); }
+    .mode-toggle input:checked + .mode-slider::before { transform: translateX(20px); }
 
-    .mode-toggle input:checked + .mode-slider {
-      background: var(--accent);
-    }
-
-    .mode-toggle input:checked + .mode-slider::before {
-      transform: translateX(20px);
-    }
-
-    .color-palette-section {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      padding-bottom: 12px;
-      border-bottom: 1px solid var(--border-color);
-    }
-
-    .palette-label {
-      font-size: 0.9rem;
-      color: var(--text-secondary);
-    }
-
-    .color-options {
-      display: flex;
-      gap: 10px;
-      justify-content: center;
-    }
-
+    .color-palette-section { display: flex; flex-direction: column; gap: 10px; padding-bottom: 10px; }
+    .palette-label { font-size: 0.9rem; color: var(--text-secondary); }
+    .color-options { display: flex; gap: 10px; justify-content: center; }
     .color-btn {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      border: 2px solid transparent;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      position: relative;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.15);
-      padding: 0;
+      width: 32px; height: 32px; border-radius: 50%; border: 2px solid transparent; cursor: pointer;
+      transition: all 0.2s ease; position: relative; box-shadow: 0 3px 10px rgba(0,0,0,0.15); padding: 0;
     }
-
-    .color-btn:hover {
-      transform: scale(1.1);
-      box-shadow: 0 5px 16px rgba(0,0,0,0.25);
-    }
-
-    .color-btn.active {
-      border-color: var(--text-primary);
-      box-shadow: 0 0 0 2px var(--bg-secondary), 0 5px 16px rgba(0,0,0,0.25);
-      transform: scale(1.1);
-    }
-
+    .color-btn:hover { transform: scale(1.1); box-shadow: 0 5px 16px rgba(0,0,0,0.25); }
+    .color-btn.active { border-color: var(--text-primary); box-shadow: 0 0 0 2px var(--bg-secondary), 0 5px 16px rgba(0,0,0,0.25); transform: scale(1.1); }
     .color-btn[data-color="neutral"] { background: linear-gradient(135deg, #e5e7eb 0%, #9ca3af 100%); }
     .color-btn[data-color="blue"] { background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%); }
     .color-btn[data-color="green"] { background: linear-gradient(135deg, #34d399 0%, #059669 100%); }
     .color-btn[data-color="purple"] { background: linear-gradient(135deg, #a78bfa 0%, #7c3aed 100%); }
     .color-btn[data-color="orange"] { background: linear-gradient(135deg, #fb923c 0%, #ea580c 100%); }
 
-	.wallpaper-section {
-	padding-top: 8px;
-	padding-bottom: 1px;
-	}
-	
-	.position-section {
-	padding-top: 12px;
-	border-top: 1px solid var(--border-color); /* 可选：保留滑块上方的分割线 */
-	}
-
-    .wallpaper-label,
-    .position-label {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-size: 0.9rem;
-      color: var(--text-secondary);
-      margin-bottom: 8px;
-    }
-
-    .position-slider {
-      width: 100%;
-      height: 6px;
-      border-radius: 3px;
-      background: var(--input-border);
-      outline: none;
-      -webkit-appearance: none;
-      cursor: pointer;
-    }
-
-    .position-slider::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      width: 18px;
-      height: 18px;
-      border-radius: 50%;
-      background: var(--accent);
-      cursor: pointer;
-      transition: transform 0.2s;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-    }
-
-    .position-slider::-webkit-slider-thumb:hover {
-      transform: scale(1.1);
-    }
-
-    .position-slider::-moz-range-thumb {
-      width: 18px;
-      height: 18px;
-      border-radius: 50%;
-      background: var(--accent);
-      cursor: pointer;
-      border: none;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-    }
-
-    .position-value {
-      font-size: 0.8rem;
-      color: var(--text-secondary);
-      text-align: center;
-      margin-top: 4px;
-    }
+    .wallpaper-section, .position-section { padding-top: 10px; }
+    .wallpaper-label, .position-label { display: flex; align-items: center; justify-content: space-between; font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 6px; }
+    .position-slider { width: 100%; height: 6px; border-radius: 3px; background: var(--input-border); outline: none; -webkit-appearance: none; cursor: pointer; }
+    .position-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; border-radius: 50%; background: var(--accent); cursor: pointer; transition: transform 0.2s; box-shadow: 0 2px 6px rgba(0,0,0,0.2); }
+    .position-slider::-webkit-slider-thumb:hover { transform: scale(1.1); }
+    .position-slider::-moz-range-thumb { width: 18px; height: 18px; border-radius: 50%; background: var(--accent); cursor: pointer; border: none; box-shadow: 0 2px 6px rgba(0,0,0,0.2); }
+    .position-value { font-size: 0.8rem; color: var(--text-secondary); text-align: center; margin-top: 4px; }
 
     main {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      align-items: center;
-      padding: 2rem 1rem;
-      width: 100%;
-      max-width: 680px;
-      margin: 0 auto;
-      gap: 1.5rem;
-      /* 🔧 默认值修改为 25vh */
-      margin-top: var(--search-vertical-position, 25vh);
-      transition: margin-top 0.3s ease;
+      flex: 1; display: flex; flex-direction: column; justify-content: flex-start; align-items: center;
+      padding: 2rem 1rem; width: 100%; max-width: 680px; margin: 0 auto; gap: 1.5rem;
+      margin-top: var(--search-vertical-position, 25vh); transition: margin-top 0.3s ease;
     }
-
     .clock-display {
-      font-size: 2.5rem;
-      font-weight: 300;
-      color: var(--clock-color);
-      font-variant-numeric: tabular-nums;
-      letter-spacing: 1px;
-      opacity: 0.9;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      transition: all 0.3s ease;
-      user-select: none;
+      font-size: 2.5rem; font-weight: 300; color: var(--clock-color); font-variant-numeric: tabular-nums;
+      letter-spacing: 1px; opacity: 0.9; text-shadow: 0 2px 4px rgba(0,0,0,0.1); transition: all 0.3s ease; user-select: none;
     }
-
-    .search-wrapper {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      gap: 1.2rem;
-      position: relative;
-    }
-
-    .search-box {
-      position: relative;
-      width: 100%;
-    }
-
+    .search-wrapper { width: 100%; display: flex; flex-direction: column; gap: 1.2rem; position: relative; }
+    .search-box { position: relative; width: 100%; }
     .search-input {
-      width: 100%;
-      padding: 0.9rem 3.2rem 0.9rem 1.5rem;
-      border: 1px solid var(--input-border);
-      border-radius: 50px;
-      font-size: 1rem;
-      background: var(--input-bg);
-      color: var(--text-primary);
-      transition: all 0.2s ease;
-      outline: none;
+      width: 100%; padding: 0.9rem 3.2rem 0.9rem 1.5rem; border: 1px solid var(--input-border);
+      border-radius: 50px; font-size: 1rem; background: var(--input-bg); color: var(--text-primary);
+      transition: all 0.2s ease; outline: none;
     }
-
-    .search-input::placeholder {
-      color: var(--text-secondary);
-      opacity: 0.8;
-    }
-
-    .search-input:focus {
-      border-color: var(--input-focus);
-      box-shadow: 0 0 0 3px rgba(107, 114, 128, 0.15);
-    }
-
+    .search-input::placeholder { color: var(--text-secondary); opacity: 0.8; }
+    .search-input:focus { border-color: var(--input-focus); box-shadow: 0 0 0 3px rgba(107, 114, 128, 0.15); }
     .search-icon-btn {
-      position: absolute;
-      right: 12px;
-      top: 50%;
-      transform: translateY(-50%);
-      background: none;
-      border: none;
-      padding: 6px;
-      cursor: pointer;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.2s ease;
-      color: var(--icon-color);
-      z-index: 10;
+      position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+      background: none; border: none; padding: 6px; cursor: pointer; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center; transition: all 0.2s ease;
+      color: var(--icon-color); z-index: 10;
     }
-
-    .search-icon-btn:hover {
-      background: var(--bg-secondary);
-      color: var(--icon-hover);
-      transform: translateY(-50%) scale(1.05);
-    }
-
-    .search-icon-btn svg {
-      width: 20px;
-      height: 20px;
-    }
+    .search-icon-btn:hover { background: var(--bg-secondary); color: var(--icon-hover); transform: translateY(-50%) scale(1.05); }
+    .search-icon-btn svg { width: 20px; height: 20px; }
 
     .suggestions-container {
-      position: absolute;
-      top: 100%;
-      left: 0;
-      right: 0;
-      background: var(--suggestion-bg);
-      border: 1px solid var(--border-color);
-      z-index: 50;
-      display: none;
-      max-height: 300px;
-      overflow-y: auto;
-      margin-top: 4px;
-      transition: box-shadow 0.3s ease;
+      position: absolute; top: 100%; left: 0; right: 0; background: var(--suggestion-bg);
+      border: 1px solid var(--border-color); z-index: 50; display: none; max-height: 300px;
+      overflow-y: auto; margin-top: 4px; transition: box-shadow 0.3s ease;
     }
+    .suggestions-container.show { display: block; }
+    .suggestion-item { display: flex; align-items: center; gap: 8px; padding: 8px 12px; cursor: pointer; color: var(--text-primary); font-size: 0.95rem; }
+    .suggestion-item:hover, .suggestion-item.active { background: var(--suggestion-hover); }
+    .suggestion-item svg { width: 14px; height: 14px; color: var(--text-secondary); flex-shrink: 0; }
+    .suggestion-item span { flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .suggestion-item .highlight { font-weight: 600; color: var(--accent); }
+    .suggestions-loading { display: flex; align-items: center; justify-content: center; padding: 10px; color: var(--text-secondary); font-size: 0.9rem; }
+    .suggestions-loading svg { width: 14px; height: 14px; margin-right: 6px; animation: spin 1s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
 
-    .suggestions-container.show {
-      display: block;
-    }
-
-    .suggestion-item {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 12px;
-      cursor: pointer;
-      color: var(--text-primary);
-      font-size: 0.95rem;
-    }
-
-    .suggestion-item:hover,
-    .suggestion-item.active {
-      background: var(--suggestion-hover);
-    }
-
-    .suggestion-item svg {
-      width: 14px;
-      height: 14px;
-      color: var(--text-secondary);
-      flex-shrink: 0;
-    }
-
-    .suggestion-item span {
-      flex: 1;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .suggestion-item .highlight {
-      font-weight: 600;
-      color: var(--accent);
-    }
-
-    .suggestions-loading {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 10px;
-      color: var(--text-secondary);
-      font-size: 0.9rem;
-    }
-
-    .suggestions-loading svg {
-      width: 14px;
-      height: 14px;
-      margin-right: 6px;
-      animation: spin 1s linear infinite;
-    }
-
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-
-    .engine-selector {
-      display: flex;
-      gap: 0.5rem;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-
+    .engine-selector { display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: center; }
     .engine-btn {
-      padding: 0.45rem 1rem;
-      background: var(--bg-secondary);
-      border: 1px solid var(--border-color);
-      border-radius: 50px;
-      font-size: 0.85rem;
-      color: var(--text-secondary);
-      cursor: pointer;
-      transition: all 0.15s ease;
-      font-weight: 500;
+      padding: 0.45rem 1rem; background: var(--bg-secondary); border: 1px solid var(--border-color);
+      border-radius: 50px; font-size: 0.85rem; color: var(--text-secondary); cursor: pointer;
+      transition: all 0.15s ease; font-weight: 500;
     }
+    .engine-btn:hover, .engine-btn.active { background: var(--accent); color: white; border-color: var(--accent); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
 
-    .engine-btn:hover,
-    .engine-btn.active {
-      background: var(--accent);
-      color: white;
-      border-color: var(--accent);
-      transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-
-    footer {
-      text-align: center;
-      padding: 0.6rem 1rem 1.2rem;
-      color: var(--text-secondary);
-      font-size: 0.72rem;
-      opacity: 0.65;
-      width: 100%;
-    }
-
-    footer p {
-      margin: 0;
-      letter-spacing: 0.3px;
-    }
+    footer { text-align: center; padding: 0.6rem 1rem 1.2rem; color: var(--text-secondary); font-size: 0.72rem; opacity: 0.65; width: 100%; }
+    footer p { margin: 0; letter-spacing: 0.3px; }
 
     @media (max-width: 640px) {
-      header {
-        padding: 0.6rem 1rem;
-        height: 52px;
-      }
-
-      .logo svg {
-        max-width: 110px;
-      }
-
-      .theme-toggle {
-        width: 38px;
-        height: 38px;
-      }
-
-      .theme-panel {
-        width: 280px;
-        right: -10px;
-      }
-
-      main {
-        padding: 1.5rem 0.8rem;
-        gap: 1.2rem;
-      }
-
-      .clock-display {
-        font-size: 2rem;
-      }
-
-      .search-input {
-        padding: 0.85rem 3rem 0.85rem 1.3rem;
-        font-size: 0.95rem;
-      }
-
-      .search-icon-btn {
-        right: 10px;
-        padding: 5px;
-      }
-
-      .search-icon-btn svg {
-        width: 18px;
-        height: 18px;
-      }
-
-      .suggestions-container {
-        max-height: 250px;
-      }
-
-      .suggestion-item {
-        padding: 7px 10px;
-        font-size: 0.9rem;
-      }
-
-      .engine-selector {
-        gap: 0.4rem;
-      }
-
-      .engine-btn {
-        padding: 0.4rem 0.9rem;
-        font-size: 0.8rem;
-      }
-
-      footer {
-        padding: 0.5rem 0.8rem 1rem;
-        font-size: 0.68rem;
-      }
+      header { padding: 0.6rem 1rem; height: 52px; }
+      .logo svg { max-width: 110px; }
+      .theme-toggle { width: 38px; height: 38px; }
+      .theme-panel { width: 280px; right: -10px; }
+      main { padding: 1.5rem 0.8rem; gap: 1.2rem; }
+      .clock-display { font-size: 2rem; }
+      .search-input { padding: 0.85rem 3rem 0.85rem 1.3rem; font-size: 0.95rem; }
+      .search-icon-btn { right: 10px; padding: 5px; }
+      .search-icon-btn svg { width: 18px; height: 18px; }
+      .suggestions-container { max-height: 250px; }
+      .suggestion-item { padding: 7px 10px; font-size: 0.9rem; }
+      .engine-selector { gap: 0.4rem; }
+      .engine-btn { padding: 0.4rem 0.9rem; font-size: 0.8rem; }
+      footer { padding: 0.5rem 0.8rem 1rem; font-size: 0.68rem; }
     }
 
-    @keyframes pulse {
-      0%, 100% { box-shadow: 0 0 0 0 rgba(107, 114, 128, 0.2); }
-      50% { box-shadow: 0 0 0 6px rgba(107, 114, 128, 0); }
-    }
-
-    .search-input:focus {
-      animation: pulse 2s infinite;
-    }
+    @keyframes pulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(107, 114, 128, 0.2); } 50% { box-shadow: 0 0 0 6px rgba(107, 114, 128, 0); } }
+    .search-input:focus { animation: pulse 2s infinite; }
   </style>
 </head>
 <body>
@@ -923,6 +479,25 @@
           </div>
         </div>
         
+        <div class="auto-theme-section">
+          <div class="mode-switch-label" style="margin-bottom:4px;"><span>自动切换主题</span></div>
+          <div class="auto-theme-options">
+            <label class="auto-radio"><input type="radio" name="autoTheme" value="off" checked><span>关闭</span></label>
+            <label class="auto-radio"><input type="radio" name="autoTheme" value="system"><span>跟随系统</span></label>
+            <label class="auto-radio"><input type="radio" name="autoTheme" value="time"><span>定时切换</span></label>
+          </div>
+          <div class="time-settings" id="timeSettings">
+            <label>
+              <span>进入深色</span>
+              <input type="time" id="darkTime" value="18:00">
+            </label>
+            <label>
+              <span>进入浅色</span>
+              <input type="time" id="lightTime" value="06:00">
+            </label>
+          </div>
+        </div>
+        
         <div class="color-palette-section">
           <div class="palette-label">色彩主题</div>
           <div class="color-options">
@@ -945,10 +520,7 @@
         </div>
         
         <div class="position-section">
-          <div class="position-label">
-            <span>搜索框垂直位置</span>
-          </div>
-          <!-- 🔧 滑块默认值改为 25 -->
+          <div class="position-label"><span>搜索框垂直位置</span></div>
           <input type="range" class="position-slider" id="positionSlider" min="5" max="50" value="25" step="1">
           <div class="position-value" id="positionValue">25% (默认)</div>
         </div>
@@ -962,15 +534,7 @@
     <div class="search-wrapper">
       <div class="search-box">
         <div class="glass" style="border-radius: 50px; position: relative;">
-          <input 
-            type="text" 
-            class="search-input" 
-            id="searchInput" 
-            placeholder="搜索关键词..." 
-            autocomplete="off"
-            autofocus
-            aria-label="搜索关键词"
-          />
+          <input type="text" class="search-input" id="searchInput" placeholder="搜索关键词..." autocomplete="off" autofocus aria-label="搜索关键词" />
           <button type="button" class="search-icon-btn" id="searchIconBtn" aria-label="执行搜索">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <circle cx="11" cy="11" r="8"></circle>
@@ -978,10 +542,7 @@
             </svg>
           </button>
         </div>
-        
-        <div class="suggestions-container" id="suggestionsContainer">
-          <div id="suggestionsList"></div>
-        </div>
+        <div class="suggestions-container" id="suggestionsContainer"><div id="suggestionsList"></div></div>
       </div>
       
       <div class="engine-selector" role="tablist" aria-label="选择搜索引擎">
@@ -995,113 +556,160 @@
   </main>
 
   <footer>
-    <p>ASYS 科技 搜索起始页 版权所有</p>
+    <p>ASYS 科技 搜索起始页©2026 保留所有权利</p>
   </footer>
 
   <script>
-    // ============ 配置 ============
     const searchEngines = {
-      bing: {
-        search: 'https://www.bing.com/search?q=',
-        suggest: 'https://www.bing.com/osjson.aspx?query='
-      },
-      baidu: {
-        search: 'https://www.baidu.com/s?wd=',
-        suggest: 'https://suggestion.baidu.com/su?wd='
-      },
-      google: {
-        search: 'https://www.google.com/search?q=',
-        suggest: 'https://suggestqueries.google.com/complete/search?client=chrome&q='
-      },
-      duckduckgo: {
-        search: 'https://duckduckgo.com/?q=',
-        suggest: 'https://duckduckgo.com/ac/?q='
-      },
-      yandex: {
-        search: 'https://yandex.com/search/?text=',
-        suggest: 'https://suggest.yandex.com/suggest-ff.cgi?part='
-      }
+      bing: { search: 'https://www.bing.com/search?q=', suggest: 'https://www.bing.com/osjson.aspx?query=' },
+      baidu: { search: 'https://www.baidu.com/s?wd=', suggest: 'https://suggestion.baidu.com/su?wd=' },
+      google: { search: 'https://www.google.com/search?q=', suggest: 'https://suggestqueries.google.com/complete/search?client=chrome&q=' },
+      duckduckgo: { search: 'https://duckduckgo.com/?q=', suggest: 'https://duckduckgo.com/ac/?q=' },
+      yandex: { search: 'https://yandex.com/search/?text=', suggest: 'https://suggest.yandex.com/suggest-ff.cgi?part=' }
     };
 
     const colorThemes = ['neutral', 'blue', 'green', 'purple', 'orange'];
 
-    // 状态变量
-    let debounceTimer = null;
-    let currentScript = null;
-    let selectedSuggestionIndex = -1;
-    let currentSuggestions = [];
+    let debounceTimer = null, currentScript = null, selectedSuggestionIndex = -1, currentSuggestions = [];
     let currentEngine = 'bing';
+    let wallpaperPreloaded = false, wallpaperImageUrl = '';
     
-    let wallpaperPreloaded = false;
-    let wallpaperImageUrl = '';
+    let autoThemeMode = 'off'; 
+    const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    let autoThemeTimer = null;
 
-    // ============ 初始化 ============
     document.addEventListener('DOMContentLoaded', () => {
       preloadWallpaper();
       loadPreferences();
       bindEvents();
       initClock();
+      initAutoTheme();
     });
 
     function preloadWallpaper() {
-      const wallpaperUrl = 'https://api.dujin.org/bing/1920.php';
       const img = new Image();
-      img.onload = () => {
-        wallpaperImageUrl = wallpaperUrl + '?t=' + Date.now();
-        wallpaperPreloaded = true;
-      };
-      img.onerror = () => {
-        wallpaperPreloaded = false;
-      };
-      img.src = wallpaperUrl + '?t=' + Date.now();
+      img.onload = () => { wallpaperImageUrl = `https://api.dujin.org/bing/1920.php?t=${Date.now()}`; wallpaperPreloaded = true; };
+      img.onerror = () => { wallpaperPreloaded = false; };
+      img.src = 'https://api.dujin.org/bing/1920.php?t=' + Date.now();
     }
 
     function loadPreferences() {
       const saved = JSON.parse(localStorage.getItem('asys_theme_prefs') || '{}');
-      
-      // 🔧 默认位置改为 25
-      const mode = saved.mode !== undefined ? saved.mode : 'light';
-      const color = saved.color !== undefined ? saved.color : 'blue';
-      const wallpaper = saved.wallpaper !== undefined ? saved.wallpaper : false;
-      const engine = saved.engine !== undefined ? saved.engine : 'bing';
-      const position = saved.position !== undefined ? saved.position : 25;
-      
+      const mode = saved.mode ?? 'light';
+      const color = saved.color ?? 'blue';
+      const wallpaper = saved.wallpaper ?? false;
+      const engine = saved.engine ?? 'bing';
+      const position = saved.position ?? 25;
+      autoThemeMode = saved.autoTheme ?? 'off';
+
       currentEngine = engine;
       localStorage.setItem('asys_engine', engine);
-      
+
       applyTheme(mode, color);
       updateToggleState(mode);
       updateColorActive(color);
       updateWallpaperToggle(wallpaper);
+      updateAutoThemeUI(autoThemeMode);
       setActiveEngine(engine);
       updateSearchPosition(position);
-      
-      if (wallpaper) {
-        document.body.classList.add('wallpaper-enabled');
-        showPreloadedWallpaper();
-      } else {
-        document.body.classList.remove('wallpaper-enabled');
-      }
+
+      if (wallpaper) { document.body.classList.add('wallpaper-enabled'); showPreloadedWallpaper(); }
+      else { document.body.classList.remove('wallpaper-enabled'); }
+
+      // 恢复时间设置
+      document.getElementById('darkTime').value = saved.darkTime ?? '18:00';
+      document.getElementById('lightTime').value = saved.lightTime ?? '06:00';
     }
 
     function showPreloadedWallpaper() {
-      const wallpaperBg = document.getElementById('wallpaperBg');
-      const wallpaperImg = document.getElementById('wallpaperImg');
-      if (!wallpaperImg) return;
+      const bg = document.getElementById('wallpaperBg'), img = document.getElementById('wallpaperImg');
+      if (!img) return;
+      if (wallpaperPreloaded && wallpaperImageUrl) { img.src = wallpaperImageUrl; bg.classList.add('show'); }
+      else { const i = new Image(); i.onload = () => { img.src = wallpaperImageUrl || 'https://api.dujin.org/bing/1920.php'; bg.classList.add('show'); }; i.src = wallpaperImageUrl || 'https://api.dujin.org/bing/1920.php'; }
+    }
+
+    function initAutoTheme() {
+      updateAutoThemeUI(autoThemeMode);
+      applyAutoThemeLogic();
+      setupAutoThemeListeners();
+    }
+
+    function updateAutoThemeUI(mode) {
+      document.querySelectorAll('input[name="autoTheme"]').forEach(r => r.checked = r.value === mode);
+      const toggle = document.getElementById('darkModeToggle');
+      const timeSettings = document.getElementById('timeSettings');
+      const disabled = mode !== 'off';
       
-      if (wallpaperPreloaded && wallpaperImageUrl) {
-        wallpaperImg.src = wallpaperImageUrl;
-        wallpaperBg.classList.add('show');
-        updateWallpaperBrightness();
+      // 控制手动开关
+      toggle.disabled = disabled;
+      toggle.parentElement.style.opacity = disabled ? '0.4' : '1';
+      toggle.parentElement.style.pointerEvents = disabled ? 'none' : 'auto';
+
+      // 控制时间设置显示
+      if (mode === 'time') {
+        timeSettings.classList.add('show');
       } else {
-        const img = new Image();
-        img.onload = () => {
-          wallpaperImg.src = wallpaperImageUrl || 'https://api.dujin.org/bing/1920.php?t=' + Date.now();
-          wallpaperBg.classList.add('show');
-          updateWallpaperBrightness();
-        };
-        img.src = wallpaperImageUrl || 'https://api.dujin.org/bing/1920.php?t=' + Date.now();
+        timeSettings.classList.remove('show');
       }
+    }
+
+    function applyAutoThemeLogic() {
+      let isDark = false;
+      const saved = JSON.parse(localStorage.getItem('asys_theme_prefs') || '{}');
+      
+      if (autoThemeMode === 'system') {
+          isDark = darkModeMediaQuery.matches;
+      } else if (autoThemeMode === 'time') {
+          const darkTime = document.getElementById('darkTime').value || '18:00';
+          const lightTime = document.getElementById('lightTime').value || '06:00';
+          const now = new Date();
+          const currentMinutes = now.getHours() * 60 + now.getMinutes();
+          
+          const [dH, dM] = darkTime.split(':').map(Number);
+          const [lH, lM] = lightTime.split(':').map(Number);
+          const darkStart = dH * 60 + dM;
+          const lightStart = lH * 60 + lM;
+
+          if (darkStart === lightStart) {
+              // 如果时间一样，视为全天浅色（或者全天深色，这里按逻辑处理）
+              isDark = false; 
+          } else if (darkStart < lightStart) {
+              // 例：10:00 到 15:00 深色
+              isDark = currentMinutes >= darkStart && currentMinutes < lightStart;
+          } else {
+              // 例：18:00 到 06:00 深色 (默认)
+              isDark = currentMinutes >= darkStart || currentMinutes < lightStart;
+          }
+      }
+      
+      const toggle = document.getElementById('darkModeToggle');
+      toggle.checked = isDark;
+      applyTheme(isDark ? 'dark' : 'light', getCurrentColor());
+      if (document.getElementById('wallpaperToggle').checked) updateWallpaperBrightness();
+    }
+
+    function setupAutoThemeListeners() {
+      darkModeMediaQuery.addEventListener('change', () => { if (autoThemeMode === 'system') applyAutoThemeLogic(); });
+      
+      document.querySelectorAll('input[name="autoTheme"]').forEach(r => {
+        r.addEventListener('change', (e) => {
+          autoThemeMode = e.target.value;
+          updateAutoThemeUI(autoThemeMode);
+          applyAutoThemeLogic();
+          savePreferences(getCurrentMode(), getCurrentColor());
+        });
+      });
+
+      // 监听时间变化
+      const updateTime = () => {
+          if(autoThemeMode === 'time') applyAutoThemeLogic();
+          savePreferences(getCurrentMode(), getCurrentColor());
+      };
+      document.getElementById('darkTime').addEventListener('input', updateTime);
+      document.getElementById('lightTime').addEventListener('input', updateTime);
+
+      if (autoThemeTimer) clearInterval(autoThemeTimer);
+      autoThemeTimer = setInterval(() => { if (autoThemeMode === 'time') applyAutoThemeLogic(); }, 60000);
     }
 
     function bindEvents() {
@@ -1123,297 +731,148 @@
       });
 
       document.addEventListener('click', (e) => {
-        if (!themeToggle.contains(e.target) && !themePanel.contains(e.target)) {
-          themePanel.classList.remove('show');
-          themeToggle.setAttribute('aria-expanded', 'false');
-        }
-        if (!searchInput.contains(e.target) && !suggestionsContainer.contains(e.target)) {
-          hideSuggestions();
-        }
+        if (!themeToggle.contains(e.target) && !themePanel.contains(e.target)) { themePanel.classList.remove('show'); themeToggle.setAttribute('aria-expanded', 'false'); }
+        if (!searchInput.contains(e.target) && !suggestionsContainer.contains(e.target)) hideSuggestions();
       });
 
       darkModeToggle.addEventListener('change', (e) => {
+        if (autoThemeMode !== 'off') return;
         const mode = e.target.checked ? 'dark' : 'light';
-        const color = getCurrentColor();
-        applyTheme(mode, color);
-        savePreferences(mode, color);
+        applyTheme(mode, getCurrentColor());
+        savePreferences(mode, getCurrentColor());
         if (wallpaperToggle.checked) updateWallpaperBrightness();
       });
 
       wallpaperToggle.addEventListener('change', (e) => {
         const enabled = e.target.checked;
         savePreferences(getCurrentMode(), getCurrentColor(), enabled);
-        if (enabled) {
-          document.body.classList.add('wallpaper-enabled');
-          showPreloadedWallpaper();
-        } else {
-          document.body.classList.remove('wallpaper-enabled');
-          wallpaperBg.classList.remove('show');
-          const img = document.getElementById('wallpaperImg');
-          if (img) img.src = '';
-        }
+        if (enabled) { document.body.classList.add('wallpaper-enabled'); showPreloadedWallpaper(); }
+        else { document.body.classList.remove('wallpaper-enabled'); wallpaperBg.classList.remove('show'); const i = document.getElementById('wallpaperImg'); if(i) i.src=''; }
       });
 
-      positionSlider.addEventListener('input', (e) => {
-        const value = parseInt(e.target.value);
-        updateSearchPosition(value);
-        updatePositionDisplay(value);
-      });
-      
-      positionSlider.addEventListener('change', (e) => {
-        const value = parseInt(e.target.value);
-        savePreferences(getCurrentMode(), getCurrentColor(), null, null, value);
-      });
+      positionSlider.addEventListener('input', (e) => { const v = parseInt(e.target.value); updateSearchPosition(v); updatePositionDisplay(v); });
+      positionSlider.addEventListener('change', (e) => { savePreferences(getCurrentMode(), getCurrentColor(), null, null, parseInt(e.target.value)); });
 
       document.querySelectorAll('.color-btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-          const color = e.currentTarget.dataset.color;
-          const mode = getCurrentMode();
-          applyTheme(mode, color);
-          savePreferences(mode, color);
-          updateColorActive(color);
-        });
+        btn.addEventListener('click', (e) => { const c = e.currentTarget.dataset.color; applyTheme(getCurrentMode(), c); savePreferences(getCurrentMode(), c); updateColorActive(c); });
       });
       
       document.querySelectorAll('.engine-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
-          const engine = e.currentTarget.dataset.engine;
-          currentEngine = engine;
-          localStorage.setItem('asys_engine', engine);
-          setActiveEngine(engine);
-          savePreferences(getCurrentMode(), getCurrentColor(), null, engine);
+          currentEngine = btn.dataset.engine; localStorage.setItem('asys_engine', currentEngine);
+          setActiveEngine(currentEngine); savePreferences(getCurrentMode(), getCurrentColor(), null, currentEngine);
           if (searchInput.value.trim()) fetchSuggestions(searchInput.value.trim());
         });
       });
       
       searchInput.addEventListener('input', (e) => {
-        const query = e.target.value.trim();
+        const q = e.target.value.trim();
         if (debounceTimer) clearTimeout(debounceTimer);
         cleanupScript();
-        if (query.length === 0) { hideSuggestions(); return; }
-        debounceTimer = setTimeout(() => fetchSuggestions(query), 300);
+        if (!q.length) { hideSuggestions(); return; }
+        debounceTimer = setTimeout(() => fetchSuggestions(q), 300);
       });
       
       searchInput.addEventListener('focus', () => {
         wallpaperBg.classList.add('blurred');
-        const query = searchInput.value.trim();
-        if (query.length > 0 && currentSuggestions.length > 0) showSuggestions();
+        const q = searchInput.value.trim();
+        if (q.length > 0 && currentSuggestions.length > 0) showSuggestions();
       });
-      
-      searchInput.addEventListener('blur', () => {
-        wallpaperBg.classList.remove('blurred');
-      });
+      searchInput.addEventListener('blur', () => wallpaperBg.classList.remove('blurred'));
       
       searchInput.addEventListener('keydown', (e) => {
-        if (currentSuggestions.length === 0) return;
-        switch (e.key) {
-          case 'ArrowDown':
-            e.preventDefault();
-            selectedSuggestionIndex = Math.min(selectedSuggestionIndex + 1, currentSuggestions.length - 1);
-            updateSuggestionHighlight();
-            break;
-          case 'ArrowUp':
-            e.preventDefault();
-            selectedSuggestionIndex = Math.max(selectedSuggestionIndex - 1, -1);
-            updateSuggestionHighlight();
-            break;
-          case 'Enter':
-            if (selectedSuggestionIndex >= 0 && selectedSuggestionIndex < currentSuggestions.length) {
-              e.preventDefault();
-              executeSearch(currentSuggestions[selectedSuggestionIndex]);
-            }
-            break;
-          case 'Escape':
-            hideSuggestions();
-            searchInput.blur();
-            break;
-        }
+        if (!currentSuggestions.length) return;
+        if (e.key === 'ArrowDown') { e.preventDefault(); selectedSuggestionIndex = Math.min(selectedSuggestionIndex+1, currentSuggestions.length-1); updateSuggestionHighlight(); }
+        else if (e.key === 'ArrowUp') { e.preventDefault(); selectedSuggestionIndex = Math.max(selectedSuggestionIndex-1, -1); updateSuggestionHighlight(); }
+        else if (e.key === 'Enter' && selectedSuggestionIndex >= 0) { e.preventDefault(); executeSearch(currentSuggestions[selectedSuggestionIndex]); }
+        else if (e.key === 'Escape') { hideSuggestions(); searchInput.blur(); }
       });
       
-      searchInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter' && selectedSuggestionIndex < 0) {
-          e.preventDefault();
-          executeSearch(searchInput.value.trim());
-        }
-      });
-      
+      searchInput.addEventListener('keypress', (e) => { if (e.key === 'Enter' && selectedSuggestionIndex < 0) { e.preventDefault(); executeSearch(searchInput.value.trim()); } });
       searchIconBtn.addEventListener('click', () => executeSearch(searchInput.value.trim()));
     }
 
-    function updateSearchPosition(percent) {
-      const mainContent = document.getElementById('mainContent');
-      mainContent.style.setProperty('--search-vertical-position', `${percent}vh`);
-    }
-
-    function updatePositionDisplay(percent) {
-      const positionValue = document.getElementById('positionValue');
-      // 🔧 判断默认值改为 25
-      const label = percent === 25 ? ' (默认)' : '';
-      positionValue.textContent = `${percent}%${label}`;
-    }
-
+    function updateSearchPosition(p) { document.getElementById('mainContent').style.setProperty('--search-vertical-position', `${p}vh`); }
+    function updatePositionDisplay(p) { document.getElementById('positionValue').textContent = `${p}%${p===25?' (默认)':''}`; }
     function updateWallpaperBrightness() {}
 
     function fetchSuggestions(query) {
-      const engine = currentEngine;
-      const suggestionsList = document.getElementById('suggestionsList');
-      const suggestionsContainer = document.getElementById('suggestionsContainer');
-      
+      const engine = currentEngine, list = document.getElementById('suggestionsList'), box = document.getElementById('suggestionsContainer');
       cleanupScript();
-      suggestionsList.innerHTML = `
-        <div class="suggestions-loading">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l4 2"></path></svg>
-          加载中...
-        </div>`;
-      showSuggestions();
-      
-      const callbackName = 'suggest_' + engine + '_' + Date.now();
-      window[callbackName] = (data) => {
-        cleanupScript();
-        delete window[callbackName];
-        let suggestions = [];
-        if (engine === 'baidu') suggestions = data.s || [];
-        else if (engine === 'google') suggestions = Array.isArray(data[1]) ? data[1] : [];
-        else if (engine === 'bing') suggestions = Array.isArray(data[1]) ? data[1] : [];
-        else if (engine === 'duckduckgo') suggestions = data.map(item => item.phrase || item);
-        else if (engine === 'yandex') suggestions = Array.isArray(data[1]) ? data[1].map(item => item[0] || item) : [];
-        
-        currentSuggestions = suggestions.slice(0, 10);
-        selectedSuggestionIndex = -1;
-        
-        if (currentSuggestions.length > 0) { renderSuggestions(currentSuggestions, query); showSuggestions(); }
-        else { hideSuggestions(); }
+      list.innerHTML = `<div class="suggestions-loading"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l4 2"></path></svg>加载中...</div>`;
+      box.classList.add('show');
+      const cb = `s_${engine}_${Date.now()}`;
+      window[cb] = (data) => {
+        cleanupScript(); delete window[cb];
+        let s = [];
+        if(engine==='baidu') s=data.s||[]; else if(engine==='google'||engine==='bing') s=Array.isArray(data[1])?data[1]:[]; else if(engine==='duckduckgo') s=data.map(i=>i.phrase||i); else if(engine==='yandex') s=Array.isArray(data[1])?data[1].map(i=>i[0]||i):[];
+        currentSuggestions=s.slice(0,10); selectedSuggestionIndex=-1;
+        if(currentSuggestions.length){ renderSuggestions(currentSuggestions, query); box.classList.add('show'); } else hideSuggestions();
       };
+      let u='';
+      if(engine==='baidu') u=`https://suggestion.baidu.com/su?wd=${encodeURIComponent(query)}&cb=${cb}`;
+      else if(engine==='google') u=`https://suggestqueries.google.com/complete/search?client=chrome&q=${encodeURIComponent(query)}&callback=${cb}`;
+      else if(engine==='bing') u=`https://www.bing.com/osjson.aspx?query=${encodeURIComponent(query)}&JsonType=callback&JsonCallback=${cb}`;
+      else if(engine==='duckduckgo') u=`https://duckduckgo.com/ac/?q=${encodeURIComponent(query)}&callback=${cb}`;
+      else if(engine==='yandex') u=`https://suggest.yandex.com/suggest-ff.cgi?part=${encodeURIComponent(query)}&callback=${cb}`;
       
-      let scriptUrl = '';
-      if (engine === 'baidu') scriptUrl = `https://suggestion.baidu.com/su?wd=${encodeURIComponent(query)}&cb=${callbackName}`;
-      else if (engine === 'google') scriptUrl = `https://suggestqueries.google.com/complete/search?client=chrome&q=${encodeURIComponent(query)}&callback=${callbackName}`;
-      else if (engine === 'bing') scriptUrl = `https://www.bing.com/osjson.aspx?query=${encodeURIComponent(query)}&JsonType=callback&JsonCallback=${callbackName}`;
-      else if (engine === 'duckduckgo') scriptUrl = `https://duckduckgo.com/ac/?q=${encodeURIComponent(query)}&callback=${callbackName}`;
-      else if (engine === 'yandex') scriptUrl = `https://suggest.yandex.com/suggest-ff.cgi?part=${encodeURIComponent(query)}&callback=${callbackName}`;
-      
-      const script = document.createElement('script');
-      script.src = scriptUrl;
-      script.onerror = () => { cleanupScript(); delete window[callbackName]; hideSuggestions(); };
-      currentScript = script;
-      document.body.appendChild(script);
-      
-      setTimeout(() => {
-        if (currentScript === script) { cleanupScript(); delete window[callbackName]; hideSuggestions(); }
-      }, 5000);
+      const script = document.createElement('script'); script.src = u;
+      script.onerror = () => { cleanupScript(); delete window[cb]; hideSuggestions(); };
+      currentScript = script; document.body.appendChild(script);
+      setTimeout(() => { if(currentScript===script){ cleanupScript(); delete window[cb]; hideSuggestions(); } }, 5000);
     }
-
-    function cleanupScript() {
-      if (currentScript && currentScript.parentNode) {
-        document.body.removeChild(currentScript);
-        currentScript = null;
-      }
-    }
-
-    function renderSuggestions(suggestions, query) {
-      const suggestionsList = document.getElementById('suggestionsList');
-      suggestionsList.innerHTML = suggestions.map((item, index) => `
-        <div class="suggestion-item" data-index="${index}" data-suggestion="${escapeHtml(item)}">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-          <span>${highlightMatch(item, query)}</span>
-        </div>`).join('');
-        
-      suggestionsList.querySelectorAll('.suggestion-item').forEach(item => {
-        item.addEventListener('click', (e) => {
-          e.stopPropagation();
-          executeSearch(item.dataset.suggestion);
-        });
-        item.addEventListener('mouseenter', () => {
-          selectedSuggestionIndex = parseInt(item.dataset.index);
-          updateSuggestionHighlight();
-        });
+    function cleanupScript() { if(currentScript&&currentScript.parentNode){ document.body.removeChild(currentScript); currentScript=null; } }
+    function renderSuggestions(s, q) {
+      const l = document.getElementById('suggestionsList');
+      l.innerHTML = s.map((t,i) => `<div class="suggestion-item" data-index="${i}" data-suggestion="${escapeHtml(t)}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg><span>${highlightMatch(t,q)}</span></div>`).join('');
+      l.querySelectorAll('.suggestion-item').forEach(el => {
+        el.onclick = (e) => { e.stopPropagation(); executeSearch(el.dataset.suggestion); };
+        el.onmouseenter = () => { selectedSuggestionIndex=parseInt(el.dataset.index); updateSuggestionHighlight(); };
       });
     }
-
-    function highlightMatch(text, query) {
-      if (!query) return escapeHtml(text);
-      const regex = new RegExp(`(${escapeRegex(query)})`, 'gi');
-      return escapeHtml(text).replace(regex, '<span class="highlight">$1</span>');
-    }
-
+    function highlightMatch(t, q) { if(!q) return escapeHtml(t); return escapeHtml(t).replace(new RegExp(`(${escapeRegex(q)})`,'gi'),'<span class="highlight">$1</span>'); }
     function updateSuggestionHighlight() {
       const items = document.getElementById('suggestionsList').querySelectorAll('.suggestion-item');
-      items.forEach((item, index) => {
-        if (index === selectedSuggestionIndex) {
-          item.classList.add('active');
-          item.scrollIntoView({ block: 'nearest' });
-        } else {
-          item.classList.remove('active');
-        }
-      });
-      if (selectedSuggestionIndex >= 0 && selectedSuggestionIndex < currentSuggestions.length) {
-        document.getElementById('searchInput').value = currentSuggestions[selectedSuggestionIndex];
-      }
+      items.forEach((el,i) => { if(i===selectedSuggestionIndex){ el.classList.add('active'); el.scrollIntoView({block:'nearest'}); } else el.classList.remove('active'); });
+      if(selectedSuggestionIndex>=0 && selectedSuggestionIndex<currentSuggestions.length) document.getElementById('searchInput').value = currentSuggestions[selectedSuggestionIndex];
     }
-
     function showSuggestions() { document.getElementById('suggestionsContainer').classList.add('show'); }
-    function hideSuggestions() { 
-      document.getElementById('suggestionsContainer').classList.remove('show'); 
-      selectedSuggestionIndex = -1; currentSuggestions = [];
-    }
-
-    function escapeHtml(text) { const div = document.createElement('div'); div.textContent = text; return div.innerHTML; }
-    function escapeRegex(string) { return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
+    function hideSuggestions() { document.getElementById('suggestionsContainer').classList.remove('show'); selectedSuggestionIndex=-1; currentSuggestions=[]; }
+    function escapeHtml(t) { const d=document.createElement('div'); d.textContent=t; return d.innerHTML; }
+    function escapeRegex(s) { return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
 
     function initClock() {
-      const clockEl = document.getElementById('clockDisplay');
-      updateClockDisplay(clockEl, new Date());
-      setInterval(() => updateClockDisplay(clockEl, new Date()), 1000);
-      fetch('https://worldtimeapi.org/api/ip', { signal: AbortSignal.timeout(3000) })
-        .then(res => res.ok ? res.json() : Promise.reject())
-        .then(data => updateClockDisplay(clockEl, new Date(data.datetime)))
-        .catch(() => {});
+      const c = document.getElementById('clockDisplay');
+      const upd = () => c.textContent = `${String(new Date().getHours()).padStart(2,'0')}:${String(new Date().getMinutes()).padStart(2,'0')}`;
+      upd(); setInterval(upd, 1000);
+      fetch('https://worldtimeapi.org/api/ip', { signal: AbortSignal.timeout(3000) }).then(r=>r.ok?r.json():Promise.reject()).then(d=>upd(new Date(d.datetime))).catch(()=>{});
     }
 
-    function updateClockDisplay(el, date) {
-      el.textContent = `${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
-    }
-
-    function applyTheme(mode, color) {
-      document.documentElement.setAttribute('data-theme', `${mode}-${color}`);
-    }
-
-    function getCurrentMode() { return document.documentElement.getAttribute('data-theme')?.startsWith('dark') ? 'dark' : 'light'; }
-    function getCurrentColor() { return document.documentElement.getAttribute('data-theme')?.split('-')[1] || 'blue'; }
-
-    function updateToggleState(mode) { document.getElementById('darkModeToggle').checked = (mode === 'dark'); }
-    function updateColorActive(color) {
-      document.querySelectorAll('.color-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.color === color));
-    }
-    function updateWallpaperToggle(enabled) { document.getElementById('wallpaperToggle').checked = enabled; }
-    function setActiveEngine(engine) {
-      document.querySelectorAll('.engine-btn').forEach(btn => {
-        const isActive = btn.dataset.engine === engine;
-        btn.classList.toggle('active', isActive);
-        btn.setAttribute('aria-selected', isActive);
-      });
-    }
-
-    // 🔧 默认值改为 25
+    function applyTheme(mode, color) { document.documentElement.setAttribute('data-theme', `${mode}-${color}`); }
+    function getCurrentMode() { return document.documentElement.getAttribute('data-theme')?.startsWith('dark')?'dark':'light'; }
+    function getCurrentColor() { return document.documentElement.getAttribute('data-theme')?.split('-')[1]||'blue'; }
+    function updateToggleState(mode) { document.getElementById('darkModeToggle').checked = (mode==='dark'); }
+    function updateColorActive(color) { document.querySelectorAll('.color-btn').forEach(b=>b.classList.toggle('active', b.dataset.color===color)); }
+    function updateWallpaperToggle(en) { document.getElementById('wallpaperToggle').checked = en; }
+    function setActiveEngine(engine) { document.querySelectorAll('.engine-btn').forEach(b=>{ const a=b.dataset.engine===engine; b.classList.toggle('active',a); b.setAttribute('aria-selected',a); }); }
+    
     function savePreferences(mode, color, wallpaper, engine, position) {
-      const saved = JSON.parse(localStorage.getItem('asys_theme_prefs') || '{}');
-      const prefs = {
-        mode: mode ?? saved.mode ?? 'light',
-        color: color ?? saved.color ?? 'blue',
-        wallpaper: wallpaper ?? saved.wallpaper ?? false,
-        engine: engine ?? saved.engine ?? 'bing',
-        position: position ?? saved.position ?? 25
+      const s = JSON.parse(localStorage.getItem('asys_theme_prefs')||'{}');
+      const p = { 
+        mode: mode??s.mode??'light', color: color??s.color??'blue', 
+        wallpaper: wallpaper??s.wallpaper??false, engine: engine??s.engine??'bing', 
+        position: position??s.position??25, autoTheme: s.autoTheme||'off',
+        darkTime: document.getElementById('darkTime')?.value || '18:00',
+        lightTime: document.getElementById('lightTime')?.value || '06:00'
       };
-      localStorage.setItem('asys_theme_prefs', JSON.stringify(prefs));
-      if (engine) localStorage.setItem('asys_engine', engine);
+      localStorage.setItem('asys_theme_prefs', JSON.stringify(p));
+      if(engine) localStorage.setItem('asys_engine', engine);
     }
-
-    function executeSearch(query) {
-      if (query) {
-        window.open(searchEngines[currentEngine].search + encodeURIComponent(query), '_blank', 'noopener,noreferrer');
-        document.getElementById('searchInput').blur();
-        hideSuggestions();
-      }
+    
+    function executeSearch(q) {
+      if(!q) return;
+      window.open(searchEngines[currentEngine].search + encodeURIComponent(q), '_blank', 'noopener,noreferrer');
+      document.getElementById('searchInput').blur(); hideSuggestions();
     }
   </script>
 </body>
