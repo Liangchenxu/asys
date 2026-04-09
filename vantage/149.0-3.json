@@ -1,0 +1,25 @@
+{
+    "version": "149.0-3 正式版",
+    
+    "links": {
+        "windows_exe": "https://dl.asystech.cn/d/asys/vantage/149.0-3/vantage-149.0-3.win64.installer.exe",
+
+        "mac_intel_dmg": "https://dl.asystech.cn/d/asys/vantage/149.0-3/vantage-149.0-3.en-US.mac-intel.dmg",
+        "mac_apple_dmg": "https://dl.asystech.cn/d/asys/vantage/149.0-3/vantage-149.0-3.en-US.mac-apple.dmg",
+
+        "linux_x64_deb": "https://dl.asystech.cn/d/asys/vantage/149.0-3/vantage_149.0-3_amd64.deb",
+        "linux_arm64_deb": "https://dl.asystech.cn/d/asys/vantage/149.0-3/vantage_149.0-3_arm64.deb",
+
+        "linux_x64_rpm": "https://dl.asystech.cn/d/asys/vantage/149.0-3/vantage-149.0-3.x86_64.rpm",
+        "linux_arm64_rpm": "https://dl.asystech.cn/d/asys/vantage/149.0-3/vantage-149.0-3.aarch64.rpm",
+
+        "linux_x64_appimage": "https://dl.asystech.cn/d/asys/vantage/149.0-3/vantage-149.0-3.x86_64.AppImage",
+        "linux_arm64_appimage": "https://dl.asystech.cn/d/asys/vantage/149.0-3/vantage-149.0-3.aarch64.AppImage",
+
+        "linux_x64_tar": "https://dl.asystech.cn/d/asys/vantage/149.0-3/vantage-149.0-3.x64_portable.tar.gz",
+        "linux_arm64_tar": "https://dl.asystech.cn/d/asys/vantage/149.0-3/vantage-149.0-3.aarch64.portable.tar.gz",
+
+        "linux_x64_tar_xz": "",
+        "linux_arm64_tar_xz": "https://dl.asystech.cn/d/asys/vantage/149.0-3/vantage-149.0-3.en-US.linux-aarch64.tar.xz"
+    }
+}

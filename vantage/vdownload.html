@@ -6,35 +6,9 @@
     <title>下载 Vantage - ASYS 科技</title>
     <link rel="shortcut icon" href="../img/asys.ico" type="image/x-icon">
     <style>
-        :root {
-            --vantage-blue: #0078d4;
-            --bg-main: #ffffff;
-            --bg-hero: #f9fafb;
-            --text-main: #111827;
-            --text-sub: #4b5563;
-            --border: #e5e7eb;
-        }
-
-        body {
-            margin: 0;
-            font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
-            background-color: var(--bg-main);
-            color: var(--text-main);
-            line-height: 1.6;
-        }
-
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 15%;
-            background: #fff;
-            border-bottom: 1px solid var(--border);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
+        :root { --vantage-blue: #0078d4; --bg-main: #ffffff; --bg-hero: #f9fafb; --text-main: #111827; --text-sub: #4b5563; --border: #e5e7eb; }
+        body { margin: 0; font-family: -apple-system, "Segoe UI", Roboto, sans-serif; background-color: var(--bg-main); color: var(--text-main); line-height: 1.6; }
+        nav { display: flex; justify-content: space-between; align-items: center; padding: 1rem 15%; background: #fff; border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; }
         .nav-left { display: flex; align-items: center; gap: 2rem; }
         .nav-logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.3rem; text-decoration: none; color: var(--text-main); }
         .nav-logo img { height: 28px; display: block; }
@@ -44,179 +18,75 @@
         .asys-main-link { display: flex; align-items: center; text-decoration: none; transition: opacity 0.2s; padding: 5px; }
         .asys-main-link:hover { opacity: 0.7; }
         .asys-main-link img { height: 38px; display: block; }
-
-        .page-header {
-            text-align: center;
-            padding: 60px 20px 40px;
-            background-color: var(--bg-hero);
-            border-bottom: 1px solid var(--border);
-        }
+        .page-header { text-align: center; padding: 60px 20px 40px; background-color: var(--bg-hero); border-bottom: 1px solid var(--border); }
         .page-header h1 { font-size: 3rem; margin: 0 0 15px 0; font-weight: 800; }
         .page-header p { font-size: 1.1rem; color: var(--text-sub); margin: 0; max-width: 600px; margin: 0 auto; }
-
-        .warning-box {
-            background-color: #fffbeb;
-            border: 1px solid #f59e0b;
-            border-radius: 8px;
-            padding: 15px 20px;
-            margin: 25px auto 0;
-            max-width: 800px;
-            color: #b45309;
-            text-align: left;
-            font-size: 0.95rem;
-            line-height: 1.6;
-        }
-        .warning-box a {
-            color: #d97706;
-            font-weight: bold;
-            text-decoration: underline;
-        }
-
-        .download-container {
-            max-width: 1100px;
-            margin: 60px auto;
-            padding: 0 20px;
-        }
-
-        .os-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-        }
-
-        .os-card {
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 40px 30px;
-            text-align: center;
-            background: #fff;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .os-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-        }
-
-        .os-icon-img {
-            width: 55px;  
-            height: 55px;
-            margin: 0 auto 20px auto;
-            display: block;
-            object-fit: contain;
-        }
-
-        .os-title {
-            font-size: 1.5rem;
-            margin-bottom: 25px;
-            font-weight: 700;
-        }
-
-        .pkg-select {
-            width: 100%;
-            padding: 10px 15px;
-            margin-bottom: 15px;
-            border-radius: 8px;
-            border: 1px solid var(--border);
-            background-color: #f9fafb;
-            font-size: 0.95rem;
-            color: var(--text-main);
-            outline: none;
-            cursor: pointer;
-            font-family: inherit;
-        }
-        .pkg-select:focus {
-            border-color: var(--vantage-blue);
-        }
-
-        .btn-group {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            margin-top: auto;
-        }
-
-        .btn-primary {
-            display: block;
-            padding: 12px 20px;
-            background: var(--vantage-blue);
-            color: #fff;
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: 600;
-            transition: 0.2s;
-        }
-        .btn-primary:hover { background: #006abc; }
-
-        .btn-secondary {
-            display: block;
-            padding: 12px 20px;
-            background: #f3f4f6;
-            color: var(--text-main);
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: 600;
-            transition: 0.2s;
-        }
-        .btn-secondary:hover { background: #e5e7eb; }
         
-        .btn-warning-dark {
-            display: block;
-            padding: 12px 20px;
-            background: #d97706;
-            color: #fff;
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: 600;
-            transition: 0.2s;
+        .auto-btn-wrapper { margin-top: 35px; margin-bottom: 10px; }
+        .btn-smart { display: inline-flex; align-items: center; gap: 10px; padding: 16px 45px; font-size: 1.25rem; border-radius: 50px; font-weight: 700; background: var(--vantage-blue); color: #fff; text-decoration: none; transition: all 0.3s ease; box-shadow: 0 8px 20px -5px rgba(0, 120, 212, 0.4); }
+        .btn-smart:hover { background: #006abc; transform: translateY(-3px); box-shadow: 0 12px 25px -5px rgba(0, 120, 212, 0.5); }
+        
+        .warning-box { background-color: #fffbeb; border: 1px solid #f59e0b; border-radius: 8px; padding: 15px 20px; margin: 25px auto 0; max-width: 800px; color: #b45309; text-align: left; font-size: 0.95rem; line-height: 1.6; }
+        .warning-box a { color: #d97706; font-weight: bold; text-decoration: underline; }
+        .download-container { max-width: 1100px; margin: 60px auto; padding: 0 20px; }
+        
+        .os-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; }
+        
+        .os-card { 
+            border: 1px solid var(--border); 
+            border-radius: 12px; 
+            padding: 40px 30px; 
+            text-align: center; 
+            background: #fff; 
+            transition: transform 0.3s ease, box-shadow 0.3s ease; 
+            display: flex; 
+            flex-direction: column; 
         }
+        .os-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
+        .os-icon-img { width: 55px; height: 55px; margin: 0 auto 20px auto; display: block; object-fit: contain; }
+        .os-title { font-size: 1.5rem; margin-bottom: 25px; font-weight: 700; }
+        
+        .pkg-select { 
+            width: 100%; 
+            padding: 10px 15px; 
+            margin-bottom: 12px; 
+            border-radius: 8px; 
+            border: 1px solid var(--border); 
+            background-color: #f9fafb; 
+            font-size: 0.95rem; 
+            color: var(--text-main); 
+            outline: none; 
+            cursor: pointer; 
+            font-family: inherit; 
+            box-sizing: border-box;
+        }
+        .pkg-select:focus { border-color: var(--vantage-blue); }
+        
+        .btn-group { display: flex; flex-direction: column; gap: 12px; margin-top: auto; }
+        .btn-primary { display: block; padding: 12px 20px; background: var(--vantage-blue); color: #fff; text-decoration: none; border-radius: 8px; font-weight: 600; transition: 0.2s; }
+        .btn-primary:hover { background: #006abc; }
+        .btn-secondary { display: block; padding: 12px 20px; background: #f3f4f6; color: var(--text-main); text-decoration: none; border-radius: 8px; font-weight: 600; transition: 0.2s; }
+        .btn-secondary:hover { background: #e5e7eb; }
+        .btn-warning-dark { display: block; padding: 12px 20px; background: #d97706; color: #fff; text-decoration: none; border-radius: 8px; font-weight: 600; transition: 0.2s; }
         .btn-warning-dark:hover { background: #b45309; }
-
-        .btn-disabled {
-            display: block;
-            padding: 12px 20px;
-            background: #f3f4f6;
-            color: #9ca3af;
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: not-allowed;
-            border: 1px dashed #d1d5db;
-        }
-
+        
         footer { padding: 40px 20px; text-align: center; font-size: 0.85rem; color: #9ca3af; border-top: 1px solid var(--border); margin-top: 60px; }
 
-        /* ————————————————
-           ★★★ 手机端全套适配同步 ★★★
-           ———————————————— */
         @media (max-width: 768px) {
-            /* 1. 导航栏完全对标 vantage.html */
             nav { flex-direction: column; gap: 15px; padding: 15px 20px; position: relative; }
             .nav-left { flex-direction: column; gap: 15px; width: 100%; }
             .nav-links { flex-wrap: wrap; justify-content: center; gap: 10px; width: 100%; }
             .nav-links a { background: #f8fafc; padding: 5px 12px; border-radius: 4px; border: 1px solid #e2e8f0; font-size: 14px; }
-            .nav-links a.active { border-color: var(--vantage-blue); color: var(--vantage-blue); }
-            
-            /* 右上角 ASYS 标志控制 */
             .asys-main-link { position: absolute; top: 26px; right: 20px; }
             .asys-main-link img { height: 18px !important; }
-            
-            /* 2. 主体内容适配 */
             .page-header { padding: 40px 15px 30px; }
             .page-header h1 { font-size: 2.2rem; }
-            .page-header p { font-size: 1rem; }
-            
+            .btn-smart { padding: 12px 30px; font-size: 1.1rem; }
             .warning-box { padding: 15px; font-size: 0.85rem; margin-top: 20px; }
-            
             .download-container { margin: 40px auto; padding: 0 15px; }
             .os-grid { grid-template-columns: 1fr; gap: 20px; }
             .os-card { padding: 30px 20px; }
-            .os-icon-img { width: 45px; height: 45px; }
-            .os-title { font-size: 1.3rem; margin-bottom: 20px; }
-            
-            .btn-primary, .btn-secondary, .btn-warning-dark, .btn-disabled { font-size: 0.95rem; padding: 10px 15px; }
+            .btn-primary, .btn-secondary, .btn-warning-dark { font-size: 0.95rem; padding: 10px 15px; }
         }
     </style>
 </head>
@@ -242,7 +112,14 @@
     <header class="page-header">
         <h1>下载 Vantage</h1>
         <p>选择适合您操作系统的版本，体验更易用、更隐私的浏览环境。</p>
-		<div style="font-size: 0.85rem; color: #9ca3af; margin-top: 15px;">最新版本：149.0-2</div>
+        
+        <div class="auto-btn-wrapper" id="smart-download-section">
+            <a href="#" id="smart-btn" class="btn-smart">
+                <span id="smart-icon">⏳</span> <span id="smart-text">正在读取配置...</span>
+            </a>
+        </div>
+
+		<div id="version-display" style="font-size: 0.85rem; color: #9ca3af; margin-top: 25px;">正在加载版本信息...</div>
 		<div style="font-size: 0.85rem; color: #9ca3af; margin-top: 15px;">Vantage是自由软件，不提供任何担保</div>
         
         <div class="warning-box">
@@ -259,27 +136,34 @@
             <div class="os-card">
                 <img src="../img/windows11.png" alt="Windows" class="os-icon-img">
                 <div class="os-title">Windows</div>
+                <div style="font-size: 0.9rem; color: var(--text-sub); margin-bottom: 25px;">支持 Windows 10 和 Windows 11</div>
+                
                 <div class="btn-group">
-                    <a href="https://gitee.com/asystech-chen/Vantage/releases/download/V149.0-2/vantage_installer_149.0-2.exe" class="btn-primary">下载</a>
+                    <a href="#" id="btn-win" class="btn-primary">下载安装包</a>
                     <a href="https://pan.quark.cn/s/6a83898d6142" target="_blank" class="btn-secondary">网盘分流 (推荐)</a>
                     <a href="https://github.com/asystech-chen/Vantage/releases/" target="_blank" class="btn-secondary">前往 GitHub 下载</a>
                 </div>
-                <div style="font-size: 0.85rem; color: #9ca3af; margin-top: 15px;">支持 Windows 10 和 Windows 11</div>
             </div>
 
             <div class="os-card">
                 <img src="../img/linuxpg.png" alt="Linux" class="os-icon-img">
                 <div class="os-title">Linux</div>
                 
-                <select id="linux-selector" class="pkg-select">
+                <select id="linux-format" class="pkg-select">
                     <option value="deb">Debian / Ubuntu (.deb)</option>
                     <option value="rpm">Red Hat / Rocky (.rpm)</option>
-                    <option value="appimage">其他 Linux (AppImage)</option>
+                    <option value="appimage">免安装版 (AppImage)</option>
+                    <option value="tar">便携压缩包 (.tar.gz)</option>
+                    <option value="tar_xz">高压缩便携包 (.tar.xz)</option>
+                </select>
+                <select id="linux-arch" class="pkg-select" style="margin-bottom: 25px;">
+                    <option value="x64">64位 (AMD64 / x86_64)</option>
+                    <option value="arm64">ARM 64位 (AArch64)</option>
                 </select>
 
-                <div class="btn-group" id="linux-btn-group">
-                    <a href="https://gitee.com/asystech-chen/Vantage/releases/download/V149.0-2/vantage_149.0-2_amd64.deb" id="linux-primary-btn" class="btn-primary">下载</a>
-                    <a href="https://pan.quark.cn/s/6a83898d6142" target="_blank" id="linux-quark-btn" class="btn-secondary">网盘分流 (推荐)</a>
+                <div class="btn-group">
+                    <a href="#" id="btn-linux" class="btn-primary">下载</a>
+                    <a href="https://pan.quark.cn/s/6a83898d6142" target="_blank" class="btn-secondary">网盘分流 (推荐)</a>
                     <a href="https://github.com/asystech-chen/Vantage/releases/" target="_blank" class="btn-secondary">前往 GitHub 下载</a>
                 </div>
             </div>
@@ -287,8 +171,16 @@
             <div class="os-card">
                 <img src="../img/apple.svg" alt="macOS" class="os-icon-img">
                 <div class="os-title">macOS</div>
+                
+                <select id="mac-arch" class="pkg-select" style="margin-bottom: 25px;">
+                    <option value="intel">Intel 芯片版</option>
+                    <option value="apple">Apple (M系列芯片暂不支持运行)</option>
+                </select>
+
                 <div class="btn-group">
-                    <a href="javascript:void(0)" class="btn-disabled">敬请期待</a>
+                    <a href="#" id="btn-mac" class="btn-primary">下载</a>
+                    <a href="https://pan.quark.cn/s/6a83898d6142" target="_blank" class="btn-secondary">网盘分流 (推荐)</a>
+                    <a href="https://github.com/asystech-chen/Vantage/releases/" target="_blank" class="btn-secondary">前往 GitHub 下载</a>
                 </div>
             </div>
 
@@ -298,7 +190,6 @@
                 <p style="font-size: 0.9rem; color: #b45309; margin-bottom: 20px; font-weight: 500;">强大的广告拦截扩展，部分用户可能需要手动下载此文件。</p>
                 <div class="btn-group">
                     <a href="../vantage/uBlock.xpi" class="btn-warning-dark">下载 (.xpi)</a>
-                    <a href="https://pan.quark.cn/s/6a83898d6142" target="_blank" class="btn-secondary">网盘分流下载</a>
                     <a href="../vantage/docs.html#ublock-tutorial" class="btn-secondary" style="background: transparent; border: 1px solid #f59e0b; color: #b45309;">查看安装教程</a>
                 </div>
             </div>
@@ -311,28 +202,97 @@
     </footer>
 
     <script>
-        const linuxSelector = document.getElementById('linux-selector');
-        const linuxPrimaryBtn = document.getElementById('linux-primary-btn');
-        const linuxQuarkBtn = document.getElementById('linux-quark-btn');
+        // ==========================================================
+        // 🚀 核心控制：以后每次更新，只要改下面这个名字就行！
+        // ==========================================================
+        const CURRENT_VERSION = "149.0-3"; 
+        
+        let linkData = {}; 
 
-        linuxSelector.addEventListener('change', function() {
-            const selectedType = this.value;
-            
-            if (selectedType === 'deb') {
-                linuxPrimaryBtn.style.display = 'block'; 
-                linuxPrimaryBtn.textContent = '下载';
-                linuxPrimaryBtn.href = '../vantage/vantage-latest.deb'; 
-                linuxPrimaryBtn.className = 'btn-primary';
-                linuxQuarkBtn.style.display = 'block'; 
-            } 
-            else if (selectedType === 'appimage' || selectedType === 'rpm') {
-                linuxPrimaryBtn.style.display = 'block'; 
-                linuxPrimaryBtn.textContent = '暂不提供直链下载'; 
-                linuxPrimaryBtn.href = 'javascript:void(0)'; 
-                linuxPrimaryBtn.className = 'btn-disabled';
-                linuxQuarkBtn.style.display = 'block'; 
+        fetch(`${CURRENT_VERSION}.json`)
+            .then(res => res.json())
+            .then(data => {
+                linkData = data.links;
+                document.getElementById('version-display').innerHTML = `当前版本：${data.version}`;
+
+                document.getElementById('btn-win').href = linkData.windows_exe || "#";
+
+                // Linux 下拉框联动
+                const linuxFormat = document.getElementById('linux-format');
+                const linuxArch = document.getElementById('linux-arch');
+                const btnLinux = document.getElementById('btn-linux');
+                
+                function updateLinuxBtn() {
+                    const format = linuxFormat.value;
+                    const arch = linuxArch.value;
+                    const jsonKey = `linux_${arch}_${format}`; 
+                    
+                    const targetLink = linkData[jsonKey];
+                    if (targetLink && targetLink !== "") {
+                        btnLinux.href = targetLink;
+                        btnLinux.textContent = "下载";
+                        btnLinux.style.opacity = "1";
+                        btnLinux.style.pointerEvents = "auto";
+                    } else {
+                        btnLinux.href = "javascript:alert('暂无提供此版本下载')";
+                        btnLinux.textContent = "暂无提供";
+                        btnLinux.style.opacity = "0.5";
+                    }
+                }
+                
+                linuxFormat.addEventListener('change', updateLinuxBtn);
+                linuxArch.addEventListener('change', updateLinuxBtn);
+                updateLinuxBtn(); 
+
+                // macOS 下拉框联动 (已解除所有限制)
+                const macArch = document.getElementById('mac-arch');
+                const btnMac = document.getElementById('btn-mac');
+
+                function updateMacBtn() {
+                    if (macArch.value === 'intel') {
+                        btnMac.href = linkData.mac_intel_dmg || "#";
+                    } else {
+                        // Apple M系列：无缝读取直链，完全开放下载
+                        btnMac.href = linkData.mac_apple_dmg || "#";
+                    }
+                    // 按钮始终保持激活状态
+                    btnMac.textContent = "下载";
+                    btnMac.style.opacity = "1";
+                    btnMac.style.pointerEvents = "auto";
+                }
+
+                macArch.addEventListener('change', updateMacBtn);
+                updateMacBtn();
+
+                initSmartDetection();
+            })
+            .catch(err => {
+                console.error("JSON加载失败", err);
+                document.getElementById('smart-text').textContent = `⚠️ 读取 ${CURRENT_VERSION}.json 失败，请检查文件`;
+            });
+
+        function initSmartDetection() {
+            const ua = window.navigator.userAgent;
+            const smartBtn = document.getElementById('smart-btn');
+            const smartText = document.getElementById('smart-text');
+            const smartIcon = document.getElementById('smart-icon');
+
+            if (ua.indexOf("Windows") !== -1) {
+                smartText.textContent = "下载 Vantage for Windows";
+                smartIcon.textContent = "💻";
+                smartBtn.href = linkData.windows_exe || "#";
+            } else if (ua.indexOf("Mac") !== -1) {
+                smartText.textContent = "下载 Vantage for macOS";
+                smartIcon.textContent = "🍎";
+                smartBtn.href = linkData.mac_intel_dmg || "#";
+            } else if (ua.indexOf("Linux") !== -1 || ua.indexOf("X11") !== -1) {
+                smartText.textContent = "下载 Vantage for Linux (.deb)";
+                smartIcon.textContent = "🐧";
+                smartBtn.href = linkData.linux_x64_deb || "#";
+            } else {
+                document.getElementById('smart-download-section').style.display = 'none';
             }
-        });
+        }
     </script>
 </body>
 </html>
