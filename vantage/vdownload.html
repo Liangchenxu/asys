@@ -158,6 +158,7 @@
                 </select>
                 <select id="linux-arch" class="pkg-select" style="margin-bottom: 25px;">
                     <option value="x64">64位 (AMD64 / x86_64)</option>
+                    <option value="x86">32位 (x86)</option>
                     <option value="arm64">ARM 64位 (AArch64)</option>
                 </select>
 
@@ -174,7 +175,7 @@
                 
                 <select id="mac-arch" class="pkg-select" style="margin-bottom: 25px;">
                     <option value="intel">Intel 芯片版</option>
-                    <option value="apple">Apple (M系列芯片暂不支持运行)</option>
+                    <option value="apple">Apple M系列芯片版 (暂不支持运行)</option>
                 </select>
 
                 <div class="btn-group">
@@ -228,15 +229,19 @@
                     const jsonKey = `linux_${arch}_${format}`; 
                     
                     const targetLink = linkData[jsonKey];
+                    // 完美的防呆设计：只要 JSON 里的对应坑位为空或者没有，立刻置灰！
                     if (targetLink && targetLink !== "") {
                         btnLinux.href = targetLink;
                         btnLinux.textContent = "下载";
                         btnLinux.style.opacity = "1";
                         btnLinux.style.pointerEvents = "auto";
+                        btnLinux.style.cursor = "pointer";
                     } else {
-                        btnLinux.href = "javascript:alert('暂无提供此版本下载')";
-                        btnLinux.textContent = "暂无提供";
-                        btnLinux.style.opacity = "0.5";
+                        btnLinux.href = "javascript:void(0);";
+                        btnLinux.textContent = "暂不提供此版本";
+                        btnLinux.style.opacity = "0.4";
+                        btnLinux.style.pointerEvents = "none"; // 彻底无法点击
+                        btnLinux.style.cursor = "not-allowed";
                     }
                 }
                 
@@ -244,7 +249,7 @@
                 linuxArch.addEventListener('change', updateLinuxBtn);
                 updateLinuxBtn(); 
 
-                // macOS 下拉框联动 (已解除所有限制)
+                // macOS 下拉框联动
                 const macArch = document.getElementById('mac-arch');
                 const btnMac = document.getElementById('btn-mac');
 
@@ -252,10 +257,9 @@
                     if (macArch.value === 'intel') {
                         btnMac.href = linkData.mac_intel_dmg || "#";
                     } else {
-                        // Apple M系列：无缝读取直链，完全开放下载
+                        // M系列：无缝读取直链，完全开放下载
                         btnMac.href = linkData.mac_apple_dmg || "#";
                     }
-                    // 按钮始终保持激活状态
                     btnMac.textContent = "下载";
                     btnMac.style.opacity = "1";
                     btnMac.style.pointerEvents = "auto";
