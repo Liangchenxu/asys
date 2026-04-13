@@ -19,19 +19,19 @@ ul { list-style: none; }
 a { text-decoration: none; color: inherit; transition: color 0.3s; }
 img { max-width: 100%; display: block; }
 
-/* ★★★ 核心修复1：全站容器约束，解决巨大无比的问题 ★★★ */
+/* ★ 全站容器约束 ★ */
 .container { width: 90%; max-width: 1200px; margin: 0 auto; padding: 0 20px; }
 
 /* =========================================
    两大生态体系的基底样式
    ========================================= */
-/* 1. ASYS 官网体系 (关于、产品、Debian、自助、教程) */
+/* 1. ASYS 官网体系 */
 .site-asys { font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif; background: #f8fafc; color: #1e293b; line-height: 1.6; }
 .site-asys.page-debian { background: #fff; color: #333; font-size: 14px; }
 .site-asys section { padding: 60px 0; }
 .site-asys .section-title { text-align: center; margin-bottom: 40px; font-size: 2.2rem; color: #0f172a; }
 
-/* 2. Vantage 浏览器体系 (首页、下载、文档) */
+/* 2. Vantage 浏览器体系 */
 .site-vantage { font-family: -apple-system, "Segoe UI", Roboto, sans-serif; line-height: 1.6; background-color: var(--bg-main); color: var(--text-main); }
 .site-vantage.page-vantage-home { background-color: var(--bg-page); overflow-x: hidden; }
 
@@ -53,8 +53,8 @@ img { max-width: 100%; display: block; }
 .site-asys.page-debian .debian-nav-links a.active::after { background-color: var(--debian-red); }
 .site-asys footer { background: #f1f5f9; padding: 40px 0; text-align: center; border-top: 1px solid #e2e8f0; color: #64748b; margin-top: auto; }
 
-/* --- Vantage 体系导航与页脚 ★★★核心修复2：全放开★★★ --- */
-.site-vantage nav { display: flex; justify-content: space-between; align-items: center; padding: 1rem 15%; position: sticky; top: 0; z-index: 100; background: #fff; border-bottom: 1px solid var(--border); }
+/* --- Vantage 体系导航与页脚 --- */
+.site-vantage nav { display: flex; justify-content: space-between; align-items: center; padding: 1rem 3%; position: sticky; top: 0; z-index: 100; background: #fff; border-bottom: 1px solid var(--border); }
 .site-vantage.page-vantage-home nav { background: rgba(248, 250, 252, 0.75); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border-bottom: 1px solid rgba(226, 232, 240, 0.6); }
 .site-vantage .nav-left { display: flex; align-items: center; gap: 2rem; }
 .site-vantage .nav-logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.3rem; text-decoration: none; color: var(--text-main); }
@@ -81,6 +81,9 @@ img { max-width: 100%; display: block; }
 .btn-download { display: inline-block; padding: 15px 55px; border-radius: 10px; text-decoration: none; font-weight: 600; font-size: 1.15rem; background: var(--vantage-blue); color: #fff; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 4px 15px -3px rgba(0, 120, 212, 0.3); }
 .btn-download:hover { background: #006abc; transform: translateY(-3px); box-shadow: 0 8px 25px -5px rgba(0, 120, 212, 0.4); }
 .content-mask { background-color: var(--bg-mask); position: relative; z-index: 10; border-top-left-radius: 40px; border-top-right-radius: 40px; box-shadow: 0 -15px 40px rgba(0, 0, 0, 0.04); padding-top: 20px; }
+.site-vantage .section-title { text-align: center; margin-bottom: 4rem; }
+.site-vantage .section-title h2 { font-size: 2.2rem; color: var(--text-main); margin-bottom: 15px; }
+.site-vantage .section-title p { color: var(--text-sub); font-size: 1.1rem; max-width: 700px; margin: 0 auto; }
 .page-vantage-home .container { max-width: 1050px; padding: 60px 20px 80px; }
 .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 28px; }
 .f-card { padding: 45px 35px; text-align: center; border: 1px solid var(--border); border-radius: 20px; background: #ffffff; box-shadow: 0 4px 20px -5px rgba(0,0,0,0.03); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
@@ -206,7 +209,6 @@ img { max-width: 100%; display: block; }
 .page-tutorials .loading { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px; }
 .page-tutorials .loading-spinner { width: 40px; height: 40px; border: 4px solid #e2e8f0; border-top: 4px solid var(--asys-blue); border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 15px; }
 
-
 /* --- ASYS Debian 详情页 --- */
 .page-debian .product-overview { display: flex; gap: 60px; padding: 60px 0; border-bottom: 1px solid #eee; align-items: flex-start; }
 .page-debian .preview-area { flex: 1; background: #fbfbfb; border: 1px solid #eee; border-radius: 8px; padding: 20px; }
@@ -280,29 +282,38 @@ img { max-width: 100%; display: block; }
    全站通用手机端适配 (Mobile Response)
    ========================================= */
 @media (max-width: 768px) {
-    /* 导航栏折叠 */
-    .site-asys nav, .site-vantage nav { flex-direction: column; gap: 15px; padding: 15px 20px; position: relative; }
-    .site-vantage .nav-left { flex-direction: column; gap: 15px; width: 100%; }
+    /* 1. 修复 Vantage 导航栏炸裂和巨大 Logo */
+    .site-asys nav, .site-vantage nav { flex-direction: column; gap: 15px; padding: 15px 20px !important; position: relative; }
+    .site-vantage .nav-left { flex-direction: column; gap: 15px; width: 100%; align-items: center; }
+    .site-vantage .asys-main-link { position: absolute; top: 18px; right: 20px; }
+    .site-vantage .asys-main-link img { height: 22px !important; width: auto !important; }
+
+    /* 2. 修复大 V 手机端太小、缩放不舒服的问题 */
+    .site-vantage .bg-watermark { 
+        top: 20% !important; /* 手机端往上提，托住文字 */
+        background-size: 140vw !important; /* 手机端强行撑大，边缘出屏幕，更有张力 */
+        opacity: 0.3 !important; /* 手机端稍微调淡，不刺眼 */
+    }
+
+    /* 3. 导航链接排版 */
     .site-asys .debian-nav-links, .site-vantage .vantage-nav-links { flex-wrap: wrap; justify-content: center; gap: 10px; width: 100%; margin-left: 0; }
     .site-vantage .vantage-nav-links a { background: #f8fafc; padding: 5px 12px; border-radius: 4px; border: 1px solid #e2e8f0; font-size: 14px; }
     .site-vantage .vantage-nav-links a.active { border-color: var(--vantage-blue); color: var(--vantage-blue); }
     .site-asys .debian-nav-links a { font-size: 0.9rem; padding: 5px 10px; }
     .site-asys .debian-nav-links a.active::after { display: none; }
     
-    .site-vantage .asys-main-link { position: absolute; top: 26px; right: 20px; }
-    .site-vantage .asys-main-link img { height: 18px !important; }
-    
-    /* 页面区块坍缩 */
-    .hero { padding: 6vh 20px 15vh; }
-    .hero-v-img { width: 100px; height: 100px; }
-    .hero h1 { font-size: 2.8rem; }
-    .hero p { font-size: 1.1rem; }
-    .bg-watermark { background-size: clamp(250px, 95vw, 600px); top: 40%; }
+    /* 4. 页面区块坍缩与字体缩小 */
+    .hero { padding: 6vh 20px 10vh; }
+    .hero-v-img { width: 90px; height: 90px; margin-bottom: 15px; }
+    .hero h1 { font-size: 2.5rem; }
+    .hero p { font-size: 1rem; margin: 1rem 0 2rem; }
     .content-mask { border-top-left-radius: 25px; border-top-right-radius: 25px; }
     .page-vantage-home .container { padding: 40px 15px 60px; }
     .site-asys .section-title, .site-vantage .section-title { margin-bottom: 2rem; }
-    .site-asys .section-title h2, .site-vantage .section-title h2 { font-size: 1.8rem; }
+    .site-asys .section-title h2, .site-vantage .section-title h2 { font-size: 1.6rem; }
+    .site-vantage .section-title p { font-size: 0.95rem; }
     
+    /* 5. 卡片单列显示 */
     .features, .page-about .about-content, .page-about .contact-grid, .page-products .products-grid, .page-service .category-grid { grid-template-columns: 1fr; gap: 20px; }
     .f-card, .page-service .category-card { padding: 30px 20px; }
     .f-icon { font-size: 2.2rem; }
@@ -311,6 +322,7 @@ img { max-width: 100%; display: block; }
     .legal-footer { padding: 40px 20px; }
     .legal-text { font-size: 0.9rem; }
     
+    /* 6. 下载页适配 */
     .page-header { padding: 40px 15px 30px; }
     .page-header h1, .dp-header h1 { font-size: 2.2rem; }
     .btn-smart { padding: 12px 30px; font-size: 1.1rem; }
@@ -320,6 +332,7 @@ img { max-width: 100%; display: block; }
     .os-card { padding: 30px 20px; }
     .os-card .btn-primary, .os-card .btn-secondary, .btn-warning-dark { font-size: 0.95rem; padding: 10px 15px; }
 
+    /* 7. 其他页面适配 */
     .page-tutorials .tutorial-layout, .page-docs .docs-layout, .page-debian .product-overview { flex-direction: column; }
     .page-tutorials .tutorial-sidebar, .page-docs .docs-sidebar { width: 100%; position: static; margin-bottom: 20px; height: auto; border-right: none; border-bottom: 1px solid var(--border); padding: 20px 15px 5px;}
     .page-tutorials .tutorial-content, .page-docs .docs-content { padding: 20px; width: 100%; }
@@ -332,22 +345,3 @@ img { max-width: 100%; display: block; }
     .dp-content-block { padding: 25px; }
     .dp-grid { grid-template-columns: 1fr; }
 }
-/* ★★★ 紧急修复 Vantage 首页排版补丁 ★★★ */
-
-/* 1. 找回 "什么是 Vantage?" 的居中排版和间距 */
-.site-vantage .section-title { 
-    text-align: center; 
-    margin-bottom: 4rem; 
-}
-.site-vantage .section-title h2 { 
-    font-size: 2.2rem; 
-    color: var(--text-main); 
-    margin-bottom: 15px; 
-}
-.site-vantage .section-title p { 
-    color: var(--text-sub); 
-    font-size: 1.1rem; 
-    max-width: 700px; 
-    margin: 0 auto; 
-}
-
