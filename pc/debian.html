@@ -4,131 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Debian 安装介质详情 - 赛思科技</title>
-    
     <link rel="shortcut icon" href="../img/asys.ico" type="image/x-icon">
-
-    <style>
-        /* --- 基础样式 --- */
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Microsoft YaHei', 'Segoe UI', sans-serif; }
-        body { background: #fff; color: #333; font-size: 14px; line-height: 1.6; }
-        ul { list-style: none; }
-        a { text-decoration: none; color: inherit; transition: color 0.3s; }
-        img { max-width: 100%; display: block; }
-
-        .container { width: 90%; max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-
-        /* --- 导航栏 --- */
-        header { background: white; border-bottom: 1px solid #e2e8f0; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
-        nav { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; }
-        
-        /* Logo 样式 */
-        .logo { 
-            display: flex; 
-            align-items: center; 
-            gap: 10px; 
-            text-decoration: none; 
-            color: inherit; 
-        }
-        .logo img { height: 40px; }
-        .logo h1 { font-size: 1.3rem; font-weight: 700; color: #0f172a; }
-        
-        .nav-links { display: flex; gap: 25px; }
-        .nav-links a { color: #475569; font-weight: 600; font-size: 15px; position: relative; }
-        .nav-links a:hover, .nav-links a.active { color: #d70a53; }
-        .nav-links a.active::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 100%; height: 2px; background-color: #d70a53; }
-
-        /* --- 详情页布局 (Flexbox) --- */
-        .product-overview { display: flex; gap: 60px; padding: 60px 0; border-bottom: 1px solid #eee; align-items: flex-start; }
-
-        /* 左侧：图片区域 */
-        .preview-area { flex: 1; background: #fbfbfb; border: 1px solid #eee; border-radius: 8px; padding: 20px; }
-        .main-stage { height: 400px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; overflow: hidden; }
-
-        /* 图片切换逻辑 */
-        .gallery-item { display: none; width: 100%; height: 100%; align-items: center; justify-content: center; animation: fadeIn 0.3s ease-in-out; }
-        .gallery-item.active { display: flex; }
-        .gallery-item img { max-width: 100%; max-height: 100%; object-fit: contain; }
-
-        /* 缩略图 */
-        .thumbnail-strip { display: flex; gap: 10px; justify-content: center; height: 70px; }
-        .thumb-box { width: 70px; height: 70px; border: 2px solid #eee; border-radius: 4px; cursor: pointer; padding: 5px; background: #fff; display: flex; align-items: center; justify-content: center; transition: all 0.3s; }
-        .thumb-box.active { border-color: #000; }
-        .thumb-box:hover { border-color: #999; }
-        .thumb-box img { max-width: 100%; max-height: 100%; object-fit: contain; }
-
-        /* 右侧：信息区域 */
-        .info-area { flex: 1; display: flex; flex-direction: column; }
-        .product-title { font-size: 28px; font-weight: 700; color: #000; margin-bottom: 30px; line-height: 1.3; }
-        
-        .feature-list { margin-bottom: 30px; }
-        .feature-item { font-size: 14px; color: #666; margin-bottom: 12px; line-height: 1.6; padding-left: 15px; position: relative; }
-        .feature-item::before { content: ''; position: absolute; left: 0; top: 8px; width: 4px; height: 4px; background: #d70a53; border-radius: 50%; }
-
-        /* 价格 */
-        .price-info { margin-bottom: 25px; padding-top: 20px; border-top: 1px dashed #eee; display: flex; align-items: baseline; gap: 10px; }
-        .price-main { font-size: 36px; color: #d70a53; font-weight: 700; line-height: 1; }
-        .price-symbol { font-size: 20px; margin-right: 5px; }
-        .shipping-tag { font-size: 14px; color: #fff; background: #d70a53; padding: 4px 10px; border-radius: 4px; font-weight: 500; }
-
-        /* 按钮组 */
-        .action-buttons { display: flex; gap: 20px; }
-        .buy-button { flex: 1; height: 50px; line-height: 50px; background: #222; color: #fff; text-align: center; font-size: 16px; font-weight: 600; border-radius: 2px; cursor: pointer; transition: background 0.3s; }
-        .buy-button:hover { background: #d70a53; }
-        .contact-button { flex: 1; height: 50px; line-height: 50px; background: #fff; color: #333; text-align: center; font-size: 16px; font-weight: 600; border-radius: 2px; cursor: pointer; transition: all 0.3s; border: 2px solid #eee; }
-        .contact-button:hover { border-color: #d70a53; color: #d70a53; }
-
-        /* --- 底部内容 --- */
-        .details-container { padding: 40px 0 80px; }
-        .tabs { display: flex; gap: 40px; border-bottom: 1px solid #ddd; margin-bottom: 30px; }
-        .tab-item { padding-bottom: 15px; font-size: 16px; font-weight: 700; color: #666; cursor: pointer; border-bottom: 3px solid transparent; transition: all 0.3s; }
-        .tab-item:hover { color: #333; }
-        .tab-item.active { color: #000; border-bottom-color: #000; }
-        
-        .tab-pane { display: none; animation: fadeIn 0.5s; }
-        .tab-pane.active { display: block; }
-
-        /* 斑马纹表格 */
-        .specs-table { width: 100%; border-collapse: collapse; font-size: 14px; }
-        .specs-table tr { height: 50px; }
-        .specs-table tr:nth-child(odd) { background-color: #f7f7f7; }
-        .specs-table tr:nth-child(even) { background-color: #ffffff; }
-        .specs-table td { padding: 0 20px; color: #333; border: none; }
-        .specs-label { width: 200px; font-weight: 600; color: #000; }
-
-        .intro-text { line-height: 1.8; color: #444; padding: 30px; background: #fcfcfc; border: 1px solid #eee; border-radius: 8px; }
-
-        footer { background: #f1f5f9; padding: 40px 0; text-align: center; border-top: 1px solid #e2e8f0; color: #64748b; }
-
-        @keyframes fadeIn { from { opacity: 0.5; } to { opacity: 1; } }
-
-        /* 手机端适配 */
-        @media (max-width: 768px) {
-            nav { flex-direction: column; gap: 15px; }
-            .nav-links { flex-wrap: wrap; justify-content: center; width: 100%; gap: 10px; }
-            .product-overview { flex-direction: column; gap: 30px; padding: 30px 0; }
-            .preview-area, .info-area { width: 100%; }
-            .main-stage { height: 300px; }
-            .action-buttons { flex-direction: column; }
-            .tabs { overflow-x: auto; white-space: nowrap; }
-        }
-    </style>
+    <link rel="stylesheet" href="../css/global.css">
+    <script src="../js/global.js" defer></script>
 </head>
-<body>
+<body class="page-debian"> 
     <header>
         <div class="container">
             <nav>
-                <a href="index.html" class="logo">
+                <a href="../index.html" class="debian-logo">
                     <img src="../img/ASYS-3.png" alt="赛思科技 Logo">
                     <h1>赛思科技</h1>
                 </a>
-                
-                <div class="nav-links">
-                    <a href="index.html">首页</a>
-                    <a href="service-guide.html">自助服务</a>
-                    <a href="products.html">产品</a>
-                    <a href="tutorials.html">教程</a>
-                    <a href="vantage.html">Vantage浏览器</a>
-                    <a href="about.html">关于 & 联系</a>
+                <div class="debian-nav-links">
+                    <a href="../index.html">首页</a>
+                    <a href="#">自助服务</a>
+                    <a href="#">产品</a>
+                    <a href="#">教程</a>
+                    <a href="../vantage/index.html">Vantage浏览器</a>
+                    <a href="#">关于 & 联系</a>
                 </div>
             </nav>
         </div>
@@ -142,19 +36,21 @@
                     <div class="gallery-item" id="img-2"><img src="../img/main2dvd.png" alt="Debian U盘正面"></div>
                     <div class="gallery-item" id="img-3"><img src="../img/debian2.png" alt="产品背面图"></div>
                     <div class="gallery-item" id="img-4"><img src="../img/debian3.png" alt="产品包装图"></div>
+                    <div class="gallery-item" id="img-5"><img src="../img/debian-vendor.png" alt="Debian 官方认证供应商"></div>
                 </div>
                 <div class="thumbnail-strip">
                     <div class="thumb-box active" onclick="switchImage(1)"><img src="../img/debianlogo.png" alt="缩略图1"></div>
                     <div class="thumb-box" onclick="switchImage(2)"><img src="../img/main2dvd.png" alt="缩略图2"></div>
                     <div class="thumb-box" onclick="switchImage(3)"><img src="../img/debian2.png" alt="缩略图3"></div>
                     <div class="thumb-box" onclick="switchImage(4)"><img src="../img/debian3.png" alt="缩略图4"></div>
+                    <div class="thumb-box" onclick="switchImage(5)"><img src="../img/debian-vendor.png" alt="缩略图5"></div>
                 </div>
             </div>
 
             <div class="info-area">
                 <h1 class="product-title">Debian GNU/Linux安装介质（USB/DVD）</h1>
-                
                 <ul class="feature-list">
+                    <li class="feature-item">Debian官方收录供应商</li>
                     <li class="feature-item">支持 UEFI / Legacy 双模式启动，兼容性强</li>
                     <li class="feature-item">Debian 13 trixie 当前最新稳定版</li>
                     <li class="feature-item">官方原版Debian安装程序</li>
@@ -162,15 +58,13 @@
                     <li class="feature-item">可选U盘或光盘</li>
                     <li class="feature-item">收入的一部分将用于捐赠Debian项目</li>
                 </ul>
-
                 <div class="price-info">
                     <div class="price-main"><span class="price-symbol">¥</span>20.00-50.00</div>
                     <div class="shipping-tag">中国大陆包邮</div>
                 </div>
-
                 <div class="action-buttons">
-                    <a href="https://item.taobao.com/item.htm?id=1022348317049&mi_id=0000B8NFXid2zRy8PzmpKwKLcTpfSOL6nnBYD3lMrE_mhBo&spm=a21xtw.29178619.0.0&xxc=shop" target="_blank" class="buy-button">前往淘宝购买</a>
-                    <a href="about.html#contact" class="contact-button">联系我们</a>
+                    <a href="https://item.taobao.com/item.htm?id=1022348317049" target="_blank" class="buy-button">前往淘宝购买</a>
+                    <a href="#" class="contact-button">联系我们</a>
                 </div>
             </div>
         </div>
@@ -180,7 +74,6 @@
                 <div class="tab-item active" onclick="switchTab(this, 'specs')">规格参数</div>
                 <div class="tab-item" onclick="switchTab(this, 'intro')">详情介绍</div>
             </div>
-
             <div class="tab-content">
                 <div id="con-specs" class="tab-pane active">
                     <table class="specs-table">
@@ -191,108 +84,48 @@
                         <tr><td class="specs-label">启动模式</td><td>UEFI (Secure Boot Ready) / BIOS Legacy</td></tr>
                     </table>
                 </div>
-
                 <div id="con-intro" class="tab-pane">
-                    
                     <div id="debian-promo-wrapper">
-                        <style>
-                          #debian-promo-wrapper {
-                            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-                            line-height: 1.7;
-                            color: #333;
-                            width: 100%;
-                            padding: 20px 0 40px 0;
-                            background-color: #fff;
-                            box-sizing: border-box;
-                          }
-                          #debian-promo-wrapper * { box-sizing: border-box; }
-                      
-                          /* 头部区域 */
-                          .dp-header { text-align: center; margin-bottom: 50px; }
-                          .dp-header h1 { font-size: 3rem; color: #D70A53; margin-bottom: 15px; font-weight: 800; letter-spacing: -1px; }
-                          .dp-header .subtitle { font-size: 1.25rem; color: #666; max-width: 700px; margin: 0 auto 30px auto; }
-                          .dp-btn { display: inline-block; background-color: #D70A53; color: white; padding: 14px 35px; border-radius: 50px; text-decoration: none; font-weight: bold; transition: background 0.3s, transform 0.2s; box-shadow: 0 4px 6px rgba(215, 10, 83, 0.2); }
-                          .dp-btn:hover { background-color: #b00842; transform: translateY(-2px); color: white; }
-                      
-                          /* 简介文本 */
-                          .dp-intro { text-align: center; max-width: 800px; margin: 0 auto 50px auto; font-size: 1.1rem; color: #444; }
-                      
-                          /* 特性网格 */
-                          .dp-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-bottom: 60px; }
-                          .dp-card { background: #f9f9f9; border-radius: 12px; padding: 35px; transition: all 0.3s ease; border-top: 4px solid #D70A53; display: flex; flex-direction: column; }
-                          .dp-card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.08); background: #fff; }
-                          .dp-card h3 { font-size: 1.5rem; margin-top: 0; margin-bottom: 15px; color: #222; display: flex; align-items: center; }
-                          .dp-icon { margin-right: 12px; font-size: 1.6rem; }
-                          .dp-card p { font-size: 1rem; color: #555; margin-bottom: 0; flex-grow: 1; }
-                      
-                          /* 深度内容区域 */
-                          .dp-section { margin-bottom: 60px; background: #fff; }
-                          .dp-section-title { font-size: 2rem; color: #222; margin-bottom: 30px; text-align: center; font-weight: 700; }
-                          .dp-content-block { display: flex; flex-wrap: wrap; gap: 40px; align-items: center; background: #f4f4f4; padding: 40px; border-radius: 16px; margin-bottom: 30px; }
-                          .dp-content-text { flex: 1; min-width: 300px; }
-                          .dp-content-text h4 { font-size: 1.4rem; color: #D70A53; margin-top: 0; margin-bottom: 15px; }
-                          .dp-content-text ul { padding-left: 20px; color: #555; }
-                          .dp-content-text li { margin-bottom: 10px; }
-                      
-                          /* 深色强调区 */
-                          .dp-highlight { background-color: #222; color: #fff; padding: 50px 40px; border-radius: 16px; text-align: center; margin-top: 40px; }
-                          .dp-highlight h2 { color: #fff; margin-top: 0; font-size: 1.8rem; }
-                          .dp-highlight p { opacity: 0.9; max-width: 700px; margin: 20px auto; }
-                      
-                          .dp-disclaimer { margin-top: 40px; font-size: 0.85rem; color: #888; text-align: left; border-top: 1px solid #eee; padding-top: 20px; }
-                      
-                          @media (max-width: 768px) {
-                            .dp-header h1 { font-size: 2.2rem; }
-                            .dp-content-block { padding: 25px; }
-                            .dp-grid { grid-template-columns: 1fr; }
-                          }
-                        </style>
-                      
                         <div class="dp-header">
                           <h1>Debian GNU/Linux</h1>
                           <p class="subtitle">通用操作系统。坚守自由软件原则，由全球社区共同维护。</p>
                           <a href="https://www.debian.org/" target="_blank" class="dp-btn">访问官方网站</a>
                         </div>
-                      
+                        <div class="dp-intro">
+                          <p>赛思科技（ASYS Technology）是目前中国大陆唯一被 Debian 官方网站正式收录的实体安装介质（CD/DVD/USB）供应商。（如上方主图第五张所示）。我们致力于为国内用户提供最纯净、最可靠的开源生态支持。</p>
+                        </div>
                         <div class="dp-intro">
                           <p>本产品专为系统管理员、开发者及高安全要求环境打造。为您提供即插即用的 Debian 官方离线安装方案。拒绝任何第三方修改，以物理介质的绝对可靠性，完美解决传统网络安装中由于服务器连接不稳定、下载中断而导致的致命痛点。</p>
                         </div>
-                      
                         <div class="dp-grid">
                           <div class="dp-card">
                             <h3><span class="dp-icon">🕊️</span> 纯净无篡改</h3>
                             <p>严守官方发行标准。我们的介质在刻录前均经过严格的 SHA512 哈希值校验，坚决杜绝第三方非官方源中可能包含的“夹带私货”，确保您得到的是原汁原味的 Debian 系统。</p>
                           </div>
-                      
                           <div class="dp-card">
                             <h3><span class="dp-icon">🛡️</span> 物理安全隔离</h3>
                             <p>专为极高安全要求的环境（Air-gapped）设计。配套的介质包含了完整的离线安装包集合，对于不允许连接外部互联网的涉密服务器，这是合规且安全的唯一安装途径。</p>
                           </div>
-                      
                           <div class="dp-card">
                             <h3><span class="dp-icon">🖥️</span> 灵活的环境选择</h3>
                             <p>不仅可作为纯命令行服务器的坚实基石，安装向导还内置了 GNOME、KDE、XFCE 等多种主流桌面环境，您可以在安装时自由勾选，满足各种生产力需求。</p>
                           </div>
-                      
                           <div class="dp-card">
                             <h3><span class="dp-icon">📦</span> 无视网络波动</h3>
                             <p>告别因为国外服务器连接不稳定、下载镜像源中途断开导致的安装失败。本地实体介质高速直读，几分钟内即可完成基础系统部署，效率成倍提升。</p>
                           </div>
-                      
                           <div class="dp-card">
                             <h3><span class="dp-icon">🚑</span> 强力系统急救盘</h3>
                             <p>U盘套装不仅用于安装，还包含完整的 Live 桌面环境。当您的主系统崩溃、GRUB 引导损坏或忘记密码时，插上它免安装即可进入图形界面，成为您手中强大的“应急瑞士军刀”。</p>
                           </div>
-                      
                           <div class="dp-card">
                             <h3><span class="dp-icon">🌍</span> 广泛兼容性</h3>
                             <p>不论是十年前的老旧电脑，还是支持 Secure Boot 的现代主板，我们的介质完美支持 UEFI 与 Legacy 双模式引导，彻底解决您的兼容性焦虑。</p>
                           </div>
                         </div>
-                      
+
                         <div class="dp-section">
                           <h2 class="dp-section-title">为什么专业人士更偏爱实体介质？</h2>
-                          
                           <div class="dp-content-block">
                             <div class="dp-content-text">
                               <h4>高效的批量部署与维护</h4>
@@ -312,24 +145,15 @@
                             </div>
                           </div>
                         </div>
-                      
+
                         <div class="dp-highlight">
                           <h2>准备好开始了吗？</h2>
                           <p>稳定、自由、强大的 Debian 系统触手可及。拥有一份可靠的实体安装介质，将成为您系统运维和开发路上最安心的后盾。</p>
                         </div>
-                      
+
                         <div class="dp-disclaimer">
                           <p><strong>免责声明</strong>：Debian 是自由软件，按“原样”（AS IS）提供。社区志愿者致力于提供高质量的服务，但依据自由软件许可证（如 GPL），软件不提供任何明示或暗示的担保，包括但不限于对适销性或特定用途适用性的担保。ASYS科技仅分发Debian，与Debian项目无任何商业合作或隶属关系。</p>
                         </div>
-                    </div>
-                    
-                </div>
-
-                <div id="con-download" class="tab-pane">
-                    <div class="intro-text" style="text-align: center; padding: 50px;">
-                        <p style="font-size: 16px; font-weight: bold;">相关文档与工具下载</p>
-                        <p>购买本产品后，您可以联系客服获取电子版使用手册及校验工具。</p>
-                        <a href="about.html#contact" class="contact-button" style="display: inline-block; width: auto; padding: 0 30px; margin-top: 20px;">联系客服获取</a>
                     </div>
                 </div>
             </div>
@@ -342,23 +166,8 @@
         </div>
     </footer>
 
-    <script>
-        function switchImage(index) {
-            document.querySelectorAll('.gallery-item').forEach(item => item.classList.remove('active'));
-            const target = document.getElementById('img-' + index);
-            if (target) target.classList.add('active');
-            
-            document.querySelectorAll('.thumb-box').forEach(thumb => thumb.classList.remove('active'));
-            const thumbs = document.querySelectorAll('.thumb-box');
-            if(thumbs[index - 1]) thumbs[index - 1].classList.add('active');
-        }
-
-        function switchTab(element, contentId) {
-            document.querySelectorAll('.tab-item').forEach(item => item.classList.remove('active'));
-            element.classList.add('active');
-            document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('active'));
-            document.getElementById('con-' + contentId).classList.add('active');
-        }
-    </script>
+    <div id="imageModal" style="display:none; position:fixed; z-index:9999; left:0; top:0; width:100%; height:100%; background-color:rgba(0,0,0,0.85); align-items:center; justify-content:center; cursor:zoom-out; backdrop-filter: blur(5px);" onclick="this.style.display='none'">
+        <img id="modalImg" style="max-width:90%; max-height:90%; border-radius:4px; box-shadow:0 10px 30px rgba(0,0,0,0.5);">
+    </div>
 </body>
 </html>
