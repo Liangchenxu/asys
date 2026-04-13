@@ -73,7 +73,7 @@ img { max-width: 100%; display: block; }
    ========================================= */
 
 /* --- Vantage 首页 --- */
-.bg-watermark { position: fixed; top: 35%; left: 50%; transform: translate3d(-50%, -50%, 0) scale(1); width: 100vw; height: 100vh; background-image: url('../img/vantage.webp'); background-repeat: no-repeat; background-position: center center; background-size: clamp(400px, 80vw, 1800px); opacity: 0.5; z-index: 0; pointer-events: none; will-change: transform, opacity; backface-visibility: hidden; }
+.bg-watermark { position: fixed; top: 40%; left: 50%; transform: translate3d(-50%, -50%, 0) scale(1); width: 100vw; height: 100vh; background-image: url('../img/vantage.webp'); background-repeat: no-repeat; background-position: center center; background-size: clamp(400px, 80vw, 1800px); opacity: 0.5; z-index: 0; pointer-events: none; will-change: transform, opacity; backface-visibility: hidden; }
 .hero { position: relative; padding: 12vh 20px 30vh; text-align: center; background-color: transparent; z-index: 1; }
 .hero-v-img { width: 150px; height: 150px; object-fit: contain; margin: 0 auto 30px auto; display: block; }
 .hero h1 { font-size: 4rem; margin: 0; font-weight: 800; letter-spacing: -1px; }
@@ -332,3 +332,22 @@ img { max-width: 100%; display: block; }
     .dp-content-block { padding: 25px; }
     .dp-grid { grid-template-columns: 1fr; }
 }
+/* ★★★ 紧急修复 Vantage 首页排版补丁 ★★★ */
+
+/* 1. 找回 "什么是 Vantage?" 的居中排版和间距 */
+.site-vantage .section-title { 
+    text-align: center; 
+    margin-bottom: 4rem; 
+}
+.site-vantage .section-title h2 { 
+    font-size: 2.2rem; 
+    color: var(--text-main); 
+    margin-bottom: 15px; 
+}
+.site-vantage .section-title p { 
+    color: var(--text-sub); 
+    font-size: 1.1rem; 
+    max-width: 700px; 
+    margin: 0 auto; 
+}
+
