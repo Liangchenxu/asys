@@ -172,3 +172,223 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 });
+// =========================================================
+// 🚀 无敌 DRY 架构：公共 Header 和 Footer 自动注入器
+// =========================================================
+function injectCommonComponents() {
+    const headerContainer = document.getElementById('app-header');
+    const footerContainer = document.getElementById('app-footer');
+    const isVantageSite = document.body.classList.contains('site-vantage');
+    
+    // 注入导航栏
+    if (headerContainer) {
+        headerContainer.innerHTML = isVantageSite ? `
+            <nav>
+                <div class="nav-left">
+                    <a href="index.html" class="nav-logo">
+                        <img src="../img/icon.svg" alt="Vantage Logo">
+                        <span>Vantage</span>
+                    </a>
+                    <div class="vantage-nav-links">
+                        <a href="index.html" data-target="index.html">主页</a>
+                        <a href="vdownload.html" data-target="vdownload.html">下载</a>
+                        <a href="docs.html" data-target="docs.html">文档</a>
+                    </div>
+                </div>
+                <a href="../index.html" class="asys-main-link" title="返回首页">
+                    <img src="../img/asys.svg" alt="ASYS 科技">
+                </a>
+            </nav>
+        ` : `
+            <header>
+                <div class="container">
+                    <nav>
+                        <a href="index.html" class="debian-logo">
+                            <img src="../img/ASYS-3.png" alt="赛思科技 Logo">
+                            <h1>赛思科技</h1>
+                        </a>
+                        <div class="debian-nav-links">
+                            <a href="index.html" data-target="index.html">首页</a>
+                            <a href="service-guide.html" data-target="service-guide.html">自助服务</a>
+                            <a href="products.html" data-target="products.html">产品</a>
+                            <a href="tutorials.html" data-target="tutorials.html">教程</a>
+                            <a href="../vantage/index.html" data-target="vantage.html">Vantage浏览器</a>
+                            <a href="about.html" data-target="about.html">关于 & 联系</a>
+                        </div>
+                    </nav>
+                </div>
+            </header>
+        `;
+
+        // 智能侦测当前页面，自动高亮对应按钮
+        const currentPath = window.location.pathname.split('/').pop() || 'index.html';
+        const links = headerContainer.querySelectorAll('a[data-target]');
+        links.forEach(link => {
+            if(link.getAttribute('data-target') === currentPath) {
+                link.classList.add('active');
+            }
+        });
+    }
+
+    // 注入页脚
+    if (footerContainer) {
+        footerContainer.innerHTML = isVantageSite ? `
+            <footer>
+                <p>&copy; 2026 ASYS 科技 - Vantage 浏览器项目</p>
+            </footer>
+        ` : `
+            <footer>
+                <div class="container">
+                    <p>© 2026 赛思科技. 保留所有权利。</p>
+                </div>
+            </footer>
+        `;
+    }
+}
+// 页面一加载立刻执行，防止闪烁
+injectCommonComponents();
+
+// =========================================================
+// 🚀 教程页与文档页专属 JS 逻辑
+// =========================================================
+document.addEventListener('DOMContentLoaded', function() {
+    // --- 教程页面逻辑 ---
+    if (document.body.classList.contains('page-tutorials')) {
+        const TUTORIALS_LIST_URL = `https://asystech.cn/jc/tutorials-list.json`;
+        fetch(TUTORIALS_LIST_URL)
+            .then(res => res.ok ? res.json() : Promise.reject(res.status))
+            .then(tutorials => {
+                document.getElementById('sidebar-loading').style.display = 'none';
+                const tutorialList = document.getElementById('tutorial-list');
+                tutorialList.innerHTML = '';
+                tutorials.forEach(tutorial => {
+                    const li = document.createElement('li');
+                    li.className = 'toc-item';
+                    const a = document.createElement('a');
+                    a.className = 'toc-link';
+                    a.textContent = tutorial.title;
+                    a.onclick = (e) => {
+                        e.preventDefault();
+                        document.querySelectorAll('.toc-link').forEach(l => l.classList.remove('active'));
+                        a.classList.add('active');
+                        loadTutorialContent(tutorial.filePath);
+                        if (window.innerWidth <= 768) document.querySelector('.tutorial-content').scrollIntoView({behavior: 'smooth'});
+                    };
+                    li.appendChild(a);
+                    tutorialList.appendChild(li);
+                });
+                tutorialList.style.display = 'block';
+                if (tutorials.length > 0) tutorialList.querySelector('.toc-link').click();
+            })
+            .catch(() => {
+                document.getElementById('sidebar-loading').style.display = 'none';
+                document.getElementById('sidebar-error').style.display = 'block';
+            });
+
+        window.loadTutorialContent = function(filePath) {
+            document.getElementById('content-placeholder').style.display = 'none';
+            document.getElementById('tutorial-content').style.display = 'none';
+            document.getElementById('content-error').style.display = 'none';
+            document.getElementById('content-loading').style.display = 'flex';
+            fetch(filePath)
+                .then(res => res.ok ? res.text() : Promise.reject(res.status))
+                .then(html => {
+                    document.getElementById('content-loading').style.display = 'none';
+                    const container = document.getElementById('tutorial-content');
+                    container.innerHTML = html;
+                    container.style.display = 'block';
+                    container.querySelectorAll('img').forEach(img => {
+                        if (!img.style.width) { img.style.maxWidth = '100%'; img.style.height = 'auto'; }
+                    });
+                })
+                .catch(() => {
+                    document.getElementById('content-loading').style.display = 'none';
+                    document.getElementById('content-error').style.display = 'flex';
+                });
+        };
+    }
+
+    // --- 文档页面逻辑 ---
+    if (document.body.classList.contains('page-docs')) {
+        const sidebarContainer = document.getElementById('sidebar-container');
+        const mainContent = document.getElementById('main-content');
+        let docsConfig = []; 
+
+        fetch('../vdocs/docs-config.json')
+            .then(res => res.json())
+            .then(data => {
+                docsConfig = data.categories;
+                let html = '';
+                docsConfig.forEach(category => {
+                    html += `<h3>${category.title}</h3><ul>`;
+                    category.items.forEach(item => {
+                        html += `<li><a onclick="loadDoc('${item.id}', '${item.file}')" id="link-${item.id}">${item.title}</a></li>`;
+                    });
+                    html += `</ul>`;
+                });
+                sidebarContainer.innerHTML = html;
+                loadDocFromHash(); 
+            })
+            .catch(() => {
+                sidebarContainer.innerHTML = '<p style="color:red;">配置读取失败</p>';
+                mainContent.innerHTML = '<div class="loading-text" style="color:red;">❌ 无法读取文档列表</div>';
+            });
+
+        window.loadDoc = function(id, filePath) {
+            document.querySelectorAll('.docs-sidebar a').forEach(a => a.classList.remove('active'));
+            const activeLink = document.getElementById(`link-${id}`);
+            if (activeLink) activeLink.classList.add('active');
+            window.history.pushState(null, null, `#${id}`);
+            mainContent.innerHTML = '<div class="loading-text">加载中...</div>';
+            fetch(filePath)
+                .then(res => { if (!res.ok) throw new Error('找不到文件'); return res.text(); })
+                .then(html => {
+                    mainContent.innerHTML = html;
+                    window.scrollTo(0, 0); 
+                    if (id === 'changelog') renderChangelogFromJson();
+                })
+                .catch(() => {
+                    mainContent.innerHTML = `<div class="loading-text" style="color:red;">❌ 无法加载文档内容。</div>`;
+                });
+        };
+
+        window.loadDocFromHash = function() {
+            const hash = window.location.hash.replace('#', '');
+            let targetItem = null;
+            if (hash) {
+                docsConfig.forEach(cat => {
+                    const found = cat.items.find(item => item.id === hash);
+                    if (found) targetItem = found;
+                });
+            }
+            if (!targetItem && docsConfig.length > 0) targetItem = docsConfig[0].items[0];
+            if (targetItem) loadDoc(targetItem.id, targetItem.file);
+        };
+
+        window.renderChangelogFromJson = function() {
+            fetch('../vdocs/changelog.json')
+                .then(res => res.json())
+                .then(data => {
+                    let html = '';
+                    data.forEach(ver => {
+                        let badge = ver.isLatest ? `<span style="font-size: 0.8rem; background: #dbeafe; color: var(--vantage-blue); padding: 3px 8px; border-radius: 12px;">最新版本</span>` : '';
+                        let featuresHtml = ver.features?.length > 0 ? `<p><strong>✨ ${ver.featuresTitle || '更新内容：'}</strong></p><ul>${ver.features.map(f=>`<li>${f}</li>`).join('')}</ul>` : '';
+                        let descHtml = ver.desc ? `<p style="color: var(--text-sub); margin-bottom: 20px;">${ver.desc}</p>` : '';
+                        let issuesHtml = ver.issues?.length > 0 ? `<p><strong>⚠️ 已知问题 - ${ver.issueTitle}：</strong></p><ul>${ver.issues.map(i=>`<li>${i}</li>`).join('')}</ul>` : '';
+                        
+                        html += `
+                        <div class="step-block">
+                            <h2 style="margin-top: 0; color: #111827; font-size: 1.4rem; display: flex; align-items: center; gap: 10px;">${ver.version} ${badge}</h2>
+                            <div class="step-content">${featuresHtml}${descHtml}${issuesHtml}
+                                <div style="margin-top: 25px;"><a href="${ver.link}" target="_blank" class="docs-link">🔗 在 GitHub 查看完整 Release 页面</a></div>
+                            </div>
+                        </div>`;
+                    });
+                    const container = document.getElementById('changelog-container');
+                    if(container) container.innerHTML = html;
+                }).catch(()=>{});
+        };
+
+        window.addEventListener('popstate', loadDocFromHash);
+    }
+});

@@ -10,6 +10,8 @@
     --text-main: #111827;
     --text-sub: #4b5563;
     --border: #e5e7eb;
+    --asys-blue: #4f46e5;
+    --debian-red: #d70a53;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -17,47 +19,61 @@ ul { list-style: none; }
 a { text-decoration: none; color: inherit; transition: color 0.3s; }
 img { max-width: 100%; display: block; }
 
-/* =========================================
-   页面基础底色 (Body Base)
-   ========================================= */
-.page-debian { font-family: 'Microsoft YaHei', 'Segoe UI', sans-serif; background: #fff; color: #333; font-size: 14px; line-height: 1.6; }
-.page-vantage-home, .page-vdownload { font-family: -apple-system, "Segoe UI", Roboto, sans-serif; line-height: 1.6; }
-.page-vantage-home { background-color: var(--bg-page); color: var(--text-main); overflow-x: hidden; }
-.page-vdownload { background-color: var(--bg-main); color: var(--text-main); }
+/* ★★★ 核心修复1：全站容器约束，解决巨大无比的问题 ★★★ */
+.container { width: 90%; max-width: 1200px; margin: 0 auto; padding: 0 20px; }
 
 /* =========================================
-   导航栏 (Navbar) - 分区隔离防冲突
+   两大生态体系的基底样式
    ========================================= */
-/* Vantage 系列导航 */
-.page-vantage-home nav, .page-vdownload nav { display: flex; justify-content: space-between; align-items: center; padding: 1rem 15%; position: sticky; top: 0; z-index: 100; }
-.page-vantage-home nav { background: rgba(248, 250, 252, 0.75); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border-bottom: 1px solid rgba(226, 232, 240, 0.6); }
-.page-vdownload nav { background: #fff; border-bottom: 1px solid var(--border); }
-.nav-left { display: flex; align-items: center; gap: 2rem; }
-.nav-logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.3rem; text-decoration: none; color: var(--text-main); }
-.nav-logo img { height: 28px; width: auto; display: block; }
-.vantage-nav-links { display: flex; gap: 1.5rem; }
-.vantage-nav-links a { text-decoration: none; color: var(--text-sub); font-size: 0.95rem; font-weight: 500; transition: color 0.2s ease; }
-.vantage-nav-links a:hover, .vantage-nav-links a.active { color: var(--vantage-blue); }
-.asys-main-link { display: flex; align-items: center; text-decoration: none; transition: opacity 0.2s; padding: 5px; }
-.asys-main-link:hover { opacity: 0.7; }
-.asys-main-link img { height: 38px; width: auto; display: block; }
+/* 1. ASYS 官网体系 (关于、产品、Debian、自助、教程) */
+.site-asys { font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif; background: #f8fafc; color: #1e293b; line-height: 1.6; }
+.site-asys.page-debian { background: #fff; color: #333; font-size: 14px; }
+.site-asys section { padding: 60px 0; }
+.site-asys .section-title { text-align: center; margin-bottom: 40px; font-size: 2.2rem; color: #0f172a; }
 
-/* Debian 页面导航 */
-.page-debian header { background: white; border-bottom: 1px solid #e2e8f0; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
-.page-debian nav { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; }
-.page-debian .container { width: 90%; max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-.debian-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: inherit; }
-.debian-logo img { height: 40px; }
-.debian-logo h1 { font-size: 1.3rem; font-weight: 700; color: #0f172a; }
-.debian-nav-links { display: flex; gap: 25px; }
-.debian-nav-links a { color: #475569; font-weight: 600; font-size: 15px; position: relative; }
-.debian-nav-links a:hover, .debian-nav-links a.active { color: #d70a53; }
-.debian-nav-links a.active::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 100%; height: 2px; background-color: #d70a53; }
+/* 2. Vantage 浏览器体系 (首页、下载、文档) */
+.site-vantage { font-family: -apple-system, "Segoe UI", Roboto, sans-serif; line-height: 1.6; background-color: var(--bg-main); color: var(--text-main); }
+.site-vantage.page-vantage-home { background-color: var(--bg-page); overflow-x: hidden; }
 
 /* =========================================
-   Vantage 首页专属样式 (Index)
+   公共导航栏与页脚 (Header & Footer)
    ========================================= */
-.bg-watermark { position: fixed; top: 40%; left: 50%; transform: translate3d(-50%, -50%, 0) scale(1); width: 100vw; height: 100vh; background-image: url('../img/vantage.webp'); background-repeat: no-repeat; background-position: center center; background-size: clamp(400px, 80vw, 1800px); opacity: 0.5; z-index: 0; pointer-events: none; will-change: transform, opacity; backface-visibility: hidden; }
+/* --- ASYS 体系导航与页脚 --- */
+.site-asys header { background: white; border-bottom: 1px solid #e2e8f0; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.05); width: 100%; }
+.site-asys nav { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; width: 100%; }
+.site-asys .debian-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: inherit; }
+.site-asys .debian-logo img { height: 40px; }
+.site-asys .debian-logo h1 { font-size: 1.3rem; font-weight: 700; color: #0f172a; margin: 0; }
+.site-asys .debian-nav-links { display: flex; gap: 25px; margin-left: auto; }
+.site-asys .debian-nav-links a { color: #475569; font-weight: 600; font-size: 15px; position: relative; }
+.site-asys .debian-nav-links a:hover, .site-asys .debian-nav-links a.active { color: var(--asys-blue); }
+.site-asys .debian-nav-links a.active::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 100%; height: 2px; background-color: var(--asys-blue); }
+/* Debian 特例红 */
+.site-asys.page-debian .debian-nav-links a:hover, .site-asys.page-debian .debian-nav-links a.active { color: var(--debian-red); }
+.site-asys.page-debian .debian-nav-links a.active::after { background-color: var(--debian-red); }
+.site-asys footer { background: #f1f5f9; padding: 40px 0; text-align: center; border-top: 1px solid #e2e8f0; color: #64748b; margin-top: auto; }
+
+/* --- Vantage 体系导航与页脚 ★★★核心修复2：全放开★★★ --- */
+.site-vantage nav { display: flex; justify-content: space-between; align-items: center; padding: 1rem 15%; position: sticky; top: 0; z-index: 100; background: #fff; border-bottom: 1px solid var(--border); }
+.site-vantage.page-vantage-home nav { background: rgba(248, 250, 252, 0.75); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border-bottom: 1px solid rgba(226, 232, 240, 0.6); }
+.site-vantage .nav-left { display: flex; align-items: center; gap: 2rem; }
+.site-vantage .nav-logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.3rem; text-decoration: none; color: var(--text-main); }
+.site-vantage .nav-logo img { height: 28px; width: auto; display: block; }
+.site-vantage .vantage-nav-links { display: flex; gap: 1.5rem; }
+.site-vantage .vantage-nav-links a { text-decoration: none; color: var(--text-sub); font-size: 0.95rem; font-weight: 500; transition: color 0.2s ease; }
+.site-vantage .vantage-nav-links a:hover, .site-vantage .vantage-nav-links a.active { color: var(--vantage-blue); }
+.site-vantage .asys-main-link { display: flex; align-items: center; text-decoration: none; transition: opacity 0.2s; padding: 5px; }
+.site-vantage .asys-main-link:hover { opacity: 0.7; }
+.site-vantage .asys-main-link img { height: 38px; width: auto; display: block; }
+.site-vantage footer { padding: 40px 20px; text-align: center; font-size: 0.85rem; color: #9ca3af; border-top: 1px solid var(--border); margin-top: 60px; }
+
+
+/* =========================================
+   各个页面的专属积木 (Page Specific Styles)
+   ========================================= */
+
+/* --- Vantage 首页 --- */
+.bg-watermark { position: fixed; top: 35%; left: 50%; transform: translate3d(-50%, -50%, 0) scale(1); width: 100vw; height: 100vh; background-image: url('../img/vantage.webp'); background-repeat: no-repeat; background-position: center center; background-size: clamp(400px, 80vw, 1800px); opacity: 0.5; z-index: 0; pointer-events: none; will-change: transform, opacity; backface-visibility: hidden; }
 .hero { position: relative; padding: 12vh 20px 30vh; text-align: center; background-color: transparent; z-index: 1; }
 .hero-v-img { width: 150px; height: 150px; object-fit: contain; margin: 0 auto 30px auto; display: block; }
 .hero h1 { font-size: 4rem; margin: 0; font-weight: 800; letter-spacing: -1px; }
@@ -65,10 +81,7 @@ img { max-width: 100%; display: block; }
 .btn-download { display: inline-block; padding: 15px 55px; border-radius: 10px; text-decoration: none; font-weight: 600; font-size: 1.15rem; background: var(--vantage-blue); color: #fff; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 4px 15px -3px rgba(0, 120, 212, 0.3); }
 .btn-download:hover { background: #006abc; transform: translateY(-3px); box-shadow: 0 8px 25px -5px rgba(0, 120, 212, 0.4); }
 .content-mask { background-color: var(--bg-mask); position: relative; z-index: 10; border-top-left-radius: 40px; border-top-right-radius: 40px; box-shadow: 0 -15px 40px rgba(0, 0, 0, 0.04); padding-top: 20px; }
-.page-vantage-home .container { max-width: 1050px; margin: 0 auto; padding: 60px 20px 80px; }
-.section-title { text-align: center; margin-bottom: 4rem; }
-.section-title h2 { font-size: 2.2rem; color: var(--text-main); margin-bottom: 15px; }
-.section-title p { color: var(--text-sub); font-size: 1.1rem; max-width: 700px; margin: 0 auto; }
+.page-vantage-home .container { max-width: 1050px; padding: 60px 20px 80px; }
 .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 28px; }
 .f-card { padding: 45px 35px; text-align: center; border: 1px solid var(--border); border-radius: 20px; background: #ffffff; box-shadow: 0 4px 20px -5px rgba(0,0,0,0.03); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
 .f-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px -10px rgba(0,0,0,0.08); border-color: #cbd5e1; }
@@ -80,9 +93,7 @@ img { max-width: 100%; display: block; }
 .github-icon { fill: #94a3b8; transition: fill 0.3s ease, transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
 .github-link:hover .github-icon { fill: #0f172a; transform: scale(1.15) rotate(5deg); }
 
-/* =========================================
-   Vantage 下载页专属样式 (Download)
-   ========================================= */
+/* --- Vantage 下载页 --- */
 .page-header { text-align: center; padding: 60px 20px 40px; background-color: var(--bg-hero); border-bottom: 1px solid var(--border); }
 .page-header h1 { font-size: 3rem; margin: 0 0 15px 0; font-weight: 800; }
 .page-header p { font-size: 1.1rem; color: var(--text-sub); margin: 0; max-width: 600px; margin: 0 auto; }
@@ -106,62 +117,147 @@ img { max-width: 100%; display: block; }
 .os-card .btn-secondary:hover { background: #e5e7eb; }
 .btn-warning-dark { display: block; padding: 12px 20px; background: #d97706; color: #fff; text-decoration: none; border-radius: 8px; font-weight: 600; transition: 0.2s; }
 .btn-warning-dark:hover { background: #b45309; }
-.page-vdownload footer, .page-vantage-home footer { padding: 40px 20px; text-align: center; font-size: 0.85rem; color: #9ca3af; border-top: 1px solid var(--border); margin-top: 60px; }
 
-/* =========================================
-   Debian 页面专属样式 (Debian)
-   ========================================= */
-.product-overview { display: flex; gap: 60px; padding: 60px 0; border-bottom: 1px solid #eee; align-items: flex-start; }
-.preview-area { flex: 1; background: #fbfbfb; border: 1px solid #eee; border-radius: 8px; padding: 20px; }
-.main-stage { height: 400px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; overflow: hidden; }
-.gallery-item { display: none; width: 100%; height: 100%; align-items: center; justify-content: center; animation: fadeIn 0.3s ease-in-out; }
-.gallery-item.active { display: flex; }
-.gallery-item img { max-width: 100%; max-height: 100%; object-fit: contain; }
-.thumbnail-strip { display: flex; gap: 10px; justify-content: center; height: 70px; }
-.thumb-box { width: 70px; height: 70px; border: 2px solid #eee; border-radius: 4px; cursor: pointer; padding: 5px; background: #fff; display: flex; align-items: center; justify-content: center; transition: all 0.3s; }
-.thumb-box.active { border-color: #000; }
-.thumb-box:hover { border-color: #999; }
-.thumb-box img { max-width: 100%; max-height: 100%; object-fit: contain; }
-.info-area { flex: 1; display: flex; flex-direction: column; }
-.product-title { font-size: 28px; font-weight: 700; color: #000; margin-bottom: 30px; line-height: 1.3; }
-.feature-list { margin-bottom: 30px; }
-.feature-item { font-size: 14px; color: #666; margin-bottom: 12px; line-height: 1.6; padding-left: 15px; position: relative; }
-.feature-item::before { content: ''; position: absolute; left: 0; top: 8px; width: 4px; height: 4px; background: #d70a53; border-radius: 50%; }
-.price-info { margin-bottom: 25px; padding-top: 20px; border-top: 1px dashed #eee; display: flex; align-items: baseline; gap: 10px; }
-.price-main { font-size: 36px; color: #d70a53; font-weight: 700; line-height: 1; }
-.price-symbol { font-size: 20px; margin-right: 5px; }
-.shipping-tag { font-size: 14px; color: #fff; background: #d70a53; padding: 4px 10px; border-radius: 4px; font-weight: 500; }
-.action-buttons { display: flex; gap: 20px; }
-.action-buttons .buy-button { flex: 1; height: 50px; line-height: 50px; background: #222; color: #fff; text-align: center; font-size: 16px; font-weight: 600; border-radius: 2px; cursor: pointer; transition: background 0.3s; }
-.action-buttons .buy-button:hover { background: #d70a53; }
-.action-buttons .contact-button { flex: 1; height: 50px; line-height: 50px; background: #fff; color: #333; text-align: center; font-size: 16px; font-weight: 600; border-radius: 2px; cursor: pointer; transition: all 0.3s; border: 2px solid #eee; }
-.action-buttons .contact-button:hover { border-color: #d70a53; color: #d70a53; }
-.details-container { padding: 40px 0 80px; }
-.tabs { display: flex; gap: 40px; border-bottom: 1px solid #ddd; margin-bottom: 30px; }
-.tab-item { padding-bottom: 15px; font-size: 16px; font-weight: 700; color: #666; cursor: pointer; border-bottom: 3px solid transparent; transition: all 0.3s; }
-.tab-item:hover { color: #333; }
-.tab-item.active { color: #000; border-bottom-color: #000; }
-.tab-pane { display: none; animation: fadeIn 0.5s; }
-.tab-pane.active { display: block; }
-.specs-table { width: 100%; border-collapse: collapse; font-size: 14px; }
-.specs-table tr { height: 50px; }
-.specs-table tr:nth-child(odd) { background-color: #f7f7f7; }
-.specs-table tr:nth-child(even) { background-color: #ffffff; }
-.specs-table td { padding: 0 20px; color: #333; border: none; }
-.specs-label { width: 200px; font-weight: 600; color: #000; }
-.intro-text { line-height: 1.8; color: #444; padding: 30px; background: #fcfcfc; border: 1px solid #eee; border-radius: 8px; }
-.page-debian footer { background: #f1f5f9; padding: 40px 0; text-align: center; border-top: 1px solid #e2e8f0; color: #64748b; }
+/* --- Vantage 文档页 --- */
+.page-docs .docs-layout { display: flex; max-width: 1200px; margin: 0 auto; min-height: calc(100vh - 150px); }
+.page-docs .docs-sidebar { width: 280px; padding: 40px 20px; border-right: 1px solid var(--border); background: #fbfbfc; position: sticky; top: 70px; height: calc(100vh - 70px); overflow-y: auto; }
+.page-docs .docs-sidebar h3 { font-size: 0.9rem; text-transform: uppercase; color: #9ca3af; letter-spacing: 1px; margin-bottom: 15px; margin-top: 25px; }
+.page-docs .docs-sidebar h3:first-child { margin-top: 0; }
+.page-docs .docs-sidebar ul { list-style: none; padding: 0; margin: 0 0 30px 0; }
+.page-docs .docs-sidebar li { margin-bottom: 6px; }
+.page-docs .docs-sidebar a { text-decoration: none; color: var(--text-sub); font-weight: 500; transition: 0.2s; display: block; padding: 8px 12px; border-radius: 6px; cursor: pointer;}
+.page-docs .docs-sidebar a:hover, .page-docs .docs-sidebar a.active { background: #eff6ff; color: var(--vantage-blue); }
+.page-docs .docs-content { flex: 1; padding: 40px 60px; max-width: 850px; }
+.page-docs .docs-content h1 { font-size: 2.2rem; margin-top: 0; margin-bottom: 20px; border-bottom: 2px solid var(--border); padding-bottom: 15px; }
+.page-docs .docs-content h2 { font-size: 1.5rem; margin-top: 40px; margin-bottom: 15px; color: var(--vantage-blue); }
+.page-docs .docs-content p { font-size: 1.05rem; color: var(--text-sub); margin-bottom: 20px; line-height: 1.7; }
+.page-docs .docs-content code { background: #f1f5f9; padding: 3px 6px; border-radius: 4px; font-family: Consolas, monospace; font-size: 0.9em; color: #d946ef; }
+.page-docs .docs-link { color: var(--vantage-blue); font-weight: bold; text-decoration: none; }
+.page-docs .docs-link:hover { text-decoration: underline; }
+.page-docs .step-block { background: var(--bg-mask); border: 1px solid var(--border); border-radius: 8px; padding: 24px; margin-bottom: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.02); }
+.page-docs .step-title { font-size: 1.1rem; font-weight: 600; margin: 0 0 12px 0; display: flex; align-items: center; gap: 10px; color: #111827; }
+.page-docs .step-number { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; background: var(--vantage-blue); color: white; border-radius: 50%; font-size: 0.85rem; }
+.page-docs .step-content p { margin: 0 0 16px 0; color: var(--text-sub); }
+.page-docs .highlight-code { background: #f1f5f9; padding: 2px 6px; border-radius: 4px; font-family: monospace; font-size: 0.9em; color: #0f172a; }
+.page-docs .download-btn { display: inline-block; background: #f3f4f6; color: #111827; border: 1px solid #d1d5db; padding: 8px 16px; border-radius: 6px; text-decoration: none; font-weight: 500; font-size: 0.95rem; margin-bottom: 16px; transition: 0.2s; }
+.page-docs .download-btn:hover { background: #e5e7eb; }
+.page-docs .tutorial-img { width: 100%; max-width: 600px; height: auto; border: 1px solid var(--border); border-radius: 6px; display: block; margin-top: 15px; background-color: #f9fafb; }
+.page-docs .reason-box { background-color: #fffbeb; border: 1px solid #fef08a; border-radius: 8px; padding: 24px; margin-top: 3rem; }
+.page-docs .reason-box h3 { margin: 0 0 12px 0; color: #92400e; font-size: 1.2rem; display: flex; align-items: center; gap: 8px; }
+.page-docs .reason-box p { margin: 0 0 12px 0; color: #92400e; font-size: 0.95rem; }
+.page-docs .loading-text { text-align: center; color: #9ca3af; margin-top: 50px; font-size: 1.1rem; }
 
-/* Debian Promo Wrapper */
+/* --- ASYS 关于我们 --- */
+.page-about .about-content { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+.page-about .about-image img { width: 100%; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+.page-about .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; background: white; padding: 40px; border-radius: 12px; border: 1px solid #e2e8f0; }
+.page-about .contact-detail { display: flex; gap: 15px; margin-bottom: 20px; }
+.page-about .contact-icon { color: var(--asys-blue); font-size: 1.5rem; }
+.page-about .contact-detail a { color: var(--asys-blue); text-decoration: none; }
+.page-about .contact-detail a:hover { text-decoration: underline; }
+
+/* --- ASYS 产品中心 --- */
+.page-products .hero-section { background: linear-gradient(135deg, #f0f5ff 0%, #e0e7ff 100%); text-align: center; padding: 80px 0; }
+.page-products .products-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; }
+.page-products .product-card { background: white; border-radius: 16px; border: 1px solid #e2e8f0; overflow: hidden; transition: all 0.3s ease; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
+.page-products .product-card:hover { transform: translateY(-10px); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); }
+.page-products .product-image { width: 100%; padding-bottom: 100%; background: #f8fafc; position: relative; overflow: hidden; }
+.page-products .product-image img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+.page-products .product-card:hover .product-image img { transform: scale(1.1); }
+.page-products .product-info { padding: 30px; }
+.page-products .product-info h3 { margin-bottom: 15px; font-size: 1.4rem; color: #0f172a; font-weight: 600; }
+.page-products .product-info p { color: #64748b; font-size: 1rem; line-height: 1.6; margin-bottom: 20px; }
+.page-products .product-features { list-style: none; margin-bottom: 20px; }
+.page-products .product-features li { padding: 8px 0; color: #64748b; position: relative; padding-left: 20px; }
+.page-products .product-features li:before { content: "✓"; position: absolute; left: 0; color: #10b981; font-weight: bold; }
+
+/* --- ASYS 自助服务 --- */
+.page-service .hero-section { background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); padding: 100px 0; border-bottom: 1px solid #bae6fd; text-align: center;}
+.page-service .category-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin-top: -60px; padding-bottom: 80px; position: relative; z-index: 10; }
+.page-service .category-card { background: white; border-radius: 16px; padding: 40px 30px; text-align: center; border: 1px solid #e2e8f0; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1); transition: all 0.3s ease; text-decoration: none; color: inherit; display: flex; flex-direction: column; align-items: center; }
+.page-service .category-card:hover { transform: translateY(-10px); box-shadow: 0 20px 30px -10px rgba(79, 70, 229, 0.15); border-color: var(--asys-blue); }
+.page-service .cat-icon { width: 80px; height: 80px; background: #eff6ff; color: var(--asys-blue); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; margin-bottom: 25px; transition: all 0.3s; }
+.page-service .cat-icon img { width: 70% !important; height: 70% !important; object-fit: contain !important; display: block; }
+.page-service .category-card:hover .cat-icon { background: var(--asys-blue); color: white; transform: scale(1.1); }
+.page-service .cat-title { font-size: 1.35rem; font-weight: 700; color: #0f172a; margin-bottom: 15px; }
+.page-service .cat-desc { color: #64748b; font-size: 0.95rem; line-height: 1.6; }
+
+/* --- ASYS 教程中心 --- */
+.page-tutorials { overflow-y: scroll; scrollbar-gutter: stable; }
+.page-tutorials .hero-section { background: linear-gradient(135deg, #f0f5ff 0%, #e0e7ff 100%); text-align: center; padding: 60px 0; }
+.page-tutorials .tutorial-layout { display: flex; gap: 40px; margin-top: 40px; }
+.page-tutorials .tutorial-sidebar { width: 280px; flex-shrink: 0; background: white; border-radius: 12px; padding: 25px; border: 1px solid #e2e8f0; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); height: fit-content; position: sticky; top: 100px; }
+.page-tutorials .tutorial-sidebar h3 { margin-bottom: 20px; color: #0f172a; font-size: 1.2rem; padding-bottom: 10px; border-bottom: 2px solid #e2e8f0; }
+.page-tutorials .toc-list { list-style: none; }
+.page-tutorials .toc-item { margin-bottom: 10px; }
+.page-tutorials .toc-link { color: #475569; text-decoration: none; display: block; padding: 8px 12px; border-radius: 6px; transition: all 0.3s; cursor: pointer; }
+.page-tutorials .toc-link:hover { background: #f1f5f9; color: var(--asys-blue); }
+.page-tutorials .toc-link.active { background: var(--asys-blue); color: white; }
+.page-tutorials .tutorial-content { flex: 1; background: white; border-radius: 12px; padding: 40px; border: 1px solid #e2e8f0; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); min-height: 500px; }
+.page-tutorials .embedded-content img { max-width: 100%; height: auto; border-radius: 8px; margin: 20px 0; }
+.page-tutorials .embedded-content h1 { font-size: 2.2rem; margin-bottom: 20px; color: #0f172a; border-bottom: 2px solid #e2e8f0; padding-bottom: 15px; }
+.page-tutorials .embedded-content h2 { font-size: 1.8rem; margin: 40px 0 20px 0; color: #0f172a; padding-bottom: 10px; border-bottom: 1px solid #e2e8f0; }
+.page-tutorials .embedded-content h3 { font-size: 1.4rem; margin: 30px 0 15px 0; color: #0f172a; }
+.page-tutorials .embedded-content p { margin-bottom: 15px; }
+.page-tutorials .embedded-content pre { background: #1e293b; color: #fff; padding: 15px; border-radius: 8px; overflow-x: auto; margin: 20px 0; }
+.page-tutorials .embedded-content code { background: #f1f5f9; padding: 2px 6px; border-radius: 4px; font-family: monospace; }
+.page-tutorials .content-placeholder { text-align: center; color: #94a3b8; padding: 100px 0; }
+.page-tutorials .content-placeholder .icon { font-size: 3rem; margin-bottom: 15px; }
+.page-tutorials .loading { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px; }
+.page-tutorials .loading-spinner { width: 40px; height: 40px; border: 4px solid #e2e8f0; border-top: 4px solid var(--asys-blue); border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 15px; }
+
+
+/* --- ASYS Debian 详情页 --- */
+.page-debian .product-overview { display: flex; gap: 60px; padding: 60px 0; border-bottom: 1px solid #eee; align-items: flex-start; }
+.page-debian .preview-area { flex: 1; background: #fbfbfb; border: 1px solid #eee; border-radius: 8px; padding: 20px; }
+.page-debian .main-stage { height: 400px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; overflow: hidden; }
+.page-debian .gallery-item { display: none; width: 100%; height: 100%; align-items: center; justify-content: center; animation: fadeIn 0.3s ease-in-out; }
+.page-debian .gallery-item.active { display: flex; }
+.page-debian .gallery-item img { max-width: 100%; max-height: 100%; object-fit: contain; }
+.page-debian .thumbnail-strip { display: flex; gap: 10px; justify-content: center; height: 70px; }
+.page-debian .thumb-box { width: 70px; height: 70px; border: 2px solid #eee; border-radius: 4px; cursor: pointer; padding: 5px; background: #fff; display: flex; align-items: center; justify-content: center; transition: all 0.3s; }
+.page-debian .thumb-box.active { border-color: #000; }
+.page-debian .thumb-box:hover { border-color: #999; }
+.page-debian .thumb-box img { max-width: 100%; max-height: 100%; object-fit: contain; }
+.page-debian .info-area { flex: 1; display: flex; flex-direction: column; }
+.page-debian .product-title { font-size: 28px; font-weight: 700; color: #000; margin-bottom: 30px; line-height: 1.3; }
+.page-debian .feature-list { margin-bottom: 30px; }
+.page-debian .feature-item { font-size: 14px; color: #666; margin-bottom: 12px; line-height: 1.6; padding-left: 15px; position: relative; }
+.page-debian .feature-item::before { content: ''; position: absolute; left: 0; top: 8px; width: 4px; height: 4px; background: var(--debian-red); border-radius: 50%; }
+.page-debian .price-info { margin-bottom: 25px; padding-top: 20px; border-top: 1px dashed #eee; display: flex; align-items: baseline; gap: 10px; }
+.page-debian .price-main { font-size: 36px; color: var(--debian-red); font-weight: 700; line-height: 1; }
+.page-debian .price-symbol { font-size: 20px; margin-right: 5px; }
+.page-debian .shipping-tag { font-size: 14px; color: #fff; background: var(--debian-red); padding: 4px 10px; border-radius: 4px; font-weight: 500; }
+.page-debian .action-buttons { display: flex; gap: 20px; }
+.page-debian .action-buttons .buy-button { flex: 1; height: 50px; line-height: 50px; background: #222; color: #fff; text-align: center; font-size: 16px; font-weight: 600; border-radius: 2px; cursor: pointer; transition: background 0.3s; }
+.page-debian .action-buttons .buy-button:hover { background: var(--debian-red); }
+.page-debian .action-buttons .contact-button { flex: 1; height: 50px; line-height: 50px; background: #fff; color: #333; text-align: center; font-size: 16px; font-weight: 600; border-radius: 2px; cursor: pointer; transition: all 0.3s; border: 2px solid #eee; }
+.page-debian .action-buttons .contact-button:hover { border-color: var(--debian-red); color: var(--debian-red); }
+.page-debian .details-container { padding: 40px 0 80px; }
+.page-debian .tabs { display: flex; gap: 40px; border-bottom: 1px solid #ddd; margin-bottom: 30px; }
+.page-debian .tab-item { padding-bottom: 15px; font-size: 16px; font-weight: 700; color: #666; cursor: pointer; border-bottom: 3px solid transparent; transition: all 0.3s; }
+.page-debian .tab-item:hover { color: #333; }
+.page-debian .tab-item.active { color: #000; border-bottom-color: #000; }
+.page-debian .tab-pane { display: none; animation: fadeIn 0.5s; }
+.page-debian .tab-pane.active { display: block; }
+.page-debian .specs-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.page-debian .specs-table tr { height: 50px; }
+.page-debian .specs-table tr:nth-child(odd) { background-color: #f7f7f7; }
+.page-debian .specs-table tr:nth-child(even) { background-color: #ffffff; }
+.page-debian .specs-table td { padding: 0 20px; color: #333; border: none; }
+.page-debian .specs-label { width: 200px; font-weight: 600; color: #000; }
+.page-debian .intro-text { line-height: 1.8; color: #444; padding: 30px; background: #fcfcfc; border: 1px solid #eee; border-radius: 8px; }
+
+/* Debian Promo Wrapper (长文本展示) */
 #debian-promo-wrapper { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; line-height: 1.7; color: #333; width: 100%; padding: 20px 0 40px 0; background-color: #fff; box-sizing: border-box; }
 .dp-header { text-align: center; margin-bottom: 50px; }
-.dp-header h1 { font-size: 3rem; color: #D70A53; margin-bottom: 15px; font-weight: 800; letter-spacing: -1px; }
+.dp-header h1 { font-size: 3rem; color: var(--debian-red); margin-bottom: 15px; font-weight: 800; letter-spacing: -1px; }
 .dp-header .subtitle { font-size: 1.25rem; color: #666; max-width: 700px; margin: 0 auto 30px auto; }
-.dp-btn { display: inline-block; background-color: #D70A53; color: white; padding: 14px 35px; border-radius: 50px; text-decoration: none; font-weight: bold; transition: background 0.3s, transform 0.2s; box-shadow: 0 4px 6px rgba(215, 10, 83, 0.2); }
+.dp-btn { display: inline-block; background-color: var(--debian-red); color: white; padding: 14px 35px; border-radius: 50px; text-decoration: none; font-weight: bold; transition: background 0.3s, transform 0.2s; box-shadow: 0 4px 6px rgba(215, 10, 83, 0.2); }
 .dp-btn:hover { background-color: #b00842; transform: translateY(-2px); color: white; }
 .dp-intro { text-align: center; max-width: 800px; margin: 0 auto 50px auto; font-size: 1.1rem; color: #444; }
 .dp-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-bottom: 60px; }
-.dp-card { background: #f9f9f9; border-radius: 12px; padding: 35px; transition: all 0.3s ease; border-top: 4px solid #D70A53; display: flex; flex-direction: column; }
+.dp-card { background: #f9f9f9; border-radius: 12px; padding: 35px; transition: all 0.3s ease; border-top: 4px solid var(--debian-red); display: flex; flex-direction: column; }
 .dp-card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.08); background: #fff; }
 .dp-card h3 { font-size: 1.5rem; margin-top: 0; margin-bottom: 15px; color: #222; display: flex; align-items: center; }
 .dp-icon { margin-right: 12px; font-size: 1.6rem; }
@@ -170,7 +266,7 @@ img { max-width: 100%; display: block; }
 .dp-section-title { font-size: 2rem; color: #222; margin-bottom: 30px; text-align: center; font-weight: 700; }
 .dp-content-block { display: flex; flex-wrap: wrap; gap: 40px; align-items: center; background: #f4f4f4; padding: 40px; border-radius: 16px; margin-bottom: 30px; }
 .dp-content-text { flex: 1; min-width: 300px; }
-.dp-content-text h4 { font-size: 1.4rem; color: #D70A53; margin-top: 0; margin-bottom: 15px; }
+.dp-content-text h4 { font-size: 1.4rem; color: var(--debian-red); margin-top: 0; margin-bottom: 15px; }
 .dp-content-text ul { padding-left: 20px; color: #555; }
 .dp-content-text li { margin-bottom: 10px; }
 .dp-highlight { background-color: #222; color: #fff; padding: 50px 40px; border-radius: 16px; text-align: center; margin-top: 40px; }
@@ -181,19 +277,22 @@ img { max-width: 100%; display: block; }
 @keyframes fadeIn { from { opacity: 0.5; } to { opacity: 1; } }
 
 /* =========================================
-   全站统一的手机端适配 (Mobile Responsive)
+   全站通用手机端适配 (Mobile Response)
    ========================================= */
 @media (max-width: 768px) {
-    /* 导航栏共用适配 */
-    .page-vantage-home nav, .page-vdownload nav, .page-debian nav { flex-direction: column; gap: 15px; padding: 15px 20px; position: relative; }
-    .nav-left { flex-direction: column; gap: 15px; width: 100%; }
-    .vantage-nav-links, .debian-nav-links { flex-wrap: wrap; justify-content: center; gap: 10px; width: 100%; }
-    .vantage-nav-links a { background: #f8fafc; padding: 5px 12px; border-radius: 4px; border: 1px solid #e2e8f0; font-size: 14px; }
-    .vantage-nav-links a.active { border-color: var(--vantage-blue); color: var(--vantage-blue); }
-    .asys-main-link { position: absolute; top: 26px; right: 20px; }
-    .asys-main-link img { height: 18px !important; }
+    /* 导航栏折叠 */
+    .site-asys nav, .site-vantage nav { flex-direction: column; gap: 15px; padding: 15px 20px; position: relative; }
+    .site-vantage .nav-left { flex-direction: column; gap: 15px; width: 100%; }
+    .site-asys .debian-nav-links, .site-vantage .vantage-nav-links { flex-wrap: wrap; justify-content: center; gap: 10px; width: 100%; margin-left: 0; }
+    .site-vantage .vantage-nav-links a { background: #f8fafc; padding: 5px 12px; border-radius: 4px; border: 1px solid #e2e8f0; font-size: 14px; }
+    .site-vantage .vantage-nav-links a.active { border-color: var(--vantage-blue); color: var(--vantage-blue); }
+    .site-asys .debian-nav-links a { font-size: 0.9rem; padding: 5px 10px; }
+    .site-asys .debian-nav-links a.active::after { display: none; }
     
-    /* Vantage 主页适配 */
+    .site-vantage .asys-main-link { position: absolute; top: 26px; right: 20px; }
+    .site-vantage .asys-main-link img { height: 18px !important; }
+    
+    /* 页面区块坍缩 */
     .hero { padding: 6vh 20px 15vh; }
     .hero-v-img { width: 100px; height: 100px; }
     .hero h1 { font-size: 2.8rem; }
@@ -201,19 +300,19 @@ img { max-width: 100%; display: block; }
     .bg-watermark { background-size: clamp(250px, 95vw, 600px); top: 40%; }
     .content-mask { border-top-left-radius: 25px; border-top-right-radius: 25px; }
     .page-vantage-home .container { padding: 40px 15px 60px; }
-    .section-title { margin-bottom: 2rem; }
-    .section-title h2 { font-size: 1.8rem; }
-    .features { grid-template-columns: 1fr; gap: 20px; }
-    .f-card { padding: 30px 20px; }
+    .site-asys .section-title, .site-vantage .section-title { margin-bottom: 2rem; }
+    .site-asys .section-title h2, .site-vantage .section-title h2 { font-size: 1.8rem; }
+    
+    .features, .page-about .about-content, .page-about .contact-grid, .page-products .products-grid, .page-service .category-grid { grid-template-columns: 1fr; gap: 20px; }
+    .f-card, .page-service .category-card { padding: 30px 20px; }
     .f-icon { font-size: 2.2rem; }
     .f-card h3 { font-size: 1.15rem; }
     .f-card p { font-size: 0.85rem; }
     .legal-footer { padding: 40px 20px; }
     .legal-text { font-size: 0.9rem; }
-
-    /* Vantage 下载页适配 */
+    
     .page-header { padding: 40px 15px 30px; }
-    .page-header h1 { font-size: 2.2rem; }
+    .page-header h1, .dp-header h1 { font-size: 2.2rem; }
     .btn-smart { padding: 12px 30px; font-size: 1.1rem; }
     .warning-box { padding: 15px; font-size: 0.85rem; margin-top: 20px; }
     .download-container { margin: 40px auto; padding: 0 15px; }
@@ -221,13 +320,15 @@ img { max-width: 100%; display: block; }
     .os-card { padding: 30px 20px; }
     .os-card .btn-primary, .os-card .btn-secondary, .btn-warning-dark { font-size: 0.95rem; padding: 10px 15px; }
 
-    /* Debian 页适配 */
-    .product-overview { flex-direction: column; gap: 30px; padding: 30px 0; }
-    .preview-area, .info-area { width: 100%; }
-    .main-stage { height: 300px; }
-    .action-buttons { flex-direction: column; }
-    .tabs { overflow-x: auto; white-space: nowrap; }
-    .dp-header h1 { font-size: 2.2rem; }
+    .page-tutorials .tutorial-layout, .page-docs .docs-layout, .page-debian .product-overview { flex-direction: column; }
+    .page-tutorials .tutorial-sidebar, .page-docs .docs-sidebar { width: 100%; position: static; margin-bottom: 20px; height: auto; border-right: none; border-bottom: 1px solid var(--border); padding: 20px 15px 5px;}
+    .page-tutorials .tutorial-content, .page-docs .docs-content { padding: 20px; width: 100%; }
+    .page-docs .docs-sidebar ul { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 15px; }
+
+    .page-debian .preview-area, .page-debian .info-area { width: 100%; }
+    .page-debian .main-stage { height: 300px; }
+    .page-debian .action-buttons { flex-direction: column; }
+    .page-debian .tabs { overflow-x: auto; white-space: nowrap; }
     .dp-content-block { padding: 25px; }
     .dp-grid { grid-template-columns: 1fr; }
 }
