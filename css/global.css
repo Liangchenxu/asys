@@ -382,6 +382,21 @@ img { max-width: 100%; display: block; }
     /* 去掉 !important，让浏览器底层加速自然生效 */
     will-change: transform, opacity; 
     backface-visibility: hidden !important;
+    /* ★★★ 终极层级护盾：彻底防止文字和按钮被大 V 遮挡或产生虚影 ★★★ */
+    .hero h1, 
+    .hero p, 
+    .hero-v-img, 
+    .hero div {
+        position: relative !important;
+        z-index: 99 !important; /* 强行把文字和按钮提到绝对的最上层 */
+}
+
+/* 专门增强“隐私·快速·易用”的清晰度，防止被背后的蓝绿色吞噬 */
+.hero p {
+    font-weight: 600 !important; /* 稍微加粗一点 */
+    color: #374151 !important; /* 颜色稍微调深一点点 */
+    text-shadow: 0 1px 4px rgba(255, 255, 255, 0.9) !important; /* 加一层非常自然的白色底光，瞬间脱离背景 */
+}
 }
 
 /* ★★★ 2K / 4K 大屏专属遥控器 ★★★ */
@@ -391,6 +406,7 @@ img { max-width: 100%; display: block; }
         background-size: 130vh !important; 
     }
 }
+
 /* ★★★ 手机端专属大 V 补丁 ★★★ */
 @media (max-width: 768px) {
     .bg-watermark {
