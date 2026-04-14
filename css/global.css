@@ -391,3 +391,16 @@ img { max-width: 100%; display: block; }
         background-size: 130vh !important; 
     }
 }
+/* ★★★ 手机端专属大 V 补丁 ★★★ */
+@media (max-width: 768px) {
+    .bg-watermark {
+        /* 1. 手机端屏幕细长，必须按宽度 (vw) 来缩小，防止被切头！你可以调 130vw 或 140vw */
+        background-size: 140vw !important; 
+        
+        /* 2. 手机端专属上下位置：如果觉得偏上，把 45% 改成 50% 往下压 */
+        background-position: center 48% !important; 
+        
+        /* 3. 手机端稍微调淡一点，防止喧宾夺主 */
+        opacity: 0.25 !important; 
+    }
+}
