@@ -82,26 +82,7 @@ img { max-width: 100%; display: block; }
     z-index: 1; 
     overflow: visible; 
 }
-.bg-watermark { 
-    position: fixed; /* 恢复固定定位，解锁跟随效果 */
-    top: 45%; 
-    left: 50%; 
-    /* 🚀 找回灵魂 1：开启 GPU 3D 硬件加速，并给放大动效预留 scale 接口 */
-    transform: translate3d(-50%, -50%, 0) scale(1); 
-    width: 100vw; 
-    height: 100vh; 
-    background-image: url('../img/vantage.webp'); 
-    background-repeat: no-repeat; 
-    background-position: center center; 
-    background-size: clamp(450px, 85vw, 1600px); 
-    opacity: 0.45; 
-    z-index: -1; 
-    pointer-events: none; 
-    /* 🚀 找回灵魂 2：提前通知显卡进行双重渲染加速，恢复绝对丝滑 */
-    will-change: transform, opacity; 
-    /* 🚀 找回灵魂 3：开启抗锯齿，防止放大时边缘闪烁抖动 */
-    backface-visibility: hidden; 
-}
+/* --- 1111111111--- */
 .hero-v-img { width: 150px; height: 150px; object-fit: contain; margin: 0 auto 30px auto; display: block; }
 .hero h1 { font-size: 4rem; margin: 0; font-weight: 800; letter-spacing: -1px; }
 .hero p { font-size: 1.3rem; color: var(--text-sub); margin: 1.5rem 0 3.5rem; font-weight: 500; letter-spacing: 2px; }
@@ -376,8 +357,37 @@ img { max-width: 100%; display: block; }
     padding: 1rem 5% !important; 
 }
 
-/* ★★★ 调整大 V 在电脑端的大小和位置 ★★★ */
-.site-vantage .bg-watermark { 
-    background-size: 150vh !important; /* 缩小大 V。75vh意思是占屏幕高度的75%，觉得大改成60，觉得小改成80 */
-    top: 45% !important;              /* 把大 V 往下挪。数字越大越往下，防止被头部导航切掉 */
+/* ★★★ 终极大 V 方案：完美兼容 JS 放大特效 + 兼容 2K/1080p ★★★ */
+.bg-watermark { 
+    position: fixed !important; 
+    top: 50% !important; 
+    left: 50% !important; 
+    width: 100vw !important; 
+    height: 100vh !important; 
+    
+    /* 🚀 动效接口 1：千万不能加 !important，要留给 JS 去放大它 */
+    transform: translate3d(-50%, -50%, 0) scale(1); 
+    
+    background-image: url('../img/vantage.webp'); 
+    background-repeat: no-repeat; 
+    background-position: center 55% !important; 
+    background-size: 150vh !important; 
+    
+    /* 🚀 动效接口 2 (罪魁祸首)：去掉了 !important，JS 终于可以控制淡出淡入了！ */
+    opacity: 0.45; 
+    
+    z-index: -1 !important; 
+    pointer-events: none !important; 
+    
+    /* 去掉 !important，让浏览器底层加速自然生效 */
+    will-change: transform, opacity; 
+    backface-visibility: hidden !important;
+}
+
+/* ★★★ 2K / 4K 大屏专属遥控器 ★★★ */
+@media (min-width: 2000px) {
+    .bg-watermark {
+        background-position: center 88% !important; 
+        background-size: 130vh !important; 
+    }
 }
