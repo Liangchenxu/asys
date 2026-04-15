@@ -18,6 +18,11 @@
           "id": "changelog",
           "title": "更新日志",
           "file": "../vdocs/changelog.html"
+        },
+        {
+          "id": "privacy",
+          "title": "隐私政策",
+          "file": "../vdocs/privacy.html" 
         }
       ]
     }
