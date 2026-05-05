@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>开源支持证书查询 - 赛思科技</title>
+    <link rel="shortcut icon" href="../img/asys.ico" type="image/x-icon">
+    <link rel="stylesheet" href="../css/global.css">
+    <script src="../js/global.js" defer></script>
+    <style>
+        /* 查询页面专属样式 (可以直接写在这里，避免再去改 global.css) */
+        .query-section {
+            padding: 80px 20px 120px;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            min-height: calc(100vh - 150px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .query-card {
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.1);
+            padding: 50px 40px;
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+        }
+        .query-card h2 {
+            font-size: 2rem;
+            color: #0f172a;
+            margin-bottom: 15px;
+            font-weight: 800;
+        }
+        .query-card p.subtitle {
+            color: #64748b;
+            font-size: 1.05rem;
+            margin-bottom: 35px;
+            line-height: 1.6;
+        }
+        .query-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .input-group {
+            position: relative;
+        }
+        .cert-input {
+            width: 100%;
+            padding: 18px 20px;
+            font-size: 1.5rem;
+            text-align: center;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            border: 2px solid #cbd5e1;
+            border-radius: 12px;
+            outline: none;
+            transition: all 0.3s;
+            font-family: monospace;
+            background: #f8fafc;
+            color: #1e293b;
+            font-weight: bold;
+        }
+        .cert-input:focus {
+            border-color: var(--asys-blue);
+            background: #fff;
+            box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+        }
+        .cert-input::placeholder {
+            color: #94a3b8;
+            font-weight: normal;
+            letter-spacing: normal;
+        }
+        .submit-btn {
+            background: var(--asys-blue);
+            color: white;
+            border: none;
+            padding: 16px;
+            font-size: 1.15rem;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3);
+        }
+        .submit-btn:hover {
+            background: #4338ca;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(79, 70, 229, 0.4);
+        }
+        .submit-btn:disabled {
+            background: #94a3b8;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        /* 结果展示区 */
+        .result-area {
+            margin-top: 30px;
+            display: none;
+            animation: fadeIn 0.4s ease-out;
+        }
+        .result-box {
+            padding: 25px;
+            border-radius: 12px;
+            text-align: left;
+        }
+        .result-success {
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            color: #166534;
+        }
+        .result-error {
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            color: #991b1b;
+        }
+        .result-box h3 {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1.25rem;
+        }
+        .result-box p {
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+        .result-box .donate-msg {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px dashed rgba(0,0,0,0.1);
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="site-asys page-donation"> 
+    <header>
+        <div class="container">
+            <nav>
+                <a href="../index.html" class="debian-logo">
+                    <!-- 请确保此处 logo 路径正确 -->
+                    <img src="../img/ASYS-3.png" alt="赛思科技 Logo">
+                    <h1>赛思科技</h1>
+                </a>
+                <div class="debian-nav-links">
+                    <a href="../index.html">首页</a>
+                    <a href="../service-guide.html">自助服务</a>
+                    <a href="../products.html">产品</a>
+                    <a href="../tutorials.html">教程</a>
+                    <a href="../vantage/index.html">Vantage浏览器</a>
+                    <a href="../about.html">关于 & 联系</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main class="query-section">
+        <div class="query-card">
+            <h2>开源支持证书查询</h2>
+            <p class="subtitle">感谢您选择 ASYS科技 提供的 Debian 安装介质。<br>请输入证书左下角的 6 位十六进制编号以验证您的捐赠记录。</p>
+            
+            <form class="query-form" id="donationForm">
+                <div class="input-group">
+                    <!-- 限制最大长度6，使用正则限制只能输入0-9,a-f,A-F -->
+                    <input type="text" id="certCode" class="cert-input" placeholder="输入6位编号 (例如: 1A2B3C)" maxlength="6" pattern="[0-9A-Fa-f]{6}" required autocomplete="off">
+                </div>
+                <button type="submit" id="submitBtn" class="submit-btn">查询记录</button>
+            </form>
+
+            <div class="result-area" id="resultArea">
+                <!-- 结果将由 JS 动态插入到这里 -->
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>© 2026 赛思科技. 保留所有权利。</p>
+        </div>
+    </footer>
+
+    <script>
+        const form = document.getElementById('donationForm');
+        const input = document.getElementById('certCode');
+        const btn = document.getElementById('submitBtn');
+        const resultArea = document.getElementById('resultArea');
+
+        // 输入时自动转为大写，过滤非16进制字符
+        input.addEventListener('input', function(e) {
+            let val = e.target.value;
+            val = val.replace(/[^0-9A-Fa-f]/g, '').toUpperCase();
+            e.target.value = val;
+        });
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const code = input.value;
+
+            // 二次校验
+            if (!/^[0-9A-F]{6}$/.test(code)) {
+                alert("请输入有效的 6 位 16 进制证书编号！");
+                return;
+            }
+
+            // 切换为加载状态
+            btn.disabled = true;
+            btn.innerText = "查询中...";
+            resultArea.style.display = "none";
+
+            // ==========================================
+            // 🚀 这里是前端模拟加载，之后请替换为真实的 Fetch 请求
+            // 目标接口: dl.asystech.cn 
+            // ==========================================
+            setTimeout(() => {
+                btn.disabled = false;
+                btn.innerText = "查询记录";
+                resultArea.style.display = "block";
+
+                // 这里假设查询成功 (你可以根据后端的 JSON 返回值来写 if/else)
+                const isSuccess = true; // 模拟后端返回状态
+
+                if (isSuccess) {
+                    resultArea.innerHTML = `
+                        <div class="result-box result-success">
+                            <h3>✅ 证书有效</h3>
+                            <p><strong>证书编号：</strong> ${code}</p>
+                            <p><strong>验证状态：</strong> 记录已确认</p>
+                            <div class="donate-msg">
+                                您购买产品所支付的费用中，已有一部分被直接用于捐赠 Debian 项目，以支持自由软件基础设施与社区发展。感谢您的贡献！
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    resultArea.innerHTML = `
+                        <div class="result-box result-error">
+                            <h3>❌ 查无此证</h3>
+                            <p>未找到编号为 <strong>${code}</strong> 的捐赠记录。</p>
+                            <div class="donate-msg">请检查您的编号是否输入正确。如有疑问，请联系 ASYS科技 售后支持。</div>
+                        </div>
+                    `;
+                }
+            }, 800); // 模拟 800ms 的网络延迟
+        });
+    </script>
+</body>
+</html>
