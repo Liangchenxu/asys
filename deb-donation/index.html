@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>开源支持证书查询 - 赛思科技</title>
@@ -59,6 +60,16 @@
             color: #1e293b;
             font-weight: bold;
         }
+        
+        /* 【新增】单独处理占位符的样式，防止手机端因为字间距太大被截断 */
+        .cert-input::placeholder {
+            letter-spacing: normal; /* 恢复正常间距 */
+            font-size: 1rem;        /* 提示词稍微小一点 */
+            font-family: system-ui, -apple-system, sans-serif;
+            color: #94a3b8;
+            font-weight: normal;
+        }
+
         .cert-input:focus {
             border-color: var(--asys-blue);
             background: #fff;
@@ -133,6 +144,53 @@
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
+
+        /* ========================================================= */
+        /* 【新增】手机端专属适配逻辑                                 */
+        /* ========================================================= */
+        @media (max-width: 600px) {
+            .query-section {
+                padding: 40px 15px 60px; /* 减小上下和左右的内边距 */
+            }
+            .query-card {
+                padding: 30px 20px; /* 卡片在手机上更紧凑 */
+            }
+            .query-card h2 {
+                font-size: 1.5rem; /* 标题改小 */
+            }
+            .query-card p.subtitle {
+                font-size: 0.95rem; /* 副标题改小 */
+                margin-bottom: 25px;
+            }
+            .cert-input {
+                font-size: 1.3rem; /* 手机上输入的字体稍微改小点 */
+                padding: 15px;
+                letter-spacing: 2px; /* 减小输入的字间距 */
+            }
+            .cert-input::placeholder {
+                font-size: 0.9rem; /* 手机端提示词再小一点，确保绝对不被截断 */
+            }
+            /* 让验证码在手机端自动居中 */
+            .cf-turnstile {
+                display: flex;
+                justify-content: center;
+            }
+            /* 调整查询结果的排版 */
+            .result-box {
+                padding: 20px;
+            }
+            .result-box h3 {
+                font-size: 1.2rem;
+            }
+            .info-row {
+                flex-direction: column; /* 手机上变成上下排列更好看 */
+                align-items: flex-start;
+                gap: 5px;
+            }
+            .info-row strong {
+                width: auto;
+            }
+        }
     </style>
 </head>
 <body class="site-asys page-donation"> 
@@ -162,6 +220,9 @@
             
             <form class="query-form" id="donationForm">
                 <input type="text" id="certCode" class="cert-input" placeholder="输入6位编号 (例如: 1A2B3C)" maxlength="6" pattern="[0-9A-Fa-f]{6}" required autocomplete="off">
+                
+                <div class="cf-turnstile" data-sitekey="0x4AAAAAADKvxJ8XvkXsPIZR"></div>
+
                 <button type="submit" id="submitBtn" class="submit-btn">查询记录</button>
             </form>
 
@@ -190,6 +251,16 @@
             e.preventDefault();
             const code = input.value;
 
+            // 【新增】第 1 步：尝试获取验证码的 Token
+            const turnstileResponseElement = document.querySelector('[name="cf-turnstile-response"]');
+            const token = turnstileResponseElement ? turnstileResponseElement.value : '';
+
+            // 如果没有 token，说明还没验证通过（或者他压根没点验证）
+            if (!token) {
+                alert("请先完成人机验证！");
+                return;
+            }
+
             if (!/^[0-9A-F]{6}$/.test(code)) {
                 alert("请输入有效的 6 位 16 进制证书编号！");
                 return;
@@ -201,15 +272,25 @@
             resultArea.style.display = "none";
 
             try {
-                // 🚀 正式请求 Cloudflare 后端接口
-                const response = await fetch(`https://cert.asystech.cn/?code=${code}`);
+                // 【修改】第 2 步：向后端发请求。
+                // 之前是拼在 URL 里发 GET 请求。现在为了把 token 安全地传给后端，换成了 POST 请求发 JSON
+                const response = await fetch(`https://verify.asystech.cn/verify`, { // 这里的 /verify 需要跟你 Worker 设定的路由对应
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ 
+                        code: code,   // 证书号
+                        token: token  // 【核心】把验证码的 Token 传给你的 Worker 校验
+                    })
+                });
                 
                 if (!response.ok) throw new Error("服务器响应异常");
                 
                 const resultJson = await response.json();
                 let htmlContent = '';
                 
-                // 判断捐赠状态，渲染不同的 UI
+                // 判断捐赠状态，渲染不同的 UI（这部分逻辑原封不动）
                 if (resultJson.status === 2) {
                     htmlContent = `
                         <div class="result-box result-success">
@@ -258,6 +339,12 @@
                 // 恢复按钮状态
                 btn.disabled = false;
                 btn.innerText = "查询记录";
+                
+                // 【新增】极其重要的一步：重置验证码
+                // 因为如果不重置，用户输错了一次之后，想改个数字再查一次的话，刚刚用过的旧 Token 会被拒绝
+                if (typeof turnstile !== 'undefined') {
+                    turnstile.reset();
+                }
             }
         });
     </script>
