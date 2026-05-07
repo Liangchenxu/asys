@@ -49,23 +49,28 @@
             padding: 18px 20px;
             font-size: 1.5rem;
             text-align: center;
-            letter-spacing: 4px;
+            letter-spacing: 6px; /* 恢复成正常的字间距 */
             text-transform: uppercase;
             border: 2px solid #cbd5e1;
             border-radius: 12px;
             outline: none;
             transition: all 0.3s;
-            font-family: 'Microsoft YaHei', 'PingFang SC', 'SimHei', sans-serif; /* 👈 按照师傅要求，改成了标准的黑体/无衬线字体组合 */
+            font-family: 'Microsoft YaHei', 'PingFang SC', 'SimHei', sans-serif;
             background: #f8fafc;
             color: #1e293b;
             font-weight: bold;
         }
+
+        .cf-turnstile {
+            margin: 12px 0;
+            display: flex;
+            justify-content: center;
+        }
         
-        /* 单独处理占位符的样式，防止手机端因为字间距太大被截断 */
         .cert-input::placeholder {
-            letter-spacing: normal; /* 恢复正常间距 */
-            font-size: 1rem;        /* 提示词稍微小一点 */
-            font-family: 'Microsoft YaHei', 'PingFang SC', 'SimHei', sans-serif; /* 占位符也同步为黑体 */
+            letter-spacing: normal;
+            font-size: 1rem;
+            font-family: 'Microsoft YaHei', 'PingFang SC', 'SimHei', sans-serif;
             color: #94a3b8;
             font-weight: normal;
         }
@@ -145,47 +150,19 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* 手机端专属适配逻辑 */
+        /* 手机端适配 */
         @media (max-width: 600px) {
-            .query-section {
-                padding: 40px 15px 60px;
-            }
-            .query-card {
-                padding: 30px 20px;
-            }
-            .query-card h2 {
-                font-size: 1.5rem;
-            }
-            .query-card p.subtitle {
-                font-size: 0.95rem;
-                margin-bottom: 25px;
-            }
-            .cert-input {
-                font-size: 1.3rem;
-                padding: 15px;
-                letter-spacing: 2px;
-            }
-            .cert-input::placeholder {
-                font-size: 0.9rem;
-            }
-            .cf-turnstile {
-                display: flex;
-                justify-content: center;
-            }
-            .result-box {
-                padding: 20px;
-            }
-            .result-box h3 {
-                font-size: 1.2rem;
-            }
-            .info-row {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 5px;
-            }
-            .info-row strong {
-                width: auto;
-            }
+            .query-section { padding: 40px 15px 60px; }
+            .query-card { padding: 30px 20px; }
+            .query-card h2 { font-size: 1.5rem; }
+            .query-card p.subtitle { font-size: 0.95rem; margin-bottom: 25px; }
+            .cert-input { font-size: 1.3rem; padding: 15px; letter-spacing: 2px; }
+            .cert-input::placeholder { font-size: 0.9rem; }
+            .cf-turnstile { margin: 8px 0; }
+            .result-box { padding: 20px; }
+            .result-box h3 { font-size: 1.2rem; }
+            .info-row { flex-direction: column; align-items: flex-start; gap: 5px; }
+            .info-row strong { width: auto; }
         }
     </style>
 </head>
@@ -215,7 +192,7 @@
             <p class="subtitle">感谢您选择 ASYS科技 提供的 Debian 安装介质。<br>请输入证书左下角的 6 位十六进制编号以验证您的捐赠记录。</p>
             
             <form class="query-form" id="donationForm">
-                <input type="text" id="certCode" class="cert-input" placeholder="输入6位编号 (例如: 1A2B3C)" maxlength="6" pattern="[0-9A-Fa-f]{6}" required autocomplete="off">
+                <input type="text" id="certCode" class="cert-input" placeholder="输入编号 (例如： 1A2 B3C)" maxlength="7" required autocomplete="off">
                 
                 <div class="cf-turnstile" data-sitekey="0x4AAAAAADKvxJ8XvkXsPIZR"></div>
 
@@ -238,13 +215,23 @@
         const btn = document.getElementById('submitBtn');
         const resultArea = document.getElementById('resultArea');
 
+        // 输入时自动格式化：过滤字符并在第3位后加空格
         input.addEventListener('input', function(e) {
-            e.target.value = e.target.value.replace(/[^0-9A-Fa-f]/g, '').toUpperCase();
+            // 过滤非16进制字符
+            let val = e.target.value.replace(/[^0-9A-Fa-f]/g, '').toUpperCase();
+            
+            // 如果长度超过3位，中间插入空格
+            if (val.length > 3) {
+                val = val.slice(0, 3) + ' ' + val.slice(3, 6);
+            }
+            e.target.value = val;
         });
 
         form.addEventListener('submit', async function(e) {
             e.preventDefault();
-            const code = input.value;
+            
+            // 提交时，把空格剔除掉，拿到的依然是纯净的 6 位验证码发给后端
+            const code = input.value.replace(/\s+/g, '');
 
             const turnstileResponseElement = document.querySelector('[name="cf-turnstile-response"]');
             const token = turnstileResponseElement ? turnstileResponseElement.value : '';
