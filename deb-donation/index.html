@@ -49,7 +49,7 @@
             padding: 18px 20px;
             font-size: 1.5rem;
             text-align: center;
-            letter-spacing: 6px; /* 恢复成正常的字间距 */
+            letter-spacing: 6px;
             text-transform: uppercase;
             border: 2px solid #cbd5e1;
             border-radius: 12px;
@@ -80,6 +80,34 @@
             background: #fff;
             box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
         }
+
+        /* 隐私政策勾选框样式 */
+        .privacy-checkbox-container {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            text-align: left;
+            font-size: 0.9rem;
+            color: #64748b;
+            margin-bottom: 5px;
+            line-height: 1.5;
+        }
+        .privacy-checkbox-container input[type="checkbox"] {
+            margin-top: 4px;
+            cursor: pointer;
+            width: 16px;
+            height: 16px;
+            flex-shrink: 0;
+        }
+        .privacy-checkbox-container a {
+            color: var(--asys-blue);
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .privacy-checkbox-container a:hover {
+            text-decoration: underline;
+        }
+
         .submit-btn {
             background: var(--asys-blue);
             color: white;
@@ -196,6 +224,11 @@
                 
                 <div class="cf-turnstile" data-sitekey="0x4AAAAAADKvxJ8XvkXsPIZR"></div>
 
+                <div class="privacy-checkbox-container">
+                    <input type="checkbox" id="privacyCheck">
+                    <label for="privacyCheck">我已阅读并同意 <a href="../vantage/privacy.html" target="_blank">《隐私政策》</a>。为保障系统安全与反滥用，本次查询将收集基础网络请求信息（如IP地址、浏览器类型等）。</label>
+                </div>
+
                 <button type="submit" id="submitBtn" class="submit-btn">查询记录</button>
             </form>
 
@@ -214,13 +247,11 @@
         const input = document.getElementById('certCode');
         const btn = document.getElementById('submitBtn');
         const resultArea = document.getElementById('resultArea');
+        const privacyCheck = document.getElementById('privacyCheck'); // 获取勾选框元素
 
         // 输入时自动格式化：过滤字符并在第3位后加空格
         input.addEventListener('input', function(e) {
-            // 过滤非16进制字符
             let val = e.target.value.replace(/[^0-9A-Fa-f]/g, '').toUpperCase();
-            
-            // 如果长度超过3位，中间插入空格
             if (val.length > 3) {
                 val = val.slice(0, 3) + ' ' + val.slice(3, 6);
             }
@@ -229,6 +260,12 @@
 
         form.addEventListener('submit', async function(e) {
             e.preventDefault();
+
+            // 🚀 第一步：验证是否勾选隐私政策
+            if (!privacyCheck.checked) {
+                alert("请您阅读并勾选同意《隐私政策》后继续查验。");
+                return;
+            }
             
             // 提交时，把空格剔除掉，拿到的依然是纯净的 6 位验证码发给后端
             const code = input.value.replace(/\s+/g, '');
