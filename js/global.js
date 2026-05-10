@@ -90,7 +90,25 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(data => {
                 linkData = data.links;
                 document.getElementById('version-display').innerHTML = `当前版本：${data.version}`;
-                document.getElementById('btn-win').href = linkData.windows_exe || "#";
+
+                // Windows 下拉框联动
+                const winArch = document.getElementById('win-arch');
+                const btnWin = document.getElementById('btn-win');
+                
+                if (btnWin) {
+                    function updateWinBtn() {
+                        if (winArch && winArch.value === 'arm64') {
+                            btnWin.href = linkData.win_arm64_exe || "#";
+                        } else {
+                            // 兼容新版 win_x64_exe 或旧版 windows_exe 命名
+                            btnWin.href = linkData.win_x64_exe || linkData.windows_exe || "#";
+                        }
+                    }
+                    if (winArch) {
+                        winArch.addEventListener('change', updateWinBtn);
+                    }
+                    updateWinBtn();
+                }
 
                 // Linux 下拉框联动
                 const linuxFormat = document.getElementById('linux-format');
@@ -157,7 +175,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (ua.indexOf("Windows") !== -1) {
                 smartText.textContent = "下载 Vantage for Windows";
                 smartIcon.textContent = "💻";
-                smartBtn.href = linkData.windows_exe || "#";
+                smartBtn.href = linkData.win_x64_exe || linkData.windows_exe || "#";
             } else if (ua.indexOf("Mac") !== -1) {
                 smartText.textContent = "下载 Vantage for macOS";
                 smartIcon.textContent = "🍎";
