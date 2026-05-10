@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // 3. Vantage 下载页专属逻辑：JSON 获取与按钮联动
     // -----------------------------------------
     if (isVDownload) {
-        const CURRENT_VERSION = "149.0-3"; 
+        const CURRENT_VERSION = "vd"; 
         let linkData = {}; 
 
         fetch(`${CURRENT_VERSION}.json`)
