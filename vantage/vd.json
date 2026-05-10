@@ -5,8 +5,8 @@
         "windows_exe": "https://dl.asystech.cn/d/asys/vantage/150.0.2-1/vantage-150.0.2-1.x86_64-installer.exe",
         "win_arm64_exe": "https://dl.asystech.cn/d/asys/vantage/150.0.2-1/vantage-150.0.2-1.aarch64-installer.exe",
 
-        "mac_intel_dmg": "https://dl.asystech.cn/d/asys/vantage/149.0-3/vantage-149.0-3.en-US.mac-intel.dmg",
-        "mac_apple_dmg": "https://dl.asystech.cn/d/asys/vantage/149.0-3/vantage-149.0-3.en-US.mac-apple.dmg",
+        "mac_intel_dmg": "",
+        "mac_apple_dmg": "",
 
         "linux_x64_deb": "https://dl.asystech.cn/d/asys/vantage/150.0.2-1/vantage_150.0.2-1_amd64.deb",
         "linux_x86_deb": "",

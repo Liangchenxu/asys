@@ -82,6 +82,24 @@ document.addEventListener('DOMContentLoaded', function() {
     // 3. Vantage 下载页专属逻辑：JSON 获取与按钮联动
     // -----------------------------------------
     if (isVDownload) {
+        
+        // ✨ 新功能：自动从 releases.json 读取最新版本号
+        fetch('releases.json')
+            .then(res => res.json())
+            .then(data => {
+                if (data && data.length > 0) {
+                    // 读取第一个元素的 tag_name，并用 trim() 自动去掉两端多余的空格
+                    const latestTag = data[0].tag_name.trim();
+                    const versionDisplay = document.getElementById('version-display');
+                    if (versionDisplay) {
+                        versionDisplay.innerHTML = `当前版本：${latestTag}`;
+                    }
+                }
+            })
+            .catch(err => console.error("读取 releases.json 失败", err));
+
+
+        // 获取下载链接数据
         const CURRENT_VERSION = "vd"; 
         let linkData = {}; 
 
@@ -89,7 +107,7 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(res => res.json())
             .then(data => {
                 linkData = data.links;
-                document.getElementById('version-display').innerHTML = `当前版本：${data.version}`;
+                // 注意：这里不再用 vd.json 里的版本号了，因为上面已经交给 releases.json 处理了
 
                 // Windows 下拉框联动
                 const winArch = document.getElementById('win-arch');
@@ -139,19 +157,26 @@ document.addEventListener('DOMContentLoaded', function() {
                 linuxArch.addEventListener('change', updateLinuxBtn);
                 updateLinuxBtn(); 
 
-                // macOS 下拉框联动
+                // macOS 下拉框联动 (无链接置灰逻辑)
                 const macArch = document.getElementById('mac-arch');
                 const btnMac = document.getElementById('btn-mac');
 
                 function updateMacBtn() {
-                    if (macArch.value === 'intel') {
-                        btnMac.href = linkData.mac_intel_dmg || "#";
+                    let targetLink = macArch.value === 'intel' ? linkData.mac_intel_dmg : linkData.mac_apple_dmg;
+                    
+                    if (targetLink && targetLink !== "") {
+                        btnMac.href = targetLink;
+                        btnMac.textContent = "下载";
+                        btnMac.style.opacity = "1";
+                        btnMac.style.pointerEvents = "auto";
+                        btnMac.style.cursor = "pointer";
                     } else {
-                        btnMac.href = linkData.mac_apple_dmg || "#";
+                        btnMac.href = "javascript:void(0);";
+                        btnMac.textContent = "暂不提供此版本";
+                        btnMac.style.opacity = "0.4";
+                        btnMac.style.pointerEvents = "none";
+                        btnMac.style.cursor = "not-allowed";
                     }
-                    btnMac.textContent = "下载";
-                    btnMac.style.opacity = "1";
-                    btnMac.style.pointerEvents = "auto";
                 }
                 macArch.addEventListener('change', updateMacBtn);
                 updateMacBtn();
@@ -161,6 +186,7 @@ document.addEventListener('DOMContentLoaded', function() {
             .catch(err => {
                 console.error("JSON加载失败", err);
                 const smartText = document.getElementById('smart-text');
+                // 这里已经锁定为读取 vd.json 如果还报错 149.0-3，绝对是 CDN 缓存！
                 if(smartText) smartText.textContent = `⚠️ 读取 ${CURRENT_VERSION}.json 失败，请检查文件`;
             });
 
@@ -177,9 +203,17 @@ document.addEventListener('DOMContentLoaded', function() {
                 smartIcon.textContent = "💻";
                 smartBtn.href = linkData.win_x64_exe || linkData.windows_exe || "#";
             } else if (ua.indexOf("Mac") !== -1) {
-                smartText.textContent = "下载 Vantage for macOS";
                 smartIcon.textContent = "🍎";
-                smartBtn.href = linkData.mac_intel_dmg || "#";
+                // Mac 智能检测联动：如果没有链接则置灰
+                if (linkData.mac_intel_dmg || linkData.mac_apple_dmg) {
+                    smartText.textContent = "下载 Vantage for macOS";
+                    smartBtn.href = linkData.mac_intel_dmg || linkData.mac_apple_dmg || "#";
+                } else {
+                    smartText.textContent = "暂不提供 macOS 版本";
+                    smartBtn.href = "javascript:void(0);";
+                    smartBtn.style.opacity = "0.5";
+                    smartBtn.style.cursor = "not-allowed";
+                }
             } else if (ua.indexOf("Linux") !== -1 || ua.indexOf("X11") !== -1) {
                 smartText.textContent = "下载 Vantage for Linux (.deb)";
                 smartIcon.textContent = "🐧";
@@ -336,7 +370,7 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(res => res.json())
             .then(data => {
                 docsConfig = data.categories;
-                window.vudFiles = data.changelog_files; // ✨ 新增：保存日志文件列表
+                window.vudFiles = data.changelog_files; 
                 let html = '';
                 docsConfig.forEach(category => {
                     html += `<h3>${category.title}</h3><ul>`;
@@ -384,13 +418,11 @@ document.addEventListener('DOMContentLoaded', function() {
             if (targetItem) loadDoc(targetItem.id, targetItem.file);
         };
 
-        // ✨ 重写：动态拼接 vud 文件夹中的内容
         window.renderChangelogFromJson = async function() {
             const container = document.getElementById('changelog-container');
             if(!container || !window.vudFiles) return;
             
             let finalHtml = '';
-            // 按照 docs-config.json 里的排序，挨个去 vud 文件夹拉取 html
             for (const fileName of window.vudFiles) {
                 try {
                     const res = await fetch(`../vud/${fileName}`);
