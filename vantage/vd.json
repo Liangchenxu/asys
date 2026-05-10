@@ -3,28 +3,29 @@
     
     "links": {
         "windows_exe": "https://dl.asystech.cn/d/asys/vantage/150.0.2-1/vantage-150.0.2-1.x86_64-installer.exe",
+        "win_arm64_exe": "https://dl.asystech.cn/d/asys/vantage/150.0.2-1/vantage-150.0.2-1.aarch64-installer.exe",
 
         "mac_intel_dmg": "https://dl.asystech.cn/d/asys/vantage/149.0-3/vantage-149.0-3.en-US.mac-intel.dmg",
         "mac_apple_dmg": "https://dl.asystech.cn/d/asys/vantage/149.0-3/vantage-149.0-3.en-US.mac-apple.dmg",
 
         "linux_x64_deb": "https://dl.asystech.cn/d/asys/vantage/150.0.2-1/vantage_150.0.2-1_amd64.deb",
         "linux_x86_deb": "",
-        "linux_arm64_deb": "https://dl.asystech.cn/d/asys/vantage/149.0-3/vantage_149.0-3_arm64.deb",
+        "linux_arm64_deb": "https://dl.asystech.cn/d/asys/vantage/150.0.2-1/vantage_150.0.2-1_arm64.deb",
 
         "linux_x64_rpm": "https://dl.asystech.cn/d/asys/vantage/150.0.2-1/vantage-150.0.2-1.x86_64.rpm",
         "linux_x86_rpm": "",
-        "linux_arm64_rpm": "https://dl.asystech.cn/d/asys/vantage/149.0-3/vantage-149.0-3.aarch64.rpm",
+        "linux_arm64_rpm": "https://dl.asystech.cn/d/asys/vantage/150.0.2-1/vantage-150.0.2-1.aarch64.rpm",
 
         "linux_x64_appimage": "https://dl.asystech.cn/d/asys/vantage/150.0.2-1/vantage-150.0.2-1.x86_64.AppImage",
         "linux_x86_appimage": "",
-        "linux_arm64_appimage": "https://dl.asystech.cn/d/asys/vantage/149.0-3/vantage-149.0-3.aarch64.AppImage",
+        "linux_arm64_appimage": "https://dl.asystech.cn/d/asys/vantage/150.0.2-1/vantage-150.0.2-1.aarch64.AppImage",
 
-        "linux_x64_tar": "https://dl.asystech.cn/d/asys/vantage/149.0-3/vantage-149.0-3.x64_portable.tar.gz",
+        "linux_x64_tar": "https://dl.asystech.cn/d/asys/vantage/150.0.2-1/vantage-150.0.2-1.x86_64.portable.tar.gz",
         "linux_x86_tar": "",
-        "linux_arm64_tar": "https://dl.asystech.cn/d/asys/vantage/149.0-3/vantage-149.0-3.aarch64.portable.tar.gz",
+        "linux_arm64_tar": "https://dl.asystech.cn/d/asys/vantage/150.0.2-1/vantage-150.0.2-1.aarch64.portable.tar.gz",
 
-        "linux_x64_tar_xz": "",
+        "linux_x64_tar_xz": "https://dl.asystech.cn/d/asys/vantage/150.0.2-1/vantage-150.0.2-1.en-US.linux-x86_64.tar.xz",
         "linux_x86_tar_xz": "",
-        "linux_arm64_tar_xz": "https://dl.asystech.cn/d/asys/vantage/150.0.2-1/vantage-150.0.2-1.en-US.linux-x86_64.tar.xz"
+        "linux_arm64_tar_xz": "https://dl.asystech.cn/d/asys/vantage/150.0.2-1/vantage-150.0.2-1.en-US.linux-aarch64.tar.xz"
     }
 }
