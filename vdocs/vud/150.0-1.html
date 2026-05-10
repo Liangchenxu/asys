@@ -1,0 +1,40 @@
+<div class="step-block">
+    <h2 style="margin-top: 0; color: #111827; font-size: 1.4rem; display: flex; align-items: center; gap: 10px;">
+        150.0-1
+        <span style="font-size: 0.8rem; background: #ffedd5; color: #9a3412; border: 1px solid #fdba74; padding: 2px 8px; border-radius: 12px; font-weight: normal;">Pre-release</span>
+    </h2>
+    <div class="step-content">
+        <p><strong>✨ 更新日志：</strong></p>
+        <ul>
+            <li>升级至 Firefox 150.0，同步 LibreWolf 150.0-1 上游安全更新和补丁。</li>
+            <li>新增 Windows 安装程序 Publisher 名称，现在显示为 Vantage 而非 Mozilla。</li>
+            <li>新增 Windows 安装器中文化，安装程序界面现在会优先显示简体中文，并在卸载时询问是否删除配置文件。</li>
+            <li>更新检查改进：移除 24 小时时间限制，改为每次启动时检查更新，并新增自定义更新服务器地址支持。</li>
+            <li>修复设置面板复选框同步问题：IPv6 开关、WebGL 开关、同步开关等单选项现在可以正确保存配置到 about:config。</li>
+            <li>恢复 about:debugging 按钮到设置面板。</li>
+            <li>截图工具将扩展默认固定到工具栏。</li>
+            <li>新增默认图标尺寸：22x22、24x24、256x256 像素图标 (这几个尺寸的依然使用Librewolf，暂未修改)。</li>
+            <li>新增 Linux ARM64 打包支持，包括 deb、rpm、AppImage、portable tar.gz。</li>
+            <li>安全增强 (来自 LibreWolf 150.0-1):
+                <ul>
+                    <li>防止通过 branding 进行浏览器指纹识别</li>
+                    <li>HTTPS 自动升级增强，自动升级本地连接</li>
+                    <li>DoH 查询改为 POST 方法 (隐私更好)</li>
+                    <li>禁用 OCSP (减少隐私泄露，已有 CRLite 补偿)</li>
+                    <li>禁用企业根证书 (防止中间人攻击)</li>
+                    <li>禁用 HTTP3 0-RTT (防止重放攻击)</li>
+                    <li>禁用弱加密套件</li>
+                </ul>
+            </li>
+        </ul>
+        <p><strong>⚠️ 已知问题：</strong></p>
+        <ul>
+            <li>I still don't care about cookies未安装</li>
+            <li>隐私仪表板入口消失</li>
+            <li>部分情况下，新建标签页的图标可能丢失</li>
+        </ul>
+        <div style="margin-top: 25px;">
+            <a href="https://github.com/asystech-chen/Vantage/releases" target="_blank" class="docs-link">🔗 在 GitHub 查看完整 Release 页面</a>
+        </div>
+    </div>
+</div>
