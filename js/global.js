@@ -336,6 +336,7 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(res => res.json())
             .then(data => {
                 docsConfig = data.categories;
+                window.vudFiles = data.changelog_files; // ✨ 新增：保存日志文件列表
                 let html = '';
                 docsConfig.forEach(category => {
                     html += `<h3>${category.title}</h3><ul>`;
@@ -383,28 +384,24 @@ document.addEventListener('DOMContentLoaded', function() {
             if (targetItem) loadDoc(targetItem.id, targetItem.file);
         };
 
-        window.renderChangelogFromJson = function() {
-            fetch('../vdocs/changelog.json')
-                .then(res => res.json())
-                .then(data => {
-                    let html = '';
-                    data.forEach(ver => {
-                        let badge = ver.isLatest ? `<span style="font-size: 0.8rem; background: #dbeafe; color: var(--vantage-blue); padding: 3px 8px; border-radius: 12px;">最新版本</span>` : '';
-                        let featuresHtml = ver.features?.length > 0 ? `<p><strong>✨ ${ver.featuresTitle || '更新内容：'}</strong></p><ul>${ver.features.map(f=>`<li>${f}</li>`).join('')}</ul>` : '';
-                        let descHtml = ver.desc ? `<p style="color: var(--text-sub); margin-bottom: 20px;">${ver.desc}</p>` : '';
-                        let issuesHtml = ver.issues?.length > 0 ? `<p><strong>⚠️ 已知问题 - ${ver.issueTitle}：</strong></p><ul>${ver.issues.map(i=>`<li>${i}</li>`).join('')}</ul>` : '';
-                        
-                        html += `
-                        <div class="step-block">
-                            <h2 style="margin-top: 0; color: #111827; font-size: 1.4rem; display: flex; align-items: center; gap: 10px;">${ver.version} ${badge}</h2>
-                            <div class="step-content">${featuresHtml}${descHtml}${issuesHtml}
-                                <div style="margin-top: 25px;"><a href="${ver.link}" target="_blank" class="docs-link">🔗 在 GitHub 查看完整 Release 页面</a></div>
-                            </div>
-                        </div>`;
-                    });
-                    const container = document.getElementById('changelog-container');
-                    if(container) container.innerHTML = html;
-                }).catch(()=>{});
+        // ✨ 重写：动态拼接 vud 文件夹中的内容
+        window.renderChangelogFromJson = async function() {
+            const container = document.getElementById('changelog-container');
+            if(!container || !window.vudFiles) return;
+            
+            let finalHtml = '';
+            // 按照 docs-config.json 里的排序，挨个去 vud 文件夹拉取 html
+            for (const fileName of window.vudFiles) {
+                try {
+                    const res = await fetch(`../vud/${fileName}`);
+                    if (res.ok) {
+                        finalHtml += await res.text();
+                    }
+                } catch(e) { 
+                    console.error("加载日志文件失败: ", fileName, e); 
+                }
+            }
+            container.innerHTML = finalHtml;
         };
 
         window.addEventListener('popstate', loadDocFromHash);
