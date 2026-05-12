@@ -226,7 +226,7 @@
 
                 <div class="privacy-checkbox-container">
                     <input type="checkbox" id="privacyCheck">
-                    <label for="privacyCheck">我已核对编号并确认查询 <a href="/deb-donation/privacy.html" target="_blank"></label>
+                    <label for="privacyCheck">我已核对编号并确认查询</label>
                 </div>
 
                 <button type="submit" id="submitBtn" class="submit-btn">查询记录</button>
@@ -263,7 +263,7 @@
 
             // 🚀 第一步：验证是否勾选隐私政策
             if (!privacyCheck.checked) {
-                alert("请您阅读并勾选同意《隐私政策》后继续查验。");
+                alert("请先勾选“我已核对编号并确认查询”后再进行查验。");
                 return;
             }
             
@@ -319,12 +319,12 @@
                 } else if (resultJson.status === 1) {
                     htmlContent = `
                         <div class="result-box result-warning">
-                            <h3>⏳ 审核中</h3>
+                            <h3>📝已录入</h3>
                             <div class="info-row"><strong>证书编号:</strong> <span>${code}</span></div>
-                            <div class="info-row"><strong>验证状态:</strong> <span style="color: #d97706;">系统正在处理</span></div>
+                            <div class="info-row"><strong>验证状态:</strong> <span style="color: #d97706;">已经录入，等待审核中</span></div>
                             <div class="divider"></div>
                             <div class="donate-msg">
-                                您的购买记录正在录入捐赠系统中。由于跨国汇款或批处理原因，可能需要 1-3 个工作日完成审核，请稍后再次查询。
+                                您的订单已经录入。正在等待财务审核，我们将会在交易平台售后追诉期结束后完成捐赠。这可能需要几天时间，具体取决于交易平台的政策。
                             </div>
                         </div>
                     `;
