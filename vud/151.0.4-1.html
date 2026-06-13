@@ -1,0 +1,88 @@
+<div class="step-block">
+    <h2 style="margin-top: 0; color: #111827; font-size: 1.4rem; display: flex; align-items: center; gap: 10px;">
+        v151.0.4-1
+        <span style="font-size: 0.8rem; background: #dbeafe; color: var(--vantage-blue); padding: 3px 8px; border-radius: 12px; font-weight: normal;">最新版本</span>
+    </h2>
+    <div class="step-content">
+        
+        <h3 style="font-size: 1.25em; border-bottom: 1px solid #eaecef; padding-bottom: 0.3em; margin-top: 24px; margin-bottom: 16px;">上游合并</h3>
+        <ul>
+            <li>基于 Firefox 151.0.4 / LibreWolf 151.0.4-1</li>
+            <li>合并 LibreWolf 上游 7 个新 patch (权限、EME、扩展管理、网络错误页等)</li>
+            <li>移除已废弃的 JXLx2、arm、bootstrap 补丁</li>
+            <li>移除 FF151 已不需要的 libc++ 编译修复</li>
+        </ul>
+
+        <h3 style="font-size: 1.25em; border-bottom: 1px solid #eaecef; padding-bottom: 0.3em; margin-top: 24px; margin-bottom: 16px;">新功能</h3>
+        
+        <h4 style="font-size: 1em; margin-top: 24px; margin-bottom: 16px;">自动更新检查</h4>
+        <ul>
+            <li>每次启动自动检查新版本，无需手动操作</li>
+            <li>发现新版本时在浏览器顶部显示通知横幅 (“发现新版本：Vantage x.x.x”)</li>
+            <li>支持一键跳转下载页面 / 忽略当前版本</li>
+            <li>已忽略的版本不会重复提示</li>
+            <li>默认开启，可在 <code>about:preferences#librewolf</code> 中关闭</li>
+        </ul>
+
+        <h4 style="font-size: 1em; margin-top: 24px; margin-bottom: 16px;">默认浏览器检查</h4>
+        <ul>
+            <li>恢复 Firefox 原生默认浏览器检测功能</li>
+        </ul>
+
+        <h3 style="font-size: 1.25em; border-bottom: 1px solid #eaecef; padding-bottom: 0.3em; margin-top: 24px; margin-bottom: 16px;">修复</h3>
+        
+        <h4 style="font-size: 1em; margin-top: 24px; margin-bottom: 16px;">librewolf.cfg 语法修复</h4>
+        <ul>
+            <li>修复 <code>NetUtil.asyncFetch</code> 回调函数参数内多余分号导致的 SyntaxError</li>
+        </ul>
+
+        <h4 style="font-size: 1em; margin-top: 24px; margin-bottom: 16px;">Firefox 151 ESM 模块迁移适配</h4>
+        <ul>
+            <li><code>NetUtil.jsm</code> → <code>NetUtil.sys.mjs</code></li>
+            <li>导入方式适配 <code>ChromeUtils.importESModule</code></li>
+            <li>适配 autoconfig 沙箱环境限制 (Components/XHR/fetch 不可用)</li>
+            <li>修复 JSON 解析导致的通知栏乱码</li>
+        </ul>
+
+        <h4 style="font-size: 1em; margin-top: 24px; margin-bottom: 16px;">about:debugging 图标</h4>
+        <ul>
+            <li>侧边栏和 runtime 面板的 LibreWolf logo 替换为 Vantage V 盾图标</li>
+        </ul>
+
+        <h4 style="font-size: 1em; margin-top: 24px; margin-bottom: 16px;">pref-pane 设置面板</h4>
+        <ul>
+            <li>修复 AI 供应商图标不显示</li>
+            <li>修复国产 AI 供应商列表不加载</li>
+            <li>修复隐私与安全页面英文显示</li>
+            <li>修复 checkbox 勾选后刷新复位</li>
+            <li>移除重复 pref 注册导致的异常</li>
+        </ul>
+
+        <h4 style="font-size: 1em; margin-top: 24px; margin-bottom: 16px;">增强跟踪保护</h4>
+        <ul>
+            <li>修复说明文字丢失</li>
+        </ul>
+
+        <h3 style="font-size: 1.25em; border-bottom: 1px solid #eaecef; padding-bottom: 0.3em; margin-top: 24px; margin-bottom: 16px;">打包</h3>
+        <ul>
+            <li>Linux: 输出 tar.xz、tar.gz、deb、rpm、AppImage、便携版 tar.gz</li>
+            <li>Windows: 输出 .exe 安装包</li>
+            <li>所有产物统一计算 SHA256 校验和，写入 <code>sha256sums</code> 文件</li>
+            <li>7zSFX 品牌文件自动集成</li>
+        </ul>
+
+        <h3 style="font-size: 1.25em; border-bottom: 1px solid #eaecef; padding-bottom: 0.3em; margin-top: 24px; margin-bottom: 16px;">升级注意事项</h3>
+        <p style="margin-bottom: 16px;">从 150.x 升级的开发者：</p>
+        <ul>
+            <li><code>settings/librewolf.cfg</code> 中更新检查逻辑已完全重写，注意不要覆盖</li>
+            <li><code>patches/removed-patches/</code> 中新增 <code>hide-default-browser.patch</code></li>
+            <li><code>assets/patches.txt</code> 中已移除此 patch 条目</li>
+            <li>如果你不准备自己编译，忽略这些内容</li>
+        </ul>
+
+        <p style="color: var(--text-sub); margin-bottom: 20px; margin-top: 30px;">如果觉得好用，麻烦点个star吧！</p>
+        <div style="margin-top: 25px;">
+            <a href="https://github.com/asystech-chen/Vantage/releases/tag/v151.0.4-1" target="_blank" class="docs-link">🔗 在 GitHub 查看完整 Release 页面</a>
+        </div>
+    </div>
+</div>
