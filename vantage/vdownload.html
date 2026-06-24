@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>下载 Vantage - ASYS 科技</title>
-    <link rel="shortcut icon" href="../img/asys.ico" type="image/x-icon">
+    <link rel="icon" href="../img/vantage.webp" type="image/png">
     <link rel="stylesheet" href="../css/global.css">
     <script src="../js/global.js" defer></script>
 </head>
@@ -25,8 +25,8 @@
 		<div id="version-display" style="font-size: 0.85rem; color: #9ca3af; margin-top: 25px;">正在加载版本信息...</div>
 		<div style="font-size: 0.85rem; color: #9ca3af; margin-top: 15px;">Vantage是自由软件，不提供任何担保</div>
         
-        <div class="warning-box">
-		<strong>Windows旧版本用户注意：</strong>如果你的Vantage版本小于等于149.0-1请下载<a href="./migrate.bat">配置迁移工具</a>。
+        <div class="announcement-box">
+		🎉Vantage 现已支持国产龙芯（LoongArch64）架构！欢迎下载体验！
         </div>
     </header> 
 
@@ -47,16 +47,15 @@
                 </div>
             </div>
 
-            <div class="os-card" style="background-color: #ffffff; border: 1px solid #ffffff;">
-                <img src="../img/loong64.png" alt="Loong64" class="os-icon-img">
-                <div class="os-title">Loong64</div>
+            <div class="os-card os-card-loong64">
+                <img src="../img/linuxpg.png" alt="Loong64" class="os-icon-img">
+                <div class="os-title">Linux</div>
+                <div class="os-arch">LoongArch64</div>
                 <select id="loong64-format" class="pkg-select">
-                    <option value="deb">Debian / Ubuntu (.deb)</option>
-                    <option value="rpm">Red Hat / Rocky (.rpm)</option>
+                    <option value="deb">Debian/UOS/麒麟(.deb)</option>
+                    <option value="rpm">欧拉/龙蜥/麒麟服务器(.rpm)</option>
                     <option value="tar">便携压缩包 (.tar.gz)</option>
                     <option value="tar_xz">高压缩便携包 (.tar.xz)</option>
-                </select>
-
                 </select>
                 <div class="btn-group">
                     <a id="btn-loong64" href="#" class="btn-primary">下载</a>
@@ -89,7 +88,7 @@
                 <div class="os-title">macOS</div>
                 <select id="mac-arch" class="pkg-select" style="margin-bottom: 25px;">
                     <option value="intel">Intel 芯片版</option>
-                    <option value="apple">Apple （暂不支持M系列芯片）</option>
+                    <option value="apple">Apple 芯片版</option>
                 </select>
                 <div class="btn-group">
                     <a href="#" id="btn-mac" class="btn-primary">下载</a>
