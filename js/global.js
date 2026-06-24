@@ -128,35 +128,44 @@ document.addEventListener('DOMContentLoaded', function() {
                     updateWinBtn();
                 }
 
-
+            
 
 
 
                 // Loong64 下拉框联动
                 const loong64Format = document.getElementById('loong64-format');
-                const btnLoong64 = document.getElementById('btn-loong64');
+                const btnLoong64 = document.getElementById('btn-loong64'); // 确保 HTML 里有 id="btn-loong64" 的按钮
 
                 function updateLoong64Btn() {
+                    
+                    if (!loong64Format || !btnLoong64) return; // 防御性编程，避免找不到元素报错
+
                     const format = loong64Format.value;
                     const jsonKey = `loong64_${format}`;
 
                     const targetLink = linkData[jsonKey];
                     if (targetLink && targetLink !== "") {
-                        btnLinux.href = targetLink;
-                        btnLinux.textContent = "下载";
-                        btnLinux.style.opacity = "1";
-                        btnLinux.style.pointerEvents = "auto";
-                        btnLinux.style.cursor = "pointer";
+                        btnLoong64.href = targetLink;                 // 修改为 btnLoong64
+                        btnLoong64.textContent = "下载";               // 修改为 btnLoong64
+                        btnLoong64.style.opacity = "1";
+                        btnLoong64.style.pointerEvents = "auto";
+                        btnLoong64.style.cursor = "pointer";
                     } else {
-                        btnLinux.href = "javascript:void(0);";
-                        btnLinux.textContent = "暂不提供此版本";
-                        btnLinux.style.opacity = "0.4";
-                        btnLinux.style.pointerEvents = "none"; 
-                        btnLinux.style.cursor = "not-allowed";
+                        btnLoong64.href = "javascript:void(0);";       // 修改为 btnLoong64
+                        btnLoong64.textContent = "暂不提供此版本";      // 修改为 btnLoong64
+                        btnLoong64.style.opacity = "0.4";
+                        btnLoong64.style.pointerEvents = "none"; 
+                        btnLoong64.style.cursor = "not-allowed";
                     }
                 }
+                
+                // 必须绑定事件，否则下拉框改变时不会触发更新
+                if (loong64Format) {
+                    loong64Format.addEventListener('change', updateLoong64Btn);
+                }
+                updateLoong64Btn(); // 页面加载完初始化执行一次
             
-
+            
 
 
                 // Linux 下拉框联动
@@ -260,7 +269,8 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     
-;
+    }
+});
 // =========================================================
 // 🚀 无敌 DRY 架构：公共 Header 和 Footer 自动注入器
 // =========================================================
