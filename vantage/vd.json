@@ -1,31 +1,36 @@
 {
-    "version": "151.0.4-1 正式版",
+    "version": "152.0.2-1 正式版",
     
     "links": {
-        "windows_exe": "https://dl.asystech.cn/latest/amd/vantage-151.0.4-1.x86_64-installer.exe",
-        "win_arm64_exe": "https://dl.asystech.cn/latest/aarch/vantage-151.0.4-1.aarch64-installer.exe",
+        "windows_exe": "https://dl.asystech.cn/latest/amd/vantage-152.0.2-1.x86_64-installer.exe",
+        "win_arm64_exe": "https://dl.asystech.cn/latest/aarch/vantage-152.0.2-1.aarch64-installer.exe",
 
         "mac_intel_dmg": "",
         "mac_apple_dmg": "",
 
-        "linux_x64_deb": "https://dl.asystech.cn/latest/amd/vantage_151.0.4-1_amd64.deb",
+        "linux_x64_deb": "https://dl.asystech.cn/latest/amd/vantage_152.0.2-1_amd64.deb",
         "linux_x86_deb": "",
-        "linux_arm64_deb": "https://dl.asystech.cn/latest/aarch/vantage_151.0.4-1_arm64.deb",
+        "linux_arm64_deb": "https://dl.asystech.cn/latest/aarch/vantage_152.0.2-1_arm64.deb",
 
-        "linux_x64_rpm": "https://dl.asystech.cn/latest/amd/vantage-151.0.4-1.x86_64.rpm",
+        "linux_x64_rpm": "https://dl.asystech.cn/latest/amd/vantage-152.0.2-1.x86_64.rpm",
         "linux_x86_rpm": "",
-        "linux_arm64_rpm": "https://dl.asystech.cn/latest/aarch/vantage-151.0.4-1.aarch64.rpm",
+        "linux_arm64_rpm": "https://dl.asystech.cn/latest/aarch/vantage-152.0.2-1.aarch64.rpm",
 
-        "linux_x64_appimage": "https://dl.asystech.cn/latest/amd/vantage-151.0.4-1.x86_64.AppImage",
+        "linux_x64_appimage": "https://dl.asystech.cn/latest/amd/vantage-152.0.2-1.x86_64.AppImage",
         "linux_x86_appimage": "",
-        "linux_arm64_appimage": "https://dl.asystech.cn/latest/amd/vantage-151.0.4-1.x86_64.AppImage",
+        "linux_arm64_appimage": "https://dl.asystech.cn/latest/aarch/vantage-152.0.2-1.aarch64.AppImage",
 
-        "linux_x64_tar": "https://dl.asystech.cn/latest/amd/vantage-151.0.4-1.x86_64.portable.tar.gz",
+        "linux_x64_tar": "https://dl.asystech.cn/latest/amd/vantage-152.0.2-1.x86_64.portable.tar.gz",
         "linux_x86_tar": "",
-        "linux_arm64_tar": "https://dl.asystech.cn/latest/aarch/vantage-151.0.4-1.aarch64.portable.tar.gz",
+        "linux_arm64_tar": "https://dl.asystech.cn/latest/aarch/vantage-152.0.2-1.aarch64.portable.tar.gz",
 
-        "linux_x64_tar_xz": "https://dl.asystech.cn/latest/amd/vantage-151.0.4-1.en-US.linux-x86_64.tar.xz",
+        "linux_x64_tar_xz": "https://dl.asystech.cn/latest/amd/vantage-152.0.2-1.en-US.linux-x86_64.tar.xz",
         "linux_x86_tar_xz": "",
-        "linux_arm64_tar_xz": "https://dl.asystech.cn/latest/aarch/vantage-151.0.4-1.en-US.linux-aarch64.tar.xz"
+        "linux_arm64_tar_xz": "https://dl.asystech.cn/latest/aarch/vantage-152.0.2-1.en-US.linux-aarch64.tar.xz",
+
+        "loong64_deb": "https://dl.asystech.cn/latest/loongarch/vantage_152.0.2-1_loong64.deb",
+        "loong64_rpm": "https://dl.asystech.cn/latest/loongarch/vantage-152.0.2-1.loongarch64.rpm",
+        "loong64_tar": "https://dl.asystech.cn/latest/loongarch/vantage-152.0.2-1.loongarch64.portable.tar.gz",
+        "loong64_tar_xz": "https://dl.asystech.cn/latest/loongarch/vantage-152.0.2-1.en-US.linux-loongarch64.tar.xz"
     }
 }

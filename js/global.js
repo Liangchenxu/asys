@@ -128,6 +128,37 @@ document.addEventListener('DOMContentLoaded', function() {
                     updateWinBtn();
                 }
 
+
+
+
+
+                // Loong64 下拉框联动
+                const loong64Format = document.getElementById('loong64-format');
+                const btnLoong64 = document.getElementById('btn-loong64');
+
+                function updateLoong64Btn() {
+                    const format = loong64Format.value;
+                    const jsonKey = `loong64_${format}`;
+
+                    const targetLink = linkData[jsonKey];
+                    if (targetLink && targetLink !== "") {
+                        btnLinux.href = targetLink;
+                        btnLinux.textContent = "下载";
+                        btnLinux.style.opacity = "1";
+                        btnLinux.style.pointerEvents = "auto";
+                        btnLinux.style.cursor = "pointer";
+                    } else {
+                        btnLinux.href = "javascript:void(0);";
+                        btnLinux.textContent = "暂不提供此版本";
+                        btnLinux.style.opacity = "0.4";
+                        btnLinux.style.pointerEvents = "none"; 
+                        btnLinux.style.cursor = "not-allowed";
+                    }
+                }
+            
+
+
+
                 // Linux 下拉框联动
                 const linuxFormat = document.getElementById('linux-format');
                 const linuxArch = document.getElementById('linux-arch');
@@ -153,6 +184,12 @@ document.addEventListener('DOMContentLoaded', function() {
                         btnLinux.style.cursor = "not-allowed";
                     }
                 }
+
+
+
+
+                
+
                 linuxFormat.addEventListener('change', updateLinuxBtn);
                 linuxArch.addEventListener('change', updateLinuxBtn);
                 updateLinuxBtn(); 
@@ -222,8 +259,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 document.getElementById('smart-download-section').style.display = 'none';
             }
         }
-    }
-});
+    
+;
 // =========================================================
 // 🚀 无敌 DRY 架构：公共 Header 和 Footer 自动注入器
 // =========================================================

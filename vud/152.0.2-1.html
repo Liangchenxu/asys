@@ -1,0 +1,61 @@
+<div class="step-block">
+    <h2 style="margin-top: 0; color: #111827; font-size: 1.4rem; display: flex; align-items: center; gap: 10px;">
+        152.0.2-1
+        <span style="font-size: 0.8rem; background: #dbeafe; color: var(--vantage-blue); padding: 3px 8px; border-radius: 12px; font-weight: normal;">最新版本</span>
+    </h2>
+    <div class="step-content">
+        <p style="margin-bottom: 24px;">Vantage 152.0.2-1 更新日志</p>
+
+        <h3 style="font-size: 1.25em; border-bottom: 1px solid #eaecef; padding-bottom: 0.3em; margin-top: 24px; margin-bottom: 16px;">上游合并</h3>
+        <ul>
+            <li>基于 Firefox 152.0.2</li>
+        </ul>
+
+        <h3 style="font-size: 1.25em; border-bottom: 1px solid #eaecef; padding-bottom: 0.3em; margin-top: 24px; margin-bottom: 16px;">修复</h3>
+        
+        <h4 style="font-size: 1em; margin-top: 24px; margin-bottom: 16px;">构建系统</h4>
+        <ul>
+            <li>Makefile WIN_VARIANT 检测修复：平台检测 fallback 从硬编码 <code>assets/mozconfig</code>（Windows 交叉编译配置）改为优先使用源码树 <code>mozconfig</code> + <code>$MOZCONFIG</code> 环境变量，解决 Linux 构建时 <code>make package</code> 误判为 Windows 的问题</li>
+            <li><code>librewolf-patches.py</code>：修复 <code>import glob as _g</code> 导致的 <code>UnboundLocalError</code> 崩溃；无 XPI 文件时跳过 <code>distribution/*.xpi</code> 写入，避免构建警告</li>
+            <li><code>vantage-privacy-dashboard.patch</code>：修复空操作 hunk 导致 <code>make dir</code> 报 <code>malformed patch</code></li>
+        </ul>
+
+        <h4 style="font-size: 1em; margin-top: 24px; margin-bottom: 16px;">隐私仪表板（about:protections）</h4>
+        <ul>
+            <li>移除不存在的 <code>preview/protections.ftl</code> 引用，修复 l10n 加载异常和页面排版混乱</li>
+            <li>所有 Vantage 仪表板字符串已内置于 <code>browser/protections.ftl</code></li>
+        </ul>
+
+        <h4 style="font-size: 1em; margin-top: 24px; margin-bottom: 16px;">首选项面板</h4>
+        <ul>
+            <li>页脚链接添加 <code>flex="1"</code> 属性，四列等宽对齐</li>
+        </ul>
+
+        <h3 style="font-size: 1.25em; border-bottom: 1px solid #eaecef; padding-bottom: 0.3em; margin-top: 24px; margin-bottom: 16px;">品牌</h3>
+        <ul>
+            <li>图标优化：所有尺寸的 PNG 图标压缩优化 (文件大小减小 40-55%)</li>
+            <li><code>about-logo.svg</code>：替换为简洁版本</li>
+            <li><code>firefox-wordmark.svg</code>：修复 viewBox</li>
+        </ul>
+
+        <h3 style="font-size: 1.25em; border-bottom: 1px solid #eaecef; padding-bottom: 0.3em; margin-top: 24px; margin-bottom: 16px;">语言</h3>
+        <ul>
+            <li><code>en-US</code> / <code>zh-CN</code>：<code>librewolf-open-profile</code> 改为 "Troubleshooting Information (about:support)" 使链接指向 <code>about:support</code> 而非打开用户配置目录</li>
+        </ul>
+
+        <h3 style="font-size: 1.25em; border-bottom: 1px solid #eaecef; padding-bottom: 0.3em; margin-top: 24px; margin-bottom: 16px;">文档</h3>
+        <ul>
+            <li><code>README</code>：补全路线图、核心特性、系统架构、安装指南</li>
+        </ul>
+
+        <h3 style="font-size: 1.25em; border-bottom: 1px solid #eaecef; padding-bottom: 0.3em; margin-top: 24px; margin-bottom: 16px;">扩展策略</h3>
+        <ul>
+            <li><code>policies.json</code>：扩展策略表中补充可选扩展（I still don't care about cookies、Absolute Enable Right Click、Easy Screenshot 等）</li>
+        </ul>
+
+        <p style="color: var(--text-sub); margin-bottom: 20px; margin-top: 30px;">如果觉得好用，麻烦点个star吧！</p>
+        <div style="margin-top: 25px;">
+            <a href="https://github.com/asystech-chen/Vantage/releases/tag/v152.0.2-1" target="_blank" class="docs-link">🔗 在 GitHub 查看完整 Release 页面</a>
+        </div>
+    </div>
+</div>
