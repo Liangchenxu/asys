@@ -82,6 +82,60 @@ img { max-width: 100%; display: block; }
     z-index: 1; 
     overflow: visible; 
 }
+/* Vantage 专属：重要新闻/公告框 */
+.announcement-box {
+  background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); /* 柔和的浅蓝渐变背景 */
+  border: 1px solid #bfdbfe;
+  border-left: 4px solid var(--vantage-blue); /* 左侧加粗蓝线，增加正式感与视觉引导 */
+  border-radius: 8px;
+  padding: 16px 24px;
+  margin: 30px auto 0;
+  max-width: 800px;
+  color: #1e3a8a; /* 深蓝色文字，保证阅读清晰度 */
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.6;
+  box-shadow: 0 4px 6px -1px rgba(0, 120, 212, 0.1); /* 淡淡的蓝色阴影，使其浮起 */
+}
+.announcement-box a {
+  color: var(--vantage-blue);
+  font-weight: 700;
+  text-decoration: underline;
+}
+/* 可选：新闻前面的小标签（如 NEW、喜报） */
+.announcement-box .news-badge {
+  display: inline-block;
+  background: var(--vantage-blue);
+  color: #fff;
+  font-size: 0.75rem;
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin-right: 8px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  vertical-align: middle;
+}
+.news-banner {
+  background: linear-gradient(90deg, rgba(201, 200, 255, 0.5) 30%, rgba(204, 235, 255, 0.5) 100%);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px); /* 兼容 Safari 浏览器 */
+  color: #7f7f7f;
+  text-align: center;
+  padding: 10px 20px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  position: relative;
+  z-index: 101; /* 确保在导航栏之上或紧贴导航栏 */
+}
+.news-banner a {
+  color: #fef08a; /* 亮黄色链接，在蓝底上极其醒目 */
+  font-weight: 700;
+  text-decoration: underline;
+  margin-left: 8px;
+}
+
 /* --- 1111111111--- */
 .hero-v-img { width: 150px; height: 150px; object-fit: contain; margin: 0 auto 30px auto; display: block; }
 .hero h1 { font-size: 4rem; margin: 0; font-weight: 800; letter-spacing: -1px; }
@@ -111,7 +165,7 @@ img { max-width: 100%; display: block; }
 .auto-btn-wrapper { margin-top: 35px; margin-bottom: 10px; }
 .btn-smart { display: inline-flex; align-items: center; gap: 10px; padding: 16px 45px; font-size: 1.25rem; border-radius: 50px; font-weight: 700; background: var(--vantage-blue); color: #fff; text-decoration: none; transition: all 0.3s ease; box-shadow: 0 8px 20px -5px rgba(0, 120, 212, 0.4); }
 .btn-smart:hover { background: #006abc; transform: translateY(-3px); box-shadow: 0 12px 25px -5px rgba(0, 120, 212, 0.5); }
-.warning-box { background-color: #fffbeb; border: 1px solid #f59e0b; border-radius: 8px; padding: 15px 20px; margin: 25px auto 0; max-width: 800px; color: #b45309; text-align: left; font-size: 0.95rem; line-height: 1.6; }
+.warning-box { background-color: #fffbeb; border: 1px solid #f59e0b; border-radius: 8px; padding: 15px 20px; margin: 25px auto 0; max-width: 800px; color: #b45309; text-align: center; font-size: 0.95rem; line-height: 1.6; }
 .warning-box a { color: #d97706; font-weight: bold; text-decoration: underline; }
 .download-container { max-width: 1200px; margin: 60px auto; padding: 0 20px; }
 .os-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 30px; }
@@ -128,6 +182,69 @@ img { max-width: 100%; display: block; }
 .os-card .btn-secondary:hover { background: #e5e7eb; }
 .btn-warning-dark { display: block; padding: 12px 20px; background: #d97706; color: #fff; text-decoration: none; border-radius: 8px; font-weight: 600; transition: 0.2s; }
 .btn-warning-dark:hover { background: #b45309; }
+
+/* ★★★ Loong64 专属卡片样式：突出国产自主特征（精简版） ★★★ */
+.os-card-loong64 {
+  /* 基础外观保持统一 */
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 40px 30px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  
+  /* ★ 龙芯特征 1：左侧加粗红色边框 */
+  border-left: 4px solid #d32f2f;
+  
+  /* ★ 龙芯特征 2：底色加深，使用更明显的淡红色渐变 */
+  background: linear-gradient(135deg, #ffffff 0%, #fee2e2 100%); 
+}
+
+.os-card-loong64:hover {
+  transform: translateY(-5px);
+  /* ★ 龙芯特征：悬停时的红色光晕阴影 */
+  box-shadow: 0 10px 25px rgba(211, 47, 47, 0.15);
+  border-color: #d32f2f;
+}
+
+/* 图标不再特殊处理，直接继承 .os-icon-img 的默认样式（正常显示企鹅） */
+/* 强制卡片标题为纯黑色 */
+
+/* ★ 龙芯特征 3：标题使用深红色 */
+.os-card-loong64 .os-arch {
+  font-size: 1.5rem;
+  margin-bottom: 25px;
+  font-weight: 700;
+  color: #c62828; /* 深红色 */
+}
+
+/* ★ 龙芯特征 4：下拉框聚焦时使用红色边框 */
+.os-card-loong64 .pkg-select:focus {
+  border-color: #d32f2f;
+  box-shadow: 0 0 0 3px rgba(211, 47, 47, 0.1);
+}
+
+/* ★ 龙芯特征 5：主按钮使用红色系 */
+.os-card-loong64 .btn-primary {
+  display: block;
+  padding: 12px 20px;
+  background: linear-gradient(135deg, #d32f2f 0%, #c62828 100%);
+  color: #fff;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: all 0.2s;
+  box-shadow: 0 4px 12px rgba(211, 47, 47, 0.3);
+}
+
+.os-card-loong64 .btn-primary:hover {
+  background: linear-gradient(135deg, #c62828 0%, #b71c1c 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(211, 47, 47, 0.4);
+}
+
+
 
 /* --- Vantage 文档页 --- */
 .page-docs .docs-layout { display: flex; max-width: 1200px; margin: 0 auto; min-height: calc(100vh - 150px); }
