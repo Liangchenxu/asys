@@ -1,0 +1,60 @@
+<div class="step-block">
+    <h2 style="margin-top: 0; color: #111827; font-size: 1.4rem; display: flex; align-items: center; gap: 10px;">
+        152.0.2-2
+        <span style="font-size: 0.8rem; background: #dbeafe; color: var(--vantage-blue); padding: 3px 8px; border-radius: 12px; font-weight: normal;">最新版本</span>
+    </h2>
+    <div class="step-content">
+        <p style="margin-bottom: 24px;">Vantage 152.0.2-2 更新日志</p>
+
+        <h3 style="font-size: 1.25em; border-bottom: 1px solid #eaecef; padding-bottom: 0.3em; margin-top: 24px; margin-bottom: 16px;">上游合并</h3>
+        <ul>
+            <li>基于 Firefox 152.0.2</li>
+        </ul>
+
+        <h3 style="font-size: 1.25em; border-bottom: 1px solid #eaecef; padding-bottom: 0.3em; margin-top: 24px; margin-bottom: 16px;">新功能开关</h3>
+        <ul>
+            <li><code>vantage.theme.enabled</code> — 启用 Vantage 主题（默认开启）</li>
+            <li><code>toolkit.tabbox.switchByScrolling</code> — 滚轮切换标签页</li>
+            <li><code>browser.tabs.closeTabByDblclick</code> — 双击关闭标签页</li>
+            <li><code>browser.urlbar.openintab</code> — 地址栏回车在新标签页打开</li>
+            <li><code>browser.tabs.loadBookmarksInTabs</code> — 书签在新标签页打开</li>
+            <li><code>browser.search.openintab</code> — 搜索在新标签页打开</li>
+            <li><code>browser.ctrlTab.sortByRecentlyUsed</code> — Ctrl+Tab 按最近使用排序</li>
+            <li><code>media.peerconnection.ice.default_address_only</code> — 限制 WebRTC 本地 IP 暴露</li>
+            <li><code>layout.css.font-visibility.level</code> — 限制字体可见性</li>
+        </ul>
+        <p style="margin-top: 16px;">以上开关均可在 <code>about:preferences#vantage</code> 中控制。</p>
+
+        <h3 style="font-size: 1.25em; border-bottom: 1px solid #eaecef; padding-bottom: 0.3em; margin-top: 24px; margin-bottom: 16px;">Vantage 主题</h3>
+        <ul>
+            <li>默认启用，跨平台统一视觉风格</li>
+            <li>蓝绿色调替换 Firefox 红紫强调色，覆盖菜单分割线、通知栏渐变条、新标签页搜索框</li>
+            <li>圆角设计：导航栏、标签栏（四角全圆）、书签栏、侧边栏</li>
+            <li>通过 <code>librewolf.cfg</code> autoconfig 自动写入 <code>userChrome.css</code> + <code>userContent.css</code>，无需手动开启 <code>toolkit.legacyUserProfileCustomizations.stylesheets</code></li>
+            <li>仅修改外观，不影响功能；切换后需重启生效</li>
+        </ul>
+
+        <h3 style="font-size: 1.25em; border-bottom: 1px solid #eaecef; padding-bottom: 0.3em; margin-top: 24px; margin-bottom: 16px;">隐私设置</h3>
+        <ul>
+            <li>所有隐私开关说明文案重写：统一「开启后...关闭后...」格式，覆盖 WebGL、RFP、letterboxing、跨域引用、<code>userChrome.css</code> 等</li>
+        </ul>
+
+        <h3 style="font-size: 1.25em; border-bottom: 1px solid #eaecef; padding-bottom: 0.3em; margin-top: 24px; margin-bottom: 16px;">修复</h3>
+        <ul>
+            <li>关于对话框无样式：<code>aboutDialog.css</code> 此前为空文件，编译后对话框一片空白。现补全蓝绿渐变背景、logo、版本号等完整样式</li>
+            <li>Linux portable 启动脚本：修复 Makefile 中换行符字面量 <code>
+</code> → 实际换行</li>
+        </ul>
+
+        <h3 style="font-size: 1.25em; border-bottom: 1px solid #eaecef; padding-bottom: 0.3em; margin-top: 24px; margin-bottom: 16px;">清理</h3>
+        <ul>
+            <li><code>vantage-infobar-accent.patch</code> → <code>removed-patches/</code>：FF152 中 <code>infobar.css</code> 路径变化，补丁不再适用，改用 CSS 变量覆盖</li>
+            <li>删除 <code>patches/.orig/</code> 下 3 个过期备份文件（<code>protections.css</code> / <code>protections.html</code> / <code>protections.mjs</code>）</li>
+        </ul>
+
+        <p style="color: var(--text-sub); margin-bottom: 20px; margin-top: 30px;">如果觉得好用，麻烦点个star吧！</p>
+        <div style="margin-top: 25px;">
+            <a href="https://github.com/asystech-chen/Vantage/releases/tag/v152.0.2-2" target="_blank" class="docs-link">🔗 在 GitHub 查看完整 Release 页面</a>
+        </div>
+    </div>
+</div>
