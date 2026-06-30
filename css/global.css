@@ -356,7 +356,7 @@ img { max-width: 100%; display: block; }
 .page-debian .price-symbol { font-size: 20px; margin-right: 5px; }
 .page-debian .shipping-tag { font-size: 14px; color: #fff; background: var(--debian-red); padding: 4px 10px; border-radius: 4px; font-weight: 500; }
 .page-debian .action-buttons { display: flex; gap: 20px; }
-.page-debian .action-buttons .buy-button { flex: 1; height: 50px; line-height: 50px; background: #222; color: #fff; text-align: center; font-size: 16px; font-weight: 600; border-radius: 2px; cursor: pointer; transition: background 0.3s; }
+.page-debian .action-buttons .buy-button { flex: 1; height: 50px; line-height: 50px; background: #FF5000; color: #fff; text-align: center; font-size: 16px; font-weight: 600; border-radius: 2px; cursor: pointer; transition: background 0.3s; }
 .page-debian .action-buttons .buy-button:hover { background: var(--debian-red); }
 .page-debian .action-buttons .contact-button { flex: 1; height: 50px; line-height: 50px; background: #fff; color: #333; text-align: center; font-size: 16px; font-weight: 600; border-radius: 2px; cursor: pointer; transition: all 0.3s; border: 2px solid #eee; }
 .page-debian .action-buttons .contact-button:hover { border-color: var(--debian-red); color: var(--debian-red); }
