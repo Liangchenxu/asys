@@ -143,13 +143,9 @@ img { max-width: 100%; display: block; }
 .btn-download { display: inline-block; padding: 15px 55px; border-radius: 10px; text-decoration: none; font-weight: 600; font-size: 1.15rem; background: var(--vantage-blue); color: #fff; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 4px 15px -3px rgba(0, 120, 212, 0.3); }
 .btn-download:hover { background: #006abc; transform: translateY(-3px); box-shadow: 0 8px 25px -5px rgba(0, 120, 212, 0.4); }
 /* ▼▼▼ 新增的微软商店横幅样式 ▼▼▼ */
-.store-banner-wrapper { display: flex; justify-content: center; margin-bottom: 50px; }
-.store-banner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 20px; padding: 16px 32px; background: rgba(0, 120, 212, 0.04); border: 1px solid rgba(0, 120, 212, 0.15); border-radius: 12px; width: 100%; max-width: 800px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02); backdrop-filter: blur(8px); }
-.store-banner .banner-text { display: flex; align-items: center; gap: 12px; }
-.store-banner .banner-desc { font-size: 15px; color: #444; font-weight: 500; letter-spacing: 0.5px; }
-.store-banner .store-button { display: flex; align-items: center; gap: 10px; padding: 10px 20px; background-color: #0078D4; border-radius: 8px; color: white; text-decoration: none; font-weight: 500; transition: transform 0.2s ease, background-color 0.2s ease; white-space: nowrap; }
-.store-banner .store-button svg { width: 20px; height: 20px; fill: white; }
-.store-banner .store-button:hover { transform: scale(1.02); background-color: #006abc; }
+.btn-store-alone { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 12px 28px; background-color: #24292e; color: #fff; border-radius: 10px; font-weight: 600; font-size: 1.1rem; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 4px 15px -3px rgba(0, 0, 0, 0.2); text-decoration: none; }
+.btn-store-alone:hover { background-color: #000; transform: translateY(-3px); box-shadow: 0 8px 25px -5px rgba(0, 0, 0, 0.3); color: #fff; }
+.btn-store-alone img { width: 34px; height: 34px; transform: scale(1.3);}
 /* ▲▲▲ 新增的微软商店横幅样式结束 ▲▲▲ */
 .content-mask { background-color: var(--bg-mask); position: relative; z-index: 10; border-top-left-radius: 40px; border-top-right-radius: 40px; box-shadow: 0 -15px 40px rgba(0, 0, 0, 0.04); padding-top: 20px; }
 .site-vantage .section-title { text-align: center; margin-bottom: 4rem; }
