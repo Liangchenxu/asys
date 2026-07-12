@@ -151,7 +151,7 @@ img { max-width: 100%; display: block; }
 
 /* --- 1111111111--- */
 .hero-v-img { width: 150px; height: 150px; object-fit: contain; margin: 0 auto 30px auto; display: block; }
-.hero h1 { font-size: 4rem; margin: 0; font-weight: 800; letter-spacing: -1px; }
+.hero h1 { font-size: 4rem; margin: 0; font-weight: 800; letter-spacing: -1px; border-bottom: none; padding-bottom: 0; }
 .hero p { font-size: 1.3rem; color: var(--text-sub); margin: 1.5rem 0 3.5rem; font-weight: 500; letter-spacing: 2px; }
 .btn-download { display: inline-block; padding: 15px 55px; border-radius: 10px; text-decoration: none; font-weight: 600; font-size: 1.15rem; background: var(--vantage-blue); color: #fff; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 4px 15px -3px rgba(0, 120, 212, 0.3); }
 .btn-download:hover { background: #006abc; transform: translateY(-3px); box-shadow: 0 8px 25px -5px rgba(0, 120, 212, 0.4); }
