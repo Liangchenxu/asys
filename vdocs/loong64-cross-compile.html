@@ -1,0 +1,171 @@
+<h1>Vantage LoongArch64 (loong64) Linux 交叉编译指南</h1>
+
+<blockquote>
+<p>此指南旨在帮助所有用户在任意x86设备上完成Vantage或者其他firefox分支的交叉编译。如果你在实际折腾过程中有新的踩坑经验，欢迎提PR！以下是桶哥自己的踩坑经验，仅供参考。</p>
+</blockquote>
+
+<h2>前置条件</h2>
+
+<ul>
+<li>x86_64 Debian 13 宿主机</li>
+<li>clang 19+（需支持 loongarch64 target）</li>
+<li>Rust loongarch64 target：<code>rustup target add loongarch64-unknown-linux-gnu</code></li>
+<li>约 2GB sysroot 磁盘空间 + 编译产物空间</li>
+</ul>
+
+<h2>1. 安装工具链</h2>
+
+<pre><code class="language-bash"># qemu-user（模拟 loong64 指令跑包管理器）
+sudo apt install qemu-user qemu-user-binfmt debootstrap lld
+
+# 确认 qemu 二进制存在
+which qemu-loongarch64
+</code></pre>
+
+<h2>2. 创建 loong64 sysroot</h2>
+
+<pre><code class="language-bash"># 用 Debian Ports（sid）创建基础系统
+sudo debootstrap --arch=loong64 --no-check-gpg \
+  sid /sysroot-loong64 https://deb.debian.org/debian-ports
+
+# 配置 qemu + DNS 进 sysroot
+sudo cp /usr/bin/qemu-loongarch64 /sysroot-loong64/usr/bin/
+sudo cp /etc/resolv.conf /sysroot-loong64/etc/
+</code></pre>
+
+<h2>3. 安装编译依赖</h2>
+
+<pre><code class="language-bash">sudo chroot /sysroot-loong64 bash -c '
+  export DEBIAN_FRONTEND=noninteractive
+
+  # 基础工具
+  apt update
+  apt install -y g++ pkgconf zip unzip curl m4 perl python3
+
+  # GTK/Pango/Wayland 等桌面库
+  apt install -y --no-install-recommends \
+    libgtk-3-dev libpango1.0-dev libcairo2-dev libglib2.0-dev \
+    libwayland-dev wayland-protocols libxkbcommon-dev \
+    libx11-dev libxext-dev libxrender-dev \
+    libx11-xcb-dev libxcb-shm0-dev libxcursor-dev libxi-dev \
+    libdbus-1-dev libdbus-glib-1-dev \
+    libfontconfig-dev libfreetype-dev \
+    libffi-dev libdrm-dev \
+    libpulse-dev libatspi2.0-dev \
+    libharfbuzz-dev libevent-dev
+'
+</code></pre>
+
+<h2>4. 解决 ALSA 依赖冲突</h2>
+
+<p>sid ports 的 <code>libasound2-dev</code> 和 <code>libasound2-data</code> 版本冲突，装不了开发包。直接提取运行时共享库：</p>
+
+<pre><code class="language-bash"># 下载并提取 libasound.so.2
+sudo chroot /sysroot-loong64 apt download libasound2t64
+sudo dpkg-deb -x /sysroot-loong64/libasound2t64*.deb /tmp/alsa-tmp
+sudo cp /tmp/alsa-tmp/usr/lib/loongarch64-linux-gnu/libasound.so* \
+  /sysroot-loong64/usr/lib/loongarch64-linux-gnu/
+sudo ln -sf libasound.so.2 /sysroot-loong64/usr/lib/loongarch64-linux-gnu/libasound.so
+
+# 放假的 ALSA 头文件 + pkg-config
+sudo mkdir -p /sysroot-loong64/usr/include/alsa
+echo "/* stub for cross-compilation with --disable-alsa */" | \
+  sudo tee /sysroot-loong64/usr/include/alsa/asoundlib.h
+
+sudo mkdir -p /sysroot-loong64/usr/lib/loongarch64-linux-gnu/pkgconfig
+cat << 'PC' | sudo tee /sysroot-loong64/usr/lib/loongarch64-linux-gnu/pkgconfig/alsa.pc
+Name: alsa
+Description: ALSA (stub, use --disable-alsa)
+Version: 1.2.16
+Libs: -lasound
+Cflags:
+PC
+</code></pre>
+
+<h2>5. Mozconfig 配置</h2>
+
+<p><code>assets/mozconfig.linux-loong64</code>（已就绪，关键点）：</p>
+
+<ul>
+<li><code>--target=loongarch64-linux-gnu</code></li>
+<li><code>--with-sysroot=/sysroot-loong64</code></li>
+<li><code>--without-wasm-sandboxed-libraries</code>（WASM sandbox 编译依赖未完全满足）</li>
+<li><code>--disable-alsa</code>（ALSA 用上面提取的运行时库 + stub 头文件绕过）</li>
+<li><code>PKG_CONFIG_LIBDIR</code> 指向 sysroot 内的 loong64 pkgconfig</li>
+<li>CC/CXX 用系统 clang（不是 Mozilla bootstrap 的 clang，后者不支持 loong64）</li>
+</ul>
+
+<h2>6. 编译</h2>
+
+<pre><code class="language-bash">cd ~/Vantage
+MOZCONFIG=$(pwd)/assets/mozconfig.linux-loong64 make clean
+MOZCONFIG=$(pwd)/assets/mozconfig.linux-loong64 make dir
+MOZCONFIG=$(pwd)/assets/mozconfig.linux-loong64 make build
+MOZCONFIG=$(pwd)/assets/mozconfig.linux-loong64 make package
+</code></pre>
+
+<p>或 <code>./build.sh ll</code>。</p>
+
+<h2>踩坑记录</h2>
+
+<table>
+<thead>
+<tr>
+  <th>问题</th>
+  <th>原因</th>
+  <th>解决</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>configure 报 GTK/Pango/pkg-config 找不到</td>
+  <td>sysroot 没装桌面库 dev 包</td>
+  <td>装 <code>libgtk-3-dev</code> 等</td>
+</tr>
+<tr>
+  <td><code>fatal error: 'cstddef' file not found</code></td>
+  <td>sysroot 缺 C++ 头文件</td>
+  <td><code>apt install g++</code></td>
+</tr>
+<tr>
+  <td><code>Package alsa was not found</code></td>
+  <td><code>--disable-alsa</code> 没完全跳过检查，且 sid 里 libasound2-dev 有版本冲突</td>
+  <td>手动提取 <code>libasound.so.2</code> + 写假 <code>alsa.pc</code> + stub 头文件</td>
+</tr>
+<tr>
+  <td><code>fatal error: 'alsa/asoundlib.h' file not found</code></td>
+  <td>MIDI 模块需要 ALSA 头</td>
+  <td>stub 头文件</td>
+</tr>
+<tr>
+  <td><code>wasm-ld: error: cannot open libclang_rt.builtins.a</code></td>
+  <td>系统 clang 缺 wasm32 runtime</td>
+  <td><code>--without-wasm-sandboxed-libraries</code></td>
+</tr>
+<tr>
+  <td><code>ld.lld: unable to find library -lasound</code></td>
+  <td>sysroot 没有 libasound</td>
+  <td>提取 <code>libasound2t64.deb</code> 中的 so</td>
+</tr>
+<tr>
+  <td><code>undefined symbol: snd_seq_*</code></td>
+  <td>旧 stub <code>libasound.so</code>（无 sequencer 符号）没被替换</td>
+  <td><code>rm libasound.so && ln -s libasound.so.2 libasound.so</code></td>
+</tr>
+<tr>
+  <td><code>optional-extensions/*</code> 缺失（Windows 打包用）</td>
+  <td><code>librewolf-patches.py</code> 里 manifest 和 moz.build 路径不一致</td>
+  <td>改 <code>@RESPATH@/distribution/optional-extensions/*</code> → <code>@RESPATH@/distribution/*.xpi</code>（已修）</td>
+</tr>
+</tbody>
+</table>
+
+<h2>注意事项</h2>
+
+<ol>
+<li><strong>sid ports 依赖经常漂移</strong>：如果 debootstrap 报 base packages 配置失败（adduser/vim-tiny 依赖版本不匹配），忽略即可，不影响交叉编译。</li>
+<li><strong>WASM sandbox 禁用了</strong>：安全影响很小，功能不受影响。</li>
+<li><strong>ALSA 是假的</strong>：用的是真实运行时库 + stub 头文件 + <code>--disable-alsa</code> 编译开关。loong64 真机上需要用 PulseAudio 或 PipeWire。</li>
+<li><strong>增量编译</strong>：第二次编译修改过的文件会很快，不需要全量重编。</li>
+<li><strong>调试编译错误</strong>：加 <code>--verbose</code> 可以看到完整编译/链接命令。</li>
+</ol>

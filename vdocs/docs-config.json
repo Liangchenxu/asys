@@ -23,6 +23,11 @@
           "id": "privacy",
           "title": "隐私政策",
           "file": "../vdocs/privacy.html" 
+        },
+        {
+          "id": "loong64-cross-compile",
+          "title": "龙芯交叉编译指南",
+          "file": "../vdocs/loong64-cross-compile.html"
         }
       ]
     }
