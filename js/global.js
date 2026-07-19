@@ -6,10 +6,10 @@ function switchImage(index) {
     document.querySelectorAll('.gallery-item').forEach(item => item.classList.remove('active'));
     const target = document.getElementById('img-' + index);
     if (target) target.classList.add('active');
-    
+
     document.querySelectorAll('.thumb-box').forEach(thumb => thumb.classList.remove('active'));
     const thumbs = document.querySelectorAll('.thumb-box');
-    if(thumbs[index - 1]) thumbs[index - 1].classList.add('active');
+    if (thumbs[index - 1]) thumbs[index - 1].classList.add('active');
 }
 
 // Debian 页面：Tab 切换
@@ -23,7 +23,7 @@ function switchTab(element, contentId) {
 /* =========================================
    各页面的专属生命周期逻辑 (DOM 加载后执行)
    ========================================= */
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
 
     const isDebian = document.body.classList.contains('page-debian');
     const isVantageHome = document.body.classList.contains('page-vantage-home');
@@ -37,10 +37,10 @@ document.addEventListener('DOMContentLoaded', function() {
         const modal = document.getElementById('imageModal');
         const modalImg = document.getElementById('modalImg');
 
-        if(modal && modalImg) {
+        if (modal && modalImg) {
             galleryItems.forEach(img => {
                 img.style.cursor = 'zoom-in'; // 鼠标变放大镜
-                img.onclick = function() {
+                img.onclick = function () {
                     modalImg.src = this.src;
                     modal.style.display = 'flex';
                 }
@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const parallaxBg = document.getElementById('parallax-bg');
         if (parallaxBg) {
             const baseOpacity = 0.5;
-            const fadeDistance = 600; 
+            const fadeDistance = 600;
             let ticking = false;
 
             function updateParallax() {
@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // 3. Vantage 下载页专属逻辑：JSON 获取与按钮联动
     // -----------------------------------------
     if (isVDownload) {
-        
+
         // ✨ 新功能：自动从 releases.json 读取最新版本号
         fetch('releases.json')
             .then(res => res.json())
@@ -100,8 +100,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
         // 获取下载链接数据
-        const CURRENT_VERSION = "vd"; 
-        let linkData = {}; 
+        const CURRENT_VERSION = "vd";
+        let linkData = {};
 
         fetch(`${CURRENT_VERSION}.json`)
             .then(res => res.json())
@@ -112,7 +112,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Windows 下拉框联动
                 const winArch = document.getElementById('win-arch');
                 const btnWin = document.getElementById('btn-win');
-                
+
                 if (btnWin) {
                     function updateWinBtn() {
                         if (winArch && winArch.value === 'arm64') {
@@ -128,7 +128,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     updateWinBtn();
                 }
 
-            
+
 
 
 
@@ -137,7 +137,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const btnLoong64 = document.getElementById('btn-loong64'); // 确保 HTML 里有 id="btn-loong64" 的按钮
 
                 function updateLoong64Btn() {
-                    
+
                     if (!loong64Format || !btnLoong64) return; // 防御性编程，避免找不到元素报错
 
                     const format = loong64Format.value;
@@ -154,30 +154,30 @@ document.addEventListener('DOMContentLoaded', function() {
                         btnLoong64.href = "javascript:void(0);";       // 修改为 btnLoong64
                         btnLoong64.textContent = "暂不提供此版本";      // 修改为 btnLoong64
                         btnLoong64.style.opacity = "0.4";
-                        btnLoong64.style.pointerEvents = "none"; 
+                        btnLoong64.style.pointerEvents = "none";
                         btnLoong64.style.cursor = "not-allowed";
                     }
                 }
-                
+
                 // 必须绑定事件，否则下拉框改变时不会触发更新
                 if (loong64Format) {
                     loong64Format.addEventListener('change', updateLoong64Btn);
                 }
                 updateLoong64Btn(); // 页面加载完初始化执行一次
-            
-            
+
+
 
 
                 // Linux 下拉框联动
                 const linuxFormat = document.getElementById('linux-format');
                 const linuxArch = document.getElementById('linux-arch');
                 const btnLinux = document.getElementById('btn-linux');
-                
+
                 function updateLinuxBtn() {
                     const format = linuxFormat.value;
                     const arch = linuxArch.value;
-                    const jsonKey = `linux_${arch}_${format}`; 
-                    
+                    const jsonKey = `linux_${arch}_${format}`;
+
                     const targetLink = linkData[jsonKey];
                     if (targetLink && targetLink !== "") {
                         btnLinux.href = targetLink;
@@ -189,7 +189,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         btnLinux.href = "javascript:void(0);";
                         btnLinux.textContent = "暂不提供此版本";
                         btnLinux.style.opacity = "0.4";
-                        btnLinux.style.pointerEvents = "none"; 
+                        btnLinux.style.pointerEvents = "none";
                         btnLinux.style.cursor = "not-allowed";
                     }
                 }
@@ -197,11 +197,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-                
+
 
                 linuxFormat.addEventListener('change', updateLinuxBtn);
                 linuxArch.addEventListener('change', updateLinuxBtn);
-                updateLinuxBtn(); 
+                updateLinuxBtn();
 
                 // macOS 下拉框联动 (无链接置灰逻辑)
                 const macArch = document.getElementById('mac-arch');
@@ -209,7 +209,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 function updateMacBtn() {
                     let targetLink = macArch.value === 'intel' ? linkData.mac_intel_dmg : linkData.mac_apple_dmg;
-                    
+
                     if (targetLink && targetLink !== "") {
                         btnMac.href = targetLink;
                         btnMac.textContent = "下载";
@@ -233,7 +233,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.error("JSON加载失败", err);
                 const smartText = document.getElementById('smart-text');
                 // 这里已经锁定为读取 vd.json 如果还报错 149.0-3，绝对是 CDN 缓存！
-                if(smartText) smartText.textContent = `⚠️ 读取 ${CURRENT_VERSION}.json 失败，请检查文件`;
+                if (smartText) smartText.textContent = `⚠️ 读取 ${CURRENT_VERSION}.json 失败，请检查文件`;
             });
 
         function initSmartDetection(linkData) {
@@ -261,14 +261,27 @@ document.addEventListener('DOMContentLoaded', function() {
                     smartBtn.style.cursor = "not-allowed";
                 }
             } else if (ua.indexOf("Linux") !== -1 || ua.indexOf("X11") !== -1) {
-                smartText.textContent = "下载 Vantage for Linux (.deb)";
                 smartIcon.textContent = "🐧";
-                smartBtn.href = linkData.linux_x64_deb || "#";
+
+                // 【核心修复】：在 Linux 分支内，进一步判断 CPU 架构
+                // 龙芯的新架构是 loongarch64，老架构可能是 mips64 或 mips64el
+                if (ua.indexOf("loongarch64") !== -1 || ua.indexOf("mips64") !== -1 || ua.indexOf("LoongArch") !== -1) {
+                    smartText.textContent = "下载 Vantage for Linux (loong64)";
+                    // 请将下方的 linkData.linux_loongson_deb 替换为你实际的龙芯下载链接变量
+                    smartBtn.href = linkData.linux_loongson_deb || "#";
+                }
+                // 如果你们还有 ARM 架构（比如飞腾、鲲鹏），可以继续加判断
+                // else if (ua.indexOf("aarch64") !== -1 || ua.indexOf("arm64") !== -1) { ... }
+                else {
+                    // 默认分配 x64 (AMD/Intel) 版本的 Linux
+                    smartText.textContent = "下载 Vantage for Linux (.deb)";
+                    smartBtn.href = linkData.linux_x64_deb || "#";
+                }
             } else {
                 document.getElementById('smart-download-section').style.display = 'none';
             }
         }
-    
+
     }
 });
 // =========================================================
@@ -278,7 +291,7 @@ function injectCommonComponents() {
     const headerContainer = document.getElementById('app-header');
     const footerContainer = document.getElementById('app-footer');
     const isVantageSite = document.body.classList.contains('site-vantage');
-    
+
     // 注入导航栏
     if (headerContainer) {
         headerContainer.innerHTML = isVantageSite ? `
@@ -323,7 +336,7 @@ function injectCommonComponents() {
         const currentPath = window.location.pathname.split('/').pop() || 'index.html';
         const links = headerContainer.querySelectorAll('a[data-target]');
         links.forEach(link => {
-            if(link.getAttribute('data-target') === currentPath) {
+            if (link.getAttribute('data-target') === currentPath) {
                 link.classList.add('active');
             }
         });
@@ -350,7 +363,7 @@ injectCommonComponents();
 // =========================================================
 // 🚀 教程页与文档页专属 JS 逻辑
 // =========================================================
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // --- 教程页面逻辑 ---
     if (document.body.classList.contains('page-tutorials')) {
         const TUTORIALS_LIST_URL = `https://asystech.cn/jc/tutorials-list.json`;
@@ -371,7 +384,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         document.querySelectorAll('.toc-link').forEach(l => l.classList.remove('active'));
                         a.classList.add('active');
                         loadTutorialContent(tutorial.filePath);
-                        if (window.innerWidth <= 768) document.querySelector('.tutorial-content').scrollIntoView({behavior: 'smooth'});
+                        if (window.innerWidth <= 768) document.querySelector('.tutorial-content').scrollIntoView({ behavior: 'smooth' });
                     };
                     li.appendChild(a);
                     tutorialList.appendChild(li);
@@ -384,7 +397,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 document.getElementById('sidebar-error').style.display = 'block';
             });
 
-        window.loadTutorialContent = function(filePath) {
+        window.loadTutorialContent = function (filePath) {
             document.getElementById('content-placeholder').style.display = 'none';
             document.getElementById('tutorial-content').style.display = 'none';
             document.getElementById('content-error').style.display = 'none';
@@ -411,13 +424,13 @@ document.addEventListener('DOMContentLoaded', function() {
     if (document.body.classList.contains('page-docs')) {
         const sidebarContainer = document.getElementById('sidebar-container');
         const mainContent = document.getElementById('main-content');
-        let docsConfig = []; 
+        let docsConfig = [];
 
         fetch('../vdocs/docs-config.json')
             .then(res => res.json())
             .then(data => {
                 docsConfig = data.categories;
-                window.vudFiles = data.changelog_files; 
+                window.vudFiles = data.changelog_files;
                 let html = '';
                 docsConfig.forEach(category => {
                     html += `<h3>${category.title}</h3><ul>`;
@@ -427,14 +440,14 @@ document.addEventListener('DOMContentLoaded', function() {
                     html += `</ul>`;
                 });
                 sidebarContainer.innerHTML = html;
-                loadDocFromHash(); 
+                loadDocFromHash();
             })
             .catch(() => {
                 sidebarContainer.innerHTML = '<p style="color:red;">配置读取失败</p>';
                 mainContent.innerHTML = '<div class="loading-text" style="color:red;">❌ 无法读取文档列表</div>';
             });
 
-        window.loadDoc = function(id, filePath) {
+        window.loadDoc = function (id, filePath) {
             document.querySelectorAll('.docs-sidebar a').forEach(a => a.classList.remove('active'));
             const activeLink = document.getElementById(`link-${id}`);
             if (activeLink) activeLink.classList.add('active');
@@ -444,7 +457,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 .then(res => { if (!res.ok) throw new Error('找不到文件'); return res.text(); })
                 .then(html => {
                     mainContent.innerHTML = html;
-                    window.scrollTo(0, 0); 
+                    window.scrollTo(0, 0);
                     if (id === 'changelog') renderChangelogFromJson();
                 })
                 .catch(() => {
@@ -452,7 +465,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
         };
 
-        window.loadDocFromHash = function() {
+        window.loadDocFromHash = function () {
             const hash = window.location.hash.replace('#', '');
             let targetItem = null;
             if (hash) {
@@ -465,10 +478,10 @@ document.addEventListener('DOMContentLoaded', function() {
             if (targetItem) loadDoc(targetItem.id, targetItem.file);
         };
 
-        window.renderChangelogFromJson = async function() {
+        window.renderChangelogFromJson = async function () {
             const container = document.getElementById('changelog-container');
-            if(!container || !window.vudFiles) return;
-            
+            if (!container || !window.vudFiles) return;
+
             let finalHtml = '';
             for (const fileName of window.vudFiles) {
                 try {
@@ -476,8 +489,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     if (res.ok) {
                         finalHtml += await res.text();
                     }
-                } catch(e) { 
-                    console.error("加载日志文件失败: ", fileName, e); 
+                } catch (e) {
+                    console.error("加载日志文件失败: ", fileName, e);
                 }
             }
             container.innerHTML = finalHtml;
