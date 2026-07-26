@@ -30,9 +30,9 @@
           "file": "../vdocs/loong64-cross-compile.html"
         },
         {
-          "id": "linux-apt-repo",
+          "id": "linux-repos",
           "title": "Linux 安装教程",
-          "file": "../vdocs/linux-apt-repo.html"
+          "file": "../vdocs/linux-repos.html"
         }
       ]
     }
