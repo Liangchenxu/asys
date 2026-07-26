@@ -1,0 +1,71 @@
+## 自动化一键安装
+只需在终端中运行以下命令，脚本将自动识别您的发行版（支持 Debian/Ubuntu 及 RHEL/CentOS/Fedora 等），并为您完成依赖安装、软件源配置及浏览器安装：
+
+```bash
+curl -fsSL https://dl.asystech.cn/latest/install.sh | sudo bash
+```
+
+## 软件源手动配置指南
+如果您处于无脚本执行权限的特殊环境，或希望手动掌控配置过程，请参考以下针对各发行版的详细命令。
+
+
+## 1. Debian 11+ / Ubuntu 22.04+ 及更新版本
+
+导入受信任的公钥并写入软件源配置：
+
+```bash
+curl -fsSL https://dl.asystech.cn/latest/keys/vantage-archive-keyring.asc | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/vantage.gpg
+echo "deb [signed-by=/etc/apt/trusted.gpg.d/vantage.gpg] https://dl.asystech.cn/latest stable main" | sudo tee /etc/apt/sources.list.d/vantage.list
+```
+更新软件包索引并安装：
+
+```bash
+sudo apt update
+sudo apt install vantage -y
+```
+
+## 旧版本 Debian / Ubuntu 系统 (Debian 10 及以下)
+
+针对不支持 signed-by 语法的旧版系统，使用全局公钥导入方式：
+
+```bash
+curl -fsSL https://dl.asystech.cn/latest/keys/vantage-archive-keyring.asc | sudo apt-key add -
+echo "deb https://dl.asystech.cn/latest stable main" | sudo tee /etc/apt/sources.list.d/vantage.list
+```
+更新软件包索引并安装：
+
+```bash
+sudo apt update
+sudo apt install vantage -y
+```
+
+##3. RHEL / CentOS / Fedora 系统
+
+导入公钥并添加 YUM/DNF 仓库配置文件：
+
+```bash
+sudo rpm --import https://dl.asystech.cn/latest/keys/vantage-archive-keyring.asc
+
+sudo tee /etc/yum.repos.d/vantage.repo << 'EOF'
+[vantage]
+name=Vantage Browser Repository
+baseurl=https://dl.asystech.cn/latest/rpm
+enabled=1
+gpgcheck=1
+gpgkey=https://dl.asystech.cn/latest/keys/vantage-archive-keyring.asc
+EOF
+```
+更新软件包索引并安装（CentOS 8+/Fedora 使用 dnf，旧版 CentOS 7 使用 yum）：
+
+```bash
+sudo dnf install vantage -y
+# 若系统为 CentOS 7，请使用：sudo yum install vantage -y
+```
+
+其他发行版：使用 AppImage 包：
+```bash
+cd ~
+wget https://github.com/asystech-chen/Vantage/releases/latest/download/vantage_latest.x86_64.AppImage
+chmod +x vantage_latest.x86_64.AppImage
+./vantage_latest.x86_64.AppImage
+```

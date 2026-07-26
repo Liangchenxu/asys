@@ -28,6 +28,11 @@
           "id": "loong64-cross-compile",
           "title": "龙芯交叉编译指南",
           "file": "../vdocs/loong64-cross-compile.html"
+        },
+        {
+          "id": "linux-apt-repo",
+          "title": "Linux 安装教程",
+          "file": "../vdocs/linux-apt-repo.html"
         }
       ]
     }
