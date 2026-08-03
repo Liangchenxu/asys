@@ -1,0 +1,40 @@
+<div class="step-block">
+    <h2 style="margin-top: 0; color: #111827; font-size: 1.4rem; display: flex; align-items: center; gap: 10px;">
+        v153.0-3
+        <span style="font-size: 0.8rem; background: #dbeafe; color: var(--vantage-blue); padding: 3px 8px; border-radius: 12px; font-weight: normal;">最新版本</span>
+    </h2>
+    <div class="step-content">
+
+        <h3 style="font-size: 1.25em; border-bottom: 1px solid #eaecef; padding-bottom: 0.3em; margin-top: 24px; margin-bottom: 16px;">上游合并</h3>
+        <ul>
+            <li>基于 Firefox 153.0 ESR</li>
+            <li>迁移至 ESR 通道 —— 与 Firefox 企业版同步安全更新，稳定可靠，适合长期部署</li>
+        </ul>
+
+        <h3 style="font-size: 1.25em; border-bottom: 1px solid #eaecef; padding-bottom: 0.3em; margin-top: 24px; margin-bottom: 16px;">新功能</h3>
+        <ul>
+            <li>Windows 自动更新 —— 安装后自动注册计划任务，登录时及每 4 小时检查新版本，检测到更新自动静默安装</li>
+            <li>apt / rpm 软件仓库 —— 支持 Debian/Ubuntu (apt) 和 Fedora/RHEL (rpm) 通过包管理器安装和更新</li>
+            <li>WebGL 权限控制 —— 网站请求 WebGL 时弹出权限提示，可选择允许或拒绝</li>
+        </ul>
+
+        <h3 style="font-size: 1.25em; border-bottom: 1px solid #eaecef; padding-bottom: 0.3em; margin-top: 24px; margin-bottom: 16px;">隐私与安全</h3>
+        <ul>
+            <li>新增 query stripping 参数过滤，默认启用 (减少 URL 跟踪参数)</li>
+            <li>新增 Local Network Access 防护 (阻止公网站点探测局域网设备)</li>
+            <li>TLS 0-RTT 默认关闭 (修复注释与值矛盾的旧 bug)</li>
+            <li>Cookie 分区默认启用</li>
+            <li>禁用 QWAC 证书、WebSerial 接口</li>
+        </ul>
+
+        <h3 style="font-size: 1.25em; border-bottom: 1px solid #eaecef; padding-bottom: 0.3em; margin-top: 24px; margin-bottom: 16px;">修复</h3>
+        <ul>
+            <li>关于页面版本检查 —— 此前“检查更新”不显示任何状态文字，现已修复</li>
+        </ul>
+
+        <p style="color: var(--text-sub); margin-bottom: 20px; margin-top: 30px;">如果觉得好用，麻烦点个star吧！</p>
+        <div style="margin-top: 25px;">
+            <a href="https://github.com/asystech-chen/Vantage/releases/tag/v153.0-3" target="_blank" class="docs-link">🔗 在 GitHub 查看完整 Release 页面</a>
+        </div>
+    </div>
+</div>
