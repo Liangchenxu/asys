@@ -35,18 +35,18 @@ img { max-width: 100%; display: block; }
 .site-vantage { font-family: -apple-system, "Segoe UI", Roboto, sans-serif; line-height: 1.6; background-color: var(--bg-main); color: var(--text-main); }
 .site-vantage.page-vantage-home { background-color: var(--bg-page); overflow-x: hidden; }
 
-/* Vantage 文档内部排版补充 */
-.site-vantage h1 { font-size: 2.2rem; margin: 24px 0 16px; border-bottom: 1px solid var(--border, #eaecef); padding-bottom: 10px; }
-.site-vantage h2 { font-size: 1.5rem; margin: 30px 0 16px; color: #0078d4; border-bottom: 1px solid var(--border, #eaecef); padding-bottom: 6px; }
-.site-vantage p, .site-vantage ul, .site-vantage ol { margin-bottom: 16px; }
-.site-vantage ul, .site-vantage ol { padding-left: 2em; }
-.site-vantage blockquote { padding: 10px 15px; color: #6a737d; border-left: 4px solid #dfe2e5; background-color: var(--bg-page, #f6f8fa); margin: 0 0 16px 0; border-radius: 4px; }
-.site-vantage code { padding: 0.2em 0.4em; background-color: rgba(214, 51, 132, 0.06); color: #d63384; border-radius: 3px; font-family: Consolas, monospace; font-size: 85%; }
-.site-vantage pre { padding: 16px; overflow: auto; background-color: var(--bg-page, #f6f8fa); border-radius: 6px; margin-bottom: 16px; border: 1px solid var(--border, #e1e4e8); }
-.site-vantage pre code { background-color: transparent; padding: 0; color: #6f42c1; font-size: 14px; }
-.site-vantage table { border-collapse: collapse; width: 100%; margin-bottom: 16px; font-size: 14px; }
-.site-vantage table th, .site-vantage table td { padding: 8px 13px; border: 1px solid var(--border, #dfe2e5); text-align: left; }
-.site-vantage table tr:nth-child(2n) { background-color: rgba(0,0,0,0.02); }
+/* Vantage 文档内部排版补充 - 已修复作用域，只在文档页生效 */
+.page-docs h1 { font-size: 2.2rem; margin: 24px 0 16px; border-bottom: 1px solid var(--border, #eaecef); padding-bottom: 10px; }
+.page-docs h2 { font-size: 1.5rem; margin: 30px 0 16px; color: #0078d4; border-bottom: 1px solid var(--border, #eaecef); padding-bottom: 6px; }
+.page-docs p, .page-docs ul, .page-docs ol { margin-bottom: 16px; }
+.page-docs ul, .page-docs ol { padding-left: 2em; }
+.page-docs blockquote { padding: 10px 15px; color: #6a737d; border-left: 4px solid #dfe2e5; background-color: var(--bg-page, #f6f8fa); margin: 0 0 16px 0; border-radius: 4px; }
+.page-docs code { padding: 0.2em 0.4em; background-color: rgba(214, 51, 132, 0.06); color: #d63384; border-radius: 3px; font-family: Consolas, monospace; font-size: 85%; }
+.page-docs pre { padding: 16px; overflow: auto; background-color: var(--bg-page, #f6f8fa); border-radius: 6px; margin-bottom: 16px; border: 1px solid var(--border, #e1e4e8); }
+.page-docs pre code { background-color: transparent; padding: 0; color: #6f42c1; font-size: 14px; }
+.page-docs table { border-collapse: collapse; width: 100%; margin-bottom: 16px; font-size: 14px; }
+.page-docs table th, .page-docs table td { padding: 8px 13px; border: 1px solid var(--border, #dfe2e5); text-align: left; }
+.page-docs table tr:nth-child(2n) { background-color: rgba(0,0,0,0.02); }
 
 /* =========================================
    公共导航栏与页脚 (Header & Footer)
