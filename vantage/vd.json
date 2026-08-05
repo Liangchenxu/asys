@@ -1,9 +1,10 @@
 {
-    "version": "153.0-3 正式版",
-
+    "version": "153.0-3",
     "links": {
         "windows_exe": "https://dl.asystech.cn/latest/amd/vantage-153.0-3.x86_64-installer.exe",
+        "windows_exe_sha256": "eef6764e3200d1aeb3a2accdd29d17da7c7edf39728e35a283dbf67879298519",
         "win_arm64_exe": "https://dl.asystech.cn/latest/aarch/vantage-153.0-3.aarch64-installer.exe",
+        "win_arm64_exe_sha256": "4696D3BDB7B9F6BB1ACF50B11E0FEA646F104B4F171E0574E9F114CF89BBBC68",
 
         "mac_intel_dmg": "",
         "mac_apple_dmg": "",
