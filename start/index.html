@@ -213,7 +213,7 @@
     let currentEngine = 'bing';
     const WALLPAPER_SOURCES = [
       { type: 'json', url: 'https://bing.biturl.top/?resolution=1920&format=json&index=0&mkt=zh-CN' },
-      { type: 'image', url: 'https://api.bimg.cc/random' }
+      { type: 'redirect', url: 'https://api.bimg.cc/random' }
     ];
     let wallpaperCachedUrl = '', wallpaperLoadSeq = 0;
     const WALLPAPER_TIMEOUT = 8000;
@@ -245,7 +245,7 @@
 
     function loadPreferences() {
       let saved = {};
-      try { saved = JSON.parse(localStorage.getItem('asys_theme_prefs') || '{}'); } catch (e) { console.warn('[prefs] localStorage 不可用，使用默认值:', e); }
+      try { saved = JSON.parse(storageGet('asys_theme_prefs') || '{}'); } catch (e) { console.warn('[prefs] localStorage 不可用，使用默认值:', e); }
       const mode = saved.mode ?? 'light';
       const color = saved.color ?? 'neutral';
       const wallpaper = saved.wallpaper ?? false;
@@ -254,7 +254,7 @@
       autoThemeMode = saved.autoTheme ?? 'system';
 
       currentEngine = engine;
-      localStorage.setItem('asys_engine', engine);
+      storageSet('asys_engine', engine);
 
       applyTheme(mode, color);
       updateToggleState(mode);
@@ -263,12 +263,27 @@
       updateAutoThemeUI(autoThemeMode);
       setActiveEngine(engine);
       updateSearchPosition(position);
+      const slider = document.getElementById('positionSlider');
+      if (slider) slider.value = position;
+      updatePositionDisplay(position);
 
       if (wallpaper) { document.body.classList.add('wallpaper-enabled'); loadWallpaper(); }
       else { document.body.classList.remove('wallpaper-enabled'); }
 
       document.getElementById('darkTime').value = saved.darkTime ?? '18:00';
       document.getElementById('lightTime').value = saved.lightTime ?? '06:00';
+    }
+
+    let memStore = null;
+    function storageGet(k) {
+      try { return localStorage.getItem(k); } catch (e) { return memStore ? memStore[k] : null; }
+    }
+    function storageSet(k, v) {
+      try { localStorage.setItem(k, v); } catch (e) {
+        console.warn('[prefs] localStorage 写入失败，降级为内存保存（刷新后失效）:', e);
+        if (!memStore) memStore = {};
+        memStore[k] = v;
+      }
     }
 
     function normalizeImgUrl(u) {
@@ -316,6 +331,15 @@
               setImg(u, () => tryIndex(i + 1));
             })
             .catch(err => { if (seq === wallpaperLoadSeq) { console.error('[wallpaper] fetch 失败:', s.url, err); tryIndex(i + 1); } });
+        } else if (s.type === 'redirect') {
+          // 截获 307 重定向地址，统一换 cn.bing.com 域名再加载
+          fetch(s.url, { signal: AbortSignal.timeout(WALLPAPER_TIMEOUT), redirect: 'manual' })
+            .then(r => {
+              const loc = r.headers.get('location');
+              if (!loc) throw new Error('no location');
+              setImg(loc, () => tryIndex(i + 1));
+            })
+            .catch(err => { if (seq === wallpaperLoadSeq) { console.error('[wallpaper] 重定向获取失败:', s.url, err); tryIndex(i + 1); } });
         } else {
           setImg(s.url, () => tryIndex(i + 1));
         }
@@ -343,6 +367,8 @@
     }
 
     function applyAutoThemeLogic() {
+      // 手动模式（关闭）不干预主题，保留用户手动选择
+      if (autoThemeMode === 'off') return;
       let isDark = false;
       if (autoThemeMode === 'system') {
           isDark = darkModeMediaQuery.matches;
@@ -400,7 +426,7 @@
       positionSlider.addEventListener('input', (e) => { const v = parseInt(e.target.value); updateSearchPosition(v); updatePositionDisplay(v); });
       positionSlider.addEventListener('change', (e) => { savePreferences(getCurrentMode(), getCurrentColor(), null, null, parseInt(e.target.value)); });
       document.querySelectorAll('.color-btn').forEach(btn => { btn.addEventListener('click', (e) => { const c = e.currentTarget.dataset.color; applyTheme(getCurrentMode(), c); savePreferences(getCurrentMode(), c); updateColorActive(c); }); });
-      document.querySelectorAll('.engine-btn').forEach(btn => { btn.addEventListener('click', (e) => { currentEngine = btn.dataset.engine; localStorage.setItem('asys_engine', currentEngine); setActiveEngine(currentEngine); savePreferences(getCurrentMode(), getCurrentColor(), null, currentEngine); if (searchInput.value.trim()) fetchSuggestions(searchInput.value.trim()); }); });
+      document.querySelectorAll('.engine-btn').forEach(btn => { btn.addEventListener('click', (e) => { currentEngine = btn.dataset.engine; storageSet('asys_engine', currentEngine); setActiveEngine(currentEngine); savePreferences(getCurrentMode(), getCurrentColor(), null, currentEngine); if (searchInput.value.trim()) fetchSuggestions(searchInput.value.trim()); }); });
       searchInput.addEventListener('input', (e) => { const q = e.target.value.trim(); if (debounceTimer) clearTimeout(debounceTimer); cleanupScript(); if (!q.length) { hideSuggestions(); return; } debounceTimer = setTimeout(() => fetchSuggestions(q), 300); });
       searchInput.addEventListener('focus', () => { wallpaperBg.classList.add('blurred'); const q = searchInput.value.trim(); if (q.length > 0 && currentSuggestions.length > 0) showSuggestions(); });
       searchInput.addEventListener('blur', () => wallpaperBg.classList.remove('blurred'));
@@ -449,10 +475,11 @@
     function setActiveEngine(engine) { document.querySelectorAll('.engine-btn').forEach(b=>{ const a=b.dataset.engine===engine; b.classList.toggle('active',a); b.setAttribute('aria-selected',a); }); }
     
     function savePreferences(mode, color, wallpaper, engine, position) {
-      const s = JSON.parse(localStorage.getItem('asys_theme_prefs')||'{}');
-      const p = { mode: mode??s.mode??'light', color: color??s.color??'neutral', wallpaper: wallpaper??s.wallpaper??false, engine: engine??s.engine??'bing', position: position??s.position??25, autoTheme: s.autoTheme||'system', darkTime: document.getElementById('darkTime')?.value || '18:00', lightTime: document.getElementById('lightTime')?.value || '06:00' };
-      localStorage.setItem('asys_theme_prefs', JSON.stringify(p));
-      if(engine) localStorage.setItem('asys_engine', engine);
+      let s = {};
+      try { s = JSON.parse(storageGet('asys_theme_prefs')||'{}'); } catch (e) {}
+      const p = { mode: mode??s.mode??'light', color: color??s.color??'neutral', wallpaper: wallpaper??s.wallpaper??false, engine: engine??s.engine??'bing', position: position??s.position??25, autoTheme: autoThemeMode, darkTime: document.getElementById('darkTime')?.value || '18:00', lightTime: document.getElementById('lightTime')?.value || '06:00' };
+      storageSet('asys_theme_prefs', JSON.stringify(p));
+      if(engine) storageSet('asys_engine', engine);
     }
     
     function executeSearch(q) { if(!q) return; window.open(searchEngines[currentEngine].search + encodeURIComponent(q), '_blank', 'noopener,noreferrer'); document.getElementById('searchInput').blur(); hideSuggestions(); }
