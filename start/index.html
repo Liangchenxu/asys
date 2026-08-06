@@ -68,11 +68,12 @@
     .mode-toggle input:checked + .mode-slider::before { transform: translateX(20px); }
     .color-palette-section { display: flex; flex-direction: column; gap: 10px; padding-bottom: 10px; }
     .palette-label { font-size: 0.9rem; color: var(--text-secondary); }
-    .color-options { display: flex; gap: 10px; justify-content: center; }
+    .color-options { display: flex; gap: 10px; justify-content: center; position: relative; }
+    .color-indicator { position: absolute; left: 0; top: 0; width: 36px; height: 36px; border-radius: 50%; border: 2px solid var(--text-primary); box-shadow: 0 0 0 2px var(--bg-secondary); pointer-events: none; transition: transform 0.15s cubic-bezier(0.25, 0.8, 0.3, 1), opacity 0.15s ease; z-index: 2; }
     .color-btn { width: 32px; height: 32px; border-radius: 50%; border: none; cursor: pointer; transition: all 0.2s ease; position: relative; box-shadow: 0 3px 10px rgba(0,0,0,0.15); padding: 0; appearance: none; -webkit-appearance: none; }
     .color-btn::-moz-focus-inner { border: 0; padding: 0; }
     .color-btn:hover { transform: scale(1.1); box-shadow: 0 5px 16px rgba(0,0,0,0.25); }
-    .color-btn.active { box-shadow: 0 0 0 2px var(--text-primary), 0 0 0 4px var(--bg-secondary), 0 5px 16px rgba(0,0,0,0.25); transform: scale(1.1); }
+    .color-btn.active { transform: scale(1.1); }
     .color-btn[data-color="neutral"] { background: radial-gradient(circle at 30% 30%, #e5e7eb 0%, #9ca3af 100%); }
     .color-btn[data-color="blue"] { background: radial-gradient(circle at 30% 30%, #38bdf8 0%, #0284c7 100%); }
     .color-btn[data-color="green"] { background: radial-gradient(circle at 30% 30%, #34d399 0%, #059669 100%); }
@@ -155,7 +156,8 @@
         
         <div class="color-palette-section">
           <div class="palette-label">色彩主题</div>
-          <div class="color-options">
+          <div class="color-options" id="colorOptions">
+            <div class="color-indicator" id="colorIndicator" aria-hidden="true"></div>
             <button class="color-btn active" data-color="neutral" title="中性灰" aria-label="中性灰主题"></button>
             <button class="color-btn" data-color="blue" title="静谧蓝" aria-label="静谧蓝主题"></button>
             <button class="color-btn" data-color="green" title="清新绿" aria-label="清新绿主题"></button>
@@ -259,7 +261,7 @@
 
       applyTheme(mode, color);
       updateToggleState(mode);
-      updateColorActive(color);
+      updateColorActive(color, false);
       updateWallpaperToggle(wallpaper);
       updateAutoThemeUI(autoThemeMode);
       setActiveEngine(engine);
@@ -420,7 +422,8 @@
       const suggestionsContainer = document.getElementById('suggestionsContainer');
       const wallpaperBg = document.getElementById('wallpaperBg');
       
-      themeToggle.addEventListener('click', (e) => { e.stopPropagation(); const isExpanded = themeToggle.getAttribute('aria-expanded') === 'true'; themeToggle.setAttribute('aria-expanded', !isExpanded); themePanel.classList.toggle('show', !isExpanded); });
+      themeToggle.addEventListener('click', (e) => { e.stopPropagation(); const isExpanded = themeToggle.getAttribute('aria-expanded') === 'true'; themeToggle.setAttribute('aria-expanded', !isExpanded); themePanel.classList.toggle('show', !isExpanded); if (!isExpanded) { const ind = document.getElementById('colorIndicator'); if (ind) ind.style.opacity = '0'; } });
+      themePanel.addEventListener('animationend', (e) => { if (e.animationName !== 'slideDown') return; const active = document.querySelector('.color-btn.active'); if (active) moveColorIndicator(active, false); const ind = document.getElementById('colorIndicator'); if (ind) ind.style.opacity = '1'; });
       document.addEventListener('click', (e) => { if (!themeToggle.contains(e.target) && !themePanel.contains(e.target)) { themePanel.classList.remove('show'); themeToggle.setAttribute('aria-expanded', 'false'); } if (!searchInput.contains(e.target) && !suggestionsContainer.contains(e.target)) hideSuggestions(); });
       darkModeToggle.addEventListener('change', (e) => { if (autoThemeMode !== 'off') return; const mode = e.target.checked ? 'dark' : 'light'; applyTheme(mode, getCurrentColor()); savePreferences(mode, getCurrentColor()); if (wallpaperToggle.checked) updateWallpaperBrightness(); });
       wallpaperToggle.addEventListener('change', (e) => { const enabled = e.target.checked; savePreferences(getCurrentMode(), getCurrentColor(), enabled); if (enabled) { document.body.classList.add('wallpaper-enabled'); loadWallpaper(); } else { document.body.classList.remove('wallpaper-enabled'); wallpaperBg.classList.remove('show'); const i = document.getElementById('wallpaperImg'); if(i){ i.onload=null; i.onerror=null; i.src=''; } } });
@@ -471,7 +474,20 @@
     function getCurrentMode() { return document.documentElement.getAttribute('data-theme')?.startsWith('dark')?'dark':'light'; }
     function getCurrentColor() { return document.documentElement.getAttribute('data-theme')?.split('-')[1]||'neutral'; }
     function updateToggleState(mode) { document.getElementById('darkModeToggle').checked = (mode==='dark'); }
-    function updateColorActive(color) { document.querySelectorAll('.color-btn').forEach(b=>b.classList.toggle('active', b.dataset.color===color)); }
+    function moveColorIndicator(btn, animate) {
+      if (!btn) return;
+      const options = document.getElementById('colorOptions');
+      const ind = document.getElementById('colorIndicator');
+      if (!options || !ind) return;
+      const oRect = options.getBoundingClientRect();
+      const bRect = btn.getBoundingClientRect();
+      const x = bRect.left - oRect.left + (bRect.width - ind.offsetWidth) / 2;
+      const y = bRect.top - oRect.top + (bRect.height - ind.offsetHeight) / 2;
+      ind.style.transition = animate === false ? 'none' : '';
+      ind.style.transform = `translate(${x}px, ${y}px)`;
+      if (animate === false) { void ind.offsetWidth; ind.style.transition = ''; }
+    }
+    function updateColorActive(color, animate) { let activeBtn = null; document.querySelectorAll('.color-btn').forEach(b=>{ const a=b.dataset.color===color; b.classList.toggle('active',a); if(a) activeBtn=b; }); moveColorIndicator(activeBtn, animate); }
     function updateWallpaperToggle(en) { document.getElementById('wallpaperToggle').checked = en; }
     function setActiveEngine(engine) { document.querySelectorAll('.engine-btn').forEach(b=>{ const a=b.dataset.engine===engine; b.classList.toggle('active',a); b.setAttribute('aria-selected',a); }); }
     
