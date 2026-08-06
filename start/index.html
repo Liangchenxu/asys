@@ -211,7 +211,12 @@
 
     let debounceTimer = null, currentScript = null, selectedSuggestionIndex = -1, currentSuggestions = [];
     let currentEngine = 'bing';
-    let wallpaperPreloaded = false, wallpaperImageUrl = '';
+    const WALLPAPER_SOURCES = [
+      { type: 'json', url: 'https://bing.biturl.top/?resolution=1920&format=json&index=0&mkt=zh-CN' },
+      { type: 'image', url: 'https://api.bimg.cc/random' }
+    ];
+    let wallpaperCachedUrl = '', wallpaperLoadSeq = 0;
+    const WALLPAPER_TIMEOUT = 8000;
     let autoThemeMode = 'system'; 
     const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
     let autoThemeTimer = null;
@@ -225,14 +230,22 @@
     });
 
     function preloadWallpaper() {
-      const img = new Image();
-      img.onload = () => { wallpaperImageUrl = `https://api.dujin.org/bing/1920.php?t=${Date.now()}`; wallpaperPreloaded = true; };
-      img.onerror = () => { wallpaperPreloaded = false; };
-      img.src = 'https://api.dujin.org/bing/1920.php?t=' + Date.now();
+      // 提前抓今日壁纸 URL + 预下载图片进浏览器缓存，开启壁纸时秒显示
+      fetch(WALLPAPER_SOURCES[0].url, { signal: AbortSignal.timeout(WALLPAPER_TIMEOUT) })
+        .then(r => (r.ok ? r.json() : Promise.reject(new Error('bad status'))))
+        .then(d => {
+          const u = (d && d.url) || (d && d.data && d.data.url);
+          if (!u) throw new Error('no url');
+          wallpaperCachedUrl = u;
+          const pre = new Image();
+          pre.src = normalizeImgUrl(u);
+        })
+        .catch(() => {});
     }
 
     function loadPreferences() {
-      const saved = JSON.parse(localStorage.getItem('asys_theme_prefs') || '{}');
+      let saved = {};
+      try { saved = JSON.parse(localStorage.getItem('asys_theme_prefs') || '{}'); } catch (e) { console.warn('[prefs] localStorage 不可用，使用默认值:', e); }
       const mode = saved.mode ?? 'light';
       const color = saved.color ?? 'neutral';
       const wallpaper = saved.wallpaper ?? false;
@@ -251,18 +264,64 @@
       setActiveEngine(engine);
       updateSearchPosition(position);
 
-      if (wallpaper) { document.body.classList.add('wallpaper-enabled'); showPreloadedWallpaper(); }
+      if (wallpaper) { document.body.classList.add('wallpaper-enabled'); loadWallpaper(); }
       else { document.body.classList.remove('wallpaper-enabled'); }
 
       document.getElementById('darkTime').value = saved.darkTime ?? '18:00';
       document.getElementById('lightTime').value = saved.lightTime ?? '06:00';
     }
 
-    function showPreloadedWallpaper() {
+    function normalizeImgUrl(u) {
+      // Bing 国际版域名国内访问慢，统一换 cn.bing.com（国内 CDN）
+      try {
+        const url = new URL(u);
+        if (url.hostname === 'www.bing.com' || url.hostname === 'bing.com') url.hostname = 'cn.bing.com';
+        return url.toString();
+      } catch (e) { return u; }
+    }
+
+    function loadWallpaper() {
       const bg = document.getElementById('wallpaperBg'), img = document.getElementById('wallpaperImg');
       if (!img) return;
-      if (wallpaperPreloaded && wallpaperImageUrl) { img.src = wallpaperImageUrl; bg.classList.add('show'); }
-      else { const i = new Image(); i.onload = () => { img.src = wallpaperImageUrl || 'https://api.dujin.org/bing/1920.php'; bg.classList.add('show'); }; i.src = wallpaperImageUrl || 'https://api.dujin.org/bing/1920.php'; }
+      const seq = ++wallpaperLoadSeq;
+      const fail = (err) => {
+        if (seq !== wallpaperLoadSeq) return;
+        console.error('[wallpaper] 所有数据源均失败:', err);
+        document.body.classList.remove('wallpaper-enabled');
+        if (bg) bg.classList.remove('show');
+        const t = document.getElementById('wallpaperToggle');
+        if (t && t.checked) { t.checked = false; savePreferences(getCurrentMode(), getCurrentColor(), false); }
+      };
+      const setImg = (src, onFail) => {
+        const timer = setTimeout(() => {
+          img.onload = null; img.onerror = null;
+          console.error('[wallpaper] 图片加载超时:', src);
+          onFail();
+        }, WALLPAPER_TIMEOUT);
+        img.onload = () => { clearTimeout(timer); if (seq === wallpaperLoadSeq) bg.classList.add('show'); };
+        img.onerror = () => { clearTimeout(timer); if (seq === wallpaperLoadSeq) { console.error('[wallpaper] 图片加载失败:', src); onFail(); } };
+        img.src = normalizeImgUrl(src);
+      };
+      const tryIndex = (i) => {
+        if (seq !== wallpaperLoadSeq) return;
+        if (i >= WALLPAPER_SOURCES.length) { fail(new Error('exhausted')); return; }
+        const s = WALLPAPER_SOURCES[i];
+        if (s.type === 'json') {
+          fetch(s.url, { signal: AbortSignal.timeout(WALLPAPER_TIMEOUT) })
+            .then(r => (r.ok ? r.json() : Promise.reject(new Error('bad status ' + r.status))))
+            .then(d => {
+              if (seq !== wallpaperLoadSeq) return;
+              const u = (d && d.url) || (d && d.data && d.data.url);
+              if (!u) throw new Error('no url');
+              setImg(u, () => tryIndex(i + 1));
+            })
+            .catch(err => { if (seq === wallpaperLoadSeq) { console.error('[wallpaper] fetch 失败:', s.url, err); tryIndex(i + 1); } });
+        } else {
+          setImg(s.url, () => tryIndex(i + 1));
+        }
+      };
+      if (wallpaperCachedUrl) setImg(wallpaperCachedUrl, () => tryIndex(0));
+      else tryIndex(0);
     }
 
     function initAutoTheme() {
@@ -337,7 +396,7 @@
       themeToggle.addEventListener('click', (e) => { e.stopPropagation(); const isExpanded = themeToggle.getAttribute('aria-expanded') === 'true'; themeToggle.setAttribute('aria-expanded', !isExpanded); themePanel.classList.toggle('show', !isExpanded); });
       document.addEventListener('click', (e) => { if (!themeToggle.contains(e.target) && !themePanel.contains(e.target)) { themePanel.classList.remove('show'); themeToggle.setAttribute('aria-expanded', 'false'); } if (!searchInput.contains(e.target) && !suggestionsContainer.contains(e.target)) hideSuggestions(); });
       darkModeToggle.addEventListener('change', (e) => { if (autoThemeMode !== 'off') return; const mode = e.target.checked ? 'dark' : 'light'; applyTheme(mode, getCurrentColor()); savePreferences(mode, getCurrentColor()); if (wallpaperToggle.checked) updateWallpaperBrightness(); });
-      wallpaperToggle.addEventListener('change', (e) => { const enabled = e.target.checked; savePreferences(getCurrentMode(), getCurrentColor(), enabled); if (enabled) { document.body.classList.add('wallpaper-enabled'); showPreloadedWallpaper(); } else { document.body.classList.remove('wallpaper-enabled'); wallpaperBg.classList.remove('show'); const i = document.getElementById('wallpaperImg'); if(i) i.src=''; } });
+      wallpaperToggle.addEventListener('change', (e) => { const enabled = e.target.checked; savePreferences(getCurrentMode(), getCurrentColor(), enabled); if (enabled) { document.body.classList.add('wallpaper-enabled'); loadWallpaper(); } else { document.body.classList.remove('wallpaper-enabled'); wallpaperBg.classList.remove('show'); const i = document.getElementById('wallpaperImg'); if(i){ i.onload=null; i.onerror=null; i.src=''; } } });
       positionSlider.addEventListener('input', (e) => { const v = parseInt(e.target.value); updateSearchPosition(v); updatePositionDisplay(v); });
       positionSlider.addEventListener('change', (e) => { savePreferences(getCurrentMode(), getCurrentColor(), null, null, parseInt(e.target.value)); });
       document.querySelectorAll('.color-btn').forEach(btn => { btn.addEventListener('click', (e) => { const c = e.currentTarget.dataset.color; applyTheme(getCurrentMode(), c); savePreferences(getCurrentMode(), c); updateColorActive(c); }); });
