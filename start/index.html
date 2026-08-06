@@ -81,6 +81,29 @@
     .color-btn[data-color="orange"] { background: radial-gradient(circle at 30% 30%, #fb923c 0%, #ea580c 100%); }
     .wallpaper-section, .position-section { padding-top: 10px; }
     .wallpaper-label, .position-label { display: flex; align-items: center; justify-content: space-between; font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 6px; }
+    .wallpaper-refresh-btn { position: fixed; right: 20px; bottom: 20px; width: 40px; height: 40px; border-radius: 50%; background: var(--bg-secondary); border: 1px solid var(--border-color); box-shadow: var(--shadow); display: none; align-items: center; justify-content: center; cursor: pointer; z-index: 90; transition: all 0.25s ease; color: var(--text-secondary); padding: 0; }
+    .wallpaper-refresh-btn.show { display: flex; }
+    .wallpaper-refresh-btn:hover { color: var(--accent); border-color: var(--accent); transform: rotate(180deg); }
+    .wallpaper-refresh-btn svg { width: 18px; height: 18px; }
+    .wallpaper-refresh-btn.spinning svg { animation: spin 0.8s linear infinite; }
+    .mini-btn { padding: 4px 12px; font-size: 0.78rem; border: 1px solid var(--border-color); border-radius: 20px; background: var(--input-bg); color: var(--text-secondary); cursor: pointer; transition: all 0.15s ease; font-family: inherit; }
+    .mini-btn:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+    .mini-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+    .mini-btn.wide { width: 100%; padding: 6px 10px; }
+    .quicklinks-section { padding-top: 10px; }
+    .quicklinks-label { display: flex; align-items: center; justify-content: space-between; font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px; }
+    .quicklinks-editor { display: none; flex-direction: column; gap: 8px; }
+    .quicklinks-editor.show { display: flex; }
+    .ql-input-wrap { position: relative; }
+    .ql-lines { position: absolute; left: 0; top: 0; bottom: 0; width: 2.2em; overflow: hidden; font-size: 0.8rem; line-height: 1.5; font-family: inherit; color: var(--text-secondary); opacity: 0.75; text-align: right; padding: 8px 5px 8px 0; border-right: 1px solid var(--border-color); background: rgba(127,127,127,0.06); pointer-events: none; user-select: none; }
+    .quicklinks-editor textarea { width: 100%; padding: 8px 8px 8px calc(2.2em + 10px); border: 1px solid var(--border-color); border-radius: 8px; background: var(--input-bg); color: var(--text-primary); font-size: 0.8rem; font-family: inherit; line-height: 1.5; resize: vertical; min-height: 90px; outline: none; }
+    .quicklinks-editor textarea:focus { border-color: var(--input-focus); }
+    .quicklinks { display: none; justify-content: center; flex-wrap: wrap; gap: 8px; width: 100%; }
+    .quicklinks.show { display: flex; }
+    .quicklink-item { display: flex; align-items: center; gap: 6px; padding: 6px 14px; border-radius: 50px; background: var(--bg-secondary); border: 1px solid var(--border-color); font-size: 0.85rem; color: var(--text-secondary); text-decoration: none; transition: all 0.15s ease; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+    .quicklink-item:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-1px); }
+    .quicklink-item .ql-icon { width: 18px; height: 18px; border-radius: 50%; background: var(--accent); color: #fff; font-size: 0.65rem; display: flex; align-items: center; justify-content: center; font-weight: 600; flex-shrink: 0; }
+    .quicklink-item .ql-icon[data-empty="true"] { background: transparent; color: transparent; }
     .position-slider { width: 100%; height: 6px; border-radius: 3px; background: var(--input-border); outline: none; -webkit-appearance: none; cursor: pointer; }
     .position-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; border-radius: 50%; background: var(--accent); cursor: pointer; transition: transform 0.2s; box-shadow: 0 2px 6px rgba(0,0,0,0.2); }
     .position-slider::-webkit-slider-thumb:hover { transform: scale(1.1); }
@@ -112,8 +135,9 @@
     footer { text-align: center; padding: 0.6rem 1rem 1.2rem; color: var(--text-secondary); font-size: 0.72rem; opacity: 0.65; width: 100%; }
     footer p { margin: 0; letter-spacing: 0.3px; }
     @media (max-width: 640px) {
-      header { padding: 0.6rem 1rem; height: 52px; } .logo svg { max-width: 110px; } .theme-toggle { width: 38px; height: 38px; } .theme-panel { width: 280px; right: -10px; } main { padding: 1.5rem 0.8rem; gap: 1.2rem; } .clock-display { font-size: 2rem; } .search-input { padding: 0.85rem 3rem 0.85rem 1.3rem; font-size: 0.95rem; } .search-icon-btn { right: 10px; padding: 5px; } .search-icon-btn svg { width: 18px; height: 18px; } .suggestions-container { max-height: 250px; } .suggestion-item { padding: 7px 10px; font-size: 0.9rem; } .engine-selector { gap: 0.4rem; } .engine-btn { padding: 0.4rem 0.9rem; font-size: 0.8rem; } footer { padding: 0.5rem 0.8rem 1rem; font-size: 0.68rem; }
+      header { padding: 0.6rem 1rem; height: 52px; } .logo svg { max-width: 110px; } .theme-toggle { width: 38px; height: 38px; } .theme-panel { position: fixed; top: auto; left: 0; right: 0; bottom: 0; width: 100%; max-height: 85vh; border-radius: 16px 16px 0 0; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 16px 16px calc(16px + env(safe-area-inset-bottom)); } .theme-panel.show { animation: slideUp 0.25s ease-out; } main { padding: 1.5rem 0.8rem; gap: 1.2rem; } .clock-display { font-size: 2rem; } .search-input { padding: 0.85rem 3rem 0.85rem 1.3rem; font-size: 0.95rem; } .search-icon-btn { right: 10px; padding: 5px; } .search-icon-btn svg { width: 18px; height: 18px; } .suggestions-container { max-height: 250px; } .suggestion-item { padding: 7px 10px; font-size: 0.9rem; } .engine-selector { gap: 0.4rem; } .engine-btn { padding: 0.4rem 0.9rem; font-size: 0.8rem; } .quicklinks { gap: 6px; } .quicklink-item { padding: 5px 12px; font-size: 0.8rem; } .quicklink-item .ql-icon { width: 16px; height: 16px; font-size: 0.6rem; } .wallpaper-refresh-btn { right: 14px; bottom: calc(14px + env(safe-area-inset-bottom)); } footer { padding: 0.5rem 0.8rem 1rem; font-size: 0.68rem; }
     }
+    @keyframes slideUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
     @keyframes pulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(107, 114, 128, 0.2); } 50% { box-shadow: 0 0 0 6px rgba(107, 114, 128, 0); } }
     .search-input:focus { animation: pulse 2s infinite; }
   </style>
@@ -170,6 +194,17 @@
           <div class="wallpaper-label"><span>使用网络图片作为背景</span><label class="mode-toggle"><input type="checkbox" id="wallpaperToggle"><span class="mode-slider"></span></label></div>
         </div>
         
+        <div class="quicklinks-section">
+          <div class="quicklinks-label"><span>快捷链接</span><label class="mode-toggle"><input type="checkbox" id="quicklinksToggle"><span class="mode-slider"></span></label></div>
+          <div class="quicklinks-editor" id="quicklinksEditor">
+            <div class="ql-input-wrap">
+              <div class="ql-lines" id="quicklinksLines" aria-hidden="true"></div>
+              <textarea id="quicklinksInput" rows="5" placeholder="每行一个链接：名称 地址（可省略 https://）&#10;示例：&#10;ASYS 官网 asystech.cn&#10;GitHub github.com"></textarea>
+            </div>
+            <button class="mini-btn wide" id="quicklinksSave">保存</button>
+          </div>
+        </div>
+        
         <div class="position-section">
           <div class="position-label"><span>搜索框垂直位置</span></div>
           <input type="range" class="position-slider" id="positionSlider" min="5" max="50" value="25" step="1">
@@ -199,7 +234,12 @@
         <button class="engine-btn" data-engine="yandex" role="tab">Yandex</button>
       </div>
     </div>
+    <div class="quicklinks" id="quicklinksBar"></div>
   </main>
+
+  <button type="button" class="wallpaper-refresh-btn" id="wallpaperRefresh" title="换一张壁纸" aria-label="换一张壁纸">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
+  </button>
 
   <footer><p>ASYS 科技 搜索起始页 版权所有</p></footer>
 
@@ -216,7 +256,7 @@
     let currentEngine = 'bing';
     const WALLPAPER_SOURCES = [
       { type: 'json', url: 'https://bing.biturl.top/?resolution=1920&format=json&index=0&mkt=zh-CN' },
-      { type: 'redirect', url: 'https://api.bimg.cc/random' }
+      { type: 'json', url: 'https://bing.biturl.top/?resolution=1920&format=json&index=8&mkt=zh-CN' }
     ];
     let wallpaperCachedUrl = '', wallpaperLoadSeq = 0;
     const WALLPAPER_TIMEOUT = 8000;
@@ -272,6 +312,21 @@
 
       if (wallpaper) { document.body.classList.add('wallpaper-enabled'); loadWallpaper(); }
       else { document.body.classList.remove('wallpaper-enabled'); }
+      const refreshBtn = document.getElementById('wallpaperRefresh');
+      if (refreshBtn) refreshBtn.classList.toggle('show', wallpaper);
+
+      // 快捷链接
+      const ql = getQuicklinks();
+      const qlToggle = document.getElementById('quicklinksToggle');
+      const qlEditor = document.getElementById('quicklinksEditor');
+      const qlBar = document.getElementById('quicklinksBar');
+      if (qlToggle) qlToggle.checked = ql.enabled;
+      if (qlEditor) qlEditor.classList.toggle('show', ql.enabled);
+      if (ql.enabled) {
+        if (qlBar) { qlBar.classList.add('show'); renderQuicklinks(ql.links); }
+        const qlInput = document.getElementById('quicklinksInput');
+        if (qlInput && ql.links.length) { qlInput.value = ql.links.map(l => `${l.name} ${l.url}`).join('\n'); updateQuicklinksLines(); }
+      }
 
       document.getElementById('darkTime').value = saved.darkTime ?? '18:00';
       document.getElementById('lightTime').value = saved.lightTime ?? '06:00';
@@ -324,28 +379,15 @@
         if (seq !== wallpaperLoadSeq) return;
         if (i >= WALLPAPER_SOURCES.length) { fail(new Error('exhausted')); return; }
         const s = WALLPAPER_SOURCES[i];
-        if (s.type === 'json') {
-          fetch(s.url, { signal: AbortSignal.timeout(WALLPAPER_TIMEOUT) })
-            .then(r => (r.ok ? r.json() : Promise.reject(new Error('bad status ' + r.status))))
-            .then(d => {
-              if (seq !== wallpaperLoadSeq) return;
-              const u = (d && d.url) || (d && d.data && d.data.url);
-              if (!u) throw new Error('no url');
-              setImg(u, () => tryIndex(i + 1));
-            })
-            .catch(err => { if (seq === wallpaperLoadSeq) { console.error('[wallpaper] fetch 失败:', s.url, err); tryIndex(i + 1); } });
-        } else if (s.type === 'redirect') {
-          // 截获 307 重定向地址，统一换 cn.bing.com 域名再加载
-          fetch(s.url, { signal: AbortSignal.timeout(WALLPAPER_TIMEOUT), redirect: 'manual' })
-            .then(r => {
-              const loc = r.headers.get('location');
-              if (!loc) throw new Error('no location');
-              setImg(loc, () => tryIndex(i + 1));
-            })
-            .catch(err => { if (seq === wallpaperLoadSeq) { console.error('[wallpaper] 重定向获取失败:', s.url, err); tryIndex(i + 1); } });
-        } else {
-          setImg(s.url, () => tryIndex(i + 1));
-        }
+        fetch(s.url, { signal: AbortSignal.timeout(WALLPAPER_TIMEOUT) })
+          .then(r => (r.ok ? r.json() : Promise.reject(new Error('bad status ' + r.status))))
+          .then(d => {
+            if (seq !== wallpaperLoadSeq) return;
+            const u = (d && d.url) || (d && d.data && d.data.url);
+            if (!u) throw new Error('no url');
+            setImg(u, () => tryIndex(i + 1));
+          })
+          .catch(err => { if (seq === wallpaperLoadSeq) { console.error('[wallpaper] fetch 失败:', s.url, err); tryIndex(i + 1); } });
       };
       if (wallpaperCachedUrl) setImg(wallpaperCachedUrl, () => tryIndex(0));
       else tryIndex(0);
@@ -423,10 +465,40 @@
       const wallpaperBg = document.getElementById('wallpaperBg');
       
       themeToggle.addEventListener('click', (e) => { e.stopPropagation(); const isExpanded = themeToggle.getAttribute('aria-expanded') === 'true'; themeToggle.setAttribute('aria-expanded', !isExpanded); themePanel.classList.toggle('show', !isExpanded); if (!isExpanded) { const ind = document.getElementById('colorIndicator'); if (ind) ind.style.opacity = '0'; } });
-      themePanel.addEventListener('animationend', (e) => { if (e.animationName !== 'slideDown') return; const active = document.querySelector('.color-btn.active'); if (active) moveColorIndicator(active, false); const ind = document.getElementById('colorIndicator'); if (ind) ind.style.opacity = '1'; });
+      themePanel.addEventListener('animationend', (e) => { if (e.animationName !== 'slideDown' && e.animationName !== 'slideUp') return; const active = document.querySelector('.color-btn.active'); if (active) moveColorIndicator(active, false); const ind = document.getElementById('colorIndicator'); if (ind) ind.style.opacity = '1'; });
       document.addEventListener('click', (e) => { if (!themeToggle.contains(e.target) && !themePanel.contains(e.target)) { themePanel.classList.remove('show'); themeToggle.setAttribute('aria-expanded', 'false'); } if (!searchInput.contains(e.target) && !suggestionsContainer.contains(e.target)) hideSuggestions(); });
       darkModeToggle.addEventListener('change', (e) => { if (autoThemeMode !== 'off') return; const mode = e.target.checked ? 'dark' : 'light'; applyTheme(mode, getCurrentColor()); savePreferences(mode, getCurrentColor()); if (wallpaperToggle.checked) updateWallpaperBrightness(); });
-      wallpaperToggle.addEventListener('change', (e) => { const enabled = e.target.checked; savePreferences(getCurrentMode(), getCurrentColor(), enabled); if (enabled) { document.body.classList.add('wallpaper-enabled'); loadWallpaper(); } else { document.body.classList.remove('wallpaper-enabled'); wallpaperBg.classList.remove('show'); const i = document.getElementById('wallpaperImg'); if(i){ i.onload=null; i.onerror=null; i.src=''; } } });
+      wallpaperToggle.addEventListener('change', (e) => { const enabled = e.target.checked; savePreferences(getCurrentMode(), getCurrentColor(), enabled); const refreshBtn = document.getElementById('wallpaperRefresh'); if (refreshBtn) refreshBtn.classList.toggle('show', enabled); if (enabled) { document.body.classList.add('wallpaper-enabled'); loadWallpaper(); } else { document.body.classList.remove('wallpaper-enabled'); wallpaperBg.classList.remove('show'); wallpaperLoadSeq++; const i = document.getElementById('wallpaperImg'); if(i){ i.onload=null; i.onerror=null; i.src=''; } } });
+      const wallpaperRefresh = document.getElementById('wallpaperRefresh');
+      if (wallpaperRefresh) wallpaperRefresh.addEventListener('click', () => { refreshWallpaper(); });
+      const quicklinksToggle = document.getElementById('quicklinksToggle');
+      const quicklinksEditor = document.getElementById('quicklinksEditor');
+      const quicklinksInput = document.getElementById('quicklinksInput');
+      const quicklinksSave = document.getElementById('quicklinksSave');
+      const quicklinksBar = document.getElementById('quicklinksBar');
+      if (quicklinksToggle) quicklinksToggle.addEventListener('change', (e) => {
+        const enabled = e.target.checked;
+        const ql = getQuicklinks();
+        ql.enabled = enabled;
+        saveQuicklinks(ql);
+        if (quicklinksEditor) quicklinksEditor.classList.toggle('show', enabled);
+        if (enabled) {
+          if (!ql.links.length && quicklinksInput) { quicklinksInput.value = 'ASYS 官网 asystech.cn\nGitHub github.com'; updateQuicklinksLines(); }
+          if (quicklinksBar) { quicklinksBar.classList.add('show'); renderQuicklinks(ql.links); }
+        } else if (quicklinksBar) quicklinksBar.classList.remove('show');
+      });
+      if (quicklinksSave) quicklinksSave.addEventListener('click', () => {
+        const links = parseQuicklinksInput(quicklinksInput ? quicklinksInput.value : '');
+        const ql = getQuicklinks();
+        ql.links = links; ql.enabled = true;
+        saveQuicklinks(ql);
+        if (quicklinksBar) { quicklinksBar.classList.add('show'); renderQuicklinks(links); }
+      });
+      if (quicklinksInput) {
+        quicklinksInput.addEventListener('input', updateQuicklinksLines);
+        quicklinksInput.addEventListener('scroll', () => { const lines = document.getElementById('quicklinksLines'); if (lines) lines.scrollTop = quicklinksInput.scrollTop; });
+        updateQuicklinksLines();
+      }
       positionSlider.addEventListener('input', (e) => { const v = parseInt(e.target.value); updateSearchPosition(v); updatePositionDisplay(v); });
       positionSlider.addEventListener('change', (e) => { savePreferences(getCurrentMode(), getCurrentColor(), null, null, parseInt(e.target.value)); });
       document.querySelectorAll('.color-btn').forEach(btn => { btn.addEventListener('click', (e) => { const c = e.currentTarget.dataset.color; applyTheme(getCurrentMode(), c); savePreferences(getCurrentMode(), c); updateColorActive(c); }); });
@@ -467,6 +539,69 @@
     function hideSuggestions() { document.getElementById('suggestionsContainer').classList.remove('show'); selectedSuggestionIndex=-1; currentSuggestions=[]; }
     function escapeHtml(t) { const d=document.createElement('div'); d.textContent=t; return d.innerHTML; }
     function escapeRegex(s) { return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
+
+    const QUICKLINKS_KEY = 'asys_quicklinks';
+    function getQuicklinks() { try { return JSON.parse(storageGet(QUICKLINKS_KEY) || 'null') || { enabled: false, links: [] }; } catch (e) { return { enabled: false, links: [] }; } }
+    function saveQuicklinks(q) { storageSet(QUICKLINKS_KEY, JSON.stringify(q)); }
+    function parseQuicklinksInput(text) {
+      const links = [];
+      (text || '').split('\n').forEach(line => {
+        line = line.trim();
+        if (!line) return;
+        // 名称 + 地址（地址可带或不带协议，探查行尾 xxx.xxx 连续串）
+        const m = line.match(/^(.*?)\s+(\S+\.\S+)$/);
+        if (m) {
+          let url = m[2];
+          if (!/^https?:\/\//i.test(url)) url = 'https://' + url;
+          links.push({ name: m[1].trim(), url });
+          return;
+        }
+        // 纯地址（无名称）
+        if (/^\S+\.\S+$/.test(line)) {
+          let url = line;
+          if (!/^https?:\/\//i.test(url)) url = 'https://' + url;
+          const name = url.replace(/^https?:\/\//, '').replace(/^www\./, '').split('/')[0];
+          links.push({ name, url });
+        }
+      });
+      return links;
+    }
+    function renderQuicklinks(links) {
+      const bar = document.getElementById('quicklinksBar');
+      if (!bar) return;
+      bar.innerHTML = links.map(l => `<a class="quicklink-item" href="${escapeHtml(l.url)}" target="_blank" rel="noopener noreferrer" title="${escapeHtml(l.url)}"><span class="ql-icon">${escapeHtml((l.name || l.url).charAt(0).toUpperCase())}</span><span>${escapeHtml(l.name)}</span></a>`).join('');
+    }
+    function updateQuicklinksLines() {
+      const ta = document.getElementById('quicklinksInput');
+      const lines = document.getElementById('quicklinksLines');
+      if (!ta || !lines) return;
+      const count = ta.value.split('\n').length;
+      lines.innerHTML = Array.from({ length: count }, (_, i) => i + 1).join('<br>');
+      lines.scrollTop = ta.scrollTop;
+    }
+    function refreshWallpaper() {
+      const bg = document.getElementById('wallpaperBg'), img = document.getElementById('wallpaperImg');
+      if (!img) return;
+      const btn = document.getElementById('wallpaperRefresh');
+      if (btn) btn.classList.add('spinning');
+      const seq = ++wallpaperLoadSeq;
+      const done = () => { if (btn) btn.classList.remove('spinning'); };
+      // 随机取一张历史 Bing 图（biturl index: 0=今天，数字越大越旧）
+      const idx = Math.floor(Math.random() * 9);
+      const url = `https://bing.biturl.top/?resolution=1920&format=json&index=${idx}&mkt=zh-CN`;
+      const timer = setTimeout(() => { console.error('[wallpaper] 换一张超时'); done(); loadWallpaper(); }, WALLPAPER_TIMEOUT);
+      fetch(url, { signal: AbortSignal.timeout(WALLPAPER_TIMEOUT) })
+        .then(r => (r.ok ? r.json() : Promise.reject(new Error('bad status ' + r.status))))
+        .then(d => {
+          if (seq !== wallpaperLoadSeq) { clearTimeout(timer); done(); return; }
+          const u = (d && d.url) || (d && d.data && d.data.url);
+          if (!u) throw new Error('no url');
+          img.onload = () => { clearTimeout(timer); done(); if (seq === wallpaperLoadSeq) bg.classList.add('show'); };
+          img.onerror = () => { clearTimeout(timer); done(); if (seq === wallpaperLoadSeq) { console.error('[wallpaper] 换一张图片加载失败'); loadWallpaper(); } };
+          img.src = normalizeImgUrl(u);
+        })
+        .catch(err => { clearTimeout(timer); done(); if (seq === wallpaperLoadSeq) { console.error('[wallpaper] 换一张失败:', err); loadWallpaper(); } });
+    }
 
     function initClock() { const c = document.getElementById('clockDisplay'); const upd = () => c.textContent = `${String(new Date().getHours()).padStart(2,'0')}:${String(new Date().getMinutes()).padStart(2,'0')}`; upd(); setInterval(upd, 1000); fetch('https://worldtimeapi.org/api/ip', { signal: AbortSignal.timeout(3000) }).then(r=>r.ok?r.json():Promise.reject()).then(d=>upd(new Date(d.datetime))).catch(()=>{}); }
 
