@@ -325,6 +325,7 @@ function injectCommonComponents() {
                             <a href="products.html" data-target="products.html">产品</a>
                             <a href="tutorials.html" data-target="tutorials.html">教程</a>
                             <a href="../vantage/index.html" data-target="vantage.html">Vantage浏览器</a>
+                            <a href="../start/index.html" data-target="start/index.html">起始页</a>
                             <a href="about.html" data-target="about.html">关于 & 联系</a>
                         </div>
                     </nav>
