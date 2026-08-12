@@ -5,153 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <link rel="shortcut icon" href="../img/asys.ico" type="image/x-icon">
   <title>ASYS 搜索起始页</title>
-  <style>
-    [data-theme="light-neutral"] { --bg-primary: rgba(245, 247, 250, 0.85); --bg-secondary: rgba(255, 255, 255, 0.85); --text-primary: #1f2937; --text-secondary: #6b7280; --border-color: rgba(229, 231, 235, 0.6); --input-bg: rgba(255, 255, 255, 0.95); --input-border: rgba(209, 213, 219, 0.5); --input-focus: #6b7280; --icon-color: #9ca3af; --icon-hover: #4b5563; --accent: #6b7280; --accent-hover: #4b5563; --shadow: 0 8px 32px rgba(31, 41, 55, 0.15); --glass-border: rgba(255, 255, 255, 0.5); --clock-color: #4b5563; --suggestion-bg: rgba(255, 255, 255, 0.98); --suggestion-hover: rgba(243, 244, 246, 0.9); --glass-blur: 20px; }
-    [data-theme="light-blue"] { --bg-primary: rgba(239, 246, 255, 0.85); --bg-secondary: rgba(255, 255, 255, 0.85); --text-primary: #0c4a6e; --text-secondary: #334155; --border-color: rgba(186, 230, 253, 0.6); --input-bg: rgba(255, 255, 255, 0.95); --input-border: rgba(125, 211, 252, 0.5); --input-focus: #0284c7; --icon-color: #64748b; --icon-hover: #0284c7; --accent: #0284c7; --accent-hover: #0369a1; --shadow: 0 8px 32px rgba(12, 74, 110, 0.15); --glass-border: rgba(255, 255, 255, 0.5); --clock-color: #0369a1; --suggestion-bg: rgba(255, 255, 255, 0.98); --suggestion-hover: rgba(240, 249, 255, 0.9); --glass-blur: 20px; }
-    [data-theme="light-green"] { --bg-primary: rgba(240, 253, 244, 0.85); --bg-secondary: rgba(255, 255, 255, 0.85); --text-primary: #064e3b; --text-secondary: #374151; --border-color: rgba(167, 243, 208, 0.6); --input-bg: rgba(255, 255, 255, 0.95); --input-border: rgba(110, 231, 183, 0.5); --input-focus: #059669; --icon-color: #6b7280; --icon-hover: #059669; --accent: #059669; --accent-hover: #047857; --shadow: 0 8px 32px rgba(6, 78, 59, 0.15); --glass-border: rgba(255, 255, 255, 0.5); --clock-color: #047857; --suggestion-bg: rgba(255, 255, 255, 0.98); --suggestion-hover: rgba(240, 253, 244, 0.9); --glass-blur: 20px; }
-    [data-theme="light-purple"] { --bg-primary: rgba(250, 245, 255, 0.85); --bg-secondary: rgba(255, 255, 255, 0.85); --text-primary: #4c1d95; --text-secondary: #475569; --border-color: rgba(233, 213, 255, 0.6); --input-bg: rgba(255, 255, 255, 0.95); --input-border: rgba(192, 132, 252, 0.5); --input-focus: #7c3aed; --icon-color: #6b7280; --icon-hover: #7c3aed; --accent: #7c3aed; --accent-hover: #6d28d9; --shadow: 0 8px 32px rgba(76, 29, 149, 0.15); --glass-border: rgba(255, 255, 255, 0.5); --clock-color: #6d28d9; --suggestion-bg: rgba(255, 255, 255, 0.98); --suggestion-hover: rgba(250, 245, 255, 0.9); --glass-blur: 20px; }
-    [data-theme="light-orange"] { --bg-primary: rgba(255, 247, 237, 0.85); --bg-secondary: rgba(255, 255, 255, 0.85); --text-primary: #7c2d12; --text-secondary: #475569; --border-color: rgba(254, 215, 170, 0.6); --input-bg: rgba(255, 255, 255, 0.95); --input-border: rgba(251, 146, 60, 0.5); --input-focus: #ea580c; --icon-color: #6b7280; --icon-hover: #ea580c; --accent: #ea580c; --accent-hover: #c2410c; --shadow: 0 8px 32px rgba(124, 45, 18, 0.15); --glass-border: rgba(255, 255, 255, 0.5); --clock-color: #c2410c; --suggestion-bg: rgba(255, 255, 255, 0.98); --suggestion-hover: rgba(255, 247, 237, 0.9); --glass-blur: 20px; }
-    [data-theme="dark-neutral"] { --bg-primary: rgba(17, 24, 39, 0.90); --bg-secondary: rgba(31, 41, 55, 0.90); --text-primary: #f3f4f6; --text-secondary: #9ca3af; --border-color: rgba(75, 85, 99, 0.6); --input-bg: rgba(55, 65, 81, 0.95); --input-border: rgba(107, 114, 128, 0.5); --input-focus: #9ca3af; --icon-color: #6b7280; --icon-hover: #d1d5db; --accent: #9ca3af; --accent-hover: #d1d5db; --shadow: 0 8px 32px rgba(0, 0, 0, 0.5); --glass-border: rgba(255, 255, 255, 0.15); --logo-dark-filter: brightness(0) invert(1); --clock-color: #d1d5db; --suggestion-bg: rgba(31, 41, 55, 0.98); --suggestion-hover: rgba(55, 65, 81, 0.9); --glass-blur: 20px; }
-    [data-theme="dark-blue"] { --bg-primary: rgba(8, 47, 73, 0.90); --bg-secondary: rgba(15, 52, 78, 0.90); --text-primary: #e0f2fe; --text-secondary: #94a3b8; --border-color: rgba(56, 189, 248, 0.4); --input-bg: rgba(30, 64, 91, 0.95); --input-border: rgba(56, 189, 248, 0.4); --input-focus: #38bdf8; --icon-color: #64748b; --icon-hover: #7dd3fc; --accent: #38bdf8; --accent-hover: #0ea5e9; --shadow: 0 8px 32px rgba(0, 0, 0, 0.5); --glass-border: rgba(255, 255, 255, 0.15); --logo-dark-filter: brightness(0) invert(1); --clock-color: #7dd3fc; --suggestion-bg: rgba(15, 52, 78, 0.98); --suggestion-hover: rgba(30, 64, 91, 0.9); --glass-blur: 20px; }
-    [data-theme="dark-green"] { --bg-primary: rgba(2, 44, 34, 0.90); --bg-secondary: rgba(6, 78, 59, 0.90); --text-primary: #d1fae5; --text-secondary: #6b9080; --border-color: rgba(52, 211, 153, 0.4); --input-bg: rgba(6, 95, 70, 0.95); --input-border: rgba(52, 211, 153, 0.4); --input-focus: #10b981; --icon-color: #6b7280; --icon-hover: #6ee7b7; --accent: #10b981; --accent-hover: #059669; --shadow: 0 8px 32px rgba(0, 0, 0, 0.5); --glass-border: rgba(255, 255, 255, 0.15); --logo-dark-filter: brightness(0) invert(1); --clock-color: #6ee7b7; --suggestion-bg: rgba(6, 78, 59, 0.98); --suggestion-hover: rgba(6, 95, 70, 0.9); --glass-blur: 20px; }
-    [data-theme="dark-purple"] { --bg-primary: rgba(46, 16, 101, 0.90); --bg-secondary: rgba(67, 20, 136, 0.90); --text-primary: #ede9fe; --text-secondary: #a78bfa; --border-color: rgba(167, 139, 250, 0.4); --input-bg: rgba(76, 29, 149, 0.95); --input-border: rgba(167, 139, 250, 0.4); --input-focus: #a78bfa; --icon-color: #6b7280; --icon-hover: #c4b5fd; --accent: #a78bfa; --accent-hover: #8b5cf6; --shadow: 0 8px 32px rgba(0, 0, 0, 0.5); --glass-border: rgba(255, 255, 255, 0.15); --logo-dark-filter: brightness(0) invert(1); --clock-color: #c4b5fd; --suggestion-bg: rgba(67, 20, 136, 0.98); --suggestion-hover: rgba(76, 29, 149, 0.9); --glass-blur: 20px; }
-    [data-theme="dark-orange"] { --bg-primary: rgba(67, 20, 7, 0.90); --bg-secondary: rgba(124, 45, 18, 0.90); --text-primary: #ffedd5; --text-secondary: #fdba74; --border-color: rgba(251, 146, 60, 0.4); --input-bg: rgba(154, 52, 18, 0.95); --input-border: rgba(251, 146, 60, 0.4); --input-focus: #fb923c; --icon-color: #6b7280; --icon-hover: #fdba74; --accent: #fb923c; --accent-hover: #ea580c; --shadow: 0 8px 32px rgba(0, 0, 0, 0.5); --glass-border: rgba(255, 255, 255, 0.15); --logo-dark-filter: brightness(0) invert(1); --clock-color: #fdba74; --suggestion-bg: rgba(124, 45, 18, 0.98); --suggestion-hover: rgba(154, 52, 18, 0.9); --glass-blur: 20px; }
-
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background: var(--bg-primary); background-image: radial-gradient(ellipse at top, rgba(255,255,255,0.1) 0%, transparent 50%), radial-gradient(ellipse at bottom, rgba(255,255,255,0.05) 0%, transparent 50%); color: var(--text-primary); min-height: 100vh; display: flex; flex-direction: column; transition: background 0.3s ease, color 0.3s ease; line-height: 1.5; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); position: relative; overflow-x: hidden; }
-    body.wallpaper-enabled .glass { box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.1); }
-    body.wallpaper-enabled .clock-display { text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5), 0 4px 8px rgba(0, 0, 0, 0.3), 0 0 20px rgba(0, 0, 0, 0.2); -webkit-text-stroke: 0.5px rgba(0, 0, 0, 0.3); }
-    body.wallpaper-enabled .clock-info { text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5), 0 4px 8px rgba(0, 0, 0, 0.3), 0 0 20px rgba(0, 0, 0, 0.2); -webkit-text-stroke: 0.5px rgba(0, 0, 0, 0.3); }
-    body.wallpaper-enabled .logo svg { filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4)); }
-    body.wallpaper-enabled .theme-toggle { box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.1); }
-    body.wallpaper-enabled .engine-btn { box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.1); }
-    body.wallpaper-enabled .search-input { box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.1); }
-    body.wallpaper-enabled .search-icon-btn { box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25); }
-    body.wallpaper-enabled .suggestions-container { box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.1); }
-    .wallpaper-bg { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; opacity: 0; pointer-events: none; transition: opacity 0.5s ease; }
-    .wallpaper-bg.show { opacity: 1; }
-    .wallpaper-bg img { width: 100vw; height: 100vh; object-fit: cover; display: block; transition: filter 0.5s ease, -webkit-filter 0.5s ease; will-change: filter; }
-    [data-theme*="light"] .wallpaper-bg img { filter: blur(0) brightness(1); }
-    [data-theme*="light"] .wallpaper-bg.blurred img { filter: blur(20px) brightness(0.85); }
-    [data-theme*="dark"] .wallpaper-bg img { filter: blur(0) brightness(0.5); }
-    [data-theme*="dark"] .wallpaper-bg.blurred img { filter: blur(20px) brightness(0.4); }
-    .glass { background: var(--bg-secondary); backdrop-filter: blur(var(--glass-blur)); -webkit-backdrop-filter: blur(var(--glass-blur)); border: 1px solid var(--glass-border); box-shadow: var(--shadow); transition: box-shadow 0.3s ease; }
-    header { display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 1.5rem; position: sticky; top: 0; z-index: 100; height: 56px; }
-    .logo { display: flex; align-items: center; height: 100%; text-decoration: none; color: var(--text-primary); }
-    .logo svg { height: 100%; width: auto; max-width: 140px; display: block; transition: filter 0.3s ease; }
-    .logo svg path[data-adaptive="true"] { fill: currentColor; transition: filter 0.25s ease; }
-    [data-theme*="dark"] .logo svg path[data-adaptive="true"] { filter: var(--logo-dark-filter, none); }
-    .theme-toggle { position: relative; background: var(--bg-secondary); border: 1px solid var(--border-color); width: 42px; height: 42px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease; box-shadow: var(--shadow); padding: 0; }
-    .theme-toggle:hover { border-color: var(--accent); transform: translateY(-1px); }
-    .theme-toggle svg { width: 18px; height: 18px; color: var(--text-secondary); transition: color 0.2s; }
-    .theme-toggle:hover svg { color: var(--accent); }
-    .theme-panel { position: absolute; top: calc(100% + 10px); right: 0; width: 300px; border-radius: 16px; padding: 16px; display: none; flex-direction: column; gap: 12px; z-index: 101; }
-    .theme-panel.show { display: flex; animation: slideDown 0.2s ease-out; }
-    @keyframes slideDown { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
-    .mode-switch-section { padding-bottom: 10px; border-bottom: 1px solid var(--border-color); }
-    .mode-switch-label { display: flex; align-items: center; justify-content: space-between; font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px; }
-    .auto-theme-section { padding: 8px 0; border-bottom: 1px solid var(--border-color); }
-    .auto-theme-options { display: flex; gap: 6px; margin-bottom: 8px; flex-wrap: wrap; }
-    .auto-radio { flex: 1; display: flex; align-items: center; justify-content: center; padding: 5px 4px; border: 1px solid var(--border-color); border-radius: 8px; cursor: pointer; transition: all 0.2s; font-size: 0.82rem; color: var(--text-secondary); min-width: 0; }
-    .auto-radio:hover { border-color: var(--accent); }
-    .auto-radio input { display: none; }
-    .auto-radio input:checked + span { font-weight: 500; color: white; }
-    .auto-radio:has(input:checked) { background: var(--accent); border-color: var(--accent); color: white; }
-    .time-settings { display: none; gap: 8px; margin-top: 4px; justify-content: space-between; background: rgba(0,0,0,0.04); padding: 10px; border-radius: 8px; }
-    .time-settings.show { display: flex; }
-    .time-settings label { flex: 1; display: flex; flex-direction: column; gap: 4px; font-size: 0.8rem; color: var(--text-secondary); }
-    .time-settings input[type="time"] { padding: 4px; border: 1px solid var(--border-color); border-radius: 4px; background: var(--input-bg); color: var(--text-primary); font-family: inherit; }
-    .mode-toggle { position: relative; display: inline-flex; align-items: center; cursor: pointer; }
-    .mode-toggle input { opacity: 0; width: 0; height: 0; }
-    .mode-slider { position: relative; width: 44px; height: 24px; background: var(--input-border); border-radius: 12px; transition: background 0.3s; }
-    .mode-slider::before { content: ""; position: absolute; width: 20px; height: 20px; left: 2px; top: 2px; background: var(--bg-secondary); border-radius: 50%; transition: transform 0.3s ease, background 0.3s; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
-    .mode-toggle input:checked + .mode-slider { background: var(--accent); }
-    .mode-toggle input:checked + .mode-slider::before { transform: translateX(20px); }
-    .color-palette-section { display: flex; flex-direction: column; gap: 10px; padding-bottom: 10px; }
-    .palette-label { font-size: 0.9rem; color: var(--text-secondary); }
-    .color-options { display: flex; gap: 10px; justify-content: center; position: relative; }
-    .color-indicator { position: absolute; left: 0; top: 0; width: 36px; height: 36px; border-radius: 50%; border: 2px solid var(--text-primary); box-shadow: 0 0 0 2px var(--bg-secondary); pointer-events: none; transition: transform 0.15s cubic-bezier(0.25, 0.8, 0.3, 1), opacity 0.15s ease; z-index: 2; }
-    .color-btn { width: 32px; height: 32px; border-radius: 50%; border: none; cursor: pointer; transition: all 0.2s ease; position: relative; box-shadow: 0 3px 10px rgba(0,0,0,0.15); padding: 0; appearance: none; -webkit-appearance: none; }
-    .color-btn::-moz-focus-inner { border: 0; padding: 0; }
-    .color-btn:hover { transform: scale(1.1); box-shadow: 0 5px 16px rgba(0,0,0,0.25); }
-    .color-btn.active { transform: scale(1.1); }
-    .color-btn[data-color="neutral"] { background: radial-gradient(circle at 30% 30%, #e5e7eb 0%, #9ca3af 100%); }
-    .color-btn[data-color="blue"] { background: radial-gradient(circle at 30% 30%, #38bdf8 0%, #0284c7 100%); }
-    .color-btn[data-color="green"] { background: radial-gradient(circle at 30% 30%, #34d399 0%, #059669 100%); }
-    .color-btn[data-color="purple"] { background: radial-gradient(circle at 30% 30%, #a78bfa 0%, #7c3aed 100%); }
-    .color-btn[data-color="orange"] { background: radial-gradient(circle at 30% 30%, #fb923c 0%, #ea580c 100%); }
-    .wallpaper-section, .position-section { padding-top: 10px; }
-    .wallpaper-label, .position-label { display: flex; align-items: center; justify-content: space-between; font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 6px; }
-    .wallpaper-refresh-btn { position: fixed; right: 20px; bottom: 20px; width: 40px; height: 40px; border-radius: 50%; background: var(--bg-secondary); border: 1px solid var(--border-color); box-shadow: var(--shadow); display: none; align-items: center; justify-content: center; cursor: pointer; z-index: 90; transition: all 0.25s ease; color: var(--text-secondary); padding: 0; }
-    .wallpaper-refresh-btn.show { display: flex; }
-    .wallpaper-refresh-btn:hover { color: var(--accent); border-color: var(--accent); transform: rotate(180deg); }
-    .wallpaper-refresh-btn svg { width: 18px; height: 18px; }
-    .wallpaper-refresh-btn.spinning svg { animation: spin 0.8s linear infinite; }
-    .mini-btn { padding: 4px 12px; font-size: 0.78rem; border: 1px solid var(--border-color); border-radius: 20px; background: var(--input-bg); color: var(--text-secondary); cursor: pointer; transition: all 0.15s ease; font-family: inherit; }
-    .mini-btn:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
-    .mini-btn:disabled { opacity: 0.45; cursor: not-allowed; }
-    .mini-btn.wide { width: 100%; padding: 6px 10px; }
-    .quicklinks-section { padding-top: 10px; }
-    .quicklinks-label { display: flex; align-items: center; justify-content: space-between; font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 8px; }
-    .quicklinks-editor { display: none; flex-direction: column; gap: 8px; }
-    .quicklinks-editor.show { display: flex; }
-    .ql-input-wrap { position: relative; }
-    .ql-lines { position: absolute; left: 0; top: 0; bottom: 0; width: 2.2em; overflow: hidden; font-size: 0.8rem; line-height: 1.5; font-family: inherit; color: var(--text-secondary); opacity: 0.75; text-align: right; padding: 8px 5px 8px 0; border-right: 1px solid var(--border-color); background: rgba(127,127,127,0.06); pointer-events: none; user-select: none; }
-    .quicklinks-editor textarea { width: 100%; padding: 8px 8px 8px calc(2.2em + 10px); border: 1px solid var(--border-color); border-radius: 8px; background: var(--input-bg); color: var(--text-primary); font-size: 0.8rem; font-family: inherit; line-height: 1.5; resize: vertical; min-height: 90px; outline: none; }
-    .quicklinks-editor textarea:focus { border-color: var(--input-focus); }
-    .quicklinks { display: none; justify-content: center; flex-wrap: wrap; gap: 8px; width: 100%; }
-    .quicklinks.show { display: flex; }
-    .quicklink-item { display: flex; align-items: center; gap: 6px; padding: 6px 14px; border-radius: 50px; background: var(--bg-secondary); border: 1px solid var(--border-color); font-size: 0.85rem; color: var(--text-secondary); text-decoration: none; transition: all 0.15s ease; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
-    .quicklink-item:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-1px); }
-    .quicklink-item .ql-icon { width: 18px; height: 18px; border-radius: 50%; background: var(--accent); color: #fff; font-size: 0.65rem; display: flex; align-items: center; justify-content: center; font-weight: 600; flex-shrink: 0; }
-    .quicklink-item .ql-icon[data-empty="true"] { background: transparent; color: transparent; }
-    .position-slider { width: 100%; height: 6px; border-radius: 3px; background: var(--input-border); outline: none; -webkit-appearance: none; cursor: pointer; }
-    .position-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; border-radius: 50%; background: var(--accent); cursor: pointer; transition: transform 0.2s; box-shadow: 0 2px 6px rgba(0,0,0,0.2); }
-    .position-slider::-webkit-slider-thumb:hover { transform: scale(1.1); }
-    .position-slider::-moz-range-thumb { width: 18px; height: 18px; border-radius: 50%; background: var(--accent); cursor: pointer; border: none; box-shadow: 0 2px 6px rgba(0,0,0,0.2); }
-    .position-value { font-size: 0.8rem; color: var(--text-secondary); text-align: center; margin-top: 4px; }
-    main { flex: 1; display: flex; flex-direction: column; justify-content: flex-start; align-items: center; padding: 2rem 1rem; width: 100%; max-width: 680px; margin: 0 auto; gap: 1rem; margin-top: var(--search-vertical-position, 25vh); transition: margin-top 0.3s ease; }
-    .clock-display { font-size: 2.5rem; line-height: 1; font-weight: 300; color: var(--clock-color); font-variant-numeric: tabular-nums; letter-spacing: 1px; opacity: 0.9; text-shadow: 0 2px 4px rgba(0,0,0,0.1); transition: all 0.3s ease; user-select: none; }
-    .clock-info { font-size: 0.9rem; line-height: 1.3; color: var(--clock-color); margin-top: -1px; display: flex; flex-wrap: wrap; justify-content: center; align-items: baseline; gap: 3px 10px; opacity: 0.85; user-select: none; transition: all 0.3s ease; }
-    .clock-info:empty { display: none; }
-    .clock-info .ci-sep { opacity: 0.5; }
-    .clock-info .ci-term { color: var(--accent); font-weight: 500; }
-    .clock-section { padding-top: 10px; }
-    .clock-label { display: flex; align-items: center; justify-content: space-between; font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 6px; }
-    .clock-toggle-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5px 8px; }
-    .clock-toggle-item { display: flex; align-items: center; justify-content: space-between; gap: 6px; font-size: 0.78rem; color: var(--text-secondary); background: rgba(0,0,0,0.04); padding: 5px 9px; border-radius: 6px; cursor: pointer; transition: background 0.15s ease; }
-    .clock-toggle-item:hover { background: rgba(0,0,0,0.08); }
-    .clock-toggle-item input { accent-color: var(--accent); width: 14px; height: 14px; cursor: pointer; flex-shrink: 0; }
-    .search-wrapper { width: 100%; display: flex; flex-direction: column; gap: 0.9rem; position: relative; }
-    .search-box { position: relative; width: 100%; }
-    .search-input { width: 100%; padding: 0.9rem 3.2rem 0.9rem 1.5rem; border: 1px solid var(--input-border); border-radius: 50px; font-size: 1rem; background: var(--input-bg); color: var(--text-primary); transition: all 0.2s ease; outline: none; }
-    .search-input::placeholder { color: var(--text-secondary); opacity: 0.8; }
-    .search-input:focus { border-color: var(--input-focus); box-shadow: 0 0 0 3px rgba(107, 114, 128, 0.15); }
-    .search-icon-btn { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: none; border: none; padding: 6px; cursor: pointer; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease; color: var(--icon-color); z-index: 10; }
-    .search-icon-btn:hover { background: var(--bg-secondary); color: var(--icon-hover); transform: translateY(-50%) scale(1.05); }
-    .search-icon-btn svg { width: 20px; height: 20px; }
-    .suggestions-container { position: absolute; top: 100%; left: 0; right: 0; background: var(--suggestion-bg); border: 1px solid var(--border-color); z-index: 50; display: none; max-height: 300px; overflow-y: auto; margin-top: 4px; transition: box-shadow 0.3s ease; }
-    .suggestions-container.show { display: block; }
-    .suggestion-item { display: flex; align-items: center; gap: 8px; padding: 8px 12px; cursor: pointer; color: var(--text-primary); font-size: 0.95rem; }
-    .suggestion-item:hover, .suggestion-item.active { background: var(--suggestion-hover); }
-    .suggestion-item svg { width: 14px; height: 14px; color: var(--text-secondary); flex-shrink: 0; }
-    .suggestion-item span { flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .suggestion-item .highlight { font-weight: 600; color: var(--accent); }
-    .suggestions-loading { display: flex; align-items: center; justify-content: center; padding: 10px; color: var(--text-secondary); font-size: 0.9rem; }
-    .suggestions-loading svg { width: 14px; height: 14px; margin-right: 6px; animation: spin 1s linear infinite; }
-    @keyframes spin { to { transform: rotate(360deg); } }
-    .engine-selector { display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: center; }
-    .engine-btn { padding: 0.45rem 1rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 50px; font-size: 0.85rem; color: var(--text-secondary); cursor: pointer; transition: all 0.15s ease; font-weight: 500; }
-    .engine-btn:hover, .engine-btn.active { background: var(--accent); color: white; border-color: var(--accent); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-    footer { text-align: center; padding: 0.6rem 1rem 1.2rem; color: var(--text-secondary); font-size: 0.72rem; opacity: 0.65; width: 100%; }
-    footer p { margin: 0; letter-spacing: 0.3px; }
-    @media (max-width: 640px) {
-      header { padding: 0.6rem 1rem; height: 52px; } .logo svg { max-width: 110px; } .theme-toggle { width: 38px; height: 38px; } .theme-panel { position: fixed; top: auto; left: 0; right: 0; bottom: 0; width: 100%; max-height: 85vh; border-radius: 16px 16px 0 0; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 16px 16px calc(16px + env(safe-area-inset-bottom)); } .theme-panel.show { animation: slideUp 0.25s ease-out; } main { padding: 1.5rem 0.8rem; gap: 0.8rem; } .clock-display { font-size: 2rem; } .search-input { padding: 0.85rem 3rem 0.85rem 1.3rem; font-size: 0.95rem; } .search-icon-btn { right: 10px; padding: 5px; } .search-icon-btn svg { width: 18px; height: 18px; } .suggestions-container { max-height: 250px; } .suggestion-item { padding: 7px 10px; font-size: 0.9rem; } .engine-selector { gap: 0.4rem; } .engine-btn { padding: 0.4rem 0.9rem; font-size: 0.8rem; } .quicklinks { gap: 6px; } .quicklink-item { padding: 5px 12px; font-size: 0.8rem; } .quicklink-item .ql-icon { width: 16px; height: 16px; font-size: 0.6rem; } .wallpaper-refresh-btn { right: 14px; bottom: calc(14px + env(safe-area-inset-bottom)); } footer { padding: 0.5rem 0.8rem 1rem; font-size: 0.68rem; }
-    }
-    @keyframes slideUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
-    @keyframes pulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(107, 114, 128, 0.2); } 50% { box-shadow: 0 0 0 6px rgba(107, 114, 128, 0); } }
-    .search-input:focus { animation: pulse 2s infinite; }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="wallpaper-bg" id="wallpaperBg"><img id="wallpaperImg" src="" alt="Bing Wallpaper" /></div>
@@ -168,7 +22,7 @@
 
     <div style="position: relative;">
       <button class="theme-toggle glass" id="themeToggle" aria-haspopup="true" aria-expanded="false" title="主题设置">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
       </button>
       
       <div class="theme-panel glass" id="themePanel" role="dialog" aria-label="主题设置">
@@ -265,471 +119,74 @@
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
   </button>
 
+  <button type="button" class="toolbox-btn" id="toolboxToggle" aria-haspopup="true" aria-expanded="false" title="工具箱" aria-label="工具箱">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"></rect><rect x="14" y="3" width="7" height="7" rx="1"></rect><rect x="14" y="14" width="7" height="7" rx="1"></rect><rect x="3" y="14" width="7" height="7" rx="1"></rect></svg>
+  </button>
+  <div class="toolbox-panel glass" id="toolboxPanel" role="dialog" aria-label="工具箱">
+    <div class="toolbox-title">工具箱</div>
+    <div class="tool-grid">
+      <a class="tool-item" href="./ms-zh/index.html" title="巨硬中文翻译器">
+        <span class="tool-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 8 6 6"></path><path d="m4 14 6-6 2-3"></path><path d="M2 5h12"></path><path d="M7 2h1"></path><path d="m22 22-5-10-5 10"></path><path d="M14 18h6"></path></svg></span>
+        <span class="tool-info">
+          <span class="tool-name">巨硬中文翻译器</span>
+          <span class="tool-desc">巨硬式机翻 · 词对词硬翻</span>
+        </span>
+        <span class="tool-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
+      </a>
+      <a class="tool-item" href="./tools/image/index.html" title="图片压缩与格式转换">
+        <span class="tool-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg></span>
+        <span class="tool-info">
+          <span class="tool-name">图片压缩转换</span>
+          <span class="tool-desc">压缩 · 转格式 · 本地处理</span>
+        </span>
+        <span class="tool-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
+      </a>
+      <a class="tool-item" href="./tools/unit/index.html" title="单位换算">
+        <span class="tool-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-6-6 6 6 0 0 0-6 6c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg></span>
+        <span class="tool-info">
+          <span class="tool-name">单位换算</span>
+          <span class="tool-desc">长度/重量/温度/存储等</span>
+        </span>
+        <span class="tool-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
+      </a>
+      <a class="tool-item" href="./tools/tomato/index.html" title="番茄钟">
+        <span class="tool-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.42 4.58a5.4 5.4 0 0 0-7.65 0l-.77.78-.77-.78a5.4 5.4 0 0 0-7.65 0C1.46 6.7 1.33 10.28 4 13l8 8 8-8c2.67-2.72 2.54-6.3.42-8.42z"></path></svg></span>
+        <span class="tool-info">
+          <span class="tool-name">番茄钟</span>
+          <span class="tool-desc">专注计时 · 劳逸结合</span>
+        </span>
+        <span class="tool-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
+      </a>
+      <a class="tool-item" href="./tools/qrcode/index.html" title="二维码生成">
+        <span class="tool-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect><path d="M14 14h3v3h-3z"></path><path d="M21 14v7"></path><path d="M14 21h7"></path></svg></span>
+        <span class="tool-info">
+          <span class="tool-name">二维码生成</span>
+          <span class="tool-desc">文本/网址/WiFi/名片</span>
+        </span>
+        <span class="tool-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
+      </a>
+      <a class="tool-item" href="./tools/password/index.html" title="密码生成器">
+        <span class="tool-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg></span>
+        <span class="tool-info">
+          <span class="tool-name">密码生成器</span>
+          <span class="tool-desc">强密码 · 强度评估</span>
+        </span>
+        <span class="tool-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
+      </a>
+      <a class="tool-item" href="./tools/devtools/index.html" title="开发者工具箱">
+        <span class="tool-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></span>
+        <span class="tool-info">
+          <span class="tool-name">开发者工具箱</span>
+          <span class="tool-desc">JSON/Base64/URL/正则</span>
+        </span>
+        <span class="tool-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
+      </a>
+    </div>
+  </div>
+
   <footer><p>ASYS 科技 搜索起始页 版权所有</p></footer>
 
-  <script>
-    /* LunarCalendar v0.1.4 (MIT) - https://github.com/zzyss86/LunarCalendar */
-    /**
- * 农历（阴历）万年历
- * LunarCalendar；NPM NAME:lunar-calendar
- * vervison : v0.1.4
- * Github : https://github.com/zzyss86/LunarCalendar
- * HomePage : http://www.tuijs.com/
- * Author : JasonZhou
- * Email : zzyss86@qq.com
- */
-!function(){function a(a){var b=H[a-B];return b[0]}function b(a){for(var b=H[a-B],c=b[0],d=b[3].toString(2),e=d.split(""),f=0;f<16-e.length;f++)e.unshift(0);for(var g=c?13:12,h=0,i=[],f=0;g>f;f++)0==e[f]?(h+=29,i.push(29)):(h+=30,i.push(30));return{yearDays:h,monthDays:i}}function c(a,c){for(var d=b(a),e=c>0?c:d.yearDays-Math.abs(c),f=d.monthDays,g=0,h=0,i=0;i<f.length;i++)if(g+=f[i],g>e){h=i,g-=f[i];break}return[a,h,e-g+1]}function d(a,b,d){var f=H[a-B],g=f[1],h=f[2],i=e(a,g-1,h,a,b,d);if(0==i)return[a,0,1];var j=i>0?a:a-1;return c(j,i)}function e(a,b,c,d,e,f){var g=new Date(a,b,c).getTime(),h=new Date(d,e,f).getTime();return(h-g)/864e5}function f(a,c,d){for(var e=b(a),f=e.monthDays,g=0,h=0;h<f.length&&c>h;h++)g+=f[h];return g+d-1}function g(a,b){var c=new Date(31556925974.7*(a-1890)+6e4*I[b]+Date.UTC(1890,0,5,16,2,31));return c.getUTCDate()}function h(a){for(var b={},c=0,d=0;24>d;d++){var e=g(a,d);d%2==0&&c++,b[A(c-1,e)]=D.solarTerm[d]}return b}function i(a){var b=a-1890+25;return D.zodiac[b%12]}function j(a){return D.heavenlyStems[a%10]+D.earthlyBranches[a%12]}function k(a,b){return b=b||0,j(a-1890+25+b)}function l(a,b,c){return c=c||0,j(12*(a-1890)+b+12+c)}function m(a,b,c){var d=Date.UTC(a,b,c)/864e5+29219+18;return j(d)}function n(a,b){var c=[31,o(a)?29:28,31,30,31,30,31,31,30,31,30,31];return c[b]}function o(a){return a%4==0&&a%100!=0||a%400==0}function p(a,b,c,d){var e=arguments.length,f=new Date;return a=e?parseInt(a,10):f.getFullYear(),b=e?parseInt(b-1,10):f.getMonth(),c=e?parseInt(c,10)||f.getDate():f.getDate(),(d?d:B+1)>a||a>C?{error:100,msg:x[100]}:{year:a,month:b,day:c}}function q(a,b,c){var d=p(a,b,c);if(d.error)return d;var e=d.year,g=d.month,h=d.day,i=f(e,g,h),j=H[e-B],k=j[1],l=j[2],m=new Date(e,k-1,l).getTime()+864e5*i;return m=new Date(m),{year:m.getFullYear(),month:m.getMonth()+1,day:m.getDate()}}function r(c,e,f){var j=p(c,e,f,B);if(j.error)return j;var n=j.year,o=j.month,q=j.day;z.setCurrent(n);var r=z.get("term2")?z.get("term2"):z.set("term2",g(n,2)),s=z.get("termList")?z.get("termList"):z.set("termList",h(n)),t=g(n,2*o),u=o>1||1==o&&q>=r?n+1:n,v=q>=t?o+1:o,w=d(n,o,q),x=a(w[0]),y="";y=x>0&&x==w[1]?"闰"+D.monthCn[w[1]-1]+"月":x>0&&w[1]>x?D.monthCn[w[1]-1]+"月":D.monthCn[w[1]]+"月";var C="",H=b(w[0]).monthDays;C=w[1]==H.length-1&&w[2]==H[H.length-1]?G.d0100:x>0&&w[1]>x?G[A(w[1]-1,w[2])]:G[A(w[1],w[2])];var I={zodiac:i(u),GanZhiYear:k(u),GanZhiMonth:l(n,v),GanZhiDay:m(n,o,q),worktime:E["y"+n]&&E["y"+n][A(o,q)]?E["y"+n][A(o,q)]:0,term:s[A(o,q)],lunarYear:w[0],lunarMonth:w[1]+1,lunarDay:w[2],lunarMonthName:y,lunarDayName:D.dateCn[w[2]-1],lunarLeapMonth:x,solarFestival:F[A(o,q)],lunarFestival:C};return I}function s(a,b,c){var d=p(a,b);if(d.error)return d;for(var e=d.year,f=d.month,g=t(e,f+1,c),h=0;h<g.monthData.length;h++){var i=g.monthData[h],j=r(i.year,i.month,i.day);v(g.monthData[h],j)}return g}function t(a,b,c){var d=p(a,b);if(d.error)return d;var e,f,g,h=d.year,i=d.month,j=new Date(h,i,1),k={firstDay:j.getDay(),monthDays:n(h,i),monthData:[]};if(k.monthData=w(h,i+1,k.monthDays,1),c){if(k.firstDay>0){var l=0>i-1?h-1:h,m=0>i-1?11:i-1;e=n(l,m),f=w(l,m+1,k.firstDay,e-k.firstDay+1),k.monthData=f.concat(k.monthData)}if(42-k.monthData.length!=0){var o=i+1>11?h+1:h,q=i+1>11?0:i+1,r=42-k.monthData.length;g=w(o,q+1,r,1),k.monthData=k.monthData.concat(g)}}return k}function u(a){v(E,a)}var v=function(a,b){if(a&&b&&"object"==typeof b)for(var c in b)a[c]=b[c];return a},w=function(a,b,c,d){var e=[];if(d=d||0,1>c)return e;for(var f=d,g=0;c>g;g++)e.push({year:a,month:b,day:f}),f++;return e},x={100:"输入的年份超过了可查询范围，仅支持1891至2100年",101:"参数输入错误，请查阅文档"},y=null,z={current:"",setCurrent:function(a){this.current!=a&&(this.current=a,this.clear())},set:function(a,b){return y||(y={}),y[a]=b,y[a]},get:function(a){return y||(y={}),y[a]},clear:function(){y=null}},A=function(a,b){return a+=1,a=10>a?"0"+a:a,b=10>b?"0"+b:b,"d"+a+b},B=1890,C=2100,D={heavenlyStems:["甲","乙","丙","丁","戊","己","庚","辛","壬","癸"],earthlyBranches:["子","丑","寅","卯","辰","巳","午","未","申","酉","戌","亥"],zodiac:["鼠","牛","虎","兔","龙","蛇","马","羊","猴","鸡","狗","猪"],solarTerm:["小寒","大寒","立春","雨水","惊蛰","春分","清明","谷雨","立夏","小满","芒种","夏至","小暑","大暑","立秋","处暑","白露","秋分","寒露","霜降","立冬","小雪","大雪","冬至"],monthCn:["正","二","三","四","五","六","七","八","九","十","十一","十二"],dateCn:["初一","初二","初三","初四","初五","初六","初七","初八","初九","初十","十一","十二","十三","十四","十五","十六","十七","十八","十九","二十","廿一","廿二","廿三","廿四","廿五","廿六","廿七","廿八","廿九","三十","卅一"]},E={};E.y2013={d0101:2,d0102:2,d0103:2,d0105:1,d0106:1,d0209:2,d0210:2,d0211:2,d0212:2,d0213:2,d0214:2,d0215:2,d0216:1,d0217:1,d0404:2,d0405:2,d0406:2,d0407:1,d0427:1,d0428:1,d0429:2,d0430:2,d0501:2,d0608:1,d0609:1,d0610:2,d0611:2,d0612:2,d0919:2,d0920:2,d0921:2,d0922:1,d0929:1,d1001:2,d1002:2,d1003:2,d1004:2,d1005:2,d1006:2,d1007:2,d1012:1},E.y2014={d0101:2,d0126:1,d0131:2,d0201:2,d0202:2,d0203:2,d0204:2,d0205:2,d0206:2,d0208:1,d0405:2,d0407:2,d0501:2,d0502:2,d0503:2,d0504:1,d0602:2,d0908:2,d0928:1,d1001:2,d1002:2,d1003:2,d1004:2,d1005:2,d1006:2,d1007:2,d1011:1};var F={d0101:"元旦节",d0202:"世界湿地日",d0210:"国际气象节",d0214:"情人节",d0301:"国际海豹日",d0303:"全国爱耳日",d0305:"学雷锋纪念日",d0308:"妇女节",d0312:"植树节 孙中山逝世纪念日",d0314:"国际警察日",d0315:"消费者权益日",d0317:"中国国医节 国际航海日",d0321:"世界森林日 消除种族歧视国际日 世界儿歌日",d0322:"世界水日",d0323:"世界气象日",d0324:"世界防治结核病日",d0325:"全国中小学生安全教育日",d0330:"巴勒斯坦国土日",d0401:"愚人节 全国爱国卫生运动月(四月) 税收宣传月(四月)",d0407:"世界卫生日",d0422:"世界地球日",d0423:"世界图书和版权日",d0424:"亚非新闻工作者日",d0501:"劳动节",d0504:"青年节",d0505:"碘缺乏病防治日",d0508:"世界红十字日",d0512:"国际护士节",d0515:"国际家庭日",d0517:"世界电信日",d0518:"国际博物馆日",d0520:"全国学生营养日",d0522:"国际生物多样性日",d0523:"国际牛奶日",d0531:"世界无烟日",d0601:"国际儿童节",d0605:"世界环境日",d0606:"全国爱眼日",d0617:"防治荒漠化和干旱日",d0623:"国际奥林匹克日",d0625:"全国土地日",d0626:"国际禁毒日",d0701:"香港回归纪念日 中共诞辰 世界建筑日",d0702:"国际体育记者日",d0707:"抗日战争纪念日",d0711:"世界人口日",d0730:"非洲妇女日",d0801:"建军节",d0808:"中国男子节(爸爸节)",d0815:"抗日战争胜利纪念",d0908:"国际扫盲日 国际新闻工作者日",d0909:"毛泽东逝世纪念",d0910:"中国教师节",d0914:"世界清洁地球日",d0916:"国际臭氧层保护日",d0918:"九一八事变纪念日",d0920:"国际爱牙日",d0927:"世界旅游日",d0928:"孔子诞辰",d1001:"国庆节 世界音乐日 国际老人节",d1002:"国际和平与民主自由斗争日",d1004:"世界动物日",d1006:"老人节",d1008:"全国高血压日 世界视觉日",d1009:"世界邮政日 万国邮联日",d1010:"辛亥革命纪念日 世界精神卫生日",d1013:"世界保健日 国际教师节",d1014:"世界标准日",d1015:"国际盲人节(白手杖节)",d1016:"世界粮食日",d1017:"世界消除贫困日",d1022:"世界传统医药日",d1024:"联合国日 世界发展信息日",d1031:"世界勤俭日",d1107:"十月社会主义革命纪念日",d1108:"中国记者日",d1109:"全国消防安全宣传教育日",d1110:"世界青年节",d1111:"国际科学与和平周(本日所属的一周)",d1112:"孙中山诞辰纪念日",d1114:"世界糖尿病日",d1117:"国际大学生节 世界学生节",d1121:"世界问候日 世界电视日",d1129:"国际声援巴勒斯坦人民国际日",d1201:"世界艾滋病日",d1203:"世界残疾人日",d1205:"国际经济和社会发展志愿人员日",d1208:"国际儿童电视日",d1209:"世界足球日",d1210:"世界人权日",d1212:"西安事变纪念日",d1213:"南京大屠杀(1937年)纪念日！紧记血泪史！",d1220:"澳门回归纪念",d1221:"国际篮球日",d1224:"平安夜",d1225:"圣诞节",d1226:"毛泽东诞辰纪念"},G={d0101:"春节",d0115:"元宵节",d0202:"龙抬头节",d0323:"妈祖生辰",d0505:"端午节",d0707:"七夕情人节",d0715:"中元节",d0815:"中秋节",d0909:"重阳节",d1015:"下元节",d1208:"腊八节",d1223:"小年",d0100:"除夕"},H=[[2,1,21,22184],[0,2,9,21936],[6,1,30,9656],[0,2,17,9584],[0,2,6,21168],[5,1,26,43344],[0,2,13,59728],[0,2,2,27296],[3,1,22,44368],[0,2,10,43856],[8,1,30,19304],[0,2,19,19168],[0,2,8,42352],[5,1,29,21096],[0,2,16,53856],[0,2,4,55632],[4,1,25,27304],[0,2,13,22176],[0,2,2,39632],[2,1,22,19176],[0,2,10,19168],[6,1,30,42200],[0,2,18,42192],[0,2,6,53840],[5,1,26,54568],[0,2,14,46400],[0,2,3,54944],[2,1,23,38608],[0,2,11,38320],[7,2,1,18872],[0,2,20,18800],[0,2,8,42160],[5,1,28,45656],[0,2,16,27216],[0,2,5,27968],[4,1,24,44456],[0,2,13,11104],[0,2,2,38256],[2,1,23,18808],[0,2,10,18800],[6,1,30,25776],[0,2,17,54432],[0,2,6,59984],[5,1,26,27976],[0,2,14,23248],[0,2,4,11104],[3,1,24,37744],[0,2,11,37600],[7,1,31,51560],[0,2,19,51536],[0,2,8,54432],[6,1,27,55888],[0,2,15,46416],[0,2,5,22176],[4,1,25,43736],[0,2,13,9680],[0,2,2,37584],[2,1,22,51544],[0,2,10,43344],[7,1,29,46248],[0,2,17,27808],[0,2,6,46416],[5,1,27,21928],[0,2,14,19872],[0,2,3,42416],[3,1,24,21176],[0,2,12,21168],[8,1,31,43344],[0,2,18,59728],[0,2,8,27296],[6,1,28,44368],[0,2,15,43856],[0,2,5,19296],[4,1,25,42352],[0,2,13,42352],[0,2,2,21088],[3,1,21,59696],[0,2,9,55632],[7,1,30,23208],[0,2,17,22176],[0,2,6,38608],[5,1,27,19176],[0,2,15,19152],[0,2,3,42192],[4,1,23,53864],[0,2,11,53840],[8,1,31,54568],[0,2,18,46400],[0,2,7,46752],[6,1,28,38608],[0,2,16,38320],[0,2,5,18864],[4,1,25,42168],[0,2,13,42160],[10,2,2,45656],[0,2,20,27216],[0,2,9,27968],[6,1,29,44448],[0,2,17,43872],[0,2,6,38256],[5,1,27,18808],[0,2,15,18800],[0,2,4,25776],[3,1,23,27216],[0,2,10,59984],[8,1,31,27432],[0,2,19,23232],[0,2,7,43872],[5,1,28,37736],[0,2,16,37600],[0,2,5,51552],[4,1,24,54440],[0,2,12,54432],[0,2,1,55888],[2,1,22,23208],[0,2,9,22176],[7,1,29,43736],[0,2,18,9680],[0,2,7,37584],[5,1,26,51544],[0,2,14,43344],[0,2,3,46240],[4,1,23,46416],[0,2,10,44368],[9,1,31,21928],[0,2,19,19360],[0,2,8,42416],[6,1,28,21176],[0,2,16,21168],[0,2,5,43312],[4,1,25,29864],[0,2,12,27296],[0,2,1,44368],[2,1,22,19880],[0,2,10,19296],[6,1,29,42352],[0,2,17,42208],[0,2,6,53856],[5,1,26,59696],[0,2,13,54576],[0,2,3,23200],[3,1,23,27472],[0,2,11,38608],[11,1,31,19176],[0,2,19,19152],[0,2,8,42192],[6,1,28,53848],[0,2,15,53840],[0,2,4,54560],[5,1,24,55968],[0,2,12,46496],[0,2,1,22224],[2,1,22,19160],[0,2,10,18864],[7,1,30,42168],[0,2,17,42160],[0,2,6,43600],[5,1,26,46376],[0,2,14,27936],[0,2,2,44448],[3,1,23,21936],[0,2,11,37744],[8,2,1,18808],[0,2,19,18800],[0,2,8,25776],[6,1,28,27216],[0,2,15,59984],[0,2,4,27424],[4,1,24,43872],[0,2,12,43744],[0,2,2,37600],[3,1,21,51568],[0,2,9,51552],[7,1,29,54440],[0,2,17,54432],[0,2,5,55888],[5,1,26,23208],[0,2,14,22176],[0,2,3,42704],[4,1,23,21224],[0,2,11,21200],[8,1,31,43352],[0,2,19,43344],[0,2,7,46240],[6,1,27,46416],[0,2,15,44368],[0,2,5,21920],[4,1,24,42448],[0,2,12,42416],[0,2,2,21168],[3,1,22,43320],[0,2,9,26928],[7,1,29,29336],[0,2,17,27296],[0,2,6,44368],[5,1,26,19880],[0,2,14,19296],[0,2,3,42352],[4,1,24,21104],[0,2,10,53856],[8,1,30,59696],[0,2,18,54560],[0,2,7,55968],[6,1,27,27472],[0,2,15,22224],[0,2,5,19168],[4,1,25,42216],[0,2,12,42192],[0,2,1,53584],[2,1,21,55592],[0,2,9,54560]],I=[0,21208,42467,63836,85337,107014,128867,150921,173149,195551,218072,240693,263343,285989,308563,331033,353350,375494,397447,419210,440795,462224,483532,504758],J={solarToLunar:r,lunarToSolar:q,calendar:s,solarCalendar:t,setWorktime:u,getSolarMonthDays:n};"function"==typeof define?define(function(){return J}):"object"==typeof exports?module.exports=J:window.LunarCalendar=J}();
-
-    const searchEngines = {
-      bing: { search: 'https://www.bing.com/search?q=', suggest: 'https://www.bing.com/osjson.aspx?query=' },
-      baidu: { search: 'https://www.baidu.com/s?wd=', suggest: 'https://suggestion.baidu.com/su?wd=' },
-      google: { search: 'https://www.google.com/search?q=', suggest: 'https://suggestqueries.google.com/complete/search?client=chrome&q=' },
-      duckduckgo: { search: 'https://duckduckgo.com/?q=', suggest: 'https://duckduckgo.com/ac/?q=' },
-      yandex: { search: 'https://yandex.com/search/?text=', suggest: 'https://suggest.yandex.com/suggest-ff.cgi?part=' }
-    };
-
-    let debounceTimer = null, currentScript = null, selectedSuggestionIndex = -1, currentSuggestions = [];
-    let currentEngine = 'bing';
-    const WALLPAPER_SOURCES = [
-      { type: 'json', url: 'https://bing.biturl.top/?resolution=1920&format=json&index=0&mkt=zh-CN' },
-      { type: 'json', url: 'https://bing.biturl.top/?resolution=1920&format=json&index=8&mkt=zh-CN' }
-    ];
-    let wallpaperCachedUrl = '', wallpaperLoadSeq = 0;
-    const WALLPAPER_TIMEOUT = 8000;
-    let autoThemeMode = 'system'; 
-    const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    let autoThemeTimer = null;
-
-    document.addEventListener('DOMContentLoaded', () => {
-      preloadWallpaper();
-      loadPreferences();
-      bindEvents();
-      initClock();
-      initAutoTheme();
-    });
-
-    function preloadWallpaper() {
-      // 提前抓今日壁纸 URL + 预下载图片进浏览器缓存，开启壁纸时秒显示
-      fetch(WALLPAPER_SOURCES[0].url, { signal: AbortSignal.timeout(WALLPAPER_TIMEOUT) })
-        .then(r => (r.ok ? r.json() : Promise.reject(new Error('bad status'))))
-        .then(d => {
-          const u = (d && d.url) || (d && d.data && d.data.url);
-          if (!u) throw new Error('no url');
-          wallpaperCachedUrl = u;
-          const pre = new Image();
-          pre.src = normalizeImgUrl(u);
-        })
-        .catch(() => {});
-    }
-
-    function loadPreferences() {
-      let saved = {};
-      try { saved = JSON.parse(storageGet('asys_theme_prefs') || '{}'); } catch (e) { console.warn('[prefs] localStorage 不可用，使用默认值:', e); }
-      const mode = saved.mode ?? 'light';
-      const color = saved.color ?? 'neutral';
-      const wallpaper = saved.wallpaper ?? false;
-      const engine = saved.engine ?? 'bing';
-      const position = saved.position ?? 25;
-      autoThemeMode = saved.autoTheme ?? 'system';
-
-      currentEngine = engine;
-      storageSet('asys_engine', engine);
-
-      applyTheme(mode, color);
-      updateToggleState(mode);
-      updateColorActive(color, false);
-      updateWallpaperToggle(wallpaper);
-      updateAutoThemeUI(autoThemeMode);
-      setActiveEngine(engine);
-      updateSearchPosition(position);
-      const slider = document.getElementById('positionSlider');
-      if (slider) slider.value = position;
-      updatePositionDisplay(position);
-
-      if (wallpaper) { document.body.classList.add('wallpaper-enabled'); loadWallpaper(); }
-      else { document.body.classList.remove('wallpaper-enabled'); }
-      const refreshBtn = document.getElementById('wallpaperRefresh');
-      if (refreshBtn) refreshBtn.classList.toggle('show', wallpaper);
-
-      // 快捷链接
-      const ql = getQuicklinks();
-      const qlToggle = document.getElementById('quicklinksToggle');
-      const qlEditor = document.getElementById('quicklinksEditor');
-      const qlBar = document.getElementById('quicklinksBar');
-      if (qlToggle) qlToggle.checked = ql.enabled;
-      if (qlEditor) qlEditor.classList.toggle('show', ql.enabled);
-      if (ql.enabled) {
-        if (qlBar) { qlBar.classList.add('show'); renderQuicklinks(ql.links); }
-        const qlInput = document.getElementById('quicklinksInput');
-        if (qlInput && ql.links.length) { qlInput.value = ql.links.map(l => `${l.name} ${l.url}`).join('\n'); updateQuicklinksLines(); }
-      }
-
-      document.getElementById('darkTime').value = saved.darkTime ?? '18:00';
-      document.getElementById('lightTime').value = saved.lightTime ?? '06:00';
-    }
-
-    let memStore = null;
-    function storageGet(k) {
-      try { return localStorage.getItem(k); } catch (e) { return memStore ? memStore[k] : null; }
-    }
-    function storageSet(k, v) {
-      try { localStorage.setItem(k, v); } catch (e) {
-        console.warn('[prefs] localStorage 写入失败，降级为内存保存（刷新后失效）:', e);
-        if (!memStore) memStore = {};
-        memStore[k] = v;
-      }
-    }
-
-    function normalizeImgUrl(u) {
-      // Bing 国际版域名国内访问慢，统一换 cn.bing.com（国内 CDN）
-      try {
-        const url = new URL(u);
-        if (url.hostname === 'www.bing.com' || url.hostname === 'bing.com') url.hostname = 'cn.bing.com';
-        return url.toString();
-      } catch (e) { return u; }
-    }
-
-    function loadWallpaper() {
-      const bg = document.getElementById('wallpaperBg'), img = document.getElementById('wallpaperImg');
-      if (!img) return;
-      const seq = ++wallpaperLoadSeq;
-      const fail = (err) => {
-        if (seq !== wallpaperLoadSeq) return;
-        console.error('[wallpaper] 所有数据源均失败:', err);
-        document.body.classList.remove('wallpaper-enabled');
-        if (bg) bg.classList.remove('show');
-        const t = document.getElementById('wallpaperToggle');
-        if (t && t.checked) { t.checked = false; savePreferences(getCurrentMode(), getCurrentColor(), false); }
-      };
-      const setImg = (src, onFail) => {
-        const timer = setTimeout(() => {
-          img.onload = null; img.onerror = null;
-          console.error('[wallpaper] 图片加载超时:', src);
-          onFail();
-        }, WALLPAPER_TIMEOUT);
-        img.onload = () => { clearTimeout(timer); if (seq === wallpaperLoadSeq) bg.classList.add('show'); };
-        img.onerror = () => { clearTimeout(timer); if (seq === wallpaperLoadSeq) { console.error('[wallpaper] 图片加载失败:', src); onFail(); } };
-        img.src = normalizeImgUrl(src);
-      };
-      const tryIndex = (i) => {
-        if (seq !== wallpaperLoadSeq) return;
-        if (i >= WALLPAPER_SOURCES.length) { fail(new Error('exhausted')); return; }
-        const s = WALLPAPER_SOURCES[i];
-        fetch(s.url, { signal: AbortSignal.timeout(WALLPAPER_TIMEOUT) })
-          .then(r => (r.ok ? r.json() : Promise.reject(new Error('bad status ' + r.status))))
-          .then(d => {
-            if (seq !== wallpaperLoadSeq) return;
-            const u = (d && d.url) || (d && d.data && d.data.url);
-            if (!u) throw new Error('no url');
-            setImg(u, () => tryIndex(i + 1));
-          })
-          .catch(err => { if (seq === wallpaperLoadSeq) { console.error('[wallpaper] fetch 失败:', s.url, err); tryIndex(i + 1); } });
-      };
-      if (wallpaperCachedUrl) setImg(wallpaperCachedUrl, () => tryIndex(0));
-      else tryIndex(0);
-    }
-
-    function initAutoTheme() {
-      updateAutoThemeUI(autoThemeMode);
-      applyAutoThemeLogic();
-      setupAutoThemeListeners();
-    }
-
-    function updateAutoThemeUI(mode) {
-      document.querySelectorAll('input[name="autoTheme"]').forEach(r => r.checked = r.value === mode);
-      const toggle = document.getElementById('darkModeToggle');
-      const timeSettings = document.getElementById('timeSettings');
-      const disabled = mode !== 'off';
-      toggle.disabled = disabled;
-      toggle.parentElement.style.opacity = disabled ? '0.4' : '1';
-      toggle.parentElement.style.pointerEvents = disabled ? 'none' : 'auto';
-      if (mode === 'time') timeSettings.classList.add('show');
-      else timeSettings.classList.remove('show');
-    }
-
-    function applyAutoThemeLogic() {
-      // 手动模式（关闭）不干预主题，保留用户手动选择
-      if (autoThemeMode === 'off') return;
-      let isDark = false;
-      if (autoThemeMode === 'system') {
-          isDark = darkModeMediaQuery.matches;
-      } else if (autoThemeMode === 'time') {
-          const darkTime = document.getElementById('darkTime').value || '18:00';
-          const lightTime = document.getElementById('lightTime').value || '06:00';
-          const now = new Date();
-          const currentMinutes = now.getHours() * 60 + now.getMinutes();
-          const [dH, dM] = darkTime.split(':').map(Number);
-          const [lH, lM] = lightTime.split(':').map(Number);
-          const darkStart = dH * 60 + dM;
-          const lightStart = lH * 60 + lM;
-          if (darkStart === lightStart) isDark = false; 
-          else if (darkStart < lightStart) isDark = currentMinutes >= darkStart && currentMinutes < lightStart;
-          else isDark = currentMinutes >= darkStart || currentMinutes < lightStart;
-      }
-      const toggle = document.getElementById('darkModeToggle');
-      toggle.checked = isDark;
-      applyTheme(isDark ? 'dark' : 'light', getCurrentColor());
-      if (document.getElementById('wallpaperToggle').checked) updateWallpaperBrightness();
-    }
-
-    function setupAutoThemeListeners() {
-      darkModeMediaQuery.addEventListener('change', () => { if (autoThemeMode === 'system') applyAutoThemeLogic(); });
-      document.querySelectorAll('input[name="autoTheme"]').forEach(r => {
-        r.addEventListener('change', (e) => {
-          autoThemeMode = e.target.value;
-          updateAutoThemeUI(autoThemeMode);
-          applyAutoThemeLogic();
-          savePreferences(getCurrentMode(), getCurrentColor());
-        });
-      });
-      const updateTime = () => { if(autoThemeMode === 'time') applyAutoThemeLogic(); savePreferences(getCurrentMode(), getCurrentColor()); };
-      document.getElementById('darkTime').addEventListener('input', updateTime);
-      document.getElementById('lightTime').addEventListener('input', updateTime);
-      if (autoThemeTimer) clearInterval(autoThemeTimer);
-      autoThemeTimer = setInterval(() => { if (autoThemeMode === 'time') applyAutoThemeLogic(); }, 60000);
-    }
-
-    function bindEvents() {
-      const themeToggle = document.getElementById('themeToggle');
-      const themePanel = document.getElementById('themePanel');
-      const darkModeToggle = document.getElementById('darkModeToggle');
-      const wallpaperToggle = document.getElementById('wallpaperToggle');
-      const positionSlider = document.getElementById('positionSlider');
-      const searchInput = document.getElementById('searchInput');
-      const searchIconBtn = document.getElementById('searchIconBtn');
-      const suggestionsContainer = document.getElementById('suggestionsContainer');
-      const wallpaperBg = document.getElementById('wallpaperBg');
-      
-      themeToggle.addEventListener('click', (e) => { e.stopPropagation(); const isExpanded = themeToggle.getAttribute('aria-expanded') === 'true'; themeToggle.setAttribute('aria-expanded', !isExpanded); themePanel.classList.toggle('show', !isExpanded); if (!isExpanded) { const ind = document.getElementById('colorIndicator'); if (ind) ind.style.opacity = '0'; } });
-      themePanel.addEventListener('animationend', (e) => { if (e.animationName !== 'slideDown' && e.animationName !== 'slideUp') return; const active = document.querySelector('.color-btn.active'); if (active) moveColorIndicator(active, false); const ind = document.getElementById('colorIndicator'); if (ind) ind.style.opacity = '1'; });
-      document.addEventListener('click', (e) => { if (!themeToggle.contains(e.target) && !themePanel.contains(e.target)) { themePanel.classList.remove('show'); themeToggle.setAttribute('aria-expanded', 'false'); } if (!searchInput.contains(e.target) && !suggestionsContainer.contains(e.target)) hideSuggestions(); });
-      darkModeToggle.addEventListener('change', (e) => { if (autoThemeMode !== 'off') return; const mode = e.target.checked ? 'dark' : 'light'; applyTheme(mode, getCurrentColor()); savePreferences(mode, getCurrentColor()); if (wallpaperToggle.checked) updateWallpaperBrightness(); });
-      wallpaperToggle.addEventListener('change', (e) => { const enabled = e.target.checked; savePreferences(getCurrentMode(), getCurrentColor(), enabled); const refreshBtn = document.getElementById('wallpaperRefresh'); if (refreshBtn) refreshBtn.classList.toggle('show', enabled); if (enabled) { document.body.classList.add('wallpaper-enabled'); loadWallpaper(); } else { document.body.classList.remove('wallpaper-enabled'); wallpaperBg.classList.remove('show'); wallpaperLoadSeq++; const i = document.getElementById('wallpaperImg'); if(i){ i.onload=null; i.onerror=null; i.src=''; } } });
-      const wallpaperRefresh = document.getElementById('wallpaperRefresh');
-      if (wallpaperRefresh) wallpaperRefresh.addEventListener('click', () => { refreshWallpaper(); });
-      const quicklinksToggle = document.getElementById('quicklinksToggle');
-      ['clockDate','clockWeek','clockLunar','clockTerm','clock24h','clockSeconds'].forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.addEventListener('change', () => { syncClockPrefsFromUI(); saveClockPrefs(); const d = new Date(); const c = document.getElementById('clockDisplay'); if (c) c.textContent = formatClock(d); renderClockInfo(d); });
-      });
-      const quicklinksEditor = document.getElementById('quicklinksEditor');
-      const quicklinksInput = document.getElementById('quicklinksInput');
-      const quicklinksSave = document.getElementById('quicklinksSave');
-      const quicklinksBar = document.getElementById('quicklinksBar');
-      if (quicklinksToggle) quicklinksToggle.addEventListener('change', (e) => {
-        const enabled = e.target.checked;
-        const ql = getQuicklinks();
-        ql.enabled = enabled;
-        saveQuicklinks(ql);
-        if (quicklinksEditor) quicklinksEditor.classList.toggle('show', enabled);
-        if (enabled) {
-          if (!ql.links.length && quicklinksInput) { quicklinksInput.value = 'ASYS 官网 asystech.cn\nGitHub github.com'; updateQuicklinksLines(); }
-          if (quicklinksBar) { quicklinksBar.classList.add('show'); renderQuicklinks(ql.links); }
-        } else if (quicklinksBar) quicklinksBar.classList.remove('show');
-      });
-      if (quicklinksSave) quicklinksSave.addEventListener('click', () => {
-        const links = parseQuicklinksInput(quicklinksInput ? quicklinksInput.value : '');
-        const ql = getQuicklinks();
-        ql.links = links; ql.enabled = true;
-        saveQuicklinks(ql);
-        if (quicklinksBar) { quicklinksBar.classList.add('show'); renderQuicklinks(links); }
-      });
-      if (quicklinksInput) {
-        quicklinksInput.addEventListener('input', updateQuicklinksLines);
-        quicklinksInput.addEventListener('scroll', () => { const lines = document.getElementById('quicklinksLines'); if (lines) lines.scrollTop = quicklinksInput.scrollTop; });
-        updateQuicklinksLines();
-      }
-      positionSlider.addEventListener('input', (e) => { const v = parseInt(e.target.value); updateSearchPosition(v); updatePositionDisplay(v); });
-      positionSlider.addEventListener('change', (e) => { savePreferences(getCurrentMode(), getCurrentColor(), null, null, parseInt(e.target.value)); });
-      document.querySelectorAll('.color-btn').forEach(btn => { btn.addEventListener('click', (e) => { const c = e.currentTarget.dataset.color; applyTheme(getCurrentMode(), c); savePreferences(getCurrentMode(), c); updateColorActive(c); }); });
-      document.querySelectorAll('.engine-btn').forEach(btn => { btn.addEventListener('click', (e) => { currentEngine = btn.dataset.engine; storageSet('asys_engine', currentEngine); setActiveEngine(currentEngine); savePreferences(getCurrentMode(), getCurrentColor(), null, currentEngine); if (searchInput.value.trim()) fetchSuggestions(searchInput.value.trim()); }); });
-      searchInput.addEventListener('input', (e) => { const q = e.target.value.trim(); if (debounceTimer) clearTimeout(debounceTimer); cleanupScript(); if (!q.length) { hideSuggestions(); return; } debounceTimer = setTimeout(() => fetchSuggestions(q), 300); });
-      searchInput.addEventListener('focus', () => { wallpaperBg.classList.add('blurred'); const q = searchInput.value.trim(); if (q.length > 0 && currentSuggestions.length > 0) showSuggestions(); });
-      searchInput.addEventListener('blur', () => wallpaperBg.classList.remove('blurred'));
-      searchInput.addEventListener('keydown', (e) => { if (!currentSuggestions.length) return; if (e.key === 'ArrowDown') { e.preventDefault(); selectedSuggestionIndex = Math.min(selectedSuggestionIndex+1, currentSuggestions.length-1); updateSuggestionHighlight(true); } else if (e.key === 'ArrowUp') { e.preventDefault(); selectedSuggestionIndex = Math.max(selectedSuggestionIndex-1, -1); updateSuggestionHighlight(true); } else if (e.key === 'Enter' && selectedSuggestionIndex >= 0) { e.preventDefault(); executeSearch(currentSuggestions[selectedSuggestionIndex]); } else if (e.key === 'Escape') { hideSuggestions(); searchInput.blur(); } });
-      searchInput.addEventListener('keypress', (e) => { if (e.key === 'Enter' && selectedSuggestionIndex < 0) { e.preventDefault(); executeSearch(searchInput.value.trim()); } });
-      searchIconBtn.addEventListener('click', () => executeSearch(searchInput.value.trim()));
-    }
-
-    function updateSearchPosition(p) { document.getElementById('mainContent').style.setProperty('--search-vertical-position', `${p}vh`); }
-    function updatePositionDisplay(p) { document.getElementById('positionValue').textContent = `${p}%${p===25?' (默认)':''}`; }
-    function updateWallpaperBrightness() {}
-
-    function fetchSuggestions(query) {
-      const engine = currentEngine, list = document.getElementById('suggestionsList'), box = document.getElementById('suggestionsContainer');
-      cleanupScript();
-      list.innerHTML = `<div class="suggestions-loading"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l4 2"></path></svg>加载中...</div>`;
-      box.classList.add('show');
-      const cb = `s_${engine}_${Date.now()}`;
-      window[cb] = (data) => { cleanupScript(); delete window[cb]; let s = []; if(engine==='baidu') s=data.s||[]; else if(engine==='google'||engine==='bing') s=Array.isArray(data[1])?data[1]:[]; else if(engine==='duckduckgo') s=data.map(i=>i.phrase||i); else if(engine==='yandex') s=Array.isArray(data[1])?data[1].map(i=>i[0]||i):[]; currentSuggestions=s.slice(0,10); selectedSuggestionIndex=-1; if(currentSuggestions.length){ renderSuggestions(currentSuggestions, query); box.classList.add('show'); } else hideSuggestions(); };
-      let u='';
-      if(engine==='baidu') u=`https://suggestion.baidu.com/su?wd=${encodeURIComponent(query)}&cb=${cb}`;
-      else if(engine==='google') u=`https://suggestqueries.google.com/complete/search?client=chrome&q=${encodeURIComponent(query)}&callback=${cb}`;
-      else if(engine==='bing') u=`https://www.bing.com/osjson.aspx?query=${encodeURIComponent(query)}&JsonType=callback&JsonCallback=${cb}`;
-      else if(engine==='duckduckgo') u=`https://duckduckgo.com/ac/?q=${encodeURIComponent(query)}&callback=${cb}`;
-      else if(engine==='yandex') u=`https://suggest.yandex.com/suggest-ff.cgi?part=${encodeURIComponent(query)}&callback=${cb}`;
-      const script = document.createElement('script'); script.src = u; script.onerror = () => { cleanupScript(); delete window[cb]; hideSuggestions(); }; currentScript = script; document.body.appendChild(script);
-      setTimeout(() => { if(currentScript===script){ cleanupScript(); delete window[cb]; hideSuggestions(); } }, 5000);
-    }
-    function cleanupScript() { if(currentScript&&currentScript.parentNode){ document.body.removeChild(currentScript); currentScript=null; } }
-    function renderSuggestions(s, q) { const l = document.getElementById('suggestionsList'); l.innerHTML = s.map((t,i) => `<div class="suggestion-item" data-index="${i}" data-suggestion="${escapeHtml(t)}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg><span>${highlightMatch(t,q)}</span></div>`).join(''); l.querySelectorAll('.suggestion-item').forEach(el => { el.onclick = (e) => { e.stopPropagation(); executeSearch(el.dataset.suggestion); }; el.onmouseenter = () => { selectedSuggestionIndex=parseInt(el.dataset.index); updateSuggestionHighlight(false); }; }); }
-    function highlightMatch(t, q) { if(!q) return escapeHtml(t); return escapeHtml(t).replace(new RegExp(`(${escapeRegex(q)})`,'gi'),'<span class="highlight">$1</span>'); }
-    function updateSuggestionHighlight(fillInput) { const items = document.getElementById('suggestionsList').querySelectorAll('.suggestion-item'); items.forEach((el,i) => { if(i===selectedSuggestionIndex){ el.classList.add('active'); el.scrollIntoView({block:'nearest'}); } else el.classList.remove('active'); }); if(fillInput && selectedSuggestionIndex>=0 && selectedSuggestionIndex<currentSuggestions.length) document.getElementById('searchInput').value = currentSuggestions[selectedSuggestionIndex]; }
-    function showSuggestions() { document.getElementById('suggestionsContainer').classList.add('show'); }
-    function hideSuggestions() { document.getElementById('suggestionsContainer').classList.remove('show'); selectedSuggestionIndex=-1; currentSuggestions=[]; }
-    function escapeHtml(t) { const d=document.createElement('div'); d.textContent=t; return d.innerHTML; }
-    function escapeRegex(s) { return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
-
-    const QUICKLINKS_KEY = 'asys_quicklinks';
-    function getQuicklinks() { try { return JSON.parse(storageGet(QUICKLINKS_KEY) || 'null') || { enabled: false, links: [] }; } catch (e) { return { enabled: false, links: [] }; } }
-    function saveQuicklinks(q) { storageSet(QUICKLINKS_KEY, JSON.stringify(q)); }
-    function parseQuicklinksInput(text) {
-      const links = [];
-      (text || '').split('\n').forEach(line => {
-        line = line.trim();
-        if (!line) return;
-        // 名称 + 地址（地址可带或不带协议，探查行尾 xxx.xxx 连续串）
-        const m = line.match(/^(.*?)\s+(\S+\.\S+)$/);
-        if (m) {
-          let url = m[2];
-          if (!/^https?:\/\//i.test(url)) url = 'https://' + url;
-          links.push({ name: m[1].trim(), url });
-          return;
-        }
-        // 纯地址（无名称）
-        if (/^\S+\.\S+$/.test(line)) {
-          let url = line;
-          if (!/^https?:\/\//i.test(url)) url = 'https://' + url;
-          const name = url.replace(/^https?:\/\//, '').replace(/^www\./, '').split('/')[0];
-          links.push({ name, url });
-        }
-      });
-      return links;
-    }
-    function renderQuicklinks(links) {
-      const bar = document.getElementById('quicklinksBar');
-      if (!bar) return;
-      bar.innerHTML = links.map(l => `<a class="quicklink-item" href="${escapeHtml(l.url)}" target="_blank" rel="noopener noreferrer" title="${escapeHtml(l.url)}"><span class="ql-icon">${escapeHtml((l.name || l.url).charAt(0).toUpperCase())}</span><span>${escapeHtml(l.name)}</span></a>`).join('');
-    }
-    function updateQuicklinksLines() {
-      const ta = document.getElementById('quicklinksInput');
-      const lines = document.getElementById('quicklinksLines');
-      if (!ta || !lines) return;
-      const count = ta.value.split('\n').length;
-      lines.innerHTML = Array.from({ length: count }, (_, i) => i + 1).join('<br>');
-      lines.scrollTop = ta.scrollTop;
-    }
-    function refreshWallpaper() {
-      const bg = document.getElementById('wallpaperBg'), img = document.getElementById('wallpaperImg');
-      if (!img) return;
-      const btn = document.getElementById('wallpaperRefresh');
-      if (btn) btn.classList.add('spinning');
-      const seq = ++wallpaperLoadSeq;
-      const done = () => { if (btn) btn.classList.remove('spinning'); };
-      // 随机取一张历史 Bing 图（biturl index: 0=今天，数字越大越旧）
-      const idx = Math.floor(Math.random() * 9);
-      const url = `https://bing.biturl.top/?resolution=1920&format=json&index=${idx}&mkt=zh-CN`;
-      const timer = setTimeout(() => { console.error('[wallpaper] 换一张超时'); done(); loadWallpaper(); }, WALLPAPER_TIMEOUT);
-      fetch(url, { signal: AbortSignal.timeout(WALLPAPER_TIMEOUT) })
-        .then(r => (r.ok ? r.json() : Promise.reject(new Error('bad status ' + r.status))))
-        .then(d => {
-          if (seq !== wallpaperLoadSeq) { clearTimeout(timer); done(); return; }
-          const u = (d && d.url) || (d && d.data && d.data.url);
-          if (!u) throw new Error('no url');
-          img.onload = () => { clearTimeout(timer); done(); if (seq === wallpaperLoadSeq) bg.classList.add('show'); };
-          img.onerror = () => { clearTimeout(timer); done(); if (seq === wallpaperLoadSeq) { console.error('[wallpaper] 换一张图片加载失败'); loadWallpaper(); } };
-          img.src = normalizeImgUrl(u);
-        })
-        .catch(err => { clearTimeout(timer); done(); if (seq === wallpaperLoadSeq) { console.error('[wallpaper] 换一张失败:', err); loadWallpaper(); } });
-    }
-
-    const CLOCK_DEFAULT = { date: false, week: false, lunar: false, term: false, hour24: true, seconds: false };
-    const CLOCK_ID_MAP = { clockDate:'date', clockWeek:'week', clockLunar:'lunar', clockTerm:'term', clock24h:'hour24', clockSeconds:'seconds' };
-    let clockPrefs = Object.assign({}, CLOCK_DEFAULT);
-    function loadClockPrefs() {
-      try { clockPrefs = Object.assign({}, CLOCK_DEFAULT, JSON.parse(storageGet('asys_clock_prefs') || '{}')); } catch (e) { clockPrefs = Object.assign({}, CLOCK_DEFAULT); }
-      for (const id in CLOCK_ID_MAP) {
-        const el = document.getElementById(id);
-        if (el) el.checked = !!clockPrefs[CLOCK_ID_MAP[id]];
-      }
-    }
-    function syncClockPrefsFromUI() {
-      const map = { clockDate:'date', clockWeek:'week', clockLunar:'lunar', clockTerm:'term', clock24h:'hour24', clockSeconds:'seconds' };
-      for (const id in map) { const el = document.getElementById(id); if (el) clockPrefs[map[id]] = el.checked; }
-    }
-    function saveClockPrefs() { storageSet('asys_clock_prefs', JSON.stringify(clockPrefs)); }
-    function pad2(n) { return String(n).padStart(2, '0'); }
-    function periodOfHour(h) { if (h < 5) return '凌晨'; if (h < 11) return '上午'; if (h < 13) return '中午'; if (h < 18) return '下午'; return '晚上'; }
-    function formatClock(d) {
-      const h = d.getHours(), m = d.getMinutes(), s = d.getSeconds();
-      let timeStr;
-      if (clockPrefs.hour24) {
-        timeStr = pad2(h) + ':' + pad2(m) + (clockPrefs.seconds ? ':' + pad2(s) : '');
-      } else {
-        const h12 = h % 12 === 0 ? 12 : h % 12;
-        timeStr = periodOfHour(h) + ' ' + h12 + ':' + pad2(m) + (clockPrefs.seconds ? ':' + pad2(s) : '');
-      }
-      return timeStr;
-    }
-    function renderClockInfo(d) {
-      const parts = [];
-      if (clockPrefs.date) parts.push(d.getFullYear() + '年' + (d.getMonth() + 1) + '月' + d.getDate() + '日');
-      if (clockPrefs.week) parts.push('星期' + '日一二三四五六'[d.getDay()]);
-      if ((clockPrefs.lunar || clockPrefs.term) && window.LunarCalendar) {
-        try {
-          const l = window.LunarCalendar.solarToLunar(d.getFullYear(), d.getMonth() + 1, d.getDate());
-          if (l && !l.error) {
-            if (clockPrefs.lunar) parts.push('农历' + l.lunarMonthName + l.lunarDayName);
-            if (clockPrefs.term) {
-              const fest = l.lunarFestival || (l.solarFestival ? l.solarFestival.split(' ')[0] : '');
-              if (fest) parts.push('<span class="ci-term">' + fest + '</span>');
-              else if (l.term) parts.push('<span class="ci-term">' + l.term + '</span>');
-            }
-          }
-        } catch (e) {}
-      }
-      const el = document.getElementById('clockInfo');
-      if (el) el.innerHTML = parts.join('<span class="ci-sep">·</span>');
-    }
-    function initClock() {
-      const c = document.getElementById('clockDisplay');
-      loadClockPrefs();
-      const upd = (d) => { const now = d || new Date(); c.textContent = formatClock(now); renderClockInfo(now); };
-      upd();
-      setInterval(() => upd(), 1000);
-      fetch('https://worldtimeapi.org/api/ip', { signal: AbortSignal.timeout(3000) }).then(r=>r.ok?r.json():Promise.reject()).then(d=>upd(new Date(d.datetime))).catch(()=>{});
-    }
-
-    function applyTheme(mode, color) { document.documentElement.setAttribute('data-theme', `${mode}-${color}`); }
-    function getCurrentMode() { return document.documentElement.getAttribute('data-theme')?.startsWith('dark')?'dark':'light'; }
-    function getCurrentColor() { return document.documentElement.getAttribute('data-theme')?.split('-')[1]||'neutral'; }
-    function updateToggleState(mode) { document.getElementById('darkModeToggle').checked = (mode==='dark'); }
-    function moveColorIndicator(btn, animate) {
-      if (!btn) return;
-      const options = document.getElementById('colorOptions');
-      const ind = document.getElementById('colorIndicator');
-      if (!options || !ind) return;
-      const oRect = options.getBoundingClientRect();
-      const bRect = btn.getBoundingClientRect();
-      const x = bRect.left - oRect.left + (bRect.width - ind.offsetWidth) / 2;
-      const y = bRect.top - oRect.top + (bRect.height - ind.offsetHeight) / 2;
-      ind.style.transition = animate === false ? 'none' : '';
-      ind.style.transform = `translate(${x}px, ${y}px)`;
-      if (animate === false) { void ind.offsetWidth; ind.style.transition = ''; }
-    }
-    function updateColorActive(color, animate) { let activeBtn = null; document.querySelectorAll('.color-btn').forEach(b=>{ const a=b.dataset.color===color; b.classList.toggle('active',a); if(a) activeBtn=b; }); moveColorIndicator(activeBtn, animate); }
-    function updateWallpaperToggle(en) { document.getElementById('wallpaperToggle').checked = en; }
-    function setActiveEngine(engine) { document.querySelectorAll('.engine-btn').forEach(b=>{ const a=b.dataset.engine===engine; b.classList.toggle('active',a); b.setAttribute('aria-selected',a); }); }
-    
-    function savePreferences(mode, color, wallpaper, engine, position) {
-      let s = {};
-      try { s = JSON.parse(storageGet('asys_theme_prefs')||'{}'); } catch (e) {}
-      const p = { mode: mode??s.mode??'light', color: color??s.color??'neutral', wallpaper: wallpaper??s.wallpaper??false, engine: engine??s.engine??'bing', position: position??s.position??25, autoTheme: autoThemeMode, darkTime: document.getElementById('darkTime')?.value || '18:00', lightTime: document.getElementById('lightTime')?.value || '06:00' };
-      storageSet('asys_theme_prefs', JSON.stringify(p));
-      if(engine) storageSet('asys_engine', engine);
-    }
-    
-    function executeSearch(q) { if(!q) return; window.open(searchEngines[currentEngine].search + encodeURIComponent(q), '_blank', 'noopener,noreferrer'); document.getElementById('searchInput').blur(); hideSuggestions(); }
-  </script>
+  <script src="lunar-calendar.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>

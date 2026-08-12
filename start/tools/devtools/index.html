@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light-neutral">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="shortcut icon" href="../../../img/asys.ico" type="image/x-icon">
+  <title>开发者工具箱 - ASYS 工具箱</title>
+  <link rel="stylesheet" href="../css/tools.css">
+  <style>
+    .dev-card { display: flex; flex-direction: column; gap: 0.8rem; }
+    .dev-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+    .output-box { width: 100%; padding: 12px 14px; border: 1px solid var(--border-color); border-radius: 10px; background: var(--input-bg); color: var(--text-primary); font-size: 0.85rem; font-family: 'SF Mono', Consolas, 'Courier New', monospace; line-height: 1.6; min-height: 60px; white-space: pre-wrap; word-break: break-all; max-height: 340px; overflow-y: auto; }
+    .output-box.ok { border-color: rgba(5, 150, 105, 0.5); }
+    .output-box.err { border-color: rgba(225, 29, 72, 0.5); color: #e11d48; }
+    .out-label { font-size: 0.8rem; color: var(--text-secondary); display: flex; align-items: center; gap: 8px; }
+    .out-label .copy-mini { padding: 2px 8px; font-size: 0.72rem; border: 1px solid var(--border-color); border-radius: 20px; background: var(--input-bg); color: var(--text-secondary); cursor: pointer; font-family: inherit; }
+    .out-label .copy-mini:hover { border-color: var(--accent); color: var(--accent); }
+    .ts-rows { display: flex; flex-direction: column; gap: 8px; }
+    .ts-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .ts-row .label { min-width: 80px; }
+    .ts-result { font-size: 0.9rem; color: var(--accent); font-family: Consolas, monospace; word-break: break-all; }
+    .regex-flags { display: flex; gap: 10px; flex-wrap: wrap; }
+    .regex-flags label { display: flex; align-items: center; gap: 4px; font-size: 0.8rem; color: var(--text-secondary); cursor: pointer; }
+    .regex-flags input { accent-color: var(--accent); }
+    .match-item { padding: 5px 10px; border-radius: 6px; background: rgba(0,0,0,0.04); font-size: 0.8rem; font-family: Consolas, monospace; word-break: break-all; margin-bottom: 4px; }
+    [data-theme*="dark"] .match-item { background: rgba(255,255,255,0.06); }
+  </style>
+</head>
+<body>
+  <header>
+    <a class="back-btn" href="../../index.html" title="返回起始页">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+      <span>起始页</span>
+    </a>
+    <h1>开发者工具箱</h1>
+  </header>
+
+  <main>
+    <div class="tabs">
+      <button class="tab active" data-tab="json">JSON</button>
+      <button class="tab" data-tab="base64">Base64</button>
+      <button class="tab" data-tab="url">URL</button>
+      <button class="tab" data-tab="ts">时间戳</button>
+      <button class="tab" data-tab="regex">正则</button>
+    </div>
+
+    <!-- JSON -->
+    <div class="tab-pane show" id="pane-json">
+      <div class="card glass dev-card">
+        <textarea class="input" id="jsonInput" rows="7" placeholder='粘贴 JSON，如 {"name":"ASYS","v":153}'></textarea>
+        <div class="dev-actions">
+          <button class="btn" id="jsonFmt">格式化</button>
+          <button class="btn secondary" id="jsonMin">压缩</button>
+          <button class="btn secondary" id="jsonClear">清空</button>
+        </div>
+        <span class="out-label">结果 <button class="copy-mini" data-copy="jsonOutput">复制</button></span>
+        <div class="output-box" id="jsonOutput"></div>
+      </div>
+    </div>
+
+    <!-- Base64 -->
+    <div class="tab-pane" id="pane-base64">
+      <div class="card glass dev-card">
+        <textarea class="input" id="b64Input" rows="5" placeholder="输入要编码/解码的内容"></textarea>
+        <div class="dev-actions">
+          <button class="btn" id="b64Enc">编码 → Base64</button>
+          <button class="btn secondary" id="b64Dec">Base64 → 解码</button>
+        </div>
+        <span class="out-label">结果 <button class="copy-mini" data-copy="b64Output">复制</button></span>
+        <div class="output-box" id="b64Output"></div>
+      </div>
+    </div>
+
+    <!-- URL -->
+    <div class="tab-pane" id="pane-url">
+      <div class="card glass dev-card">
+        <textarea class="input" id="urlInput" rows="4" placeholder="输入 URL 或参数字符串"></textarea>
+        <div class="dev-actions">
+          <button class="btn" id="urlEnc">URL 编码</button>
+          <button class="btn secondary" id="urlDec">URL 解码</button>
+          <button class="btn secondary" id="urlComp">解析参数</button>
+        </div>
+        <span class="out-label">结果 <button class="copy-mini" data-copy="urlOutput">复制</button></span>
+        <div class="output-box" id="urlOutput"></div>
+      </div>
+    </div>
+
+    <!-- 时间戳 -->
+    <div class="tab-pane" id="pane-ts">
+      <div class="card glass dev-card">
+        <div class="ts-rows">
+          <div class="ts-row">
+            <span class="label">当前时间</span>
+            <span class="ts-result" id="tsNow">—</span>
+          </div>
+          <div class="ts-row">
+            <span class="label">秒级时间戳</span>
+            <span class="ts-result" id="tsSec">—</span>
+          </div>
+          <div class="ts-row">
+            <span class="label">毫秒时间戳</span>
+            <span class="ts-result" id="tsMs">—</span>
+          </div>
+          <div class="ts-row">
+            <span class="label">时间戳 → 时间</span>
+            <input class="input grow" id="tsInput" placeholder="输入秒或毫秒时间戳">
+          </div>
+          <div class="ts-row">
+            <span class="label">转换结果</span>
+            <span class="ts-result" id="tsResult">—</span>
+          </div>
+          <div class="ts-row">
+            <span class="label">时间 → 时间戳</span>
+            <input class="input grow" id="tsDate" type="datetime-local">
+          </div>
+          <div class="ts-row">
+            <span class="label">转换结果</span>
+            <span class="ts-result" id="tsResult2">—</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 正则 -->
+    <div class="tab-pane" id="pane-regex">
+      <div class="card glass dev-card">
+        <input class="input" id="rxPattern" placeholder="正则表达式，如 \d+">
+        <div class="regex-flags" id="rxFlags">
+          <label><input type="checkbox" value="g" checked> g 全局</label>
+          <label><input type="checkbox" value="i"> i 忽略大小写</label>
+          <label><input type="checkbox" value="m"> m 多行</label>
+        </div>
+        <textarea class="input" id="rxText" rows="6" placeholder="要匹配的文本"></textarea>
+        <div class="dev-actions">
+          <button class="btn" id="rxTest">测试匹配</button>
+        </div>
+        <span class="out-label">结果 <span id="rxCount"></span></span>
+        <div class="output-box" id="rxOutput"></div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>ASYS 工具箱 · 开发者工具 —— 全部本地处理</p>
+  </footer>
+
+  <script>
+const $ = id => document.getElementById(id);
+
+    // Tab 切换
+    document.querySelectorAll('.tab').forEach(t => {
+      t.addEventListener('click', () => {
+        document.querySelectorAll('.tab').forEach(x => x.classList.toggle('active', x === t));
+        document.querySelectorAll('.tab-pane').forEach(p => p.classList.toggle('show', p.id === 'pane-' + t.dataset.tab));
+      });
+    });
+
+    // 复制小按钮
+    document.querySelectorAll('.copy-mini').forEach(b => {
+      b.addEventListener('click', async () => {
+        const el = $(b.dataset.copy);
+        if (!el || !el.textContent) return;
+        try {
+          await navigator.clipboard.writeText(el.textContent);
+          const t = b.textContent; b.textContent = '已复制 ✓';
+          setTimeout(() => b.textContent = t, 1200);
+        } catch (e) {}
+      });
+    });
+
+    function setOut(id, text, ok) {
+      const el = $(id);
+      el.textContent = text;
+      el.classList.remove('ok', 'err');
+      if (ok === true) el.classList.add('ok');
+      if (ok === false) el.classList.add('err');
+    }
+
+    // ===== JSON =====
+    $('jsonFmt').addEventListener('click', () => {
+      try { setOut('jsonOutput', JSON.stringify(JSON.parse($('jsonInput').value), null, 2), true); }
+      catch (e) { setOut('jsonOutput', '❌ JSON 解析失败：' + e.message, false); }
+    });
+    $('jsonMin').addEventListener('click', () => {
+      try { setOut('jsonOutput', JSON.stringify(JSON.parse($('jsonInput').value)), true); }
+      catch (e) { setOut('jsonOutput', '❌ JSON 解析失败：' + e.message, false); }
+    });
+    $('jsonClear').addEventListener('click', () => { $('jsonInput').value = ''; setOut('jsonOutput', '', null); });
+
+    // ===== Base64（UTF-8 安全） =====
+    function utf8ToB64(s) { return btoa(String.fromCharCode(...new TextEncoder().encode(s))); }
+    function b64ToUtf8(b) { return new TextDecoder().decode(Uint8Array.from(atob(b.trim()), c => c.charCodeAt(0))); }
+    $('b64Enc').addEventListener('click', () => {
+      try { setOut('b64Output', utf8ToB64($('b64Input').value), true); }
+      catch (e) { setOut('b64Output', '❌ 编码失败：' + e.message, false); }
+    });
+    $('b64Dec').addEventListener('click', () => {
+      try { setOut('b64Output', b64ToUtf8($('b64Input').value), true); }
+      catch (e) { setOut('b64Output', '❌ 解码失败：内容不是有效 Base64', false); }
+    });
+
+    // ===== URL =====
+    $('urlEnc').addEventListener('click', () => setOut('urlOutput', encodeURIComponent($('urlInput').value), true));
+    $('urlDec').addEventListener('click', () => {
+      try { setOut('urlOutput', decodeURIComponent($('urlInput').value), true); }
+      catch (e) { setOut('urlOutput', '❌ 解码失败：' + e.message, false); }
+    });
+    $('urlComp').addEventListener('click', () => {
+      const v = $('urlInput').value.trim();
+      try {
+        const u = new URL(v.includes('://') ? v : 'http://x/?' + v.replace(/^\?/, ''));
+        const params = u.searchParams;
+        if (!params.toString()) { setOut('urlOutput', '未找到查询参数', false); return; }
+        const lines = [];
+        for (const [k, val] of params) lines.push(k + ' = ' + val);
+        setOut('urlOutput', lines.join('\n'), true);
+      } catch (e) { setOut('urlOutput', '❌ 解析失败：' + e.message, false); }
+    });
+
+    // ===== 时间戳 =====
+    function fmtDate(d) {
+      const p = n => String(n).padStart(2, '0');
+      return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}:${p(d.getSeconds())}`;
+    }
+    function updateTs() {
+      const now = Date.now();
+      $('tsNow').textContent = fmtDate(new Date(now));
+      $('tsSec').textContent = Math.floor(now / 1000);
+      $('tsMs').textContent = now;
+    }
+    updateTs(); setInterval(updateTs, 1000);
+
+    $('tsInput').addEventListener('input', () => {
+      const v = $('tsInput').value.trim();
+      if (!v) { $('tsResult').textContent = '—'; return; }
+      let ms = parseFloat(v);
+      if (isNaN(ms)) { $('tsResult').textContent = '无效时间戳'; return; }
+      if (ms < 1e12) ms *= 1000; // 秒 → 毫秒
+      const d = new Date(ms);
+      $('tsResult').textContent = isNaN(d) ? '无效' : fmtDate(d) + '（' + d.toLocaleString('zh-CN', { weekday: 'long' }) + '）';
+    });
+    $('tsDate').addEventListener('input', () => {
+      const v = $('tsDate').value;
+      if (!v) { $('tsResult2').textContent = '—'; return; }
+      const d = new Date(v);
+      if (isNaN(d)) { $('tsResult2').textContent = '无效时间'; return; }
+      $('tsResult2').textContent = '秒: ' + Math.floor(d.getTime() / 1000) + '  毫秒: ' + d.getTime();
+    });
+
+    // ===== 正则 =====
+    $('rxTest').addEventListener('click', () => {
+      const pattern = $('rxPattern').value;
+      const flags = [...document.querySelectorAll('#rxFlags input:checked')].map(x => x.value).join('');
+      const text = $('rxText').value;
+      const out = $('rxOutput'), count = $('rxCount');
+      if (!pattern) { setOut('rxOutput', '请输入正则表达式', false); count.textContent = ''; return; }
+      try {
+        const re = new RegExp(pattern, flags);
+        const matches = [];
+        let m;
+        // 无 g 时只匹配一次
+        if (!flags.includes('g')) {
+          m = re.exec(text);
+          if (m) matches.push({ full: m[0], groups: m.slice(1) });
+        } else {
+          const re2 = new RegExp(pattern, flags);
+          while ((m = re2.exec(text)) !== null) {
+            matches.push({ full: m[0], groups: m.slice(1) });
+            if (m.index === re2.lastIndex) re2.lastIndex++;
+            if (matches.length > 200) break;
+          }
+        }
+        if (!matches.length) {
+          setOut('rxOutput', '没有匹配到任何内容', false);
+          count.textContent = '(0 个匹配)';
+          return;
+        }
+        count.textContent = `(${matches.length} 个匹配${matches.length >= 200 ? '+，已截断' : ''})`;
+        out.classList.remove('ok', 'err');
+        out.textContent = matches.map((x, i) => {
+          let s = `[${i + 1}] ${x.full}`;
+          if (x.groups.length) s += '\n     捕获组: ' + x.groups.map((g, j) => `$${j + 1}=${g}`).join(', ');
+          return s;
+        }).join('\n');
+      } catch (e) {
+        setOut('rxOutput', '❌ 正则错误：' + e.message, false);
+        count.textContent = '';
+      }
+    });
+  </script>
+  <script src="../theme.js"></script>
+</body>
+</html>
