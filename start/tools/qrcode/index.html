@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light-neutral">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="shortcut icon" href="../../../img/asys.ico" type="image/x-icon">
+  <title>二维码生成 - ASYS 工具箱</title>
+  <link rel="stylesheet" href="../css/tools.css?v=202608122212">
+  <style>
+    .qr-card { display: flex; flex-direction: column; gap: 0.9rem; }
+    .qr-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+    .qr-output { display: none; flex-direction: column; align-items: center; gap: 10px; padding: 1rem 0; }
+    .qr-output.show { display: flex; animation: fadeIn 0.25s ease-out; }
+    .qr-canvas { border-radius: 12px; border: 1px solid var(--border-color); padding: 10px; background: #fff; }
+    .qr-size-info { font-size: 0.78rem; color: var(--text-secondary); }
+    .opt-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .opt-row .label { min-width: 70px; }
+    .opt-row .grow { display: flex; align-items: center; gap: 8px; }
+    .opt-row .grow select { flex: 1; }
+    .type-tabs { display: flex; gap: 6px; }
+    .type-tab { padding: 6px 14px; border: 1px solid var(--border-color); border-radius: 50px; font-size: 0.82rem; color: var(--text-secondary); cursor: pointer; transition: all 0.15s ease; background: var(--input-bg); font-family: inherit; }
+    .type-tab:hover { border-color: var(--accent); color: var(--accent); }
+    .type-tab.active { background: var(--accent); border-color: var(--accent); color: white; }
+    .history { display: none; flex-direction: column; gap: 6px; }
+    .history.show { display: flex; }
+    .history-item { display: flex; align-items: center; gap: 8px; padding: 6px 10px; border-radius: 8px; background: var(--input-bg); border: 1px solid var(--border-color); font-size: 0.8rem; color: var(--text-secondary); }
+    .history-item .h-text { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .history-item button { background: none; border: none; color: var(--accent); cursor: pointer; font-size: 0.75rem; font-family: inherit; padding: 2px 6px; }
+  </style>
+</head>
+<body>
+  <header>
+    <a class="back-btn" href="../../index.html" title="返回起始页">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+      <span>起始页</span>
+    </a>
+    <h1>二维码生成</h1>
+  </header>
+
+  <main>
+    <div class="card glass qr-card">
+      <div class="type-tabs" id="typeTabs">
+        <button class="type-tab active" data-type="text">文本</button>
+        <button class="type-tab" data-type="url">网址</button>
+        <button class="type-tab" data-type="wifi">WiFi</button>
+        <button class="type-tab" data-type="contact">名片</button>
+      </div>
+
+      <textarea class="input" id="qrText" placeholder="输入文本内容..." rows="4"></textarea>
+
+      <!-- WiFi 表单 -->
+      <div id="wifiForm" style="display:none;flex-direction:column;gap:8px;">
+        <div class="row">
+          <input class="input grow" id="wifiSsid" placeholder="WiFi 名称 (SSID)">
+        </div>
+        <div class="row">
+          <input class="input grow" id="wifiPass" type="password" placeholder="密码">
+        </div>
+        <div class="row">
+          <select class="input grow" id="wifiEnc">
+            <option value="WPA">WPA/WPA2</option>
+            <option value="WEP">WEP</option>
+            <option value="nopass">无密码</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- 名片表单 -->
+      <div id="contactForm" style="display:none;flex-direction:column;gap:8px;">
+        <input class="input" id="cName" placeholder="姓名">
+        <input class="input" id="cPhone" placeholder="电话">
+        <input class="input" id="cEmail" placeholder="邮箱">
+        <input class="input" id="cOrg" placeholder="公司/组织">
+        <input class="input" id="cTitle" placeholder="职位">
+      </div>
+
+      <div class="opt-row">
+        <span class="label">尺寸</span>
+        <div class="grow">
+          <select class="input" id="qrSize">
+            <option value="180">小 (180px)</option>
+            <option value="240" selected>中 (240px)</option>
+            <option value="320">大 (320px)</option>
+            <option value="480">特大 (480px)</option>
+          </select>
+        </div>
+      </div>
+      <div class="opt-row">
+        <span class="label">纠错</span>
+        <div class="grow">
+          <select class="input" id="qrEC">
+            <option value="L">L (7%)</option>
+            <option value="M" selected>M (15%)</option>
+            <option value="Q">Q (25%)</option>
+            <option value="H">H (30%)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="qr-actions">
+        <button class="btn" id="genBtn">生成二维码</button>
+        <button class="btn secondary" id="dlBtn" style="display:none;">下载 PNG</button>
+      </div>
+
+      <div class="qr-output" id="qrOutput">
+        <canvas class="qr-canvas" id="qrCanvas"></canvas>
+        <div class="qr-size-info" id="qrInfo"></div>
+      </div>
+
+      <div class="history" id="historyBox">
+        <span class="label">生成历史（本地保存）</span>
+        <div id="historyList"></div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>ASYS 工具箱 · 二维码生成 —— 全部在本地生成，内容不会上传</p>
+  </footer>
+
+  <script src="qrcode.js?v=202608122212"></script>
+  <script>
+const $ = id => document.getElementById(id);
+    let currentType = 'text';
+    const HISTORY_KEY = 'asys_qr_history';
+
+    document.querySelectorAll('.type-tab').forEach(t => {
+      t.addEventListener('click', () => {
+        currentType = t.dataset.type;
+        document.querySelectorAll('.type-tab').forEach(x => x.classList.toggle('active', x === t));
+        $('wifiForm').style.display = currentType === 'wifi' ? 'flex' : 'none';
+        $('contactForm').style.display = currentType === 'contact' ? 'flex' : 'none';
+        $('qrText').style.display = (currentType === 'text' || currentType === 'url') ? 'block' : 'none';
+        $('qrText').placeholder = currentType === 'url' ? '输入网址，如 https://asystech.cn' : '输入文本内容...';
+        if (currentType === 'text' || currentType === 'url') $('qrText').focus();
+      });
+    });
+
+    function buildPayload() {
+      switch (currentType) {
+        case 'url': {
+          let u = $('qrText').value.trim();
+          if (!u) return null;
+          if (!/^https?:\/\//i.test(u)) u = 'https://' + u;
+          return u;
+        }
+        case 'wifi': {
+          const ssid = $('wifiSsid').value.trim(), pass = $('wifiPass').value.trim(), enc = $('wifiEnc').value;
+          if (!ssid) return null;
+          return 'WIFI:T:' + enc + ';S:' + ssid + ';P:' + pass + ';;';
+        }
+        case 'contact': {
+          const n = $('cName').value.trim(), p = $('cPhone').value.trim(), e = $('cEmail').value.trim(),
+                o = $('cOrg').value.trim(), t = $('cTitle').value.trim();
+          if (!n && !p && !e) return null;
+          return 'MECARD:' + (n ? 'N:' + n + ';' : '') + (o ? 'ORG:' + o + ';' : '') + (t ? 'TITLE:' + t + ';' : '') + (p ? 'TEL:' + p + ';' : '') + (e ? 'EMAIL:' + e + ';' : '') + ';';
+        }
+        default:
+          return $('qrText').value.trim() || null;
+      }
+    }
+
+    $('genBtn').addEventListener('click', generate);
+    $('qrText').addEventListener('keydown', e => { if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') generate(); });
+
+    function generate() {
+      const payload = buildPayload();
+      if (!payload) { alert('请填写内容'); return; }
+      try {
+        const size = parseInt($('qrSize').value);
+        const ec = $('qrEC').value;
+        const qr = qrcode(0, ec);
+        qr.addData(payload);
+        qr.make();
+        const canvas = $('qrCanvas');
+        const scale = size / qr.getModuleCount();
+        canvas.width = size; canvas.height = size;
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, size, size);
+        ctx.fillStyle = '#000000';
+        const count = qr.getModuleCount();
+        for (let r = 0; r < count; r++) {
+          for (let c = 0; c < count; c++) {
+            if (qr.isDark(r, c)) ctx.fillRect(c * scale, r * scale, scale, scale);
+          }
+        }
+        $('qrOutput').classList.add('show');
+        $('dlBtn').style.display = 'inline-block';
+        $('qrInfo').textContent = `${count}×${count} 模块 · ${payload.length} 字符`;
+        saveHistory(payload);
+      } catch (e) {
+        alert('生成失败：' + e.message);
+      }
+    }
+
+    $('dlBtn').addEventListener('click', () => {
+      const a = document.createElement('a');
+      a.href = $('qrCanvas').toDataURL('image/png');
+      a.download = 'qrcode-' + Date.now() + '.png';
+      document.body.appendChild(a); a.click(); a.remove();
+    });
+
+    function saveHistory(payload) {
+      let h = [];
+      try { h = JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]'); } catch (e) {}
+      h.unshift({ text: payload.length > 60 ? payload.slice(0, 60) + '…' : payload, time: new Date().toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' }) });
+      h = h.slice(0, 8);
+      try { localStorage.setItem(HISTORY_KEY, JSON.stringify(h)); } catch (e) {}
+      renderHistory(h);
+    }
+    function renderHistory(h) {
+      const box = $('historyBox'), list = $('historyList');
+      box.classList.toggle('show', h.length > 0);
+      list.innerHTML = h.map((x, i) => `
+        <div class="history-item">
+          <span class="h-text" title="${x.text.replace(/"/g, '&quot;')}">${x.time} · ${x.text}</span>
+          <button data-i="${i}">重新生成</button>
+          <button data-del="${i}">删除</button>
+        </div>`).join('');
+      list.querySelectorAll('button[data-i]').forEach(b => b.addEventListener('click', () => {
+        const item = h[parseInt(b.dataset.i)];
+        if (!item) return;
+        $('qrText').value = item.text.replace(/…$/, '');
+        if (currentType !== 'text') { document.querySelector('.type-tab[data-type="text"]').click(); }
+        generate();
+      }));
+      list.querySelectorAll('button[data-del]').forEach(b => b.addEventListener('click', () => {
+        h.splice(parseInt(b.dataset.del), 1);
+        try { localStorage.setItem(HISTORY_KEY, JSON.stringify(h)); } catch (e) {}
+        renderHistory(h);
+      }));
+    }
+    try { renderHistory(JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]')); } catch (e) {}
+  </script>
+  <script src="../theme.js?v=202608122212"></script>
+</body>
+</html>

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light-neutral">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="shortcut icon" href="../../../img/asys.ico" type="image/x-icon">
+  <title>番茄钟 - ASYS 工具箱</title>
+  <link rel="stylesheet" href="../css/tools.css?v=202608122212">
+  <style>
+    .timer-wrap { display: flex; flex-direction: column; align-items: center; gap: 1.2rem; padding: 1.5rem 1rem; }
+    .timer-ring { position: relative; width: 220px; height: 220px; }
+    .timer-ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+    .timer-ring .ring-bg { stroke: var(--input-border); }
+    .timer-ring .ring-fg { stroke: var(--accent); stroke-linecap: round; transition: stroke-dashoffset 0.3s linear, stroke 0.3s; }
+    .timer-ring .ring-fg.work { stroke: var(--accent); }
+    .timer-ring .ring-fg.break { stroke: #059669; }
+    .timer-text { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; }
+    .timer-text .time { font-size: 2.6rem; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--text-primary); letter-spacing: 1px; }
+    .timer-text .phase { font-size: 0.85rem; color: var(--text-secondary); }
+    .timer-controls { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+    .phase-tabs { display: flex; gap: 6px; }
+    .phase-tab { padding: 6px 14px; border: 1px solid var(--border-color); border-radius: 50px; font-size: 0.82rem; color: var(--text-secondary); cursor: pointer; transition: all 0.15s ease; background: var(--input-bg); font-family: inherit; }
+    .phase-tab:hover { border-color: var(--accent); color: var(--accent); }
+    .phase-tab.active { background: var(--accent); border-color: var(--accent); color: white; }
+    .settings-row { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
+    .settings-row label { display: flex; flex-direction: column; align-items: center; gap: 4px; font-size: 0.78rem; color: var(--text-secondary); }
+    .settings-row input { width: 70px; padding: 6px 8px; text-align: center; border: 1px solid var(--input-border); border-radius: 8px; background: var(--input-bg); color: var(--text-primary); font-size: 0.95rem; font-family: inherit; }
+    .stats { font-size: 0.8rem; color: var(--text-secondary); display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
+    .stats b { color: var(--accent); font-variant-numeric: tabular-nums; }
+    .tip { font-size: 0.74rem; color: var(--text-secondary); opacity: 0.8; text-align: center; }
+    @media (max-width: 640px) {
+      .timer-ring { width: 190px; height: 190px; }
+      .timer-text .time { font-size: 2.2rem; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a class="back-btn" href="../../index.html" title="返回起始页">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+      <span>起始页</span>
+    </a>
+    <h1>番茄钟</h1>
+  </header>
+
+  <main>
+    <div class="card glass timer-wrap">
+      <div class="phase-tabs" id="phaseTabs">
+        <button class="phase-tab active" data-phase="work">专注</button>
+        <button class="phase-tab" data-phase="break">短休息</button>
+        <button class="phase-tab" data-phase="long">长休息</button>
+      </div>
+
+      <div class="timer-ring">
+        <svg viewBox="0 0 220 220">
+          <circle class="ring-bg" cx="110" cy="110" r="100" fill="none" stroke-width="10"/>
+          <circle class="ring-fg work" id="ringFg" cx="110" cy="110" r="100" fill="none" stroke-width="10" stroke-dasharray="628.3" stroke-dashoffset="0"/>
+        </svg>
+        <div class="timer-text">
+          <div class="time" id="timeDisplay">25:00</div>
+          <div class="phase" id="phaseLabel">专注时间</div>
+        </div>
+      </div>
+
+      <div class="timer-controls">
+        <button class="btn" id="startBtn">
+          <span id="startLabel">开始</span>
+        </button>
+        <button class="btn secondary" id="resetBtn">重置</button>
+      </div>
+
+      <div class="settings-row" id="settingsRow">
+        <label>专注<span><input type="number" id="workMin" min="1" max="120" value="25"></span></label>
+        <label>短休<span><input type="number" id="breakMin" min="1" max="60" value="5"></span></label>
+        <label>长休<span><input type="number" id="longMin" min="1" max="60" value="15"></span></label>
+        <label>轮次<span><input type="number" id="rounds" min="1" max="12" value="4"></span></label>
+      </div>
+
+      <div class="stats">
+        <span>今日完成 <b id="doneCount">0</b> 个番茄</span>
+        <span>当前轮次 <b id="roundCount">1</b>/<span id="roundTotal">4</span></span>
+      </div>
+      <div class="tip">专注时每 25 分钟休息一次；每完成 4 个番茄进入长休息。提示音由浏览器播放。</div>
+    </div>
+  </main>
+
+  <footer>
+    <p>ASYS 工具箱 · 番茄钟 —— 保持专注，劳逸结合</p>
+  </footer>
+
+  <script>
+const $ = id => document.getElementById(id);
+    const RING_LEN = 2 * Math.PI * 100;
+
+    let phase = 'work';           // work / break / long
+    let totalSec = 25 * 60;
+    let remainSec = totalSec;
+    let running = false, timerId = null;
+    let roundInCycle = 1;
+    let prefs = { work: 25, brk: 5, long: 15, rounds: 4 };
+    try { Object.assign(prefs, JSON.parse(localStorage.getItem('asys_tomato') || '{}')); } catch (e) {}
+
+    // 今日完成数（按日期存）
+    const today = new Date().toISOString().slice(0, 10);
+    let doneToday = 0;
+    try { const d = JSON.parse(localStorage.getItem('asys_tomato_done') || '{}'); doneToday = d[today] || 0; } catch (e) {}
+    $('doneCount').textContent = doneToday;
+
+    function phaseDuration(p) {
+      return (p === 'work' ? prefs.work : p === 'break' ? prefs.brk : prefs.long) * 60;
+    }
+    function phaseName(p) {
+      return p === 'work' ? '专注时间' : p === 'break' ? '短休息' : '长休息';
+    }
+
+    function applyPhase(p, keepRunning) {
+      phase = p;
+      totalSec = phaseDuration(p);
+      remainSec = totalSec;
+      document.querySelectorAll('.phase-tab').forEach(t => t.classList.toggle('active', t.dataset.phase === p));
+      $('phaseLabel').textContent = phaseName(p);
+      const fg = $('ringFg');
+      fg.classList.toggle('work', p === 'work');
+      fg.classList.toggle('break', p !== 'work');
+      updateDisplay();
+      if (!keepRunning && running) toggleRun(false);
+    }
+
+    function updateDisplay() {
+      const m = Math.floor(remainSec / 60), s = remainSec % 60;
+      $('timeDisplay').textContent = String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+      const pct = totalSec ? remainSec / totalSec : 0;
+      $('ringFg').style.strokeDashoffset = RING_LEN * (1 - pct);
+      // 标题栏倒计时（方便切走时看到）
+      document.title = (running ? '⏱ ' : '') + $('timeDisplay').textContent + ' · 番茄钟';
+    }
+
+    function tick() {
+      remainSec--;
+      if (remainSec <= 0) {
+        remainSec = 0;
+        updateDisplay();
+        finishPhase();
+        return;
+      }
+      updateDisplay();
+    }
+
+    function finishPhase() {
+      toggleRun(false);
+      beep();
+      if (phase === 'work') {
+        doneToday++;
+        try { const d = JSON.parse(localStorage.getItem('asys_tomato_done') || '{}'); d[today] = doneToday; localStorage.setItem('asys_tomato_done', JSON.stringify(d)); } catch (e) {}
+        $('doneCount').textContent = doneToday;
+        // 4 轮后长休息
+        if (roundInCycle >= prefs.rounds) {
+          roundInCycle = 1;
+          applyPhase('long', false);
+        } else {
+          roundInCycle++;
+          applyPhase('break', false);
+        }
+      } else {
+        applyPhase('work', false);
+      }
+      $('roundCount').textContent = roundInCycle;
+      alert(phase === 'work' ? '休息结束，开始新的专注！' : '🍅 番茄完成，休息一下！');
+    }
+
+    function beep() {
+      try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        [0, 0.3, 0.6].forEach((t, i) => {
+          const o = ctx.createOscillator(), g = ctx.createGain();
+          o.connect(g); g.connect(ctx.destination);
+          o.frequency.value = i === 2 ? 880 : 660;
+          o.type = 'sine';
+          const t0 = ctx.currentTime + t;
+          g.gain.setValueAtTime(0.001, t0);
+          g.gain.exponentialRampToValueAtTime(0.3, t0 + 0.02);
+          g.gain.exponentialRampToValueAtTime(0.001, t0 + 0.25);
+          o.start(t0); o.stop(t0 + 0.3);
+        });
+      } catch (e) { /* 音频不可用则静默 */ }
+    }
+
+    function toggleRun(force) {
+      const target = force !== undefined ? force : !running;
+      running = target;
+      $('startLabel').textContent = running ? '暂停' : '继续';
+      if (running) {
+        timerId = setInterval(tick, 1000);
+      } else {
+        if (timerId) clearInterval(timerId);
+        timerId = null;
+      }
+      $('phaseTabs').style.opacity = running ? '0.5' : '1';
+      $('phaseTabs').style.pointerEvents = running ? 'none' : 'auto';
+      $('settingsRow').style.opacity = running ? '0.5' : '1';
+      $('settingsRow').style.pointerEvents = running ? 'none' : 'auto';
+      updateDisplay();
+    }
+
+    $('startBtn').addEventListener('click', () => toggleRun());
+    $('resetBtn').addEventListener('click', () => { toggleRun(false); remainSec = totalSec; updateDisplay(); });
+
+    document.querySelectorAll('.phase-tab').forEach(t => {
+      t.addEventListener('click', () => { if (!running) applyPhase(t.dataset.phase, false); });
+    });
+
+    // 设置
+    ['workMin', 'breakMin', 'longMin', 'rounds'].forEach(id => {
+      const el = $(id);
+      el.value = id === 'workMin' ? prefs.work : id === 'breakMin' ? prefs.brk : id === 'longMin' ? prefs.long : prefs.rounds;
+      el.addEventListener('change', () => {
+        const v = Math.max(1, parseInt(el.value) || 1);
+        el.value = v;
+        if (id === 'workMin') prefs.work = v;
+        if (id === 'breakMin') prefs.brk = v;
+        if (id === 'longMin') prefs.long = v;
+        if (id === 'rounds') { prefs.rounds = v; $('roundTotal').textContent = v; }
+        try { localStorage.setItem('asys_tomato', JSON.stringify(prefs)); } catch (e) {}
+        if (!running) applyPhase(phase, false);
+      });
+    });
+
+    $('roundTotal').textContent = prefs.rounds;
+    applyPhase('work', false);
+
+    // 切走页面时标题恢复
+    window.addEventListener('beforeunload', () => { document.title = '番茄钟 - ASYS 工具箱'; });
+  </script>
+  <script src="../theme.js?v=202608122212"></script>
+</body>
+</html>

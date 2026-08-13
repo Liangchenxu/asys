@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light-neutral">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="shortcut icon" href="../../../img/asys.ico" type="image/x-icon">
+  <title>密码生成器 - ASYS 工具箱</title>
+  <link rel="stylesheet" href="../css/tools.css?v=202608122212">
+  <style>
+    .pw-card { display: flex; flex-direction: column; gap: 1rem; }
+    .pw-display { position: relative; }
+    .pw-display .pw-box { width: 100%; padding: 14px 110px 14px 16px; border: 1px solid var(--input-border); border-radius: 12px; background: var(--input-bg); color: var(--text-primary); font-size: 1.25rem; font-family: 'SF Mono', Consolas, 'Courier New', monospace; letter-spacing: 1px; word-break: break-all; min-height: 54px; display: flex; align-items: center; }
+    .pw-display .pw-actions { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); display: flex; gap: 6px; }
+    .pw-display .pw-actions button { width: 46px; height: 38px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--input-bg); color: var(--text-secondary); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.15s ease; }
+    .pw-display .pw-actions button:hover { border-color: var(--accent); color: var(--accent); }
+    .pw-display .pw-actions svg { width: 17px; height: 17px; }
+    .strength-row { display: flex; align-items: center; gap: 10px; }
+    .strength-bar { flex: 1; height: 8px; border-radius: 4px; background: var(--input-border); overflow: hidden; }
+    .strength-bar i { display: block; height: 100%; width: 0; border-radius: 4px; transition: width 0.3s ease, background 0.3s; }
+    .strength-label { font-size: 0.82rem; color: var(--text-secondary); min-width: 60px; text-align: right; font-weight: 600; }
+    .opt-item { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--border-color); }
+    .opt-item:last-child { border-bottom: none; }
+    .opt-item .oi-label { font-size: 0.9rem; color: var(--text-primary); }
+    .opt-item .oi-desc { font-size: 0.74rem; color: var(--text-secondary); }
+    .opt-item .oi-control { display: flex; align-items: center; gap: 10px; }
+    .opt-item .oi-control input[type="number"] { width: 64px; padding: 6px 8px; text-align: center; border: 1px solid var(--input-border); border-radius: 8px; background: var(--input-bg); color: var(--text-primary); font-size: 0.95rem; font-family: inherit; }
+    .gen-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+    .suggest { font-size: 0.8rem; color: var(--text-secondary); display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+    .suggest button { padding: 3px 10px; border: 1px solid var(--border-color); border-radius: 50px; font-size: 0.74rem; background: var(--input-bg); color: var(--text-secondary); cursor: pointer; font-family: inherit; }
+    .suggest button:hover { border-color: var(--accent); color: var(--accent); }
+  </style>
+</head>
+<body>
+  <header>
+    <a class="back-btn" href="../../index.html" title="返回起始页">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+      <span>起始页</span>
+    </a>
+    <h1>密码生成器</h1>
+  </header>
+
+  <main>
+    <div class="card glass pw-card">
+      <div class="pw-display">
+        <div class="pw-box" id="pwBox"></div>
+        <div class="pw-actions">
+          <button id="refreshBtn" title="重新生成">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
+          </button>
+          <button id="copyBtn" title="复制">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="strength-row">
+        <span class="label">强度</span>
+        <div class="strength-bar"><i id="strengthBar"></i></div>
+        <span class="strength-label" id="strengthLabel">—</span>
+      </div>
+
+      <div>
+        <div class="opt-item">
+          <div><div class="oi-label">密码长度</div></div>
+          <div class="oi-control"><input type="number" id="pwLen" min="4" max="64" value="16"></div>
+        </div>
+        <div class="opt-item">
+          <div><div class="oi-label">大写字母 A-Z</div><div class="oi-desc">ABC…</div></div>
+          <div class="oi-control"><label class="toggle"><input type="checkbox" id="optUpper" checked><span class="slider"></span></label></div>
+        </div>
+        <div class="opt-item">
+          <div><div class="oi-label">小写字母 a-z</div><div class="oi-desc">abc…</div></div>
+          <div class="oi-control"><label class="toggle"><input type="checkbox" id="optLower" checked><span class="slider"></span></label></div>
+        </div>
+        <div class="opt-item">
+          <div><div class="oi-label">数字 0-9</div><div class="oi-desc">123…</div></div>
+          <div class="oi-control"><label class="toggle"><input type="checkbox" id="optNum" checked><span class="slider"></span></label></div>
+        </div>
+        <div class="opt-item">
+          <div><div class="oi-label">符号 !@#$</div><div class="oi-desc">!@#$%^&amp;*()_+-=</div></div>
+          <div class="oi-control"><label class="toggle"><input type="checkbox" id="optSym" checked><span class="slider"></span></label></div>
+        </div>
+        <div class="opt-item">
+          <div><div class="oi-label">排除易混淆字符</div><div class="oi-desc">0O1lI| 等</div></div>
+          <div class="oi-control"><label class="toggle"><input type="checkbox" id="optAmb" checked><span class="slider"></span></label></div>
+        </div>
+      </div>
+
+      <div class="gen-actions">
+        <button class="btn" id="genBtn">生成密码</button>
+      </div>
+
+      <div class="suggest">
+        <span>快捷:</span>
+        <button data-len="12">12 位</button>
+        <button data-len="16">16 位</button>
+        <button data-len="20">20 位</button>
+        <button data-len="24">24 位</button>
+        <button data-symbols="false">仅字母数字</button>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>ASYS 工具箱 · 密码生成器 —— 使用浏览器加密级随机数（crypto.getRandomValues）</p>
+  </footer>
+
+  <script>
+const $ = id => document.getElementById(id);
+    const UPPER = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const LOWER = 'abcdefghijklmnopqrstuvwxyz';
+    const DIGITS = '0123456789';
+    const SYMBOLS = '!@#$%^&*()_+-=[]{};:,.<>?';
+    const AMBIG = '0O1lI|`\'"';
+
+    function buildCharset() {
+      let s = '';
+      if ($('optUpper').checked) s += UPPER;
+      if ($('optLower').checked) s += LOWER;
+      if ($('optNum').checked) s += DIGITS;
+      if ($('optSym').checked) s += SYMBOLS;
+      if ($('optAmb').checked) s = [...s].filter(c => !AMBIG.includes(c)).join('');
+      return s;
+    }
+
+    function generate() {
+      const len = Math.min(64, Math.max(4, parseInt($('pwLen').value) || 16));
+      $('pwLen').value = len;
+      const charset = buildCharset();
+      if (!charset) { alert('请至少选择一种字符类型'); return; }
+      // 保证每种选中类型至少出现一次
+      const picks = [];
+      if ($('optUpper').checked) picks.push(UPPER);
+      if ($('optLower').checked) picks.push(LOWER);
+      if ($('optNum').checked) picks.push(DIGITS);
+      if ($('optSym').checked) picks.push(SYMBOLS);
+      if ($('optAmb').checked) picks.forEach((p, i) => { picks[i] = [...p].filter(c => !AMBIG.includes(c)).join(''); });
+      const cleanPicks = picks.filter(p => p.length > 0);
+
+      const arr = new Uint32Array(len * 2); // 洗牌阶段需要 i+len 索引，翻倍分配防越界
+      crypto.getRandomValues(arr);
+      let result = [];
+      // 先各选一个保证覆盖
+      const used = new Set();
+      for (const p of cleanPicks) {
+        const idx = arr[used.size] % p.length;
+        const ch = p[idx];
+        result.push(ch);
+        used.add(ch);
+      }
+      // 剩余随机填
+      const pool = charset.split('');
+      for (let i = cleanPicks.length; i < len; i++) {
+        result.push(pool[arr[i] % pool.length]);
+      }
+      // 洗牌
+      for (let i = result.length - 1; i > 0; i--) {
+        const j = arr[i + len] % (i + 1);
+        [result[i], result[j]] = [result[j], result[i]];
+      }
+      $('pwBox').textContent = result.join('');
+      updateStrength(result.join(''));
+      return result.join('');
+    }
+
+    function updateStrength(pw) {
+      let score = 0;
+      const len = pw.length;
+      if (len >= 8) score++;
+      if (len >= 12) score++;
+      if (len >= 16) score++;
+      if (/[a-z]/.test(pw) && /[A-Z]/.test(pw)) score++;
+      if (/\d/.test(pw)) score++;
+      if (/[^a-zA-Z0-9]/.test(pw)) score++;
+      if (len >= 20) score++;
+      // 熵估算
+      const charsetSize = (() => {
+        let n = 0;
+        if (/[a-z]/.test(pw)) n += 26;
+        if (/[A-Z]/.test(pw)) n += 26;
+        if (/\d/.test(pw)) n += 10;
+        if (/[^a-zA-Z0-9]/.test(pw)) n += 30;
+        return n;
+      })();
+      const bits = len * Math.log2(charsetSize || 1);
+      const pct = Math.min(100, Math.round(bits / 3.2));
+      const bar = $('strengthBar'), label = $('strengthLabel');
+      bar.style.width = pct + '%';
+      let color = '#e11d48', text = '极弱';
+      if (bits >= 100) { color = '#059669'; text = '极强'; }
+      else if (bits >= 80) { color = '#059669'; text = '强'; }
+      else if (bits >= 60) { color = '#d97706'; text = '中等'; }
+      else if (bits >= 40) { color = '#d97706'; text = '较弱'; }
+      bar.style.background = color;
+      label.textContent = text + ' (~' + Math.round(bits) + ' bit)';
+    }
+
+    $('genBtn').addEventListener('click', generate);
+    $('refreshBtn').addEventListener('click', generate);
+    $('copyBtn').addEventListener('click', async () => {
+      const pw = $('pwBox').textContent;
+      if (!pw) return;
+      try {
+        await navigator.clipboard.writeText(pw);
+        const s = $('copyBtn').innerHTML;
+        $('copyBtn').innerHTML = '<span style="font-size:0.75rem;">✓</span>';
+        setTimeout(() => { $('copyBtn').innerHTML = s; }, 1200);
+      } catch (e) {
+        // 降级：选中文本提示手动复制
+        const range = document.createRange();
+        range.selectNodeContents($('pwBox'));
+        const sel = getSelection(); sel.removeAllRanges(); sel.addRange(range);
+      }
+    });
+
+    ['pwLen', 'optUpper', 'optLower', 'optNum', 'optSym', 'optAmb'].forEach(id => {
+      $(id).addEventListener('change', generate);
+      $(id).addEventListener('input', generate);
+    });
+
+    document.querySelectorAll('.suggest button').forEach(b => {
+      b.addEventListener('click', () => {
+        if (b.dataset.len) $('pwLen').value = b.dataset.len;
+        if (b.dataset.symbols === 'false') $('optSym').checked = false;
+        generate();
+      });
+    });
+
+    generate();
+  </script>
+  <script src="../theme.js?v=202608122212"></script>
+</body>
+</html>
