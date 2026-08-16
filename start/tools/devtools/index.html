@@ -224,11 +224,11 @@ const $ = id => document.getElementById(id);
     }
     function updateTs() {
       const now = Date.now();
-      $('tsNow').textContent = fmtDate(new Date(now));
+      $('tsNow').textContent = fmtDate(new Date(now)) + '.' + String(now % 1000).padStart(3, '0');
       $('tsSec').textContent = Math.floor(now / 1000);
       $('tsMs').textContent = now;
     }
-    updateTs(); setInterval(updateTs, 1000);
+    updateTs(); setInterval(updateTs, 50); // 50ms 刷新：毫秒持续流动，不再整秒才更新
 
     $('tsInput').addEventListener('input', () => {
       const v = $('tsInput').value.trim();
