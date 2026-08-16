@@ -25,6 +25,7 @@
     .settings-row { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
     .settings-row label { display: flex; flex-direction: column; align-items: center; gap: 4px; font-size: 0.78rem; color: var(--text-secondary); }
     .settings-row input { width: 70px; padding: 6px 8px; text-align: center; border: 1px solid var(--input-border); border-radius: 8px; background: var(--input-bg); color: var(--text-primary); font-size: 0.95rem; font-family: inherit; }
+    .settings-row select { width: 100px; padding: 6px 8px; text-align: center; border: 1px solid var(--input-border); border-radius: 8px; background: var(--input-bg); color: var(--text-primary); font-size: 0.9rem; font-family: inherit; cursor: pointer; }
     .stats { font-size: 0.8rem; color: var(--text-secondary); display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
     .stats b { color: var(--accent); font-variant-numeric: tabular-nums; }
     .tip { font-size: 0.74rem; color: var(--text-secondary); opacity: 0.8; text-align: center; }
@@ -32,6 +33,8 @@
       .timer-ring { width: 190px; height: 190px; }
       .timer-text .time { font-size: 2.2rem; }
     }
+    .toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-14px); background: var(--accent); color: #fff; padding: 10px 22px; border-radius: 50px; font-size: 0.9rem; font-weight: 600; box-shadow: 0 6px 24px rgba(0,0,0,0.18); opacity: 0; pointer-events: none; transition: opacity 0.25s ease, transform 0.25s ease; z-index: 999; max-width: calc(100vw - 40px); text-align: center; }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
   </style>
 </head>
 <body>
@@ -74,19 +77,23 @@
         <label>短休<span><input type="number" id="breakMin" min="1" max="60" value="5"></span></label>
         <label>长休<span><input type="number" id="longMin" min="1" max="60" value="15"></span></label>
         <label>轮次<span><input type="number" id="rounds" min="1" max="12" value="4"></span></label>
+        <label>音效<span><select id="soundSel"></select></span></label>
+        <button class="btn small secondary" id="soundTestBtn" type="button">🔊 试听</button>
       </div>
 
       <div class="stats">
         <span>今日完成 <b id="doneCount">0</b> 个番茄</span>
         <span>当前轮次 <b id="roundCount">1</b>/<span id="roundTotal">4</span></span>
       </div>
-      <div class="tip">专注时每 25 分钟休息一次；每完成 4 个番茄进入长休息。提示音由浏览器播放。</div>
+      <div class="tip">专注时每 25 分钟休息一次；每完成 4 个番茄进入长休息。提示音可切换并试听，工作/休息完成音效略有不同。</div>
     </div>
   </main>
 
   <footer>
     <p>ASYS 工具箱 · 番茄钟 —— 保持专注，劳逸结合</p>
   </footer>
+
+  <div class="toast" id="toast"></div>
 
   <script>
 const $ = id => document.getElementById(id);
@@ -97,7 +104,7 @@ const $ = id => document.getElementById(id);
     let remainSec = totalSec;
     let running = false, timerId = null;
     let roundInCycle = 1;
-    let prefs = { work: 25, brk: 5, long: 15, rounds: 4 };
+    let prefs = { work: 25, brk: 5, long: 15, rounds: 4, sound: 'classic' };
     try { Object.assign(prefs, JSON.parse(localStorage.getItem('asys_tomato') || '{}')); } catch (e) {}
 
     // 今日完成数（按日期存）
@@ -146,10 +153,137 @@ const $ = id => document.getElementById(id);
       updateDisplay();
     }
 
+    // 单例 AudioContext：在用户手势（点击开始）时创建并解锁，
+    // 避免后台标签页 / 自动播放策略把声音挂起
+    let audioCtx = null;
+    function ensureAudio() {
+      try {
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        if (audioCtx.state === 'suspended') audioCtx.resume().catch(() => {});
+      } catch (e) {}
+      return audioCtx;
+    }
+
+    // 音效定义：work = 专注完成（去休息），break = 休息完成（回专注），两者略有不同
+    const SOUNDS = {
+      classic: {
+        name: '经典哔哔',
+        work:  { notes: [660, 660, 880], gap: 0.3, dur: 0.25 },
+        break: { notes: [880, 880, 660], gap: 0.2, dur: 0.18 }
+      },
+      doorbell: {
+        name: '叮咚门铃',
+        work:  { notes: [1318.5, 1046.5], gap: 0.5, dur: 0.5 },
+        break: { notes: [1046.5, 1318.5], gap: 0.5, dur: 0.5 }
+      },
+      arpeggio: {
+        name: '上行琶音',
+        work:  { notes: [523.25, 659.25, 783.99], gap: 0.22, dur: 0.3 },
+        break: { notes: [783.99, 659.25, 523.25], gap: 0.18, dur: 0.22 }
+      },
+      bell: {
+        name: '柔和钟声',
+        work:  { notes: [523.25, 659.25], gap: 0.9, dur: 1.4, harmonic: true },
+        break: { notes: [659.25, 783.99], gap: 0.8, dur: 1.2, harmonic: true }
+      }
+    };
+
+    function playTone(ctx, freq, t0, dur) {
+      const o = ctx.createOscillator(), g = ctx.createGain();
+      o.connect(g); g.connect(ctx.destination);
+      o.frequency.value = freq;
+      o.type = 'sine';
+      g.gain.setValueAtTime(0.001, t0);
+      g.gain.exponentialRampToValueAtTime(0.3, t0 + 0.02);
+      g.gain.exponentialRampToValueAtTime(0.001, t0 + dur);
+      o.start(t0); o.stop(t0 + dur + 0.05);
+    }
+
+    function playBell(ctx, freq, t0, dur) {
+      // 基频 + 泛音叠加，长衰减模拟钟声
+      [1, 2, 2.7].forEach((mult, i) => {
+        const o = ctx.createOscillator(), g = ctx.createGain();
+        o.connect(g); g.connect(ctx.destination);
+        o.type = 'sine';
+        o.frequency.value = freq * mult;
+        const vol = i === 0 ? 0.32 : i === 1 ? 0.12 : 0.05;
+        g.gain.setValueAtTime(0.001, t0);
+        g.gain.exponentialRampToValueAtTime(vol, t0 + 0.015);
+        g.gain.exponentialRampToValueAtTime(0.001, t0 + dur);
+        o.start(t0); o.stop(t0 + dur + 0.05);
+      });
+    }
+
+    function playSound(key, kind) {
+      const ctx = ensureAudio();
+      const def = SOUNDS[key];
+      if (!ctx || !def) return;
+      const cfg = def[kind] || def.work;
+      let t = ctx.currentTime + 0.03;
+      cfg.notes.forEach(freq => {
+        if (cfg.harmonic) playBell(ctx, freq, t, cfg.dur);
+        else playTone(ctx, freq, t, cfg.dur);
+        t += cfg.gap + cfg.dur;
+      });
+    }
+
+    function soundDuration(cfg) {
+      return cfg.gap * (cfg.notes.length - 1) + cfg.dur * cfg.notes.length;
+    }
+
+    // 试听：先播工作完成音，播完再播休息完成音，听出差异
+    function previewSound() {
+      const key = $('soundSel').value;
+      const def = SOUNDS[key];
+      if (!def) return;
+      playSound(key, 'work');
+      setTimeout(() => playSound(key, 'break'), soundDuration(def.work) * 1000 + 500);
+    }
+
+    // 非阻塞提示（替代 alert：alert 在后台标签页不显示且卡住 JS，声音会错过）
+    function showToast(msg) {
+      const t = $('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      clearTimeout(showToast._t);
+      showToast._t = setTimeout(() => t.classList.remove('show'), 4000);
+    }
+
+    // 系统通知（后台也能看到；未授权则静默降级）
+    function requestNotify() {
+      if (!('Notification' in window) || Notification.permission !== 'default') return;
+      Notification.requestPermission().catch(() => {});
+    }
+    function notify(msg) {
+      try {
+        if ('Notification' in window && Notification.permission === 'granted') {
+          new Notification('🍅 番茄钟', { body: msg });
+        }
+      } catch (e) {}
+    }
+
+    // 标题闪烁提醒（切走时也能看到）
+    let flashTimer = null;
+    function flashTitle() {
+      const base = '番茄钟 - ASYS 工具箱';
+      let on = false;
+      clearInterval(flashTimer);
+      flashTimer = setInterval(() => {
+        on = !on;
+        document.title = on ? '⏰ 时间到！' : base;
+      }, 800);
+      setTimeout(() => { clearInterval(flashTimer); document.title = base; }, 6000);
+    }
+
     function finishPhase() {
       toggleRun(false);
-      beep();
-      if (phase === 'work') {
+      const finishedWork = phase === 'work';
+      const msg = finishedWork ? '🍅 番茄完成，休息一下！' : '休息结束，开始新的专注！';
+      playSound(prefs.sound, finishedWork ? 'work' : 'break'); // 先声音：不依赖弹窗，后台也能响
+      showToast(msg);
+      notify(msg);
+      flashTitle();
+      if (finishedWork) {
         doneToday++;
         try { const d = JSON.parse(localStorage.getItem('asys_tomato_done') || '{}'); d[today] = doneToday; localStorage.setItem('asys_tomato_done', JSON.stringify(d)); } catch (e) {}
         $('doneCount').textContent = doneToday;
@@ -165,24 +299,6 @@ const $ = id => document.getElementById(id);
         applyPhase('work', false);
       }
       $('roundCount').textContent = roundInCycle;
-      alert(phase === 'work' ? '休息结束，开始新的专注！' : '🍅 番茄完成，休息一下！');
-    }
-
-    function beep() {
-      try {
-        const ctx = new (window.AudioContext || window.webkitAudioContext)();
-        [0, 0.3, 0.6].forEach((t, i) => {
-          const o = ctx.createOscillator(), g = ctx.createGain();
-          o.connect(g); g.connect(ctx.destination);
-          o.frequency.value = i === 2 ? 880 : 660;
-          o.type = 'sine';
-          const t0 = ctx.currentTime + t;
-          g.gain.setValueAtTime(0.001, t0);
-          g.gain.exponentialRampToValueAtTime(0.3, t0 + 0.02);
-          g.gain.exponentialRampToValueAtTime(0.001, t0 + 0.25);
-          o.start(t0); o.stop(t0 + 0.3);
-        });
-      } catch (e) { /* 音频不可用则静默 */ }
     }
 
     function toggleRun(force) {
@@ -202,7 +318,11 @@ const $ = id => document.getElementById(id);
       updateDisplay();
     }
 
-    $('startBtn').addEventListener('click', () => toggleRun());
+    $('startBtn').addEventListener('click', () => {
+      ensureAudio();   // 用户手势内解锁音频
+      requestNotify(); // 顺带请求通知权限（仅 default 时弹）
+      toggleRun();
+    });
     $('resetBtn').addEventListener('click', () => { toggleRun(false); remainSec = totalSec; updateDisplay(); });
 
     document.querySelectorAll('.phase-tab').forEach(t => {
@@ -226,6 +346,22 @@ const $ = id => document.getElementById(id);
     });
 
     $('roundTotal').textContent = prefs.rounds;
+
+    // 音效选择 + 试听
+    const soundSel = $('soundSel');
+    Object.entries(SOUNDS).forEach(([k, v]) => {
+      const op = document.createElement('option');
+      op.value = k;
+      op.textContent = v.name;
+      soundSel.appendChild(op);
+    });
+    soundSel.value = prefs.sound || 'classic';
+    soundSel.addEventListener('change', () => {
+      prefs.sound = soundSel.value;
+      try { localStorage.setItem('asys_tomato', JSON.stringify(prefs)); } catch (e) {}
+    });
+    $('soundTestBtn').addEventListener('click', () => { ensureAudio(); previewSound(); });
+
     applyPhase('work', false);
 
     // 切走页面时标题恢复
