@@ -53,7 +53,7 @@
       <div class="drop-zone" id="dropZone">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
         <div class="dz-title">点击选择或拖拽图片到这里</div>
-        <div class="dz-sub">支持 PNG / JPG / WebP / GIF / BMP / AVIF / SVG</div>
+        <div class="dz-sub">支持 PNG / JPG / WebP / GIF / BMP / AVIF / SVG · 限 20MB 以内、单边不超过 8000px</div>
         <input type="file" id="fileInput" accept="image/png,image/jpeg,image/webp,image/gif,image/bmp,image/avif,image/svg+xml">
       </div>
       <div class="privacy-badge">
@@ -141,6 +141,10 @@
     let origFile = null, origImg = null, origName = '', blobUrl = null;
     let currentFmt = 'PNG', timer = null;
 
+    // 上传硬限制：防超大图片卡死浏览器
+    const MAX_FILE_SIZE = 20 * 1024 * 1024; // 20MB
+    const MAX_DIM = 8000;                   // 单边最大 8000px
+
     function fmtMime(fmt) { return { PNG: 'image/png', JPEG: 'image/jpeg', WEBP: 'image/webp', AVIF: 'image/avif', BMP: 'image/bmp', GIF: 'image/gif' }[fmt]; }
     function fmtExt(fmt) { return fmt === 'JPEG' ? 'jpg' : fmt.toLowerCase(); }
 
@@ -186,6 +190,7 @@
 
     function loadFile(file) {
       if (!file.type.startsWith('image/')) { alert('请选择图片文件'); return; }
+      if (file.size > MAX_FILE_SIZE) { alert('图片过大（超出20MB）'); return; }
       resetAll();
       origFile = file;
       origName = file.name.replace(/\.[^.]+$/, '') || 'image';
@@ -193,6 +198,11 @@
       reader.onload = e => {
         const img = new Image();
         img.onload = () => {
+          if (img.naturalWidth > MAX_DIM || img.naturalHeight > MAX_DIM) {
+            alert('图片尺寸过大（单边超过 8000px），请压缩后再试');
+            resetAll();
+            return;
+          }
           origImg = img;
           $('origPreview').src = e.target.result;
           $('origInfo').textContent = `${img.naturalWidth}×${img.naturalHeight} · ${fmtSize(file.size)}`;
