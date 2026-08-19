@@ -36,6 +36,7 @@
     "from": "从", "on": "在", "your": "你的", "you": "你",
     "this": "这", "that": "那", "it": "它", "we": "我们", "our": "我们的",
     "as": "作为", "mode": "模式", "open": "打开", "save": "保存",
+    "way": "方式", "ways": "方式",
     "close": "关闭", "delete": "删除", "update": "更新", "download": "下载",
     "settings": "设置", "options": "选项", "search": "搜索", "privacy": "隐私",
     "security": "安全", "password": "***", "bookmark": "书签", "tab": "标签页",
@@ -64,7 +65,18 @@
     "still": "仍然", "please": "请",
     "they": "他们", "them": "他们", "their": "他们的", "those": "那些",
     "these": "这些", "there": "那里", "here": "这里",
+    "news": "新闻",
+    // 缩写词（词典里释义是注释如 abbr. you are 你（你们）是，直接固定翻译）
     "don't": "不要", "doesn't": "不", "can't": "不能", "won't": "将不", "it's": "它是",
+    "you're": "你是", "we're": "我们是", "they're": "他们是",
+    "you'll": "你将", "we'll": "我们将", "they'll": "他们将",
+    "i'm": "我是", "i've": "我有", "we've": "我们有", "you've": "你有", "they've": "他们有",
+    "that's": "那是", "there's": "那里是", "what's": "什么是", "here's": "这里是",
+    "let's": "让我们", "he's": "他是", "she's": "她是",
+    "aren't": "不是", "isn't": "不是", "wasn't": "不是", "weren't": "不是",
+    "didn't": "没有", "wouldn't": "不会", "couldn't": "不能", "shouldn't": "不应该",
+    "haven't": "没有", "hasn't": "没有", "hadn't": "没有",
+    "i'd": "我将", "you'd": "你将", "he'd": "他将", "we'd": "我们将", "they'd": "他们将",
     // DOS 命令污染词（词典 [计] 段是 DOS 命令）
     "time": "时间", "include": "包含", "more": "更多", "shift": "移动", "home": "主页",
     "pause": "暂停", "vol": "卷", "echo": "回声", "if": "如果",
@@ -124,7 +136,18 @@
     "makes": "make", "takes": "take", "gets": "get", "knows": "know",
     "asks": "ask", "remembers": "remember", "trusts": "trust",
     "continues": "continue", "creates": "create", "applies": "apply",
-    "works": "work", "means": "mean", "contains": "contain", "includes": "include"
+    "works": "work", "means": "mean", "contains": "contain", "includes": "include",
+    // 常见三单/复数（短词，len>3 规则不覆盖或避免误伤）
+    "says": "say", "goes": "go", "saying": "say", "calls": "call",
+    "helps": "help", "lets": "let", "tells": "tell", "finds": "find",
+    "gives": "give", "sets": "set", "turns": "turn", "puts": "put",
+    "seems": "seem", "looks": "look", "runs": "run", "pays": "pay",
+    "stays": "stay", "plays": "play", "shows": "show", "hours": "hour",
+    "years": "year", "days": "day", "words": "word", "ways": "way",
+    "names": "name", "types": "type", "kinds": "kind", "parts": "part",
+    "places": "place", "points": "point", "groups": "group", "areas": "area",
+    "people": "person", "children": "child", "men": "man", "women": "woman",
+    "feet": "foot", "teeth": "tooth", "mice": "mouse", "data": "datum",
   };
 
   // ---------- 词组表（长文本专用：常用词组 → 正常中文）----------
@@ -188,11 +211,61 @@
     ["when firefox starts", "当 Firefox 启动时"],
     ["is trying to", "正尝试"],
     ["install an add-on", "安装附加组件"],
-    ["the current", "当前"]
+    ["the current", "当前"],
+    // 短句词组（随机模式：短句有时套用、有时不套用；长句同样受益）
+    ["thank you", "谢谢你"],
+    ["how are you", "你好吗"],
+    ["good morning", "早上好"],
+    ["good night", "晚安"],
+    ["see you", "再见"],
+    ["come here", "过来"],
+    ["wait a moment", "等一下"],
+    ["no problem", "没问题"],
+    ["of course", "当然"],
+    ["for example", "例如"],
+    ["right now", "现在"],
+    ["by the way", "顺便说一下"],
+    ["what is this", "这是什么"],
+    ["who are you", "你是谁"],
+    ["where are you", "你在哪里"],
+    ["what time is it", "现在几点"],
+    ["i love you", "我爱你"],
+    ["open the door", "打开门"],
+    ["save the file", "保存文件"],
+    ["close the window", "关闭窗口"],
+    ["turn it on", "打开它"],
+    ["turn it off", "关闭它"],
+    ["excuse me", "打扰一下"],
+    ["my name is", "我的名字是"],
+    ["nice to meet you", "很高兴见到你"],
+    ["take care", "保重"],
+    ["welcome back", "欢迎回来"],
+    ["come back", "回来"],
+    ["go away", "走开"],
+    ["keep going", "继续前进"],
+    ["well done", "做得好"],
+    ["good luck", "祝你好运"],
+    ["happy birthday", "生日快乐"],
+    ["merry christmas", "圣诞快乐"],
+    ["happy new year", "新年快乐"],
+    ["long time no see", "好久不见"],
+    ["try again", "再试一次"],
+    ["go back", "返回"],
+    ["go to", "前往"],
+    ["click here", "点击这里"],
+    ["learn more", "了解更多"],
+    ["read more", "阅读更多"],
+    ["show more", "显示更多"],
+    ["sign in", "登录"],
+    ["log in", "登录"],
+    ["log out", "登出"],
+    ["close tab", "关闭标签页"],
+    ["new window", "新窗口"],
+    ["back to top", "回到顶部"],
   ];
 
   // ---------- 保护 ----------
-  const PROTECT_RE = /\{[^{}]*\}|<[^>]*>|[A-Za-z_]+\([^)]*\)|add-on\b|min-width\b|max-width\b|\.[a-z]{2,4}\b|\b(?:Ctrl|Control|Shift|Alt|Esc|Cmd|Option|Meta|Tab|Enter|Return|Backspace|Delete|PageUp|PageDown|Arrow|⌘|⌃|⇧|⌥)\b(?:\+[A-Za-z0-9+ ]*)?|\b[A-Z]{2,}\b|\$[a-zA-Z][a-zA-Z0-9]*|-[a-z][a-z0-9-]*(?=[\s.}，。；：！？)])/g;
+  const PROTECT_RE = /\{[^{}]*\}|<[^>]*>|[A-Za-z_]+\([^)]*\)|add-on\b|min-width\b|max-width\b|\.[a-z]{2,4}\b|\b(?:Ctrl|Control|Shift|Alt|Esc|Cmd|Option|Meta|Tab|Enter|Return|Backspace|PageUp|PageDown|Arrow|⌘|⌃|⇧|⌥)\b(?:\+[A-Za-z0-9+ ]*)?|\b[A-Z]{2,}\b|\$[a-zA-Z][a-zA-Z0-9]*|-[a-z][a-z0-9-]*(?=[\s.}，。；：！？)])/g;
 
   // 前置词 → 推断后一个词的词性
   const POS_VERB_BEFORE = new Set(["to", "can", "will", "would", "could", "should", "may", "might", "must", "do", "does", "did", "please", "not"]);
@@ -259,29 +332,52 @@
     return String(s).replace(/\[[^\]]*\]/g, "").trim();
   }
 
+  // ---------- 词典词形注释清洗 ----------
+  // ECDICT 里大量变形词条目的释义是词典注释而非真翻译：
+  //   ( alternative的复数形式 ) / acute的比较级 / abbr. you are 你（你们）是
+  //   （willy的复数） / （are not） / 参见：elementary school
+  // 直接输出会污染译文，必须剔除；整条都是注释的词条视为未命中（保留原文）。
+  const FORM_NOTE_RE = /[（(][^）)]*?(?:的复数(?:形式)?|的过去式|的过去分词|的现在分词|的第三人称单数|的比较级|的最高级|的常用口语形式?|的缩写|等于|复数|过去式|过去分词|现在分词|第三人称单数|比较级|最高级|缩写)[^）)]*[)）]|[a-zA-Z'\s-]+\s*的(?:复数(?:形式)?|过去式|过去分词|现在分词|第三人称单数|比较级|最高级|常用口语形式?|缩写)|(?:参见|同义词)\s*[:：]\s*[a-zA-Z'\s-]+|[（(][a-zA-Z][a-zA-Z' -]{1,}[)）]/g;
+
+  function stripFormNotes(s) {
+    let s2 = String(s).replace(FORM_NOTE_RE, "");
+    s2 = s2.replace(/^[\s,;，；"']+|[\s,;，；"']+$/g, "");
+    if (!s2 || /^(?:[a-z]+\.\s*)+$/.test(s2)) return "";
+    return s2;
+  }
+
+  function firstDef(text) {
+    return stripFormNotes(cleanDef(String(text).split(/[,;，；]/)[0]));
+  }
+
   function pickDef(translation, pos) {
     const segs = parseSegments(translation);
     // [计] 段优先（UI 术语语境）——但 DOS 命令段跳过
     for (const seg of segs) {
       if (seg.tags.length && seg.tags[0] === "[计]" && !seg.text.includes("DOS")) {
-        return cleanDef(seg.text.split(/[,;，；]/)[0]);
+        const v = firstDef(seg.text);
+        if (v) return v;
       }
     }
     if (pos === "verb") {
       for (const seg of segs) {
         if (seg.tags.some(t => t === "vt" || t === "vi" || t === "v") && !seg.text.includes("DOS")) {
-          return cleanDef(seg.text.split(/[,;，；]/)[0]);
+          const v = firstDef(seg.text);
+          if (v) return v;
         }
       }
     } else if (pos === "noun") {
       for (const seg of segs) {
         if (seg.tags.includes("n")) {
-          return cleanDef(seg.text.split(/[,;，；]/)[0]);
+          const v = firstDef(seg.text);
+          if (v) return v;
         }
       }
     }
-    if (segs.length) {
-      return cleanDef(segs[0].text.split(/[,;，；]/)[0]);
+    // fallback：逐段尝试，跳过整条都是词形注释的段
+    for (const seg of segs) {
+      const v = firstDef(seg.text);
+      if (v) return v;
     }
     return "";
   }
@@ -295,16 +391,33 @@
   }
 
   // ---------- 词形还原 ----------
-  function lemmatize(word) {
+  function lemmatizeCandidates(word) {
+    // 生成词形还原候选（按优先级）。调用方必须用词典验证命中，
+    // 避免 lemmatize 截错（如 alternatives → alternativ）把变形词误导向
+    // 词典里的「词形注释词条」（释义 = XX的复数形式，不是真翻译）。
     const w = word.toLowerCase();
-    if (IRREGULAR[w]) return IRREGULAR[w];
-    // 保守规则：第三人称单数 / 复数去 s/es（排除常见误伤）
-    if (w.length > 4) {
-      if (w.endsWith("ies") && w !== "ties" && w !== "movies") return w.slice(0, -3) + "y";
-      if (w.endsWith("es") && !/(ss|zz|us|is|sh|ch|x|o)$/.test(w)) return w.slice(0, -2);
-      if (w.endsWith("s") && !/(ss|us|is|as|os)$/.test(w)) return w.slice(0, -1);
+    if (IRREGULAR[w]) return [IRREGULAR[w]];
+    const cands = [];
+    if (w.length > 3) {
+      if (w.endsWith("ies") && w !== "ties" && w !== "movies") {
+        cands.push(w.slice(0, -3) + "y"); // possibilities → possibility
+      } else if (w.endsWith("es")) {
+        cands.push(w.slice(0, -1)); // alternatives → alternative（复数 +s 优先）
+        cands.push(w.slice(0, -2)); // boxes → box（真正的 -es 复数）
+      } else if (w.endsWith("s") && !/(ss|us|is)$/.test(w)) {
+        cands.push(w.slice(0, -1)); // browsers → browser
+      }
     }
-    return w;
+    const out = [];
+    for (const c of cands) {
+      if (c !== w && !out.includes(c)) out.push(c);
+    }
+    return out;
+  }
+
+  function lemmatize(word) {
+    const cands = lemmatizeCandidates(word);
+    return cands.length ? cands[0] : word.toLowerCase();
   }
 
   // ---------- 核心翻译 ----------
@@ -348,7 +461,14 @@
           const stem = lemmatize(t);
           w = OVERRIDES[stem];
           if (w === undefined) {
-            const d = (DICT && (DICT[stem] || DICT[t.toLowerCase()])) || null;
+            // 变形词 → 按候选原形查词典（词典验证命中才算），
+            // 避免命中「词形注释词条」（释义 = XX的复数形式，不是真翻译）
+            let d = null;
+            for (const cand of lemmatizeCandidates(t)) {
+              d = DICT && DICT[cand];
+              if (d) break;
+            }
+            if (!d) d = DICT && DICT[t.toLowerCase()];
             if (d) {
               const ai = alphaIdx.indexOf(i);
               const prev = ai > 0 ? tokens[alphaIdx[ai - 1]] : null;
@@ -373,9 +493,15 @@
     return { text: result, missing };
   }
 
-  function translate(text) {
+  function translate(text, opts) {
+    const o = opts || {};
     const wordCount = (text.match(/[A-Za-z]+/g) || []).length;
-    return hardTranslate(text, wordCount > 4);
+    // 长句：词组 + 硬翻混合（可读性优先）
+    if (wordCount > 4) return hardTranslate(text, true);
+    // 短句：随机模式掷硬币决定是否套用词组表（有时正常中文，有时纯硬翻）
+    if (o.random) return hardTranslate(text, Math.random() < 0.5);
+    // 默认：短句纯硬翻（跑偏）
+    return hardTranslate(text, false);
   }
 
   // ---------- MyMemory 兜底 ----------
@@ -418,7 +544,7 @@
   async function translateWithFallback(text, opts) {
     const o = opts || {};
     const allowOnline = o.online !== false;
-    const { text: base, missing } = o.strict ? hardTranslate(text, false) : translate(text);
+    const { text: base, missing } = o.strict ? hardTranslate(text, false) : translate(text, o);
     const res = { text: base, missing: [], onlineUsed: 0, quota: false };
 
     if (!allowOnline || missing.size === 0) return res;
@@ -471,7 +597,7 @@
   const api = {
     OVERRIDES, IRREGULAR, PHRASES,
     setDict, dictLoaded, dictSize, loadDict, loadDictFromUrl,
-    lemmatize, pickDef, parseSegments,
+    lemmatize, lemmatizeCandidates, pickDef, parseSegments, stripFormNotes,
     hardTranslate, translate, translateWithFallback,
     _cache: { loadCache, saveCache, fetchWordZh }
   };

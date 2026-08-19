@@ -149,6 +149,9 @@
           <label class="opt-chip" id="modeChipStrict" title="全部词对词硬翻，不套用词组">
             <input type="radio" name="mode" value="strict">严格硬翻
           </label>
+          <label class="opt-chip" id="modeChipRandom" title="短句随机：有时套用词组（正常中文），有时纯硬翻">
+            <input type="radio" name="mode" value="random">随机模式
+          </label>
         </div>
         <label class="opt-chip toggle active" id="onlineChip" title="词典查不到的词用在线翻译补全（MyMemory）">
           <input type="checkbox" id="onlineToggle" checked><span>在线补全</span>
@@ -175,8 +178,8 @@
     词典数据来自 <a href="https://github.com/skywind3000/ECDICT" target="_blank" rel="noopener noreferrer">ECDICT</a>（MIT License），生僻词由 MyMemory 在线补全</p>
   </footer>
 
-  <script src="hard-translate.js?v=202608122212"></script>
-  <script src="ecdict-data.js?v=202608122212"></script>
+  <script src="hard-translate.js?v=202608191353"></script>
+  <script src="ecdict-data.js?v=202608191353"></script>
   <script src="../tools/theme.js?v=202608122212"></script>
   <script>
 
@@ -234,11 +237,12 @@
       translateBtn.disabled = true;
       translateBtn.textContent = '翻译中...';
 
-      const strict = document.querySelector('input[name="mode"]:checked').value === 'strict';
+      const mode = document.querySelector('input[name="mode"]:checked').value;
+      const strict = mode === 'strict';
       const allowOnline = onlineToggle.checked;
 
       try {
-        const res = await HardTranslate.translateWithFallback(text, { online: allowOnline, strict });
+        const res = await HardTranslate.translateWithFallback(text, { online: allowOnline, strict, random: mode === 'random' });
 
         resultText.textContent = res.text;
         resultCard.classList.add('show');
@@ -276,6 +280,7 @@
       r.addEventListener('change', () => {
         $('modeChipAuto').classList.toggle('active', r.value === 'auto');
         $('modeChipStrict').classList.toggle('active', r.value === 'strict');
+        $('modeChipRandom').classList.toggle('active', r.value === 'random');
       });
     });
     onlineToggle.addEventListener('change', () => {
