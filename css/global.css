@@ -176,35 +176,20 @@ img { max-width: 100%; display: block; }
 .warning-box a { color: #d97706; font-weight: bold; text-decoration: underline; }
 .download-container { max-width: 1200px; margin: 60px auto; padding: 0 20px; }
 
-/* 下载区动感引导提示：文字内流光 + 箭头同步摆动（无外框） */
+/* 下载区引导提示（静态，不喧宾夺主） */
 .download-hint {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 12px;
     margin: 0 0 30px;
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     font-weight: 600;
-    background: linear-gradient(90deg, #1d4ed8, #60a5fa, #1d4ed8);
-    background-size: 200% auto;
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    color: transparent;
-    animation: hintFlow 4s linear infinite;
+    color: var(--vantage-blue);
 }
 .download-hint .hint-arrow {
-    display: inline-block;
     font-size: 0.8rem;
-    animation: hintBounce 1.4s ease-in-out infinite;
-}
-@keyframes hintFlow {
-    0% { background-position: 0% center; }
-    100% { background-position: 200% center; }
-}
-@keyframes hintBounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(5px); }
+    color: var(--vantage-blue);
 }
 .os-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 30px; }
 .os-card { border: 1px solid var(--border); border-radius: 12px; padding: 40px 30px; text-align: center; background: #fff; transition: transform 0.3s ease, box-shadow 0.3s ease; display: flex; flex-direction: column; }
