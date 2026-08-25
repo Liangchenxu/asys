@@ -199,7 +199,7 @@ img { max-width: 100%; display: block; }
 .os-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
 .os-icon-img { width: 55px; height: 55px; margin: 0 auto 20px auto; display: block; object-fit: contain; }
 .os-title { font-size: 1.5rem; margin-bottom: 25px; font-weight: 700; }
-.pkg-select { width: 100%; padding: 10px 15px; margin-bottom: 12px; border-radius: 8px; border: 1px solid var(--border); background-color: #f9fafb; font-size: 0.95rem; color: var(--text-main); outline: none; cursor: pointer; font-family: inherit; box-sizing: border-box; }
+.pkg-select { width: 100%; padding: 10px 15px; margin-bottom: 12px; border-radius: 8px; border: 1px solid var(--border); background-color: #ffffff; font-size: 0.95rem; color: var(--text-main); outline: none; cursor: pointer; font-family: inherit; box-sizing: border-box; }
 .pkg-select:focus { border-color: var(--vantage-blue); }
 .os-card .btn-group { display: flex; flex-direction: column; gap: 12px; margin-top: auto; }
 .os-card .btn-primary { display: block; padding: 12px 20px; background: var(--vantage-blue); color: #fff; text-decoration: none; border-radius: 8px; font-weight: 600; transition: 0.2s; }
