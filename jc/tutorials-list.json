@@ -1,7 +1,12 @@
 [
     {
         "id": "usb-rescue",
-        "title": "关于系统急救U盘",
-        "filePath": "https://asystech.cn/jc/usb-rescue.html"
+        "title": "系统急救 U 盘制作指南",
+        "filePath": "../jc/usb-rescue.html"
+    },
+    {
+        "id": "windows11-install",
+        "title": "Windows 11 安装指南",
+        "filePath": "../jc/windows11-install.html"
     }
 ]

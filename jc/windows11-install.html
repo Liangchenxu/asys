@@ -1,35 +1,92 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>Windows 11 安装教程</title>
-</head>
-<body>
-    <h1 id="section1">Windows 11 安装指南</h1>
-    <p>这里是Windows 11安装指南的详细内容...</p>
-    <p>您可以使用Markdown格式编写内容，支持标题、列表、代码块等。</p>
-    
-    <h2>准备工作</h2>
-    <p>在开始安装之前，请确保您已准备好以下内容：</p>
-    <ul>
-        <li>8GB或更大容量的U盘</li>
-        <li>Windows 11 ISO镜像文件</li>
-        <li>备份重要数据</li>
-    </ul>
-    
-    <h2>安装步骤</h2>
-    <p>以下是简要的安装步骤：</p>
-    <ol>
-        <li>制作启动U盘</li>
-        <li>设置BIOS启动顺序</li>
-        <li>开始安装过程</li>
-        <li>完成初始设置</li>
-    </ol>
-    
-    <h3>制作启动U盘</h3>
-    <p>使用Rufus工具制作启动U盘的命令示例：</p>
-    <pre><code># 这里是代码示例
-# 您可以使用pre和code标签展示代码
-# 代码会自动高亮显示</code></pre>
-</body>
-</html>
+<h1 id="windows-11">Windows 11 安装指南</h1>
+<p>从制作启动盘到完成系统初始化，一份面向新手的完整 Windows 11 安装教程。</p>
+<h2 id="_1">安装前准备</h2>
+<ul>
+<li><strong>8GB 或更大</strong> U 盘（制作启动盘用，会清空数据）</li>
+<li>Windows 11 系统镜像（.iso），从微软官网下载：https://www.microsoft.com/zh-cn/software-download/windows11</li>
+<li>备份原系统的重要文件（桌面、文档、照片等）</li>
+<li>确认电脑满足 Win11 要求：64 位 CPU、4GB 内存、64GB 硬盘、TPM 2.0</li>
+</ul>
+<blockquote>
+<p>⚠️ <strong>TPM 2.0 是什么？</strong> 近几年的电脑基本都支持。老电脑如果不满足，安装时会提示"此电脑无法运行 Windows 11"，解决方法见文末常见问题。</p>
+</blockquote>
+<h2 id="u">第一步：制作启动 U 盘</h2>
+<h3 id="_2">方式一：微软官方工具（最简单）</h3>
+<ol>
+<li>下载「Windows 11 安装媒体创建工具」并运行</li>
+<li>选择语言和版本 → 选择「U 盘」</li>
+<li>选择你的 U 盘 → 自动下载并写入，等待完成</li>
+</ol>
+<h3 id="ventoy">方式二：Ventoy（推荐，可复用）</h3>
+<pre><code class="language-text">1. 下载 Ventoy（https://www.ventoy.net）并安装到 U 盘
+2. 把 Win11 的 .iso 文件直接复制进 U 盘
+3. 以后想换系统版本，替换 .iso 即可，不用重新制作
+</code></pre>
+<h3 id="rufuswindows">方式三：Rufus（Windows 下老牌工具）</h3>
+<pre><code class="language-text">1. 下载 Rufus（https://rufus.ie）
+2. 选择 U 盘 → 选择 .iso 镜像 → 点击「开始」
+3. 遇到询问保持默认即可
+</code></pre>
+<h2 id="u_1">第二步：从 U 盘启动</h2>
+<ol>
+<li>插入 U 盘，开机时按启动菜单键（常见：F12 / F8 / F11 / Esc，品牌不同按键不同）</li>
+<li>选择 U 盘启动项，进入 Windows 安装程序</li>
+<li>选择语言和键盘布局 → 点击「下一步」→「现在安装」</li>
+</ol>
+<h2 id="_3">第三步：安装系统</h2>
+<ol>
+<li>输入产品密钥（没有就点「我没有产品密钥」，装完再激活）</li>
+<li>选择版本（家庭版/专业版，根据你的密钥选择）</li>
+<li>勾选「我接受许可条款」→ 下一步</li>
+<li><strong>选择「自定义：仅安装 Windows」</strong>（全新安装）</li>
+</ol>
+<h3 id="_4">硬盘分区（关键步骤）</h3>
+<table>
+<thead>
+<tr>
+<th>情况</th>
+<th>做法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>全新硬盘</td>
+<td>点「新建」创建分区，系统会自动生成引导分区，剩余空间装系统</td>
+</tr>
+<tr>
+<td>已有分区</td>
+<td>选原系统分区（C 盘）→ 「格式化」→ 下一步</td>
+</tr>
+<tr>
+<td>想重分区</td>
+<td>删除所有分区 → 重新「新建」（⚠️ 数据全没，先备份）</td>
+</tr>
+</tbody>
+</table>
+<ol start="5">
+<li>选择目标分区 → 点击「下一步」，系统开始复制文件，期间会自动重启几次，<strong>不要动 U 盘</strong></li>
+</ol>
+<h2 id="_5">第四步：初始化设置</h2>
+<p>重启后进入 OOBE（首次开机设置）：</p>
+<ol>
+<li>选择区域（中国）→ 输入法（微软拼音）</li>
+<li>连接网络（建议连网，会检查更新）</li>
+<li>登录微软账户（或选择「改为域加入」→ 离线账户，跳过登录）</li>
+<li>设置 PIN 密码 → 隐私设置全部按需选择 → 等待完成</li>
+</ol>
+<h2 id="_6">第五步：装完必做</h2>
+<ul>
+<li><strong>激活系统</strong>：设置 → 系统 → 激活，输入密钥或确认数字许可证</li>
+<li><strong>安装驱动</strong>：Windows 更新里检查可选更新，或到品牌官网下载驱动</li>
+<li><strong>安装常用软件</strong>：浏览器、输入法、办公软件等</li>
+<li><strong>开启系统备份</strong>：设置 → 账户 → Windows 备份</li>
+</ul>
+<h2 id="_7">常见问题</h2>
+<p><strong>Q：提示"此电脑无法运行 Windows 11"？</strong>
+A：一般是 TPM 或 Secure Boot 未开启。进 BIOS（开机按 Del/F2）→ 开启 TPM（Intel 叫 PTT，AMD 叫 fTPM）→ 开启 Secure Boot → 保存重启。老 CPU 实在不行就装 Windows 10 或改用绕过检测工具（如 Rufus 的扩展选项）。</p>
+<p><strong>Q：安装时找不到硬盘？</strong>
+A：进 BIOS 把硬盘模式从 RAID 改成 AHCI（Intel 平台）；或主板未识别 NVMe 固态，更新 BIOS。</p>
+<p><strong>Q：装到一半卡住/报错？</strong>
+A：换 USB 2.0 接口重试；重新制作启动盘；检查内存（可单条内存测试）；或检查硬盘健康度（用 PE 里的 DiskGenius/CrystalDiskInfo）。</p>
+<p><strong>Q：不想要新系统里的"预留分区"？</strong>
+A：预留分区（EFI/MSR/恢复）是 Windows 正常运行必需的，建议保留，不要手动删除。</p>
