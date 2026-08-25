@@ -45,7 +45,7 @@ def main() -> int:
     args = parser.parse_args()
 
     doc_dir = BASE / args.dir
-    md_files = sorted(doc_dir.glob("*.md"))
+    md_files = sorted(f for f in doc_dir.glob("*.md") if f.name.lower() != "readme.md")
     if not md_files:
         print(f"{doc_dir} 下没有找到 .md 文件")
         return 1
