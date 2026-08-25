@@ -263,19 +263,31 @@ document.addEventListener('DOMContentLoaded', function () {
             } else if (ua.indexOf("Linux") !== -1 || ua.indexOf("X11") !== -1) {
                 smartIcon.textContent = "🐧";
 
-                // 【核心修复】：在 Linux 分支内，进一步判断 CPU 架构
-                // 龙芯的新架构是 loongarch64，老架构可能是 mips64 或 mips64el
-                if (ua.indexOf("loongarch64") !== -1 || ua.indexOf("mips64") !== -1 || ua.indexOf("LoongArch") !== -1) {
-                    smartText.textContent = "下载 Vantage for Linux (loong64)";
-                    // 请将下方的 linkData.linux_loongson_deb 替换为你实际的龙芯下载链接变量
-                    smartBtn.href = linkData.linux_loongson_deb || "#";
-                }
-                // 如果你们还有 ARM 架构（比如飞腾、鲲鹏），可以继续加判断
-                // else if (ua.indexOf("aarch64") !== -1 || ua.indexOf("arm64") !== -1) { ... }
-                else {
-                    // 默认分配 x64 (AMD/Intel) 版本的 Linux
-                    smartText.textContent = "下载 Vantage for Linux (.deb)";
-                    smartBtn.href = linkData.linux_x64_deb || "#";
+                // Linux：优先引导软件源安装（不直接给包下载）
+                const guide = document.getElementById('linux-install-guide');
+                const isLoong = ua.indexOf("loongarch64") !== -1 || ua.indexOf("mips64") !== -1 || ua.indexOf("LoongArch") !== -1;
+
+                if (guide) {
+                    guide.style.display = 'block';
+                    if (isLoong) {
+                        // 龙芯：软件源未覆盖，提示使用手动下载
+                        document.getElementById('linux-loong64-hint').style.display = 'block';
+                        smartText.textContent = "下载 Vantage for Linux (loong64)";
+                        smartBtn.href = linkData.linux_loongson_deb || "#";
+                        smartBtn.style.display = 'inline-flex';
+                    } else {
+                        // 常规 Linux：隐藏下载按钮，突出安装引导
+                        smartBtn.style.display = 'none';
+                    }
+                } else {
+                    // 兜底：找不到引导区时维持原逻辑
+                    if (isLoong) {
+                        smartText.textContent = "下载 Vantage for Linux (loong64)";
+                        smartBtn.href = linkData.linux_loongson_deb || "#";
+                    } else {
+                        smartText.textContent = "下载 Vantage for Linux (.deb)";
+                        smartBtn.href = linkData.linux_x64_deb || "#";
+                    }
                 }
             } else {
                 document.getElementById('smart-download-section').style.display = 'none';

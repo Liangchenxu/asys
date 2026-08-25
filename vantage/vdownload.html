@@ -5,8 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>下载 Vantage - ASYS 科技</title>
     <link rel="icon" href="../img/vantage.webp" type="image/png">
-    <link rel="stylesheet" href="../css/global.css?v=202608260123">
-    <script src="../js/global.js?v=202608260123" defer></script>
+    <link rel="stylesheet" href="../css/global.css?v=202608260129">
+    <link rel="stylesheet" href="../css/docs.css?v=202608260129">
+    <link rel="stylesheet" href="../css/highlight-github.min.css?v=202608260129">
+    <script src="../js/highlight.min.js?v=202608260129" defer></script>
+    <script src="../js/global.js?v=202608260129" defer></script>
 </head>
 <body class="site-vantage page-vdownload"> 
 
@@ -20,6 +23,20 @@
             <a href="#" id="smart-btn" class="btn-smart">
                 <span id="smart-icon">⏳</span> <span id="smart-text">正在读取配置...</span>
             </a>
+        </div>
+
+        <!-- Linux 安装引导区（检测到 Linux 时显示，替代包下载入口） -->
+        <div id="linux-install-guide" class="docs-content" style="display: none; max-width: 640px; margin: 30px auto 0; text-align: left;">
+            <div class="code-block" id="linux-install-code">
+                <div class="code-header">
+                    <span class="code-lang">bash</span>
+                    <button class="code-copy" type="button" aria-label="复制安装命令">复制</button>
+                </div>
+                <pre><code class="language-bash">curl -fsSL https://dl.asystech.cn/vantage-release/install.sh | sudo bash</code></pre>
+            </div>
+            <p style="margin-top: 10px;">脚本自动识别 Debian/Ubuntu、RHEL/CentOS/Fedora 等发行版并配置软件源，<strong>安装后随系统自动更新</strong>。</p>
+            <p><a href="docs.html#linux-repos">📖 查看详细安装文档（手动配置软件源 / 其他发行版）</a></p>
+            <p id="linux-loong64-hint" style="display: none;">🐉 龙芯用户：软件源暂未覆盖 LoongArch64，请使用下方「Linux · LoongArch64」卡片手动下载。</p>
         </div>
 
 		<div id="version-display" style="font-size: 0.85rem; color: #9ca3af; margin-top: 25px;">正在加载版本信息...</div>
@@ -78,6 +95,7 @@
             <div class="os-card">
                 <img src="../img/linuxpg.png" alt="Linux" class="os-icon-img">
                 <div class="os-title">Linux</div>
+                <div style="font-size: 0.85rem; color: #9ca3af; margin-bottom: 12px;">💡 推荐使用软件源安装（自动更新），以下为手动下载备选</div>
                 <select id="linux-format" class="pkg-select">
                     <option value="deb">Debian / Ubuntu (.deb)</option>
                     <option value="rpm">Red Hat / Rocky (.rpm)</option>
