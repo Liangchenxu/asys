@@ -92,7 +92,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     const latestTag = data[0].tag_name.trim();
                     const versionDisplay = document.getElementById('version-display');
                     if (versionDisplay) {
-                        versionDisplay.innerHTML = `当前版本：${latestTag}`;
+                        versionDisplay.innerHTML = `当前版本：${latestTag} · <a href="docs.html#changelog-153.0-6">查看更新日志 →</a>`;
                     }
                 }
             })

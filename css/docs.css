@@ -42,6 +42,8 @@
 .linux-guide .code-block { margin-bottom: 12px; }
 .linux-guide p { margin-bottom: 10px; line-height: 1.6; font-size: 0.95rem; }
 .linux-guide a { font-size: 0.95rem; }
+/* 引导区命令不折行（容器已放宽；极端窄屏才出横向滚动） */
+.linux-guide .code-block pre { white-space: pre; }
 
 /* ---------- 行内代码 ---------- */
 .docs-content code { background: #f1f5f9; padding: 3px 6px; border-radius: 4px; font-family: Consolas, monospace; font-size: 0.9em; color: #475569; }
