@@ -302,13 +302,7 @@ img { max-width: 100%; display: block; }
 .page-tutorials .toc-link:hover { background: #f1f5f9; color: var(--asys-blue); }
 .page-tutorials .toc-link.active { background: var(--asys-blue); color: white; }
 .page-tutorials .tutorial-content { flex: 1; background: white; border-radius: 12px; padding: 40px; border: 1px solid #e2e8f0; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); min-height: 500px; }
-.page-tutorials .embedded-content img { max-width: 100%; height: auto; border-radius: 8px; margin: 20px 0; }
-.page-tutorials .embedded-content h1 { font-size: 2.2rem; margin-bottom: 20px; color: #0f172a; border-bottom: 2px solid #e2e8f0; padding-bottom: 15px; }
-.page-tutorials .embedded-content h2 { font-size: 1.8rem; margin: 40px 0 20px 0; color: #0f172a; padding-bottom: 10px; border-bottom: 1px solid #e2e8f0; }
-.page-tutorials .embedded-content h3 { font-size: 1.4rem; margin: 30px 0 15px 0; color: #0f172a; }
-.page-tutorials .embedded-content p { margin-bottom: 15px; }
-.page-tutorials .embedded-content pre { background: #1e293b; color: #fff; padding: 15px; border-radius: 8px; overflow-x: auto; margin: 20px 0; }
-.page-tutorials .embedded-content code { background: #f1f5f9; padding: 2px 6px; border-radius: 4px; font-family: monospace; }
+/* 教程内容排版已统一由 css/docs.css 的 .docs-content 接管（原 .embedded-content 规则已移除） */
 .page-tutorials .content-placeholder { text-align: center; color: #94a3b8; padding: 100px 0; }
 .page-tutorials .content-placeholder .icon { font-size: 3rem; margin-bottom: 15px; }
 .page-tutorials .loading { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px; }

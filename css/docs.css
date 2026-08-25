@@ -6,7 +6,7 @@
 /* ---------- 布局 ---------- */
 .page-docs .docs-layout { display: flex; max-width: 1200px; margin: 0 auto; min-height: calc(100vh - 150px); }
 .page-docs .docs-sidebar { width: 280px; padding: 40px 20px; border-right: 1px solid var(--border); background: #fbfbfc; position: sticky; top: 70px; height: calc(100vh - 70px); overflow-y: auto; }
-.page-docs .docs-content { flex: 1; padding: 40px 60px; max-width: 850px; }
+.docs-content { flex: 1; padding: 40px 60px; max-width: 850px; }
 
 /* ---------- 侧边栏目录树 ---------- */
 .page-docs .docs-sidebar .doc-cat { margin-bottom: 4px; }
@@ -23,62 +23,62 @@
 .page-docs .docs-sidebar a:hover, .page-docs .docs-sidebar a.active { background: #eff6ff; color: var(--vantage-blue); }
 
 /* ---------- 内容区基础排版（传统 Markdown 风格，参考 GitHub README） ---------- */
-.page-docs .docs-content h1 { font-size: 2rem; margin-top: 0; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid #d0d7de; color: #1f2328; font-weight: 600; }
-.page-docs .docs-content h2 { font-size: 1.55rem; margin-top: 36px; margin-bottom: 14px; padding-bottom: 8px; border-bottom: 1px solid #d0d7de; color: #1f2328; font-weight: 600; }
-.page-docs .docs-content h3 { font-size: 1.25rem; margin-top: 28px; margin-bottom: 12px; color: #1f2328; font-weight: 600; }
-.page-docs .docs-content h4 { font-size: 1.05rem; margin-top: 22px; margin-bottom: 10px; color: #24292f; font-weight: 600; }
-.page-docs .docs-content p { font-size: 1.02rem; color: #24292f; margin-bottom: 20px; line-height: 1.75; }
-.page-docs .docs-content a { color: #0969da; text-decoration: none; }
-.page-docs .docs-content a:hover { text-decoration: underline; }
-.page-docs .docs-content strong { color: #1f2328; font-weight: 600; }
-.page-docs .docs-content hr { border: none; border-top: 1px solid #d0d7de; margin: 28px 0; }
-.page-docs .docs-content ul, .page-docs .docs-content ol { padding-left: 26px; margin: 0 0 20px 0; line-height: 1.8; color: #24292f; }
-.page-docs .docs-content li { margin-bottom: 4px; }
-.page-docs .docs-content blockquote { border-left: 4px solid #d0d7de; background: #f6f8fa; margin: 0 0 20px 0; padding: 10px 18px; color: #57606a; border-radius: 0 6px 6px 0; }
-.page-docs .docs-content img { max-width: 100%; height: auto; border-radius: 8px; margin: 10px 0; }
-.page-docs .docs-content .badge-row { display: flex; gap: 10px; flex-wrap: wrap; margin: 0 0 30px 0; }
+.docs-content h1 { font-size: 2rem; margin-top: 0; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid #d0d7de; color: #1f2328; font-weight: 600; }
+.docs-content h2 { font-size: 1.55rem; margin-top: 36px; margin-bottom: 14px; padding-bottom: 8px; border-bottom: 1px solid #d0d7de; color: #1f2328; font-weight: 600; }
+.docs-content h3 { font-size: 1.25rem; margin-top: 28px; margin-bottom: 12px; color: #1f2328; font-weight: 600; }
+.docs-content h4 { font-size: 1.05rem; margin-top: 22px; margin-bottom: 10px; color: #24292f; font-weight: 600; }
+.docs-content p { font-size: 1.02rem; color: #24292f; margin-bottom: 20px; line-height: 1.75; }
+.docs-content a { color: #0969da; text-decoration: none; }
+.docs-content a:hover { text-decoration: underline; }
+.docs-content strong { color: #1f2328; font-weight: 600; }
+.docs-content hr { border: none; border-top: 1px solid #d0d7de; margin: 28px 0; }
+.docs-content ul, .docs-content ol { padding-left: 26px; margin: 0 0 20px 0; line-height: 1.8; color: #24292f; }
+.docs-content li { margin-bottom: 4px; }
+.docs-content blockquote { border-left: 4px solid #d0d7de; background: #f6f8fa; margin: 0 0 20px 0; padding: 10px 18px; color: #57606a; border-radius: 0 6px 6px 0; }
+.docs-content img { max-width: 100%; height: auto; border-radius: 8px; margin: 10px 0; }
+.docs-content .badge-row { display: flex; gap: 10px; flex-wrap: wrap; margin: 0 0 30px 0; }
 
 /* ---------- 行内代码 ---------- */
-.page-docs .docs-content code { background: #f1f5f9; padding: 3px 6px; border-radius: 4px; font-family: Consolas, monospace; font-size: 0.9em; color: #475569; }
+.docs-content code { background: #f1f5f9; padding: 3px 6px; border-radius: 4px; font-family: Consolas, monospace; font-size: 0.9em; color: #475569; }
 
 /* ---------- 代码块（顶栏 + 语言名 + 复制按钮） ---------- */
-.page-docs .docs-content .code-block { margin: 0 0 20px 0; border: 1px solid #d0d7de; border-radius: 8px; overflow: hidden; }
-.page-docs .docs-content .code-block .code-header { display: flex; justify-content: space-between; align-items: center; background: #eaeef2; border-bottom: 1px solid #d0d7de; padding: 5px 12px; font-family: Consolas, monospace; font-size: 0.75rem; color: #57606a; }
-.page-docs .docs-content .code-block .code-lang { font-weight: 600; text-transform: lowercase; }
-.page-docs .docs-content .code-block .code-copy { background: #fff; border: 1px solid #d0d7de; color: #57606a; font-size: 0.75rem; padding: 2px 10px; border-radius: 4px; cursor: pointer; opacity: 0.85; transition: all 0.2s; font-family: inherit; line-height: 1.6; }
-.page-docs .docs-content .code-block .code-copy:hover { opacity: 1; background: var(--vantage-blue); color: #fff; border-color: var(--vantage-blue); }
-.page-docs .docs-content .code-block pre { background: #f6f8fa; border: none; border-radius: 0; padding: 16px 20px; margin: 0; overflow-x: hidden; line-height: 1.6; white-space: pre-wrap; word-break: break-word; }
-.page-docs .docs-content .code-block pre code { background: none; padding: 0 !important; color: #24292f; font-size: 0.9em; white-space: pre-wrap; word-break: break-word; counter-reset: line; }
-.page-docs .docs-content .code-block pre code .hljs-line { display: block; counter-increment: line; }
-.page-docs .docs-content .code-block pre code .hljs-line::before { content: counter(line); display: inline-block; width: 2.2em; margin-right: 1.2em; color: #a8b1ba; text-align: right; user-select: none; -moz-user-select: none; }
+.docs-content .code-block { margin: 0 0 20px 0; border: 1px solid #d0d7de; border-radius: 8px; overflow: hidden; }
+.docs-content .code-block .code-header { display: flex; justify-content: space-between; align-items: center; background: #eaeef2; border-bottom: 1px solid #d0d7de; padding: 5px 12px; font-family: Consolas, monospace; font-size: 0.75rem; color: #57606a; }
+.docs-content .code-block .code-lang { font-weight: 600; text-transform: lowercase; }
+.docs-content .code-block .code-copy { background: #fff; border: 1px solid #d0d7de; color: #57606a; font-size: 0.75rem; padding: 2px 10px; border-radius: 4px; cursor: pointer; opacity: 0.85; transition: all 0.2s; font-family: inherit; line-height: 1.6; }
+.docs-content .code-block .code-copy:hover { opacity: 1; background: var(--vantage-blue); color: #fff; border-color: var(--vantage-blue); }
+.docs-content .code-block pre { background: #f6f8fa; border: none; border-radius: 0; padding: 16px 20px; margin: 0; overflow-x: hidden; line-height: 1.6; white-space: pre-wrap; word-break: break-word; }
+.docs-content .code-block pre code { background: none; padding: 0 !important; color: #24292f; font-size: 0.9em; white-space: pre-wrap; word-break: break-word; counter-reset: line; }
+.docs-content .code-block pre code .hljs-line { display: block; counter-increment: line; }
+.docs-content .code-block pre code .hljs-line::before { content: counter(line); display: inline-block; width: 2.2em; margin-right: 1.2em; color: #a8b1ba; text-align: right; user-select: none; -moz-user-select: none; }
 
 /* ---------- 表格 ---------- */
-.page-docs .docs-content table { width: 100%; border-collapse: collapse; margin: 0 0 20px 0; font-size: 0.95rem; }
-.page-docs .docs-content th, .page-docs .docs-content td { border: 1px solid #e2e8f0; padding: 8px 14px; text-align: left; }
-.page-docs .docs-content th { background: #f1f5f9; font-weight: 600; }
-.page-docs .docs-content tr:nth-child(even) td { background: #fafbfc; }
+.docs-content table { width: 100%; border-collapse: collapse; margin: 0 0 20px 0; font-size: 0.95rem; }
+.docs-content th, .docs-content td { border: 1px solid #e2e8f0; padding: 8px 14px; text-align: left; }
+.docs-content th { background: #f1f5f9; font-weight: 600; }
+.docs-content tr:nth-child(even) td { background: #fafbfc; }
 
 /* ---------- 文档辅助组件 ---------- */
-.page-docs .docs-link { color: var(--vantage-blue); font-weight: bold; text-decoration: none; }
-.page-docs .docs-link:hover { text-decoration: underline; }
-.page-docs .step-block { background: var(--bg-mask); border: 1px solid var(--border); border-radius: 8px; padding: 24px; margin-bottom: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.02); }
-.page-docs .step-title { font-size: 1.1rem; font-weight: 600; margin: 0 0 12px 0; display: flex; align-items: center; gap: 10px; color: #111827; }
-.page-docs .step-number { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; background: var(--vantage-blue); color: white; border-radius: 50%; font-size: 0.85rem; }
-.page-docs .step-content p { margin: 0 0 16px 0; color: var(--text-sub); }
-.page-docs .highlight-code { background: #f1f5f9; padding: 2px 6px; border-radius: 4px; font-family: monospace; font-size: 0.9em; color: #0f172a; }
-.page-docs .download-btn { display: inline-block; background: #f3f4f6; color: #111827; border: 1px solid #d1d5db; padding: 8px 16px; border-radius: 6px; text-decoration: none; font-weight: 500; font-size: 0.95rem; margin-bottom: 16px; transition: 0.2s; }
-.page-docs .download-btn:hover { background: #e5e7eb; }
-.page-docs .tutorial-img { width: 100%; max-width: 600px; height: auto; border: 1px solid var(--border); border-radius: 6px; display: block; margin-top: 15px; background-color: #f9fafb; }
-.page-docs .reason-box { background-color: #fffbeb; border: 1px solid #fef08a; border-radius: 8px; padding: 24px; margin-top: 3rem; }
-.page-docs .reason-box h3 { margin: 0 0 12px 0; color: #92400e; font-size: 1.2rem; display: flex; align-items: center; gap: 8px; }
-.page-docs .reason-box p { margin: 0 0 12px 0; color: #92400e; font-size: 0.95rem; }
-.page-docs .loading-text { text-align: center; color: #9ca3af; margin-top: 50px; font-size: 1.1rem; }
+.docs-link { color: var(--vantage-blue); font-weight: bold; text-decoration: none; }
+.docs-link:hover { text-decoration: underline; }
+.step-block { background: var(--bg-mask); border: 1px solid var(--border); border-radius: 8px; padding: 24px; margin-bottom: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.02); }
+.step-title { font-size: 1.1rem; font-weight: 600; margin: 0 0 12px 0; display: flex; align-items: center; gap: 10px; color: #111827; }
+.step-number { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; background: var(--vantage-blue); color: white; border-radius: 50%; font-size: 0.85rem; }
+.step-content p { margin: 0 0 16px 0; color: var(--text-sub); }
+.highlight-code { background: #f1f5f9; padding: 2px 6px; border-radius: 4px; font-family: monospace; font-size: 0.9em; color: #0f172a; }
+.download-btn { display: inline-block; background: #f3f4f6; color: #111827; border: 1px solid #d1d5db; padding: 8px 16px; border-radius: 6px; text-decoration: none; font-weight: 500; font-size: 0.95rem; margin-bottom: 16px; transition: 0.2s; }
+.download-btn:hover { background: #e5e7eb; }
+.tutorial-img { width: 100%; max-width: 600px; height: auto; border: 1px solid var(--border); border-radius: 6px; display: block; margin-top: 15px; background-color: #f9fafb; }
+.reason-box { background-color: #fffbeb; border: 1px solid #fef08a; border-radius: 8px; padding: 24px; margin-top: 3rem; }
+.reason-box h3 { margin: 0 0 12px 0; color: #92400e; font-size: 1.2rem; display: flex; align-items: center; gap: 8px; }
+.reason-box p { margin: 0 0 12px 0; color: #92400e; font-size: 0.95rem; }
+.loading-text { text-align: center; color: #9ca3af; margin-top: 50px; font-size: 1.1rem; }
 
 /* ---------- 移动端适配 ---------- */
 @media (max-width: 768px) {
     .page-docs .docs-layout { flex-direction: column; }
     .page-docs .docs-sidebar { width: 100%; position: static; margin-bottom: 20px; height: auto; border-right: none; border-bottom: 1px solid var(--border); padding: 20px 15px 5px; }
-    .page-docs .docs-content { padding: 20px; width: 100%; }
+    .docs-content { padding: 20px; width: 100%; }
     .page-docs .docs-sidebar ul { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 15px; }
     .page-docs .docs-sidebar .doc-cat { width: 100%; }
     .page-docs .docs-sidebar .doc-cat-items { display: none; flex-wrap: wrap; justify-content: flex-start; gap: 4px; margin: 2px 0 10px 0; }

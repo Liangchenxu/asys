@@ -365,9 +365,80 @@ injectCommonComponents();
 // 🚀 教程页与文档页专属 JS 逻辑
 // =========================================================
 document.addEventListener('DOMContentLoaded', function () {
+        /* =========================================
+           通用代码块增强（文档页/教程页共用）
+           流程：外包顶栏（语言名+复制）→ 语法高亮 → 行号
+           ========================================= */
+        function insertCodeHeaders(container) {
+            container.querySelectorAll('pre').forEach(pre => {
+                if (pre.parentElement && pre.parentElement.classList.contains('code-block')) return;
+                const wrapper = document.createElement('div');
+                wrapper.className = 'code-block';
+                const langMatch = (pre.querySelector('code')?.className || '').match(/language-(\S+)/);
+                const lang = langMatch ? langMatch[1] : '';
+                const header = document.createElement('div');
+                header.className = 'code-header';
+                header.innerHTML = `<span class="code-lang"${lang ? '' : ' style="display:none;"'}>${lang}</span><button class="code-copy" type="button" aria-label="复制代码">复制</button>`;
+                wrapper.appendChild(header);
+                pre.parentNode.insertBefore(wrapper, pre);
+                wrapper.appendChild(pre);
+            });
+        }
+
+        // 代码行号：高亮后按行包裹 span，行号由 CSS counter 生成（伪元素，不污染复制文本）
+        function wrapCodeLines(container) {
+            container.querySelectorAll('pre code').forEach(code => {
+                if (code.querySelector('.hljs-line')) return;
+                const lines = code.innerHTML.split('\n');
+                if (lines.length && lines[lines.length - 1] === '') lines.pop();
+                code.innerHTML = lines.map(line => `<span class="hljs-line">${line || ' '}</span>`).join('\n');
+            });
+        }
+
+        // 代码块增强入口：外包 + 高亮 + 行号（顺序不能反）
+        function enhanceCodeBlocks(container) {
+            if (!container) return;
+            insertCodeHeaders(container);
+            if (window.hljs) {
+                container.querySelectorAll('pre code').forEach(el => hljs.highlightElement(el));
+            }
+            wrapCodeLines(container);
+        }
+
+        // 剪贴板 API 不可用时的降级方案
+        function fallbackCopy(text, done) {
+            const ta = document.createElement('textarea');
+            ta.value = text;
+            ta.style.position = 'fixed';
+            ta.style.opacity = '0';
+            document.body.appendChild(ta);
+            ta.select();
+            try { document.execCommand('copy'); done(); } catch (err) { }
+            document.body.removeChild(ta);
+        }
+
+        // 复制按钮事件（事件委托，全站生效，动态内容无需重复绑定）
+        document.addEventListener('click', e => {
+            const btn = e.target.closest('.code-copy');
+            if (!btn) return;
+            const block = btn.closest('.code-block') || btn.closest('pre');
+            const code = block ? block.querySelector('code') : null;
+            if (!code) return;
+            const text = code.innerText;
+            const done = () => {
+                btn.textContent = '✓ 已复制';
+                setTimeout(() => { btn.textContent = '复制'; }, 1500);
+            };
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(done).catch(() => fallbackCopy(text, done));
+            } else {
+                fallbackCopy(text, done);
+            }
+        });
+
     // --- 教程页面逻辑 ---
     if (document.body.classList.contains('page-tutorials')) {
-        const TUTORIALS_LIST_URL = `https://asystech.cn/jc/tutorials-list.json`;
+        const TUTORIALS_LIST_URL = `../jc/tutorials-list.json`;
         fetch(TUTORIALS_LIST_URL)
             .then(res => res.ok ? res.json() : Promise.reject(res.status))
             .then(tutorials => {
@@ -409,10 +480,12 @@ document.addEventListener('DOMContentLoaded', function () {
                     document.getElementById('content-loading').style.display = 'none';
                     const container = document.getElementById('tutorial-content');
                     container.innerHTML = html;
+                    container.classList.add('docs-content');
                     container.style.display = 'block';
                     container.querySelectorAll('img').forEach(img => {
                         if (!img.style.width) { img.style.maxWidth = '100%'; img.style.height = 'auto'; }
                     });
+                    enhanceCodeBlocks(container);
                 })
                 .catch(() => {
                     document.getElementById('content-loading').style.display = 'none';
@@ -476,64 +549,6 @@ document.addEventListener('DOMContentLoaded', function () {
             if (catEl) catEl.classList.add('open');
         }
 
-        // 代码块：外包 code-block，顶部 header 显示语言名 + 复制按钮
-        function insertCodeHeaders(container) {
-            container.querySelectorAll('pre').forEach(pre => {
-                if (pre.parentElement && pre.parentElement.classList.contains('code-block')) return;
-                const wrapper = document.createElement('div');
-                wrapper.className = 'code-block';
-                const langMatch = (pre.querySelector('code')?.className || '').match(/language-(\S+)/);
-                const lang = langMatch ? langMatch[1] : '';
-                const header = document.createElement('div');
-                header.className = 'code-header';
-                header.innerHTML = `<span class="code-lang"${lang ? '' : ' style="display:none;"'}>${lang}</span><button class="code-copy" type="button" aria-label="复制代码">复制</button>`;
-                wrapper.appendChild(header);
-                pre.parentNode.insertBefore(wrapper, pre);
-                wrapper.appendChild(pre);
-            });
-        }
-
-        // 复制按钮事件（事件委托，动态内容无需重复绑定）
-        document.addEventListener('click', e => {
-            const btn = e.target.closest('.code-copy');
-            if (!btn) return;
-            const block = btn.closest('.code-block') || btn.closest('pre');
-            const code = block ? block.querySelector('code') : null;
-            if (!code) return;
-            const text = code.innerText;
-            const done = () => {
-                btn.textContent = '✓ 已复制';
-                setTimeout(() => { btn.textContent = '复制'; }, 1500);
-            };
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(text).then(done).catch(() => fallbackCopy(text, done));
-            } else {
-                fallbackCopy(text, done);
-            }
-        });
-
-        // 剪贴板 API 不可用时的降级方案
-        function fallbackCopy(text, done) {
-            const ta = document.createElement('textarea');
-            ta.value = text;
-            ta.style.position = 'fixed';
-            ta.style.opacity = '0';
-            document.body.appendChild(ta);
-            ta.select();
-            try { document.execCommand('copy'); done(); } catch (err) { }
-            document.body.removeChild(ta);
-        }
-
-        // 代码行号：高亮后按行包裹 span，行号由 CSS counter 生成（伪元素，不污染复制文本）
-        function wrapCodeLines(container) {
-            container.querySelectorAll('pre code').forEach(code => {
-                if (code.querySelector('.hljs-line')) return;
-                const lines = code.innerHTML.split('\n');
-                if (lines.length && lines[lines.length - 1] === '') lines.pop();
-                code.innerHTML = lines.map(line => `<span class="hljs-line">${line || ' '}</span>`).join('\n');
-            });
-        }
-
         window.loadDoc = function (id, filePath) {
             document.querySelectorAll('.docs-sidebar a').forEach(a => a.classList.remove('active'));
             const activeLink = document.getElementById(`link-${id}`);
@@ -547,12 +562,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 .then(res => { if (!res.ok) throw new Error('找不到文件'); return res.text(); })
                 .then(html => {
                     mainContent.innerHTML = html;
-                    insertCodeHeaders(mainContent);
-                    // 语法高亮（highlight.js）→ 行号包裹（顺序不能反）
-                    if (window.hljs) {
-                        mainContent.querySelectorAll('pre code').forEach(el => hljs.highlightElement(el));
-                    }
-                    wrapCodeLines(mainContent);
+                    enhanceCodeBlocks(mainContent);
                     window.scrollTo(0, 0);
                 })
                 .catch(() => {
@@ -574,5 +584,11 @@ document.addEventListener('DOMContentLoaded', function () {
         };
 
         window.addEventListener('popstate', loadDocFromHash);
+    }
+
+    // 静态内容页（非文档/教程框架页）：页面中已有 .docs-content 则直接增强代码块
+    if (!document.body.classList.contains('page-docs') && !document.body.classList.contains('page-tutorials')) {
+        const staticContent = document.querySelector('.docs-content');
+        if (staticContent) enhanceCodeBlocks(staticContent);
     }
 });
