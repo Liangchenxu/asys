@@ -228,6 +228,15 @@ document.addEventListener('DOMContentLoaded', function () {
                 updateMacBtn();
 
                 initSmartDetection(linkData);
+
+                // 平台卡片：高光跟随鼠标（spotlight 效果）
+                document.querySelectorAll('.os-card').forEach(card => {
+                    card.addEventListener('mousemove', e => {
+                        const rect = card.getBoundingClientRect();
+                        card.style.setProperty('--mx', `${e.clientX - rect.left}px`);
+                        card.style.setProperty('--my', `${e.clientY - rect.top}px`);
+                    });
+                });
             })
             .catch(err => {
                 console.error("JSON加载失败", err);
