@@ -176,33 +176,31 @@ img { max-width: 100%; display: block; }
 .warning-box a { color: #d97706; font-weight: bold; text-decoration: underline; }
 .download-container { max-width: 1200px; margin: 60px auto; padding: 0 20px; }
 
-/* 下载区动感引导提示：胶囊条 + 箭头摆动 */
+/* 下载区动感引导提示：文字内流光 + 箭头同步摆动（无外框） */
 .download-hint {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 12px;
     margin: 0 0 30px;
-    padding: 10px 24px;
-    background: linear-gradient(90deg, #eff6ff 0%, #dbeafe 50%, #eff6ff 100%);
-    background-size: 200% 100%;
-    border: 1px solid #bfdbfe;
-    border-radius: 50px;
-    color: #1e40af;
-    font-size: 1.05rem;
+    font-size: 1.1rem;
     font-weight: 600;
+    background: linear-gradient(90deg, #1d4ed8, #60a5fa, #1d4ed8);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
     animation: hintFlow 4s linear infinite;
 }
 .download-hint .hint-arrow {
     display: inline-block;
     font-size: 0.8rem;
-    color: var(--vantage-blue);
     animation: hintBounce 1.4s ease-in-out infinite;
 }
-.download-hint .hint-arrow:last-child { animation-delay: 0.2s; }
 @keyframes hintFlow {
-    0% { background-position: 0% 50%; }
-    100% { background-position: 200% 50%; }
+    0% { background-position: 0% center; }
+    100% { background-position: 200% center; }
 }
 @keyframes hintBounce {
     0%, 100% { transform: translateY(0); }
