@@ -288,8 +288,10 @@ document.addEventListener('DOMContentLoaded', function () {
                         smartBtn.href = linkData.linux_loongson_deb || "#";
                         smartBtn.style.display = 'inline-flex';
                     } else {
-                        // 常规 Linux：隐藏下载按钮，突出安装引导
-                        smartBtn.style.display = 'none';
+                        // 常规 Linux：隐藏下载按钮区（含 auto-btn-wrapper 的 35px 边距），突出安装引导
+                        const section = document.getElementById('smart-download-section');
+                        if (section) section.style.display = 'none';
+                        else smartBtn.style.display = 'none';
                     }
                 } else {
                     // 兜底：找不到引导区时维持原逻辑

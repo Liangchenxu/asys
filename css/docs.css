@@ -39,6 +39,7 @@
 .docs-content .badge-row { display: flex; gap: 10px; flex-wrap: wrap; margin: 0 0 30px 0; }
 
 /* 下载页 Linux 引导区：紧凑版文档排版（覆盖 docs-content 的宽松段落间距） */
+.linux-guide { padding: 0 !important; }
 .linux-guide .code-block { margin-bottom: 12px; }
 .linux-guide p { margin-bottom: 10px; line-height: 1.6; font-size: 0.95rem; }
 .linux-guide a { font-size: 0.95rem; }
