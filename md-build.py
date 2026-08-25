@@ -9,6 +9,8 @@
   - 图片:   统一放在 vdocs/img/ 目录，md 中写 ![](img/xxx.png)
             脚本自动补 ../vdocs/ 前缀（因为 docs.html 在 vantage/ 下加载）
   - 支持的 Markdown 特性: 表格 / 代码块(```) / 标题锚点 / 引用 / 列表
+  - 代码块行号/复制按钮/语法高亮: 由 docs.html 的 JS 在运行时生成（insertCodeHeaders →
+    highlight.js → wrapCodeLines），转换时无需处理，保持 <pre><code class="language-xx"> 结构即可
 """
 import re
 import sys

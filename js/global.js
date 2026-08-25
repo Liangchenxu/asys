@@ -524,6 +524,16 @@ document.addEventListener('DOMContentLoaded', function () {
             document.body.removeChild(ta);
         }
 
+        // 代码行号：高亮后按行包裹 span，行号由 CSS counter 生成（伪元素，不污染复制文本）
+        function wrapCodeLines(container) {
+            container.querySelectorAll('pre code').forEach(code => {
+                if (code.querySelector('.hljs-line')) return;
+                const lines = code.innerHTML.split('\n');
+                if (lines.length && lines[lines.length - 1] === '') lines.pop();
+                code.innerHTML = lines.map(line => `<span class="hljs-line">${line || ' '}</span>`).join('\n');
+            });
+        }
+
         window.loadDoc = function (id, filePath) {
             document.querySelectorAll('.docs-sidebar a').forEach(a => a.classList.remove('active'));
             const activeLink = document.getElementById(`link-${id}`);
@@ -538,10 +548,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 .then(html => {
                     mainContent.innerHTML = html;
                     insertCodeHeaders(mainContent);
-                    // 语法高亮（highlight.js）
+                    // 语法高亮（highlight.js）→ 行号包裹（顺序不能反）
                     if (window.hljs) {
                         mainContent.querySelectorAll('pre code').forEach(el => hljs.highlightElement(el));
                     }
+                    wrapCodeLines(mainContent);
                     window.scrollTo(0, 0);
                 })
                 .catch(() => {

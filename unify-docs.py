@@ -7,6 +7,7 @@
 特殊处理:
   - shields.io 徽章行（display:flex 的 <p>）→ 替换为 class="badge-row"
   - 非 style 属性（onerror 等）不受影响
+  - 代码块结构（pre/code）不在此脚本处理范围：行号/复制按钮/高亮由 docs.html 的 JS 运行时生成
 
 用法: python3 unify-docs.py
 """
