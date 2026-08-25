@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>下载 Vantage - ASYS 科技</title>
     <link rel="icon" href="../img/vantage.webp" type="image/png">
-    <link rel="stylesheet" href="../css/global.css?v=202608260129">
-    <link rel="stylesheet" href="../css/docs.css?v=202608260129">
-    <link rel="stylesheet" href="../css/highlight-github.min.css?v=202608260129">
-    <script src="../js/highlight.min.js?v=202608260129" defer></script>
-    <script src="../js/global.js?v=202608260129" defer></script>
+    <link rel="stylesheet" href="../css/global.css?v=202608260133">
+    <link rel="stylesheet" href="../css/docs.css?v=202608260133">
+    <link rel="stylesheet" href="../css/highlight-github.min.css?v=202608260133">
+    <script src="../js/highlight.min.js?v=202608260133" defer></script>
+    <script src="../js/global.js?v=202608260133" defer></script>
 </head>
 <body class="site-vantage page-vdownload"> 
 
@@ -39,7 +39,13 @@
             <p id="linux-loong64-hint" style="display: none;">🐉 龙芯用户：软件源暂未覆盖 LoongArch64，请使用下方「Linux · LoongArch64」卡片手动下载。</p>
         </div>
 
-		<div id="version-display" style="font-size: 0.85rem; color: #9ca3af; margin-top: 25px;">正在加载版本信息...</div>
+        <!-- 移动端提示（检测到手机/平板时显示） -->
+        <div id="mobile-hint" style="display: none; max-width: 640px; margin: 30px auto 0; padding: 24px; background: #eff6ff; border: 1px solid #bfdbfe; border-left: 4px solid var(--vantage-blue); border-radius: 8px; text-align: left;">
+            <h3 style="margin: 0 0 8px; font-size: 1.15rem; color: #1e3a8a;">📱 暂时只支持电脑版</h3>
+            <p style="margin: 0; color: #3b4a6b;">移动版敬请期待。请使用电脑访问本页面下载 Vantage。</p>
+        </div>
+
+        <div id="version-display" style="font-size: 0.85rem; color: #9ca3af; margin-top: 25px;">正在加载版本信息...</div>
 		<div style="font-size: 0.85rem; color: #9ca3af; margin-top: 15px;">Vantage是自由软件，不提供任何担保</div>
         
         <details style="margin: 30px auto 0; max-width: 800px; text-align: left; background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); border: 1px solid #bfdbfe; border-left: 4px solid var(--vantage-blue); border-radius: 8px; padding: 14px 24px; color: #1e3a8a; box-shadow: 0 4px 6px -1px rgba(0, 120, 212, 0.1);">

@@ -244,6 +244,18 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (!smartBtn) return;
 
+            // 移动端优先判断（iOS 的 UA 含 "Mac" 字样，必须先于 macOS 判断）
+            const isMobile = /Android|iPhone|iPad|iPod/i.test(ua)
+                || (ua.indexOf("Mac") !== -1 && ua.indexOf("Mobile") !== -1);
+            if (isMobile) {
+                smartBtn.style.display = 'none';
+                const hint = document.getElementById('mobile-hint');
+                if (hint) hint.style.display = 'block';
+                const grid = document.querySelector('.os-grid');
+                if (grid) grid.style.display = 'none';
+                return;
+            }
+
             if (ua.indexOf("Windows") !== -1) {
                 smartText.textContent = "下载 Vantage for Windows";
                 smartIcon.textContent = "💻";
