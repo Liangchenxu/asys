@@ -1,8 +1,118 @@
 {
-  "_comment": "【说明】由于 docs.html 在 pc/ 文件夹下，所以读取 vdocs 里的文件时，路径需要加上 ../ 返回上一级。",
+  "_comment": "【说明】由于 docs.html 在 vantage/ 文件夹下，所以读取 vdocs/vud 里的文件时，路径需要加上 ../ 返回上一级。",
   "categories": [
     {
-      "title": "文档目录",
+      "title": "入门指南",
+      "items": [
+        {
+          "id": "linux-repos",
+          "title": "Linux 安装教程",
+          "file": "../vdocs/linux-repos.html"
+        }
+      ]
+    },
+    {
+      "title": "功能与使用",
+      "items": [
+        {
+          "id": "ublock-tutorial",
+          "title": "uBlock 扩展安装指南",
+          "file": "../vdocs/ublock-tutorial.html"
+        }
+      ]
+    },
+    {
+      "title": "更新日志",
+      "items": [
+        {
+          "id": "changelog-153.0-6",
+          "title": "153.0-6",
+          "file": "../vud/153.0-6.html"
+        },
+        {
+          "id": "changelog-153.0-5",
+          "title": "153.0-5",
+          "file": "../vud/153.0-5.html"
+        },
+        {
+          "id": "changelog-153.0-3",
+          "title": "153.0-3",
+          "file": "../vud/153.0-3.html"
+        },
+        {
+          "id": "changelog-152.0.6-1",
+          "title": "152.0.6-1",
+          "file": "../vud/152.0.6-1.html"
+        },
+        {
+          "id": "changelog-152.0.5-1",
+          "title": "152.0.5-1",
+          "file": "../vud/152.0.5-1.html"
+        },
+        {
+          "id": "changelog-152.0.2-2",
+          "title": "152.0.2-2",
+          "file": "../vud/152.0.2-2.html"
+        },
+        {
+          "id": "changelog-152.0.2-1",
+          "title": "152.0.2-1",
+          "file": "../vud/152.0.2-1.html"
+        },
+        {
+          "id": "changelog-151.0.4-1",
+          "title": "151.0.4-1",
+          "file": "../vud/151.0.4-1.html"
+        },
+        {
+          "id": "changelog-150.0.2-1",
+          "title": "150.0.2-1",
+          "file": "../vud/150.0.2-1.html"
+        },
+        {
+          "id": "changelog-150.0-1",
+          "title": "150.0-1",
+          "file": "../vud/150.0-1.html"
+        },
+        {
+          "id": "changelog-149.0-3",
+          "title": "149.0-3",
+          "file": "../vud/149.0-3.html"
+        },
+        {
+          "id": "changelog-149.0-2",
+          "title": "149.0-2",
+          "file": "../vud/149.0-2.html"
+        },
+        {
+          "id": "changelog-149.0-1",
+          "title": "149.0-1",
+          "file": "../vud/149.0-1.html"
+        },
+        {
+          "id": "changelog-148.0.2-2",
+          "title": "148.0.2-2",
+          "file": "../vud/148.0.2-2.html"
+        },
+        {
+          "id": "changelog-148.0-1",
+          "title": "148.0-1",
+          "file": "../vud/148.0-1.html"
+        }
+      ]
+    },
+    {
+      "title": "隐私与法律",
+      "items": [
+        {
+          "id": "privacy",
+          "title": "隐私政策",
+          "file": "../vdocs/privacy.html"
+        }
+      ]
+    },
+    {
+      "title": "开发者",
       "items": [
         {
           "id": "vantage-core",
@@ -10,48 +120,11 @@
           "file": "../vdocs/vantage-core.html"
         },
         {
-          "id": "ublock-tutorial",
-          "title": "uBlock 扩展安装指南",
-          "file": "../vdocs/ublock-tutorial.html"
-        },
-        {
-          "id": "changelog",
-          "title": "更新日志",
-          "file": "../vdocs/changelog.html"
-        },
-        {
-          "id": "privacy",
-          "title": "隐私政策",
-          "file": "../vdocs/privacy.html" 
-        },
-        {
           "id": "loong64-cross-compile",
           "title": "龙芯交叉编译指南",
           "file": "../vdocs/loong64-cross-compile.html"
-        },
-        {
-          "id": "linux-repos",
-          "title": "Linux 安装教程",
-          "file": "../vdocs/linux-repos.html"
         }
       ]
     }
-  ],
-  "changelog_files": [
-    "153.0-6.html",
-    "153.0-5.html",
-    "153.0-3.html",
-    "152.0.6-1.html",
-    "152.0.5-1.html",
-    "152.0.2-2.html",
-    "152.0.2-1.html",
-    "151.0.4-1.html",
-    "150.0.2-1.html",
-    "150.0-1.html",
-    "149.0-3.html",
-    "149.0-2.html",
-    "149.0-1.html",
-    "148.0.2-2.html",
-    "148.0-1.html"
   ]
 }

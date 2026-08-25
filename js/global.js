@@ -421,7 +421,7 @@ document.addEventListener('DOMContentLoaded', function () {
         };
     }
 
-    // --- 文档页面逻辑 ---
+    // --- 文档页面逻辑（树状目录）---
     if (document.body.classList.contains('page-docs')) {
         const sidebarContainer = document.getElementById('sidebar-container');
         const mainContent = document.getElementById('main-content');
@@ -431,16 +431,7 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(res => res.json())
             .then(data => {
                 docsConfig = data.categories;
-                window.vudFiles = data.changelog_files;
-                let html = '';
-                docsConfig.forEach(category => {
-                    html += `<h3>${category.title}</h3><ul>`;
-                    category.items.forEach(item => {
-                        html += `<li><a onclick="loadDoc('${item.id}', '${item.file}')" id="link-${item.id}">${item.title}</a></li>`;
-                    });
-                    html += `</ul>`;
-                });
-                sidebarContainer.innerHTML = html;
+                sidebarContainer.innerHTML = renderTree(docsConfig);
                 loadDocFromHash();
             })
             .catch(() => {
@@ -448,18 +439,110 @@ document.addEventListener('DOMContentLoaded', function () {
                 mainContent.innerHTML = '<div class="loading-text" style="color:red;">❌ 无法读取文档列表</div>';
             });
 
+        // 递归渲染目录树（顶级分类默认收起，保持清爽）
+        function renderTree(categories) {
+            let html = '';
+            categories.forEach(category => {
+                html += `<div class="doc-cat">`;
+                html += `<div class="doc-cat-header"><span class="doc-cat-arrow">▸</span>${category.title}</div>`;
+                html += `<ul class="doc-cat-items">`;
+                category.items.forEach(item => {
+                    html += `<li><a onclick="loadDoc('${item.id}', '${item.file}')" id="link-${item.id}">${item.title}</a></li>`;
+                });
+                html += `</ul></div>`;
+            });
+            return html;
+        }
+
+        // 分类点击：展开/收起（手风琴：同时只展开一个分类）
+        // 展开时直接打开该分类的第一篇文档，符合交互直觉
+        sidebarContainer.addEventListener('click', e => {
+            const header = e.target.closest('.doc-cat-header');
+            if (!header) return;
+            const cat = header.parentElement;
+            const isOpen = cat.classList.contains('open');
+            sidebarContainer.querySelectorAll('.doc-cat.open').forEach(c => c.classList.remove('open'));
+            if (!isOpen) {
+                cat.classList.add('open');
+                const firstItem = cat.querySelector('.doc-cat-items a');
+                if (firstItem) firstItem.click();
+            }
+        });
+
+        // 展开指定分类所在目录
+        function expandCatOf(linkEl) {
+            sidebarContainer.querySelectorAll('.doc-cat.open').forEach(c => c.classList.remove('open'));
+            const catEl = linkEl.closest('.doc-cat');
+            if (catEl) catEl.classList.add('open');
+        }
+
+        // 代码块：外包 code-block，顶部 header 显示语言名 + 复制按钮
+        function insertCodeHeaders(container) {
+            container.querySelectorAll('pre').forEach(pre => {
+                if (pre.parentElement && pre.parentElement.classList.contains('code-block')) return;
+                const wrapper = document.createElement('div');
+                wrapper.className = 'code-block';
+                const langMatch = (pre.querySelector('code')?.className || '').match(/language-(\S+)/);
+                const lang = langMatch ? langMatch[1] : '';
+                const header = document.createElement('div');
+                header.className = 'code-header';
+                header.innerHTML = `<span class="code-lang"${lang ? '' : ' style="display:none;"'}>${lang}</span><button class="code-copy" type="button" aria-label="复制代码">复制</button>`;
+                wrapper.appendChild(header);
+                pre.parentNode.insertBefore(wrapper, pre);
+                wrapper.appendChild(pre);
+            });
+        }
+
+        // 复制按钮事件（事件委托，动态内容无需重复绑定）
+        document.addEventListener('click', e => {
+            const btn = e.target.closest('.code-copy');
+            if (!btn) return;
+            const block = btn.closest('.code-block') || btn.closest('pre');
+            const code = block ? block.querySelector('code') : null;
+            if (!code) return;
+            const text = code.innerText;
+            const done = () => {
+                btn.textContent = '✓ 已复制';
+                setTimeout(() => { btn.textContent = '复制'; }, 1500);
+            };
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(done).catch(() => fallbackCopy(text, done));
+            } else {
+                fallbackCopy(text, done);
+            }
+        });
+
+        // 剪贴板 API 不可用时的降级方案
+        function fallbackCopy(text, done) {
+            const ta = document.createElement('textarea');
+            ta.value = text;
+            ta.style.position = 'fixed';
+            ta.style.opacity = '0';
+            document.body.appendChild(ta);
+            ta.select();
+            try { document.execCommand('copy'); done(); } catch (err) { }
+            document.body.removeChild(ta);
+        }
+
         window.loadDoc = function (id, filePath) {
             document.querySelectorAll('.docs-sidebar a').forEach(a => a.classList.remove('active'));
             const activeLink = document.getElementById(`link-${id}`);
-            if (activeLink) activeLink.classList.add('active');
+            if (activeLink) {
+                activeLink.classList.add('active');
+                expandCatOf(activeLink);
+            }
             window.history.pushState(null, null, `#${id}`);
             mainContent.innerHTML = '<div class="loading-text">加载中...</div>';
             fetch(filePath)
                 .then(res => { if (!res.ok) throw new Error('找不到文件'); return res.text(); })
                 .then(html => {
                     mainContent.innerHTML = html;
+                    insertCodeHeaders(mainContent);
+                    // 语法高亮（highlight.js）
+                    if (window.hljs) {
+                        mainContent.querySelectorAll('pre code').forEach(el => hljs.highlightElement(el));
+                    }
                     window.scrollTo(0, 0);
-                    if (id === 'changelog') renderChangelogFromJson();
                 })
                 .catch(() => {
                     mainContent.innerHTML = `<div class="loading-text" style="color:red;">❌ 无法加载文档内容。</div>`;
@@ -477,24 +560,6 @@ document.addEventListener('DOMContentLoaded', function () {
             }
             if (!targetItem && docsConfig.length > 0) targetItem = docsConfig[0].items[0];
             if (targetItem) loadDoc(targetItem.id, targetItem.file);
-        };
-
-        window.renderChangelogFromJson = async function () {
-            const container = document.getElementById('changelog-container');
-            if (!container || !window.vudFiles) return;
-
-            let finalHtml = '';
-            for (const fileName of window.vudFiles) {
-                try {
-                    const res = await fetch(`../vud/${fileName}`);
-                    if (res.ok) {
-                        finalHtml += await res.text();
-                    }
-                } catch (e) {
-                    console.error("加载日志文件失败: ", fileName, e);
-                }
-            }
-            container.innerHTML = finalHtml;
         };
 
         window.addEventListener('popstate', loadDocFromHash);
