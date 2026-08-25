@@ -193,11 +193,13 @@ img { max-width: 100%; display: block; }
 }
 .os-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 30px; }
 .os-card { border: 1px solid var(--border); border-radius: 12px; padding: 40px 30px; text-align: center; background: #ffffff; transition: transform 0.3s ease, box-shadow 0.3s ease; display: flex; flex-direction: column; position: relative; overflow: hidden; }
+.os-card > * { position: relative; z-index: 1; }
+.os-card::before, .os-card::after { z-index: 0; }
 .os-card::before { content: ''; position: absolute; inset: 0; background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), rgba(120, 134, 150, 0.12), transparent 65%); opacity: 0; transition: opacity 0.3s ease; pointer-events: none; }
-.os-card-loong64::before { background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), rgba(255, 195, 195, 0.45), transparent 65%); }
+.os-card-loong64::before { background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), rgba(255, 125, 125, 0.35), transparent 65%); }
 /* 卡片边缘高光：1px 渐变边框跟随鼠标（mask 挖空中间，只留边缘） */
 .os-card::after { content: ''; position: absolute; inset: 0; border-radius: 12px; padding: 1px; background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 50%), rgba(120, 134, 150, 0.55), transparent 70%); -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); mask-composite: exclude; opacity: 0; transition: opacity 0.3s ease; pointer-events: none; }
-.os-card-loong64::after { background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 50%), rgba(255, 185, 185, 0.7), transparent 70%); }
+.os-card-loong64::after { background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 50%), rgba(255, 120, 120, 0.55), transparent 70%); }
 .os-card:hover::before, .os-card:hover::after { opacity: 1; }
 .os-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
 .os-icon-img { width: 55px; height: 55px; margin: 0 auto 20px auto; display: block; object-fit: contain; }
