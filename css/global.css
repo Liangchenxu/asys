@@ -194,12 +194,15 @@ img { max-width: 100%; display: block; }
 .os-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 30px; }
 .os-card { border: 1px solid var(--border); border-radius: 12px; padding: 40px 30px; text-align: center; background: #ffffff; transition: transform 0.3s ease, box-shadow 0.3s ease; display: flex; flex-direction: column; position: relative; overflow: hidden; }
 .os-card::before { content: ''; position: absolute; inset: 0; background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), rgba(120, 134, 150, 0.12), transparent 65%); opacity: 0; transition: opacity 0.3s ease; pointer-events: none; }
-.os-card-loong64::before { background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), rgba(211, 47, 47, 0.16), transparent 65%); }
-.os-card:hover::before { opacity: 1; }
+.os-card-loong64::before { background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), rgba(229, 57, 53, 0.16), transparent 65%); }
+/* 卡片边缘高光：1px 渐变边框跟随鼠标（mask 挖空中间，只留边缘） */
+.os-card::after { content: ''; position: absolute; inset: 0; border-radius: 12px; padding: 1px; background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 50%), rgba(120, 134, 150, 0.55), transparent 70%); -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); mask-composite: exclude; opacity: 0; transition: opacity 0.3s ease; pointer-events: none; }
+.os-card-loong64::after { background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 50%), rgba(229, 57, 53, 0.6), transparent 70%); }
+.os-card:hover::before, .os-card:hover::after { opacity: 1; }
 .os-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
 .os-icon-img { width: 55px; height: 55px; margin: 0 auto 20px auto; display: block; object-fit: contain; }
 .os-title { font-size: 1.5rem; margin-bottom: 25px; font-weight: 700; }
-.pkg-select { width: 100%; padding: 10px 15px; margin-bottom: 12px; border-radius: 8px; border: 1px solid var(--border); background-color: #ffffff; font-size: 0.95rem; color: var(--text-main); outline: none; cursor: pointer; font-family: inherit; box-sizing: border-box; }
+.pkg-select { width: 100%; padding: 10px 36px 10px 15px; margin-bottom: 12px; border-radius: 8px; border: 1px solid var(--border); background-color: #ffffff !important; background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2'%3e%3cpolyline points='6 9 12 15 18 9'/%3e%3c/svg%3e"); background-repeat: no-repeat; background-position: right 12px center; background-size: 14px; appearance: none; -webkit-appearance: none; -moz-appearance: none; font-size: 0.95rem; color: var(--text-main); outline: none; cursor: pointer; font-family: inherit; box-sizing: border-box; }
 .pkg-select:focus { border-color: var(--vantage-blue); }
 .os-card .btn-group { display: flex; flex-direction: column; gap: 12px; margin-top: auto; }
 .os-card .btn-primary { display: block; padding: 12px 20px; background: var(--vantage-blue); color: #fff; text-decoration: none; border-radius: 8px; font-weight: 600; transition: 0.2s; }
@@ -221,7 +224,7 @@ img { max-width: 100%; display: block; }
   flex-direction: column;
   
   /* ★ 龙芯特征 1：左侧加粗红色边框 */
-  border-left: 4px solid #d32f2f;
+  border-left: 4px solid #e53935;
   
   /* 背景渐变已取消（跟随普通卡片纯白，仅保留红色边框/悬停光晕） */
 }
@@ -229,8 +232,8 @@ img { max-width: 100%; display: block; }
 .os-card-loong64:hover {
   transform: translateY(-5px);
   /* ★ 龙芯特征：悬停时的红色光晕阴影 */
-  box-shadow: 0 10px 25px rgba(211, 47, 47, 0.15);
-  border-color: #d32f2f;
+  box-shadow: 0 10px 25px rgba(229, 57, 53, 0.15);
+  border-color: #e53935;
 }
 
 /* 图标不再特殊处理，直接继承 .os-icon-img 的默认样式（正常显示企鹅） */
@@ -241,32 +244,32 @@ img { max-width: 100%; display: block; }
   font-size: 1.5rem;
   margin-bottom: 25px;
   font-weight: 700;
-  color: #c62828; /* 深红色 */
+  color: #e53935; /* 龙芯红 */
 }
 
 /* ★ 龙芯特征 4：下拉框聚焦时使用红色边框 */
 .os-card-loong64 .pkg-select:focus {
-  border-color: #d32f2f;
-  box-shadow: 0 0 0 3px rgba(211, 47, 47, 0.1);
+  border-color: #e53935;
+  box-shadow: 0 0 0 3px rgba(229, 57, 53, 0.1);
 }
 
 /* ★ 龙芯特征 5：主按钮使用红色系 */
 .os-card-loong64 .btn-primary {
   display: block;
   padding: 12px 20px;
-  background: linear-gradient(135deg, #d32f2f 0%, #c62828 100%);
+  background: linear-gradient(135deg, #e53935 0%, #d32f2f 100%);
   color: #fff;
   text-decoration: none;
   border-radius: 8px;
   font-weight: 600;
   transition: all 0.2s;
-  box-shadow: 0 4px 12px rgba(211, 47, 47, 0.3);
+  box-shadow: 0 4px 12px rgba(229, 57, 53, 0.3);
 }
 
 .os-card-loong64 .btn-primary:hover {
-  background: linear-gradient(135deg, #c62828 0%, #b71c1c 100%);
+  background: linear-gradient(135deg, #d32f2f 0%, #c62828 100%);
   transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(211, 47, 47, 0.4);
+  box-shadow: 0 6px 16px rgba(229, 57, 53, 0.4);
 }
 
 
