@@ -175,6 +175,39 @@ img { max-width: 100%; display: block; }
 .warning-box { background-color: #fffbeb; border: 1px solid #f59e0b; border-radius: 8px; padding: 15px 20px; margin: 25px auto 0; max-width: 800px; color: #b45309; text-align: center; font-size: 0.95rem; line-height: 1.6; }
 .warning-box a { color: #d97706; font-weight: bold; text-decoration: underline; }
 .download-container { max-width: 1200px; margin: 60px auto; padding: 0 20px; }
+
+/* 下载区动感引导提示：胶囊条 + 箭头摆动 */
+.download-hint {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin: 0 0 30px;
+    padding: 10px 24px;
+    background: linear-gradient(90deg, #eff6ff 0%, #dbeafe 50%, #eff6ff 100%);
+    background-size: 200% 100%;
+    border: 1px solid #bfdbfe;
+    border-radius: 50px;
+    color: #1e40af;
+    font-size: 1.05rem;
+    font-weight: 600;
+    animation: hintFlow 4s linear infinite;
+}
+.download-hint .hint-arrow {
+    display: inline-block;
+    font-size: 0.8rem;
+    color: var(--vantage-blue);
+    animation: hintBounce 1.4s ease-in-out infinite;
+}
+.download-hint .hint-arrow:last-child { animation-delay: 0.2s; }
+@keyframes hintFlow {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 200% 50%; }
+}
+@keyframes hintBounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(5px); }
+}
 .os-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 30px; }
 .os-card { border: 1px solid var(--border); border-radius: 12px; padding: 40px 30px; text-align: center; background: #fff; transition: transform 0.3s ease, box-shadow 0.3s ease; display: flex; flex-direction: column; }
 .os-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
