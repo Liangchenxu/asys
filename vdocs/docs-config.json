@@ -25,6 +25,11 @@
       "title": "更新日志",
       "items": [
         {
+          "id": "changelog-153.1.0-1",
+          "title": "153.1.0-1",
+          "file": "../vud/153.1.0-1.html"
+        },
+        {
           "id": "changelog-153.0-6",
           "title": "153.0-6",
           "file": "../vud/153.0-6.html"
