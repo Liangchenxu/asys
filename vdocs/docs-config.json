@@ -8,6 +8,11 @@
           "id": "linux-repos",
           "title": "Linux 安装教程",
           "file": "../vdocs/linux-repos.html"
+        },
+        {
+          "id": "winget-install",
+          "title": "Windows 用 winget 安装",
+          "file": "../vdocs/winget-install.html"
         }
       ]
     },

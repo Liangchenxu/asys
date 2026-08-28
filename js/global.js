@@ -269,6 +269,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 smartText.textContent = "下载 Vantage for Windows";
                 smartIcon.textContent = "💻";
                 smartBtn.href = linkData.win_x64_exe || linkData.windows_exe || "#";
+                // Windows：在下载按钮下方显示 winget 命令行安装引导
+                const winGuide = document.getElementById('windows-install-guide');
+                if (winGuide) winGuide.style.display = 'block';
             } else if (ua.indexOf("Mac") !== -1) {
                 smartIcon.textContent = "🍎";
                 // Mac 智能检测联动：如果没有链接则置灰

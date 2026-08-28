@@ -1,0 +1,50 @@
+<h2 id="winget">什么是 winget</h2>
+<p>winget（Windows Package Manager）是 Windows 系统自带的软件包管理器，相当于手机上的"应用商店"命令行版。用一条命令就能完成软件的下载、安装、升级和卸载，装过的软件还能统一升级，告别到处找安装包。</p>
+<h2 id="_1">安装前提</h2>
+<ul>
+<li>Windows 10 1809（2018 年 10 月更新）及以上，或 Windows 11</li>
+<li>winget 随「应用安装程序」（App Installer）提供，系统自带，一般无需单独安装</li>
+</ul>
+<h3 id="winget_1">检查 winget 是否可用</h3>
+<p>按 <code>Win</code> 键输入 <code>powershell</code>，打开 Windows PowerShell，运行：</p>
+<pre><code class="language-powershell">winget --version
+</code></pre>
+<p>能显示版本号（如 <code>v1.9.x</code>）即可使用。若提示"找不到命令"，请到 Microsoft Store 搜索并安装「应用安装程序」，然后重新打开 PowerShell。</p>
+<h2 id="vantage">一键安装 Vantage</h2>
+<p>在 PowerShell 或命令提示符中运行：</p>
+<pre><code class="language-powershell">winget install ASYS.Vantage
+</code></pre>
+<p>等待进度条走完即安装完成，之后在开始菜单中搜索 <strong>Vantage</strong> 即可启动。</p>
+<blockquote>
+<p>💡 <strong>首次使用提示</strong>：第一次运行 winget 会询问是否同意源协议，输入 <code>Y</code> 回车即可。想跳过所有确认，用这条命令：</p>
+</blockquote>
+<pre><code class="language-powershell">winget install ASYS.Vantage --accept-package-agreements --accept-source-agreements
+</code></pre>
+<h2 id="_2">其他常用命令</h2>
+<table>
+<thead>
+<tr>
+<th>用途</th>
+<th>命令</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>查看软件信息</td>
+<td><code>winget show ASYS.Vantage</code></td>
+</tr>
+<tr>
+<td>升级到最新版</td>
+<td><code>winget upgrade ASYS.Vantage</code></td>
+</tr>
+<tr>
+<td>卸载 Vantage</td>
+<td><code>winget uninstall ASYS.Vantage</code></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>💡 <strong>升级提示</strong>：Vantage 发布新版本后运行 <code>winget upgrade</code> 即可检查和升级，无需再去官网重新下载安装包。</p>
+</blockquote>
+<h2 id="_3">常见问题</h2>
+<p><strong>提示"找不到软件包"</strong>：请确认包名拼写为 <code>ASYS.Vantage</code>，或稍等片刻重试——新发布的软件包同步到 winget 源需要一定时间。</p>
