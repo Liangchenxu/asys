@@ -92,7 +92,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     const latestTag = data[0].tag_name.trim();
                     const versionDisplay = document.getElementById('version-display');
                     if (versionDisplay) {
-                        versionDisplay.innerHTML = `当前版本：${latestTag} · <a href="docs.html#changelog-153.0-6">查看更新日志 →</a>`;
+                        versionDisplay.innerHTML = `当前版本：${latestTag} · <a href="docs.html#changelog-${latestTag.replace(/^v/i, '')}">查看更新日志 →</a>`;
                     }
                 }
             })
@@ -616,6 +616,14 @@ document.addEventListener('DOMContentLoaded', function () {
                     const found = cat.items.find(item => item.id === hash);
                     if (found) targetItem = found;
                 });
+            }
+            // 兼容 aboutDialog「检查新版变化」链接（docs.html#changelog）：
+            // 定位到更新日志分类的第一篇（最新版本），发版后随 docs-config 自动跟随
+            if (!targetItem && hash === 'changelog') {
+                const changelogCat = docsConfig.find(cat => cat.title === '更新日志');
+                if (changelogCat && changelogCat.items.length > 0) {
+                    targetItem = changelogCat.items[0];
+                }
             }
             if (!targetItem && docsConfig.length > 0) targetItem = docsConfig[0].items[0];
             if (targetItem) loadDoc(targetItem.id, targetItem.file);
