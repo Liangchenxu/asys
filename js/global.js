@@ -260,8 +260,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 smartBtn.style.display = 'none';
                 const hint = document.getElementById('mobile-hint');
                 if (hint) hint.style.display = 'block';
-                const grid = document.querySelector('.os-grid');
-                if (grid) grid.style.display = 'none';
+                // 注意：不隐藏 .os-grid —— 下载卡片对所有用户（含手机）始终展示
                 return;
             }
 
