@@ -1,0 +1,43 @@
+<div class="step-block">
+    <h2 style="margin-top: 0; color: #111827; font-size: 1.4rem; display: flex; align-items: center; gap: 10px;">
+        v153.2.0-1
+        <span style="font-size: 0.8rem; background: #dbeafe; color: var(--vantage-blue); padding: 3px 8px; border-radius: 12px; font-weight: normal;">最新版本</span>
+    </h2>
+    <div class="step-content">
+
+        <p style="margin-bottom: 24px; padding-left: 12px; border-left: 3px solid #e5e7eb; color: var(--text-sub);">
+            内核升级：Firefox ESR 153.1 -> ESR 153.2（含 2026-08 安全修复，见 MFSA 2026-05）
+        </p>
+
+        <h3 style="font-size: 1.25em; border-bottom: 1px solid #eaecef; padding-bottom: 0.3em; margin-top: 24px; margin-bottom: 16px;">新功能</h3>
+        <ul>
+            <li>下载提速（实验功能）
+                <ul style="margin-top: 8px; margin-bottom: 8px;">
+                    <li>多线程并行下载 — 大文件自动拆分多段并行传输，下载速度显著提升（需服务器支持断点续传/Range）；默认关闭，在 设置 -> 下载提速 中开启</li>
+                    <li>断点续传 — 下载中断后可从中新处继续，无需重新下载整个文件；浏览器意外关闭或崩溃后重启，未完成的下载可自动恢复</li>
+                    <li>取消行为可选 — 开启「取消时保留数据」后，取消下载变为暂停，可随时继续；关闭则与标准下载管理器一致（取消即清除已下载数据）</li>
+                    <li>下载提速设置区 — 设置页新增：总开关、最大连接数、最小分片阈值、分片缓存目录、断点续传、取消行为等选项，附说明</li>
+                </ul>
+            </li>
+            <li>预装「Vantage 安全防护」 — 网站识别并阻止有风险的假冒官方网站（仿冒域名、钓鱼站点）</li>
+            <li>主流视频平台广告拦截自动豁免 — 应法律要求，预装的 uBlock 插件可能侵害某些公司的权益，因此我们实现了白名单功能：对于部分页面，uBlock 将无法执行。例如在优酷、爱奇艺、腾讯视频等视频平台的页面上，广告过滤扩展无法执行。简而言之，不这样做将面临巨额罚款，希望您能谅解。</li>
+            <li>工具栏按钮老用户补齐 — 升级安装后自动补齐「恢复最近关闭」与「截图」工具栏按钮（此前仅新安装用户可见）</li>
+        </ul>
+
+        <h3 style="font-size: 1.25em; border-bottom: 1px solid #eaecef; padding-bottom: 0.3em; margin-top: 24px; margin-bottom: 16px;">修复</h3>
+        <ul>
+            <li>Windows 安装内置 VC++ 运行库 — 修复部分精简系统上安装后无法启动/崩溃的问题</li>
+            <li>Nova 最大化窗口边缘边框移除 — 最大化时窗口边缘不再显示边框线</li>
+        </ul>
+
+        <h3 style="font-size: 1.25em; border-bottom: 1px solid #eaecef; padding-bottom: 0.3em; margin-top: 24px; margin-bottom: 16px;">发布</h3>
+        <ul>
+            <li>内核升级 Firefox ESR 153.2 — 修复多项高危安全漏洞（内存安全、沙箱逃逸、信息泄露等，详见 Mozilla 安全公告 MFSA 2026-05）</li>
+        </ul>
+
+        <p style="color: var(--text-sub); margin-bottom: 20px; margin-top: 30px;">如果觉得好用，麻烦点个star吧！</p>
+        <div style="margin-top: 25px;">
+            <a href="https://github.com/asystech-chen/Vantage/releases/tag/v153.2.0-1" target="_blank" class="docs-link">🔗 在 GitHub 查看完整 Release 页面</a>
+        </div>
+    </div>
+</div>
