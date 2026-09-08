@@ -33,7 +33,19 @@
 .docs-content strong { color: #1f2328; font-weight: 600; }
 .docs-content hr { border: none; border-top: 1px solid #d0d7de; margin: 28px 0; }
 .docs-content ul, .docs-content ol { padding-left: 26px; margin: 0 0 20px 0; line-height: 1.8; color: #24292f; }
+/* 恢复项目符号（global.css 有 ul { list-style: none } reset，这里必须显式恢复，否则列表点全丢） */
+.docs-content ul { list-style: disc; }
+.docs-content ol { list-style: decimal; }
+.docs-content ul ul, .docs-content ol ul { list-style: circle; }
+.docs-content ul ul ul, .docs-content ol ul ul { list-style: square; }
 .docs-content li { margin-bottom: 4px; }
+.docs-content li > p { margin-top: 4px; margin-bottom: 8px; }
+.docs-content li > p:first-child { margin-top: 0; }
+.docs-content li > p:last-child { margin-bottom: 4px; }
+.docs-content li > table { margin: 4px 0 12px 0; }
+/* 任务列表（GFM - [x] / - [ ]；写法同 github-markdown-css） */
+.docs-content li:has(> input[type="checkbox"]) { list-style-type: none; }
+.docs-content li:has(> input[type="checkbox"]) > input[type="checkbox"] { margin: 0 0.2em 0.25em -1.6em; vertical-align: middle; accent-color: #0969da; }
 .docs-content blockquote { border-left: 4px solid #d0d7de; background: #f6f8fa; margin: 0 0 20px 0; padding: 10px 18px; color: #57606a; border-radius: 0 6px 6px 0; }
 .docs-content img { max-width: 100%; height: auto; border-radius: 8px; margin: 10px 0; }
 .docs-content .badge-row { display: flex; gap: 10px; flex-wrap: wrap; margin: 0 0 30px 0; }

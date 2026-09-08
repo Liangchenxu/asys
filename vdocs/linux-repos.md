@@ -39,7 +39,7 @@ sudo apt update
 sudo apt install vantage -y
 ```
 
-##3. RHEL / CentOS / Fedora 系统
+## 3. RHEL / CentOS / Fedora 系统
 
 导入公钥并添加 YUM/DNF 仓库配置文件：
 

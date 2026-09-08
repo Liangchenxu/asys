@@ -1,10 +1,10 @@
-<h2 id="_1">自动化一键安装</h2>
+<h2 id="自动化一键安装">自动化一键安装</h2>
 <p>只需在终端中运行以下命令，脚本将自动识别您的发行版（支持 Debian/Ubuntu 及 RHEL/CentOS/Fedora 等），并为您完成依赖安装、软件源配置及浏览器安装：</p>
 <pre><code class="language-bash">curl -fsSL https://dl.asystech.cn/vantage-release/install.sh | sudo bash
 </code></pre>
-<h2 id="_2">软件源手动配置指南</h2>
+<h2 id="软件源手动配置指南">软件源手动配置指南</h2>
 <p>如果您处于无脚本执行权限的特殊环境，或希望手动掌控配置过程，请参考以下针对各发行版的详细命令。</p>
-<h2 id="1-debian-11-ubuntu-2204">1. Debian 11+ / Ubuntu 22.04+ 及更新版本</h2>
+<h2 id="1-debian-11--ubuntu-2204-及更新版本">1. Debian 11+ / Ubuntu 22.04+ 及更新版本</h2>
 <p>导入受信任的公钥并写入软件源配置：</p>
 <pre><code class="language-bash">curl -fsSL https://dl.asystech.cn/vantage-release/keys/vantage-archive-keyring.asc | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/vantage.gpg
 echo &quot;deb [signed-by=/etc/apt/trusted.gpg.d/vantage.gpg] https://dl.asystech.cn/vantage-release stable main&quot; | sudo tee /etc/apt/sources.list.d/vantage.list
@@ -13,7 +13,7 @@ echo &quot;deb [signed-by=/etc/apt/trusted.gpg.d/vantage.gpg] https://dl.asystec
 <pre><code class="language-bash">sudo apt update
 sudo apt install vantage -y
 </code></pre>
-<h2 id="debian-ubuntu-debian-10">旧版本 Debian / Ubuntu 系统 (Debian 10 及以下)</h2>
+<h2 id="旧版本-debian--ubuntu-系统-debian-10-及以下">旧版本 Debian / Ubuntu 系统 (Debian 10 及以下)</h2>
 <p>针对不支持 signed-by 语法的旧版系统，使用全局公钥导入方式：</p>
 <pre><code class="language-bash">curl -fsSL https://dl.asystech.cn/vantage-release/keys/vantage-archive-keyring.asc | sudo apt-key add -
 echo &quot;deb https://dl.asystech.cn/vantage-release stable main&quot; | sudo tee /etc/apt/sources.list.d/vantage.list
@@ -22,7 +22,7 @@ echo &quot;deb https://dl.asystech.cn/vantage-release stable main&quot; | sudo t
 <pre><code class="language-bash">sudo apt update
 sudo apt install vantage -y
 </code></pre>
-<h2 id="3-rhel-centos-fedora">3. RHEL / CentOS / Fedora 系统</h2>
+<h2 id="3-rhel--centos--fedora-系统">3. RHEL / CentOS / Fedora 系统</h2>
 <p>导入公钥并添加 YUM/DNF 仓库配置文件：</p>
 <pre><code class="language-bash">sudo rpm --import https://dl.asystech.cn/vantage-release/keys/vantage-archive-keyring.asc
 
