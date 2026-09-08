@@ -14,6 +14,11 @@ const WALLPAPER_SOURCES = [
 ];
 let wallpaperCachedUrl = '', wallpaperLoadSeq = 0;
 const WALLPAPER_TIMEOUT = 8000;
+const BG_LIB_KEY = 'asys_bg_library';
+const BG_MAX_CHARS = 3500000; // 图库 localStorage 安全水位（字符，约 5MB 上限）
+const BG_MAX_EDGE = 1920;     // 上传图片最长边（超出等比压缩）
+const BG_JPEG_Q = 0.85;
+const BG_MAX_FILE = 20 * 1024 * 1024;
 let autoThemeMode = 'system'; 
 const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
 let autoThemeTimer = null;
@@ -25,6 +30,16 @@ document.addEventListener('DOMContentLoaded', () => {
   initClock();
   initAutoTheme();
   updateToolLinks(getCurrentMode(), getCurrentColor());
+  // 壁纸管理页等其它页面改了背景偏好 → 本页实时同步（storage 事件不触发于本页自身写入）
+  window.addEventListener('storage', (e) => {
+    if (e.key !== 'asys_theme_prefs') return;
+    const p = readBgPrefs();
+    const bg = p.background || 'off';
+    updateBgToggles(bg);
+    applyBackground(bg);
+    updateRefreshBtn();
+    updateCustomBgSection();
+  });
 });
 
 function preloadWallpaper() {
@@ -46,7 +61,7 @@ function loadPreferences() {
   try { saved = JSON.parse(storageGet('asys_theme_prefs') || '{}'); } catch (e) { console.warn('[prefs] localStorage 不可用，使用默认值:', e); }
   const mode = saved.mode ?? 'light';
   const color = saved.color ?? 'neutral';
-  const wallpaper = saved.wallpaper ?? false;
+  const bg = saved.background || (saved.wallpaper ? 'bing' : 'off'); // background: off|bing|custom（旧 wallpaper 布尔自动迁移）
   const engine = saved.engine ?? 'bing';
   const position = saved.position ?? 25;
   autoThemeMode = saved.autoTheme ?? 'system';
@@ -57,7 +72,7 @@ function loadPreferences() {
   applyTheme(mode, color);
   updateToggleState(mode);
   updateColorActive(color, false);
-  updateWallpaperToggle(wallpaper);
+  updateBgToggles(bg);
   updateAutoThemeUI(autoThemeMode);
   setActiveEngine(engine);
   updateSearchPosition(position);
@@ -65,10 +80,8 @@ function loadPreferences() {
   if (slider) slider.value = position;
   updatePositionDisplay(position);
 
-  if (wallpaper) { document.body.classList.add('wallpaper-enabled'); loadWallpaper(); }
-  else { document.body.classList.remove('wallpaper-enabled'); }
-  const refreshBtn = document.getElementById('wallpaperRefresh');
-  if (refreshBtn) refreshBtn.classList.toggle('show', wallpaper);
+  applyBackground(bg);
+  updateRefreshBtn();
 
   // 快捷链接
   const ql = getQuicklinks();
@@ -118,7 +131,7 @@ function loadWallpaper() {
     document.body.classList.remove('wallpaper-enabled');
     if (bg) bg.classList.remove('show');
     const t = document.getElementById('wallpaperToggle');
-    if (t && t.checked) { t.checked = false; savePreferences(getCurrentMode(), getCurrentColor(), false); }
+    if (t && t.checked) { setBgOff(); }
   };
   const setImg = (src, onFail) => {
     const timer = setTimeout(() => {
@@ -213,6 +226,15 @@ function bindEvents() {
   const themePanel = document.getElementById('themePanel');
   const darkModeToggle = document.getElementById('darkModeToggle');
   const wallpaperToggle = document.getElementById('wallpaperToggle');
+  const onBgToggle = (me) => {
+    const other = me === wallpaperToggle ? document.getElementById('customBgToggle') : wallpaperToggle;
+    if (me.checked && other && other.checked) other.checked = false; // 互斥：两开关不可同开（可同关）
+    const bgNow = currentBg();
+    savePreferences(getCurrentMode(), getCurrentColor(), bgNow);
+    applyBackground(bgNow);
+    updateRefreshBtn();
+    updateCustomBgSection();
+  };
   const positionSlider = document.getElementById('positionSlider');
   const searchInput = document.getElementById('searchInput');
   const searchIconBtn = document.getElementById('searchIconBtn');
@@ -228,9 +250,37 @@ function bindEvents() {
   themePanel.addEventListener('animationend', (e) => { if (e.animationName !== 'slideDown' && e.animationName !== 'slideUp') return; const active = document.querySelector('.color-btn.active'); if (active) moveColorIndicator(active, false); const ind = document.getElementById('colorIndicator'); if (ind) ind.style.opacity = '1'; });
   document.addEventListener('click', (e) => { if (!themeToggle.contains(e.target) && !themePanel.contains(e.target)) { themePanel.classList.remove('show'); themeToggle.setAttribute('aria-expanded', 'false'); } if (toolboxToggle && toolboxPanel && !toolboxToggle.contains(e.target) && !toolboxPanel.contains(e.target)) { toolboxPanel.classList.remove('show'); toolboxToggle.setAttribute('aria-expanded', 'false'); } if (!searchInput.contains(e.target) && !suggestionsContainer.contains(e.target)) hideSuggestions(); });
   darkModeToggle.addEventListener('change', (e) => { if (autoThemeMode !== 'off') return; const mode = e.target.checked ? 'dark' : 'light'; applyTheme(mode, getCurrentColor()); savePreferences(mode, getCurrentColor()); if (wallpaperToggle.checked) updateWallpaperBrightness(); });
-  wallpaperToggle.addEventListener('change', (e) => { const enabled = e.target.checked; savePreferences(getCurrentMode(), getCurrentColor(), enabled); const refreshBtn = document.getElementById('wallpaperRefresh'); if (refreshBtn) refreshBtn.classList.toggle('show', enabled); if (enabled) { document.body.classList.add('wallpaper-enabled'); loadWallpaper(); } else { document.body.classList.remove('wallpaper-enabled'); wallpaperBg.classList.remove('show'); wallpaperLoadSeq++; const i = document.getElementById('wallpaperImg'); if(i){ i.onload=null; i.onerror=null; i.src=''; } } });
+  wallpaperToggle.addEventListener('change', (e) => { onBgToggle(wallpaperToggle); });
+  const customBgToggle = document.getElementById('customBgToggle');
+  if (customBgToggle) customBgToggle.addEventListener('change', (e) => { onBgToggle(customBgToggle); });
   const wallpaperRefresh = document.getElementById('wallpaperRefresh');
   if (wallpaperRefresh) wallpaperRefresh.addEventListener('click', () => { refreshWallpaper(); });
+  const bgSub = document.getElementById('customBgSub');
+  if (bgSub) {
+    bgSub.addEventListener('click', (e) => {
+      const btn = e.target.closest('button[data-cb-action]');
+      if (!btn) return;
+      const act = btn.dataset.cbAction;
+      if (act === 'upload') { const fi = document.getElementById('customBgFile'); if (fi) fi.click(); }
+      else if (act === 'activate') {
+        const id = btn.dataset.id;
+        const lib = getBgLib();
+        if (!lib.some(x => x.id === id)) return;
+        const s = readBgPrefs(); s.customBgId = id; s.background = 'custom';
+        storageSet('asys_theme_prefs', JSON.stringify(s));
+        const t = document.getElementById('wallpaperToggle'); if (t) t.checked = false;
+        const c = document.getElementById('customBgToggle'); if (c) c.checked = true;
+        applyBackground('custom'); updateRefreshBtn();
+      }
+    });
+    bgSub.addEventListener('change', (e) => {
+      const fi = e.target.closest('input[type="file"]');
+      if (!fi || !fi.files || !fi.files.length) return;
+      const file = fi.files[0];
+      fi.value = '';
+      handleCustomUpload(file);
+    });
+  }
   const quicklinksToggle = document.getElementById('quicklinksToggle');
   ['clockDate','clockWeek','clockLunar','clockTerm','clock24h','clockSeconds'].forEach(id => {
     const el = document.getElementById(id);
@@ -344,6 +394,7 @@ function updateQuicklinksLines() {
   lines.scrollTop = ta.scrollTop;
 }
 function refreshWallpaper() {
+  if (currentBg() === 'custom') { randomCustomWallpaper(); return; }
   const bg = document.getElementById('wallpaperBg'), img = document.getElementById('wallpaperImg');
   if (!img) return;
   const btn = document.getElementById('wallpaperRefresh');
@@ -452,13 +503,180 @@ function moveColorIndicator(btn, animate) {
   if (animate === false) { void ind.offsetWidth; ind.style.transition = ''; }
 }
 function updateColorActive(color, animate) { let activeBtn = null; document.querySelectorAll('.color-btn').forEach(b=>{ const a=b.dataset.color===color; b.classList.toggle('active',a); if(a) activeBtn=b; }); moveColorIndicator(activeBtn, animate); }
-function updateWallpaperToggle(en) { document.getElementById('wallpaperToggle').checked = en; }
+function updateBgToggles(bg) {
+  const b = document.getElementById('wallpaperToggle'), c = document.getElementById('customBgToggle');
+  if (b) b.checked = (bg === 'bing');
+  if (c) c.checked = (bg === 'custom');
+}
+function currentBg() {
+  const b = document.getElementById('wallpaperToggle'), c = document.getElementById('customBgToggle');
+  return (b && b.checked) ? 'bing' : (c && c.checked) ? 'custom' : 'off';
+}
+function readBgPrefs() { try { return JSON.parse(storageGet('asys_theme_prefs') || '{}'); } catch (e) { return {}; } }
+function getCustomBgId() { return readBgPrefs().customBgId || null; }
+function getBgLib() { try { return JSON.parse(storageGet(BG_LIB_KEY) || '[]'); } catch (e) { return []; } }
+function saveBgLib(lib) {
+  const s = JSON.stringify(lib);
+  if (s.length > BG_MAX_CHARS) return 'FULL';
+  try { localStorage.setItem(BG_LIB_KEY, s); return 'OK'; }
+  catch (e) { return 'FAIL'; }
+}
+function uid() { return 'bg_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2, 8); }
+function stripExt(name) { return String(name || '').replace(/\.(png|jpe?g|webp|gif|bmp|avif|svg)$/i, ''); }
+function bgSizeCss(fit) {
+  switch (fit) {
+    case 'contain': return { size: 'contain', repeat: 'no-repeat', pos: 'center center' };
+    case 'stretch': return { size: '100% 100%', repeat: 'no-repeat', pos: 'center center' };
+    case 'tile': return { size: 'auto', repeat: 'repeat', pos: 'left top' };
+    case 'center': return { size: 'auto', repeat: 'no-repeat', pos: 'center center' };
+    default: return { size: 'cover', repeat: 'no-repeat', pos: 'center center' };
+  }
+}
+function applyBackground(bg) {
+  const bgEl = document.getElementById('wallpaperBg');
+  const img = document.getElementById('wallpaperImg');
+  const cEl = document.getElementById('wallpaperCustom');
+  wallpaperLoadSeq++; // 作废进行中的网络壁纸加载
+  if (img) { img.onload = null; img.onerror = null; img.src = ''; }
+  if (bg === 'bing') {
+    if (img) img.style.display = '';
+    if (cEl) cEl.style.display = 'none';
+    document.body.classList.add('wallpaper-enabled');
+    loadWallpaper();
+  } else if (bg === 'custom') {
+    if (img) img.style.display = 'none';
+    if (cEl) cEl.style.display = 'block'; // 覆盖 CSS 默认 display:none（custom 层默认隐藏，与 Bing 图层共存）
+    document.body.classList.add('wallpaper-enabled');
+    loadCustomWallpaper();
+  } else {
+    document.body.classList.remove('wallpaper-enabled');
+    if (bgEl) bgEl.classList.remove('show');
+    if (cEl) { cEl.style.backgroundImage = ''; cEl.style.display = 'none'; }
+    if (img) img.style.display = '';
+  }
+}
+function loadCustomWallpaper() {
+  const bgEl = document.getElementById('wallpaperBg');
+  const cEl = document.getElementById('wallpaperCustom');
+  const lib = getBgLib();
+  const found = lib.find(x => x.id === getCustomBgId());
+  if (!found || !cEl) {
+    if (bgEl) bgEl.classList.remove('show');
+    updateCustomBgSection();
+    return;
+  }
+  const css = bgSizeCss(readBgPrefs().customBgFit || 'cover');
+  cEl.style.backgroundImage = 'url("' + found.dataUrl + '")';
+  cEl.style.backgroundSize = css.size;
+  cEl.style.backgroundRepeat = css.repeat;
+  cEl.style.backgroundPosition = css.pos;
+  // DataURL 本地即取即用，无需网络加载，直接显示
+  if (bgEl) bgEl.classList.add('show');
+  updateCustomBgSection();
+}
+function setBgOff() {
+  const b = document.getElementById('wallpaperToggle'), c = document.getElementById('customBgToggle');
+  if (b) b.checked = false;
+  if (c) c.checked = false;
+  savePreferences(getCurrentMode(), getCurrentColor(), 'off');
+  applyBackground('off');
+  updateRefreshBtn();
+}
+function updateRefreshBtn() {
+  const btn = document.getElementById('wallpaperRefresh');
+  if (!btn) return;
+  const bg = currentBg();
+  const n = getBgLib().length;
+  btn.classList.toggle('show', bg === 'bing' || (bg === 'custom' && n >= 2));
+  btn.title = bg === 'custom' ? '从我的图片里随机换一张' : '换一张壁纸';
+}
+function randomCustomWallpaper() {
+  const lib = getBgLib(), cur = getCustomBgId();
+  const pool = lib.filter(x => x.id !== cur);
+  if (!pool.length) return;
+  const s = readBgPrefs();
+  s.customBgId = pool[Math.floor(Math.random() * pool.length)].id;
+  storageSet('asys_theme_prefs', JSON.stringify(s));
+  applyBackground('custom');
+  updateRefreshBtn();
+}
+function compressImage(file) {
+  return new Promise((resolve, reject) => {
+    const url = URL.createObjectURL(file);
+    const img = new Image();
+    img.onload = () => {
+      const w0 = img.naturalWidth, h0 = img.naturalHeight;
+      let w = w0, h = h0;
+      if (!w || !h) { URL.revokeObjectURL(url); reject(new Error('无法读取图片尺寸')); return; }
+      if (w > BG_MAX_EDGE) { h = Math.round(h * BG_MAX_EDGE / w); w = BG_MAX_EDGE; }
+      const c = document.createElement('canvas');
+      c.width = w; c.height = h;
+      const ctx = c.getContext('2d');
+      ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, w, h); // 白底合成，防透明 PNG 黑块
+      ctx.drawImage(img, 0, 0, w, h);
+      URL.revokeObjectURL(url);
+      c.toBlob((blob) => {
+        const fr = new FileReader();
+        fr.onload = () => resolve({ dataUrl: fr.result, w: w, h: h, bytes: blob.size });
+        fr.readAsDataURL(blob);
+      }, 'image/jpeg', BG_JPEG_Q);
+    };
+    img.onerror = () => { URL.revokeObjectURL(url); reject(new Error('图片解码失败，请换一张试试')); };
+    img.src = url;
+  });
+}
+function handleCustomUpload(file) {
+  if (!/^image\//.test(file.type)) { alert('只能上传图片文件'); return; }
+  if (file.size > BG_MAX_FILE) { alert('图片超过 20MB，请先压缩再上传'); return; }
+  compressImage(file).then(r => {
+    const lib = getBgLib();
+    lib.push({ id: uid(), name: stripExt(file.name), dataUrl: r.dataUrl, w: r.w, h: r.h, bytes: r.bytes, ts: Date.now() });
+    const res = saveBgLib(lib);
+    if (res !== 'OK') {
+      alert(res === 'FULL' ? '本地图库已满（浏览器约 5MB 限制），请到壁纸管理页删除部分图片后再试' : '保存失败：浏览器本地存储不可用');
+      return;
+    }
+    updateCustomBgSection();
+  }).catch(err => alert('图片处理失败：' + (err.message || '未知错误')));
+}
+function truncate(s, n) { s = String(s || ''); return s.length > n ? s.slice(0, n) + '…' : s; }
+function updateCustomBgSection() {
+  const sub = document.getElementById('customBgSub');
+  if (!sub) return;
+  const c = document.getElementById('customBgToggle');
+  const on = !!(c && c.checked);
+  sub.hidden = !on;
+  if (!on) return;
+  const lib = getBgLib(), id = getCustomBgId();
+  const active = lib.find(x => x.id === id);
+  const latest = lib.length ? lib[lib.length - 1] : null;
+  const theme = document.documentElement.getAttribute('data-theme') || 'light-neutral';
+  const manageUrl = './tools/wallpaper/index.html?theme=' + encodeURIComponent(theme);
+  let html = '';
+  if (active) {
+    html += '<div class="cb-line"><span class="cb-thumb" style="background-image:url(&quot;' + active.dataUrl + '&quot;)"></span><span class="cb-name">使用中：' + escapeHtml(active.name) + '</span></div>';
+  }
+  if (!lib.length) {
+    html += '<div class="cb-empty">还没有图片。上传一张并点「启用」，图片只存本机浏览器。</div>';
+  } else if (!active && latest) {
+    html += '<div class="cb-empty">图库有 ' + lib.length + ' 张图，尚未启用。</div>';
+    html += '<button type="button" class="mini-btn wide cb-activate" data-cb-action="activate" data-id="' + latest.id + '">启用「' + escapeHtml(truncate(latest.name, 14)) + '」</button>';
+  } else if (latest && latest.id !== id) {
+    html += '<button type="button" class="mini-btn wide cb-activate" data-cb-action="activate" data-id="' + latest.id + '">改用最新上传的「' + escapeHtml(truncate(latest.name, 14)) + '」</button>';
+  }
+  html += '<div class="cb-actions">';
+  html += '<button type="button" class="mini-btn" data-cb-action="upload">＋ 上传图片</button>';
+  html += '<a class="mini-btn cb-manage" href="' + manageUrl + '">管理图片库</a>';
+  html += '<input type="file" id="customBgFile" accept="image/*" hidden>';
+  html += '</div>';
+  sub.innerHTML = html;
+}
 function setActiveEngine(engine) { document.querySelectorAll('.engine-btn').forEach(b=>{ const a=b.dataset.engine===engine; b.classList.toggle('active',a); b.setAttribute('aria-selected',a); }); }
 
-function savePreferences(mode, color, wallpaper, engine, position) {
+function savePreferences(mode, color, background, engine, position) {
   let s = {};
   try { s = JSON.parse(storageGet('asys_theme_prefs')||'{}'); } catch (e) {}
-  const p = { mode: mode??s.mode??'light', color: color??s.color??'neutral', wallpaper: wallpaper??s.wallpaper??false, engine: engine??s.engine??'bing', position: position??s.position??25, autoTheme: autoThemeMode, darkTime: document.getElementById('darkTime')?.value || '18:00', lightTime: document.getElementById('lightTime')?.value || '06:00' };
+  const p = { mode: mode??s.mode??'light', color: color??s.color??'neutral', background: background ?? s.background ?? 'off', customBgId: s.customBgId ?? null, customBgFit: s.customBgFit ?? 'cover', engine: engine??s.engine??'bing', position: position??s.position??25, autoTheme: autoThemeMode, darkTime: document.getElementById('darkTime')?.value || '18:00', lightTime: document.getElementById('lightTime')?.value || '06:00' };
   storageSet('asys_theme_prefs', JSON.stringify(p));
   if(engine) storageSet('asys_engine', engine);
 }

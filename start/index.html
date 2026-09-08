@@ -5,10 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <link rel="shortcut icon" href="../img/asys.ico" type="image/x-icon">
   <title>ASYS 搜索起始页</title>
-  <link rel="stylesheet" href="style.css?v=202609042138">
+  <link rel="stylesheet" href="style.css?v=202609090201">
 </head>
 <body>
-  <div class="wallpaper-bg" id="wallpaperBg"><img id="wallpaperImg" src="" alt="Bing Wallpaper" /></div>
+  <div class="wallpaper-bg" id="wallpaperBg"><img id="wallpaperImg" src="" alt="Bing Wallpaper" /><div class="custom-bg-layer" id="wallpaperCustom"></div></div>
 
   <header>
     <a href="https://asystech.cn" class="logo" title="访问 ASYS 官网" aria-label="ASYS 官网" target="_blank" rel="noopener noreferrer">
@@ -56,7 +56,9 @@
         </div>
         
         <div class="wallpaper-section">
-          <div class="wallpaper-label"><span>使用网络图片作为背景</span><label class="mode-toggle"><input type="checkbox" id="wallpaperToggle"><span class="mode-slider"></span></label></div>
+          <div class="wallpaper-label"><span>Bing 每日壁纸</span><label class="mode-toggle"><input type="checkbox" id="wallpaperToggle"><span class="mode-slider"></span></label></div>
+          <div class="wallpaper-label"><span>我的图片背景 <em class="beta-tag">实验</em></span><label class="mode-toggle"><input type="checkbox" id="customBgToggle"><span class="mode-slider"></span></label></div>
+          <div class="custom-bg-sub" id="customBgSub" hidden></div>
         </div>
         
         <div class="quicklinks-section">
@@ -181,12 +183,20 @@
         </span>
         <span class="tool-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
       </a>
+      <a class="tool-item" href="./tools/wallpaper/index.html" title="壁纸管理">
+        <span class="tool-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg></span>
+        <span class="tool-info">
+          <span class="tool-name">壁纸管理</span>
+          <span class="tool-desc">自定义背景 · 图片本地管理</span>
+        </span>
+        <span class="tool-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
+      </a>
     </div>
   </div>
 
   <footer><p>ASYS 科技 搜索起始页 版权所有</p></footer>
 
   <script src="lunar-calendar.js?v=202609042138"></script>
-  <script src="script.js?v=202609042138"></script>
+  <script src="script.js?v=202609090200"></script>
 </body>
 </html>
