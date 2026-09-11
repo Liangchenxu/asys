@@ -8,12 +8,16 @@ const searchEngines = {
 
 let debounceTimer = null, currentScript = null, selectedSuggestionIndex = -1, currentSuggestions = [];
 let currentEngine = 'bing';
+// 壁纸分辨率按视口自适应（高分屏 1920 / 普通 1366 / 小屏 1080），减少移动端流量
+const WALLPAPER_RES = (() => { const w = Math.max((window.screen && screen.width) || 0, window.innerWidth || 0); return w >= 1920 ? 1920 : w >= 1366 ? 1366 : 1080; })();
+function wallpaperJsonUrl(index) { return `https://bing.biturl.top/?resolution=${WALLPAPER_RES}&format=json&index=${index}&mkt=zh-CN`; }
 const WALLPAPER_SOURCES = [
-  { type: 'json', url: 'https://bing.biturl.top/?resolution=1920&format=json&index=0&mkt=zh-CN' },
-  { type: 'json', url: 'https://bing.biturl.top/?resolution=1920&format=json&index=8&mkt=zh-CN' }
+  { type: 'json', url: wallpaperJsonUrl(0) },
+  { type: 'json', url: wallpaperJsonUrl(8) }
 ];
 let wallpaperCachedUrl = '', wallpaperLoadSeq = 0;
 const WALLPAPER_TIMEOUT = 8000;
+const BG_URL_CACHE_KEY = 'asys_bg_url_cache'; // 当日壁纸 URL 缓存（同日二次打开免请求）
 const BG_LIB_KEY = 'asys_bg_library';
 const BG_MAX_CHARS = 3500000; // 图库 localStorage 安全水位（字符，约 5MB 上限）
 const BG_MAX_EDGE = 1920;     // 上传图片最长边（超出等比压缩）
@@ -24,7 +28,8 @@ const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
 let autoThemeTimer = null;
 
 document.addEventListener('DOMContentLoaded', () => {
-  preloadWallpaper();
+  // 仅在使用 Bing 壁纸时才发起网络请求（默认 off → 首屏零外部请求）；当日有缓存则直接用缓存 URL
+  if (readInitialBg() === 'bing') wallpaperCachedUrl = readBgUrlCache();
   loadPreferences();
   bindEvents();
   initClock();
@@ -42,18 +47,21 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-function preloadWallpaper() {
-  // 提前抓今日壁纸 URL + 预下载图片进浏览器缓存，开启壁纸时秒显示
-  fetch(WALLPAPER_SOURCES[0].url, { signal: AbortSignal.timeout(WALLPAPER_TIMEOUT) })
-    .then(r => (r.ok ? r.json() : Promise.reject(new Error('bad status'))))
-    .then(d => {
-      const u = (d && d.url) || (d && d.data && d.data.url);
-      if (!u) throw new Error('no url');
-      wallpaperCachedUrl = u;
-      const pre = new Image();
-      pre.src = normalizeImgUrl(u);
-    })
-    .catch(() => {});
+// 背景偏好读取（提前判断是否需要网络请求；background: off|bing|custom）
+function readInitialBg() {
+  const p = readBgPrefs();
+  return p.background || (p.wallpaper ? 'bing' : 'off');
+}
+function todayKey() { const d = new Date(); return d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate(); }
+function readBgUrlCache() {
+  try {
+    const c = JSON.parse(storageGet(BG_URL_CACHE_KEY) || 'null');
+    if (c && c.date === todayKey() && c.url) return c.url;
+  } catch (e) {}
+  return '';
+}
+function saveBgUrlCache(url) {
+  try { storageSet(BG_URL_CACHE_KEY, JSON.stringify({ date: todayKey(), url })); } catch (e) {}
 }
 
 function loadPreferences() {
@@ -153,6 +161,7 @@ function loadWallpaper() {
         if (seq !== wallpaperLoadSeq) return;
         const u = (d && d.url) || (d && d.data && d.data.url);
         if (!u) throw new Error('no url');
+        if (i === 0) saveBgUrlCache(u); // 缓存当日 Bing 图 URL，同日再打开免请求
         setImg(u, () => tryIndex(i + 1));
       })
       .catch(err => { if (seq === wallpaperLoadSeq) { console.error('[wallpaper] fetch 失败:', s.url, err); tryIndex(i + 1); } });
@@ -403,7 +412,7 @@ function refreshWallpaper() {
   const done = () => { if (btn) btn.classList.remove('spinning'); };
   // 随机取一张历史 Bing 图（biturl index: 0=今天，数字越大越旧）
   const idx = Math.floor(Math.random() * 9);
-  const url = `https://bing.biturl.top/?resolution=1920&format=json&index=${idx}&mkt=zh-CN`;
+  const url = wallpaperJsonUrl(idx);
   const timer = setTimeout(() => { console.error('[wallpaper] 换一张超时'); done(); loadWallpaper(); }, WALLPAPER_TIMEOUT);
   fetch(url, { signal: AbortSignal.timeout(WALLPAPER_TIMEOUT) })
     .then(r => (r.ok ? r.json() : Promise.reject(new Error('bad status ' + r.status))))
@@ -466,13 +475,35 @@ function renderClockInfo(d) {
   const el = document.getElementById('clockInfo');
   if (el) el.innerHTML = parts.join('<span class="ci-sep">·</span>');
 }
+let clockOffset = 0; // 与服务器时间的偏差（毫秒）
+function clockNow() { return new Date(Date.now() + clockOffset); }
 function initClock() {
   const c = document.getElementById('clockDisplay');
   loadClockPrefs();
-  const upd = (d) => { const now = d || new Date(); c.textContent = formatClock(now); renderClockInfo(now); };
-  upd();
-  setInterval(() => upd(), 1000);
-  fetch('https://worldtimeapi.org/api/ip', { signal: AbortSignal.timeout(3000) }).then(r=>r.ok?r.json():Promise.reject()).then(d=>upd(new Date(d.datetime))).catch(()=>{});
+  let lastInfoDate = '';
+  const tick = (d) => {
+    const now = d || clockNow();
+    c.textContent = formatClock(now);
+    const key = now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + now.getDate();
+    if (key !== lastInfoDate) { lastInfoDate = key; renderClockInfo(now); } // 农历/节气仅日期变化时重算，避免每秒空转
+  };
+  tick();
+  setInterval(tick, 1000);
+  // 时钟校准：读官网自身服务器 Date 头（同源，零 CORS；Cloudflare 时间准确），空闲时执行不抢首屏
+  const calibrate = () => {
+    fetch(location.href, { method: 'HEAD', cache: 'no-store' })
+      .then(r => {
+        const dv = r.headers.get('date');
+        if (!dv) throw new Error('no date');
+        const t = new Date(dv);
+        if (isNaN(t.getTime())) throw new Error('bad date');
+        clockOffset = t.getTime() - Date.now();
+        tick();
+      })
+      .catch(() => {});
+  };
+  if ('requestIdleCallback' in window) requestIdleCallback(calibrate, { timeout: 2000 });
+  else setTimeout(calibrate, 800);
 }
 
 function applyTheme(mode, color) { document.documentElement.setAttribute('data-theme', `${mode}-${color}`); updateToolLinks(mode, color); }
