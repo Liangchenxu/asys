@@ -10,7 +10,7 @@
 [data-theme="dark-orange"] { --bg-primary: rgba(67, 20, 7, 0.90); --bg-secondary: rgba(124, 45, 18, 0.90); --text-primary: #ffedd5; --text-secondary: #fdba74; --border-color: rgba(251, 146, 60, 0.4); --input-bg: rgba(154, 52, 18, 0.95); --input-border: rgba(251, 146, 60, 0.4); --input-focus: #fb923c; --icon-color: #6b7280; --icon-hover: #fdba74; --accent: #fb923c; --accent-hover: #ea580c; --shadow: 0 8px 32px rgba(0, 0, 0, 0.5); --glass-border: rgba(255, 255, 255, 0.15); --logo-dark-filter: brightness(0) invert(1); --clock-color: #fdba74; --suggestion-bg: rgba(124, 45, 18, 0.98); --suggestion-hover: rgba(154, 52, 18, 0.9); --glass-blur: 20px; }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background: var(--bg-primary); background-image: radial-gradient(ellipse at top, rgba(255,255,255,0.1) 0%, transparent 50%), radial-gradient(ellipse at bottom, rgba(255,255,255,0.05) 0%, transparent 50%); color: var(--text-primary); min-height: 100vh; display: flex; flex-direction: column; transition: background 0.3s ease, color 0.3s ease; line-height: 1.5; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); position: relative; overflow-x: hidden; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background: var(--bg-primary); background-image: radial-gradient(ellipse at top, rgba(255,255,255,0.1) 0%, transparent 50%), radial-gradient(ellipse at bottom, rgba(255,255,255,0.05) 0%, transparent 50%); color: var(--text-primary); min-height: 100vh; display: flex; flex-direction: column; transition: background 0.3s ease, color 0.3s ease; line-height: 1.5; position: relative; overflow-x: hidden; }
 body.wallpaper-enabled .glass { box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.1); }
 body.wallpaper-enabled .clock-display { text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5), 0 4px 8px rgba(0, 0, 0, 0.3), 0 0 20px rgba(0, 0, 0, 0.2); -webkit-text-stroke: 0.5px rgba(0, 0, 0, 0.3); }
 body.wallpaper-enabled .clock-info { text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5), 0 4px 8px rgba(0, 0, 0, 0.3), 0 0 20px rgba(0, 0, 0, 0.2); -webkit-text-stroke: 0.5px rgba(0, 0, 0, 0.3); }
@@ -27,6 +27,12 @@ body.wallpaper-enabled .suggestions-container { box-shadow: 0 8px 32px rgba(0, 0
 [data-theme*="light"] .wallpaper-bg.blurred img { filter: blur(20px) brightness(0.85); }
 [data-theme*="dark"] .wallpaper-bg img { filter: blur(0) brightness(0.5); }
 [data-theme*="dark"] .wallpaper-bg.blurred img { filter: blur(20px) brightness(0.4); }
+/* 自定义图片背景层（background-image 方式，支持平铺/居中/适应等 Windows 壁纸规则） */
+.wallpaper-bg .custom-bg-layer { position: absolute; inset: 0; width: 100%; height: 100%; background-position: center center; background-repeat: no-repeat; transition: filter 0.5s ease, -webkit-filter 0.5s ease; will-change: filter; display: none; }
+[data-theme*="light"] .wallpaper-bg .custom-bg-layer { filter: blur(0) brightness(1); }
+[data-theme*="light"] .wallpaper-bg.blurred .custom-bg-layer { filter: blur(20px) brightness(0.85); }
+[data-theme*="dark"] .wallpaper-bg .custom-bg-layer { filter: blur(0) brightness(0.5); }
+[data-theme*="dark"] .wallpaper-bg.blurred .custom-bg-layer { filter: blur(20px) brightness(0.4); }
 .glass { background: var(--bg-secondary); backdrop-filter: blur(var(--glass-blur)); -webkit-backdrop-filter: blur(var(--glass-blur)); border: 1px solid var(--glass-border); box-shadow: var(--shadow); transition: box-shadow 0.3s ease; }
 header { display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 1.5rem; position: sticky; top: 0; z-index: 100; height: 56px; }
 .logo { display: flex; align-items: center; height: 100%; text-decoration: none; color: var(--text-primary); }
@@ -74,6 +80,16 @@ header { display: flex; justify-content: space-between; align-items: center; pad
 .color-btn[data-color="orange"] { background: radial-gradient(circle at 30% 30%, #fb923c 0%, #ea580c 100%); }
 .wallpaper-section, .position-section { padding-top: 10px; }
 .wallpaper-label, .position-label { display: flex; align-items: center; justify-content: space-between; font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 6px; }
+/* “我的图片背景”子区（上传/启用/管理，开启开关后展开） */
+.beta-tag { font-style: normal; font-size: 0.62rem; font-weight: 600; color: #92400e; background: #fef3c7; border: 1px solid #fcd34d; border-radius: 8px; padding: 0 5px; margin-left: 3px; vertical-align: 1px; letter-spacing: 0.5px; }
+.custom-bg-sub { margin-top: 2px; padding: 10px; background: var(--input-bg); border: 1px dashed var(--border-color); border-radius: 10px; display: flex; flex-direction: column; gap: 8px; }
+.custom-bg-sub[hidden] { display: none; }
+.custom-bg-sub .cb-line { display: flex; align-items: center; gap: 8px; font-size: 0.78rem; color: var(--text-secondary); min-width: 0; }
+.custom-bg-sub .cb-thumb { width: 46px; height: 28px; border-radius: 6px; background-size: cover; background-position: center; border: 1px solid var(--border-color); flex-shrink: 0; }
+.custom-bg-sub .cb-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.custom-bg-sub .cb-empty { font-size: 0.75rem; color: var(--text-secondary); line-height: 1.55; }
+.custom-bg-sub .cb-actions { display: flex; gap: 6px; }
+.custom-bg-sub .cb-actions .mini-btn { flex: 1; text-align: center; display: inline-flex; align-items: center; justify-content: center; padding: 5px 6px; box-sizing: border-box; text-decoration: none; }
 .wallpaper-refresh-btn { position: fixed; right: 20px; bottom: 20px; width: 40px; height: 40px; border-radius: 50%; background: var(--bg-secondary); border: 1px solid var(--border-color); box-shadow: var(--shadow); display: none; align-items: center; justify-content: center; cursor: pointer; z-index: 90; transition: all 0.25s ease; color: var(--text-secondary); padding: 0; }
 .wallpaper-refresh-btn.show { display: flex; }
 .wallpaper-refresh-btn:hover { color: var(--accent); border-color: var(--accent); transform: rotate(180deg); }

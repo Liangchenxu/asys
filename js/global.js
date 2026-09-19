@@ -224,8 +224,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         btnMac.style.cursor = "not-allowed";
                     }
                 }
-                macArch.addEventListener('change', updateMacBtn);
-                updateMacBtn();
+                if (macArch && btnMac) { macArch.addEventListener('change', updateMacBtn); updateMacBtn(); } // macOS 卡片已移除时跳过
 
                 initSmartDetection(linkData);
 
