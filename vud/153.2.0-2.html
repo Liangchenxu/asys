@@ -1,0 +1,46 @@
+<div class="step-block">
+    <h2 style="margin-top: 0; color: #111827; font-size: 1.4rem; display: flex; align-items: center; gap: 10px;">
+        v153.2.0-2
+    </h2>
+    <div class="step-content">
+
+        <p style="margin-bottom: 24px; padding-left: 12px; border-left: 3px solid #e5e7eb; color: var(--text-sub);">
+            本版聚焦启动提速与包体积精简，并修复若干体验问题。
+        </p>
+
+        <h3 style="font-size: 1.25em; border-bottom: 1px solid #eaecef; padding-bottom: 0.3em; margin-top: 24px; margin-bottom: 16px;">新功能</h3>
+        <ul>
+            <li>右键「复制为 Markdown 链接」 — 在页面、链接、标签页上右键即可复制为 Markdown：链接 -> <code>[链接文字](URL)</code>，页面 / 标签页 -> <code>[标题](URL)</code>，粘到笔记、文档可用</li>
+        </ul>
+
+        <h3 style="font-size: 1.25em; border-bottom: 1px solid #eaecef; padding-bottom: 0.3em; margin-top: 24px; margin-bottom: 16px;">性能与体积</h3>
+        <ul>
+            <li>启动提速 — 采用 LTO + PGO (复用 Mozilla 官方性能数据)，从启动到可上网的时间缩短</li>
+            <li>包体积精简 — 精简内置语言包 (保留 简中 / 繁中 / 巨硬中文 + 英文 en-US·en-GB·en-CA)
+                <ul style="margin-top: 8px; margin-bottom: 8px;">
+                    <li>Linux tar.xz: 97.3 MB -> <strong>83.5 MB (-14.3%)</strong></li>
+                    <li>Windows 安装包: 100.2 MB -> <strong>87.2 MB (-13.0%)</strong>；便携版: 162.2 MB -> <strong>132.4 MB (-18.4%)</strong></li>
+                </ul>
+            </li>
+        </ul>
+
+        <h3 style="font-size: 1.25em; border-bottom: 1px solid #eaecef; padding-bottom: 0.3em; margin-top: 24px; margin-bottom: 16px;">设置</h3>
+        <ul>
+            <li>AI 侧栏开关拆分 — 「启用侧栏 AI 聊天」与 「显示侧栏」 拆成两个独立开关；勾选 AI 聊天时会自动显示侧栏并打开 AI 面板</li>
+        </ul>
+
+        <h3 style="font-size: 1.25em; border-bottom: 1px solid #eaecef; padding-bottom: 0.3em; margin-top: 24px; margin-bottom: 16px;">修复</h3>
+        <ul>
+            <li>Windows 自动更新不再反复弹通知 — 后台检查全程静默，仅在更新成功时提示一次 (此前每次检查都弹)</li>
+            <li>Nova 主题：设置页左栏选中项去掉蓝色指示条 — 保持圆角风格，不再显示左侧蓝色竖条</li>
+            <li>右键菜单空「AI 聊天」子菜单已清除</li>
+            <li>Linux RPM 安装后在应用菜单里找不到 Vantage — 修复 Fedora / openSUSE 等系统安装 rpm 包后应用菜单不显示的问题 (rpm 包缺少桌面项与图标)；现在安装后会在应用菜单正常显示，可直接点击启动</li>
+            <li>终端命令 <code>vantage</code> — deb / rpm 安装后新增 <code>vantage</code> 命令，可在终端直接输入 <code>vantage</code> 启动浏览器 (此前只能从菜单或输入完整路径启动)</li>
+        </ul>
+
+        <p style="color: var(--text-sub); margin-bottom: 20px; margin-top: 30px;">如果觉得好用，麻烦点个star吧！</p>
+        <div style="margin-top: 25px;">
+            <a href="https://github.com/asystech-chen/Vantage/releases/tag/v153.2.0-2" target="_blank" class="docs-link">🔗 在 GitHub 查看完整 Release 页面</a>
+        </div>
+    </div>
+</div>
