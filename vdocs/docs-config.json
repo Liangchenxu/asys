@@ -17,12 +17,12 @@
       ]
     },
     {
-      "title": "功能与使用",
+      "title": "安全与签名",
       "items": [
         {
-          "id": "ublock-tutorial",
-          "title": "uBlock 扩展安装指南",
-          "file": "../vdocs/ublock-tutorial.html"
+          "id": "code-signing",
+          "title": "关于代码签名",
+          "file": "../vdocs/code-signing.html"
         }
       ]
     },
