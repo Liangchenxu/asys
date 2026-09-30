@@ -7,8 +7,8 @@
 <p>参考：若由开源签名项目代签，UAC 中显示的发布者会是该签名项目，而不是 Vantage 本身。这也是不少开源软件的做法。</p>
 </blockquote>
 <h2 id="macos">macOS</h2>
-<p><strong>Vantage 的 macOS 版本不做签名与公证。</strong> 我们没有付费的 Apple Developer 许可，也不愿支持这种被放在付费墙后、却没有带来实质收益的签名机制。</p>
-<p>因此，在 Apple Silicon 设备上首次打开时，系统可能提示「已损坏，无法打开」或「无法验证开发者」。解除隔离后即可正常使用：</p>
+<p><strong>Vantage 的 macOS 版本未签名、未公证，因此无法直接运行。</strong> 我们没有付费的 Apple Developer 许可，也不愿支持这种被放在付费墙后、却没有带来实质收益的签名机制。</p>
+<p>首次打开时，系统会拦截，提示「已损坏，无法打开」或「无法验证开发者」。解除隔离后即可正常使用：</p>
 <pre><code class="language-bash">xattr -dr com.apple.quarantine /Applications/Vantage.app
 </code></pre>
 <h2 id="linux">Linux</h2>
@@ -17,4 +17,4 @@
 <li><strong>deb / rpm 仓库</strong>：通过 GPG 公钥验证（见 <a href="docs.html#linux-repos">Linux 安装教程</a>）</li>
 <li><strong>AppImage / tar.gz</strong>：附带 <code>.asc</code> 分离签名，可用公钥校验</li>
 </ul>
-<p>公钥文件：<code>vantage-archive-keyring.asc</code>（各项下载页与安装教程中均给出链接）。</p>
+<p>公钥文件：<code>vantage-archive-keyring.asc</code>（各项安装教程中均给出链接）。</p>

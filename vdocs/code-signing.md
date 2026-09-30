@@ -12,9 +12,9 @@ Windows 会对下载的安装包做 SmartScreen / UAC 检查。
 
 ## macOS
 
-**Vantage 的 macOS 版本不做签名与公证。** 我们没有付费的 Apple Developer 许可，也不愿支持这种被放在付费墙后、却没有带来实质收益的签名机制。
+**Vantage 的 macOS 版本未签名、未公证，因此无法直接运行。** 我们没有付费的 Apple Developer 许可，也不愿支持这种被放在付费墙后、却没有带来实质收益的签名机制。
 
-因此，在 Apple Silicon 设备上首次打开时，系统可能提示「已损坏，无法打开」或「无法验证开发者」。解除隔离后即可正常使用：
+首次打开时，系统会拦截，提示「已损坏，无法打开」或「无法验证开发者」。解除隔离后即可正常使用：
 
 ```bash
 xattr -dr com.apple.quarantine /Applications/Vantage.app
@@ -27,4 +27,4 @@ Linux 不使用代码签名，而是用 GPG 校验安装包与仓库：
 - **deb / rpm 仓库**：通过 GPG 公钥验证（见 [Linux 安装教程](docs.html#linux-repos)）
 - **AppImage / tar.gz**：附带 `.asc` 分离签名，可用公钥校验
 
-公钥文件：`vantage-archive-keyring.asc`（各项下载页与安装教程中均给出链接）。
+公钥文件：`vantage-archive-keyring.asc`（各项安装教程中均给出链接）。
