@@ -5,12 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <link rel="shortcut icon" href="../img/asys.ico" type="image/x-icon">
   <title>ASYS 搜索起始页</title>
-  <!-- 预连接壁纸数据源与图片 CDN，开壁纸时减少建连延迟 -->
-  <link rel="preconnect" href="https://bing.biturl.top" crossorigin>
-  <link rel="dns-prefetch" href="https://bing.biturl.top">
-  <link rel="preconnect" href="https://cn.bing.com">
+  <!-- 壁纸图片 CDN 仅 dns-prefetch（开壁纸时才需要；不在首屏占用连接） -->
   <link rel="dns-prefetch" href="https://cn.bing.com">
   <link rel="stylesheet" href="style.css?v=202609192243">
+  <!-- 提前加载两个脚本，避免在 body 末尾才被发现而拖延首屏交互 -->
+  <script src="lunar-calendar.js?v=202609192243" defer></script>
+  <script src="script.js?v=202609302348" defer></script>
 </head>
 <body>
   <div class="wallpaper-bg" id="wallpaperBg"><img id="wallpaperImg" src="" alt="Bing Wallpaper" /><div class="custom-bg-layer" id="wallpaperCustom"></div></div>
@@ -100,6 +100,27 @@
 
   <main id="mainContent">
     <div class="clock-display" id="clockDisplay" title="时间">--:--</div>
+    <!-- 内联极简时钟：不依赖外部脚本，首帧即显示；script.js 加载后接管 -->
+    <script>
+    (function () {
+      var el = document.getElementById('clockDisplay');
+      if (!el) return;
+      var prefs = {};
+      try { prefs = JSON.parse(localStorage.getItem('asys_clock_prefs') || '{}'); } catch (e) {}
+      var p2 = function (n) { return (n < 10 ? '0' : '') + n; };
+      var period = function (h) { return h < 5 ? '凌晨' : h < 11 ? '上午' : h < 13 ? '中午' : h < 18 ? '下午' : '晚上'; };
+      var fmt = function (d) {
+        var h = d.getHours(), m = d.getMinutes(), s = d.getSeconds(), t;
+        if (prefs.hour24 === false) { var h12 = h % 12 === 0 ? 12 : h % 12; t = period(h) + ' ' + h12 + ':' + p2(m); }
+        else { t = p2(h) + ':' + p2(m); }
+        if (prefs.seconds) t += ':' + p2(s);
+        return t;
+      };
+      var tick = function () { el.textContent = fmt(new Date()); };
+      tick();
+      window.__clockInlineTimer = setInterval(tick, 1000);
+    })();
+    </script>
     <div class="clock-info" id="clockInfo"></div>
     <div class="search-wrapper">
       <div class="search-box">
@@ -200,8 +221,5 @@
   </div>
 
   <footer><p>ASYS 科技 搜索起始页 版权所有</p></footer>
-
-  <script src="lunar-calendar.js?v=202609192243" defer></script>
-  <script src="script.js?v=202609192243" defer></script>
 </body>
 </html>

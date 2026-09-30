@@ -478,6 +478,8 @@ function renderClockInfo(d) {
 let clockOffset = 0; // 与服务器时间的偏差（毫秒）
 function clockNow() { return new Date(Date.now() + clockOffset); }
 function initClock() {
+  // 接管 index.html 里内联的简易时钟（它负责“首帧即可见”，这里换成带偏好/校准的正式实现）
+  if (window.__clockInlineTimer) { clearInterval(window.__clockInlineTimer); window.__clockInlineTimer = null; }
   const c = document.getElementById('clockDisplay');
   loadClockPrefs();
   let lastInfoDate = '';
