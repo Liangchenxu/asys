@@ -398,6 +398,61 @@ img { max-width: 100%; display: block; }
 .dp-highlight p { opacity: 0.9; max-width: 700px; margin: 20px auto; }
 .dp-disclaimer { margin-top: 40px; font-size: 0.85rem; color: #888; text-align: left; border-top: 1px solid #eee; padding-top: 20px; }
 
+/* --- Loong64 新增档位：高亮与宣传 --- */
+.page-debian .feature-item.feature-item-new {
+    color: #b00842;
+    font-weight: 600;
+    background: #fdf2f6;
+    border-left: 3px solid var(--debian-red);
+    padding: 6px 10px 6px 12px;
+    border-radius: 4px;
+}
+.page-debian .feature-item.feature-item-new::before { display: none; }
+
+.dp-loong {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    align-items: center;
+    background: linear-gradient(135deg, #fff5f8 0%, #ffe9f0 100%);
+    border: 1px solid #f5c6d8;
+    border-left: 6px solid var(--debian-red);
+    border-radius: 16px;
+    padding: 35px;
+    margin-bottom: 50px;
+}
+.dp-loong-body { flex: 1; min-width: 260px; }
+.dp-loong-badge {
+    display: inline-block;
+    background: var(--debian-red);
+    color: #fff;
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 50px;
+    letter-spacing: 0.5px;
+    margin-bottom: 12px;
+}
+.dp-loong-body h3 { font-size: 1.6rem; color: #222; margin: 0 0 12px; }
+.dp-loong-body p { color: #555; margin-bottom: 18px; }
+.dp-loong-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+.dp-loong-actions a { padding: 10px 24px; border-radius: 6px; font-weight: 700; font-size: 0.95rem; }
+.dp-loong-buy { background: #FF5000; color: #fff; }
+.dp-loong-buy:hover { background: var(--debian-red); color: #fff; }
+
+.dp-tiers { overflow-x: auto; }
+.dp-tiers-note { text-align: center; color: #666; margin: -18px 0 22px; font-size: 0.95rem; }
+.dp-tiers table { width: 100%; border-collapse: collapse; font-size: 1rem; }
+.dp-tiers th, .dp-tiers td { padding: 14px 18px; text-align: left; border-bottom: 1px solid #eee; }
+.dp-tiers th { background: #f7f7f7; color: #222; font-weight: 700; }
+.dp-tiers tr.tier-new td { background: #fff5f8; }
+.dp-tag-buy { color: #15803d; font-weight: 700; }
+.dp-tag-contact { color: #b45309; font-weight: 700; }
+
+@media (max-width: 768px) {
+    .dp-loong { padding: 25px; }
+}
+
 @keyframes fadeIn { from { opacity: 0.5; } to { opacity: 1; } }
 
 /* =========================================
