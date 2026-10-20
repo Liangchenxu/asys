@@ -327,24 +327,27 @@ function injectCommonComponents() {
     const headerContainer = document.getElementById('app-header');
     const footerContainer = document.getElementById('app-footer');
     const isVantageSite = document.body.classList.contains('site-vantage');
+    const isLitePage = document.body.classList.contains('page-vantage-lite');
+    const vBase = isLitePage ? '../' : '';
 
     // 注入导航栏
     if (headerContainer) {
         headerContainer.innerHTML = isVantageSite ? `
             <nav>
                 <div class="nav-left">
-                    <a href="index.html" class="nav-logo">
-                        <img src="../img/icon.svg" alt="Vantage Logo">
+                    <a href="${vBase}index.html" class="nav-logo">
+                        <img src="${vBase}../img/icon.svg" alt="Vantage Logo">
                         <span>Vantage</span>
                     </a>
                     <div class="vantage-nav-links">
-                        <a href="index.html" data-target="index.html">主页</a>
-                        <a href="vdownload.html" data-target="vdownload.html">下载</a>
-                        <a href="docs.html" data-target="docs.html">文档</a>
+                        <a href="${vBase}index.html" data-target="index.html">主页</a>
+                        <a href="${vBase}vdownload.html" data-target="vdownload.html">下载</a>
+                        <a href="${vBase}docs.html" data-target="docs.html">文档</a>
+                        <a href="${vBase}lite/" data-target="lite">Lite</a>
                     </div>
                 </div>
-                <a href="../index.html" class="asys-main-link" title="返回首页">
-                    <img src="../img/asys.svg" alt="ASYS 科技">
+                <a href="${vBase}../index.html" class="asys-main-link" title="返回首页">
+                    <img src="${vBase}../img/asys.svg" alt="ASYS 科技">
                 </a>
             </nav>
         ` : `
@@ -373,7 +376,13 @@ function injectCommonComponents() {
         const currentPath = window.location.pathname.split('/').pop() || 'index.html';
         const links = headerContainer.querySelectorAll('a[data-target]');
         links.forEach(link => {
-            if (link.getAttribute('data-target') === currentPath) {
+            const target = link.getAttribute('data-target');
+
+            if (isLitePage) {
+                if (target === 'lite') {
+                    link.classList.add('active');
+                }
+            } else if (target === currentPath) {
                 link.classList.add('active');
             }
         });

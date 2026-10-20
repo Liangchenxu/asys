@@ -6,7 +6,21 @@
     <title>Vantage - ASYS 科技</title>
     <link rel="icon" href="../img/vantage.webp" type="image/png">
     <link rel="stylesheet" href="../css/global.css?v=202609192243">
-    <script src="../js/global.js?v=202609192243" defer></script>
+    <script src="../js/global.js?v=202610202325" defer></script>
+    <style>
+        /* Vantage Lite 入口：沿用 Vantage 首页的圆角卡片风格 */
+        .lite-strip { padding: 0 20px; }
+        .lite-strip a { display: flex; align-items: center; gap: 24px; max-width: 1050px; margin: 0 auto; padding: 22px 28px; color: #111; background: #fff; border: 1px solid var(--border); border-radius: 16px; box-shadow: 0 4px 20px -5px rgba(0,0,0,0.03); transition: all 0.3s ease; }
+        .lite-strip a:hover { border-color: #cbd5e1; box-shadow: 0 12px 28px -10px rgba(0,0,0,0.08); }
+        .lite-strip .kicker { font-size: 12px; letter-spacing: 0.08em; color: #64748b; }
+        .lite-strip .title { font-size: 16px; font-weight: 600; }
+        .lite-strip .arrow { margin-left: auto; font-size: 20px; }
+        .lite-strip a:hover .title { color: #0078d4; }
+        @media (max-width: 760px) {
+            .lite-strip a { gap: 14px; padding: 18px 20px; }
+            .lite-strip .kicker { display: none; }
+        }
+    </style>
 </head>
 <body class="site-vantage page-vantage-home"> 
     
@@ -77,6 +91,14 @@
                     <p>登录 Mozilla 账号，书签、密码、历史记录多设备无缝同步。</p>
                 </div>
             </div>
+        </div>
+
+        <div class="lite-strip">
+            <a href="lite/">
+                <span class="kicker">VANTAGE LITE</span>
+                <span class="title">更轻的 Windows 浏览器外壳</span>
+                <span class="arrow">→</span>
+            </a>
         </div>
 
         <div class="legal-footer">
