@@ -5,12 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <link rel="shortcut icon" href="../img/asys.ico" type="image/x-icon">
   <title>ASYS 搜索起始页</title>
-  <!-- 壁纸图片 CDN 仅 dns-prefetch（开壁纸时才需要；不在首屏占用连接） -->
+  <!-- 壁纸相关域名仅 dns-prefetch（开壁纸时才真正建连；保持首屏零外部请求） -->
+  <link rel="dns-prefetch" href="https://bing.biturl.top">
   <link rel="dns-prefetch" href="https://cn.bing.com">
   <link rel="stylesheet" href="style.css?v=202609192243">
   <!-- 提前加载两个脚本，避免在 body 末尾才被发现而拖延首屏交互 -->
   <script src="lunar-calendar.js?v=202609192243" defer></script>
-  <script src="script.js?v=202609302348" defer></script>
+  <script src="script.js?v=202610181615" defer></script>
 </head>
 <body>
   <div class="wallpaper-bg" id="wallpaperBg"><img id="wallpaperImg" src="" alt="Bing Wallpaper" /><div class="custom-bg-layer" id="wallpaperCustom"></div></div>

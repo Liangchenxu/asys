@@ -8,15 +8,27 @@ const searchEngines = {
 
 let debounceTimer = null, currentScript = null, selectedSuggestionIndex = -1, currentSuggestions = [];
 let currentEngine = 'bing';
-// 壁纸分辨率按视口自适应（高分屏 1920 / 普通 1366 / 小屏 1080），减少移动端流量
-const WALLPAPER_RES = (() => { const w = Math.max((window.screen && screen.width) || 0, window.innerWidth || 0); return w >= 1920 ? 1920 : w >= 1366 ? 1366 : 1080; })();
+// 壁纸分辨率按视口自适应；高分屏且屏宽足够时取 UHD（3840×2160），
+// 省流/弱网降到 1080，避免为了清晰度多下几 MB。
+const WALLPAPER_RES = (() => {
+  const w = Math.max((window.screen && screen.width) || 0, window.innerWidth || 0);
+  const conn = navigator.connection || {};
+  if (conn.saveData || /(^|-)2g$/.test(conn.effectiveType || '')) return 1080;
+  if ((window.devicePixelRatio || 1) >= 2 && w >= 1920) return 'UHD';
+  return w >= 1920 ? 1920 : w >= 1366 ? 1366 : 1080;
+})();
 function wallpaperJsonUrl(index) { return `https://bing.biturl.top/?resolution=${WALLPAPER_RES}&format=json&index=${index}&mkt=zh-CN`; }
+function wallpaperImageUrl(index) { return `https://bing.biturl.top/?resolution=${WALLPAPER_RES}&format=image&index=${index}&mkt=zh-CN`; }
 const WALLPAPER_SOURCES = [
   { type: 'json', url: wallpaperJsonUrl(0) },
-  { type: 'json', url: wallpaperJsonUrl(8) }
+  { type: 'json', url: wallpaperJsonUrl(8) },
+  // JSON 异常时兜底：biturl 直接 307 到 Bing 图片，<img> 不需要 CORS
+  { type: 'image', url: wallpaperImageUrl(0) }
 ];
-let wallpaperCachedUrl = '', wallpaperLoadSeq = 0;
-const WALLPAPER_TIMEOUT = 8000;
+let wallpaperCachedUrl = '', wallpaperLoadSeq = 0, wallpaperPreconnected = false;
+let wallpaperDayKey = '';
+// UHD 图约 3.6 MB，给慢网多一点时间，避免清晰度换来的却是超时回退
+const WALLPAPER_TIMEOUT = WALLPAPER_RES === 'UHD' ? 15000 : 8000;
 const BG_URL_CACHE_KEY = 'asys_bg_url_cache'; // 当日壁纸 URL 缓存（同日二次打开免请求）
 const BG_LIB_KEY = 'asys_bg_library';
 const BG_MAX_CHARS = 3500000; // 图库 localStorage 安全水位（字符，约 5MB 上限）
@@ -29,6 +41,7 @@ let autoThemeTimer = null;
 
 document.addEventListener('DOMContentLoaded', () => {
   // 仅在使用 Bing 壁纸时才发起网络请求（默认 off → 首屏零外部请求）；当日有缓存则直接用缓存 URL
+  wallpaperDayKey = todayKey();
   if (readInitialBg() === 'bing') wallpaperCachedUrl = readBgUrlCache();
   loadPreferences();
   bindEvents();
@@ -45,7 +58,18 @@ document.addEventListener('DOMContentLoaded', () => {
     updateRefreshBtn();
     updateCustomBgSection();
   });
+  // 页面跨过 0 点、或从后台切回时，自动换到新一天的 Bing 图
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) refreshWallpaperIfNewDay(); });
+  setInterval(refreshWallpaperIfNewDay, 60 * 1000);
 });
+
+function refreshWallpaperIfNewDay() {
+  if (!wallpaperDayKey) wallpaperDayKey = todayKey();
+  if (todayKey() === wallpaperDayKey) return;
+  wallpaperDayKey = todayKey();
+  wallpaperCachedUrl = readBgUrlCache();
+  if (currentBg() === 'bing') loadWallpaper();
+}
 
 // 背景偏好读取（提前判断是否需要网络请求；background: off|bing|custom）
 function readInitialBg() {
@@ -129,9 +153,24 @@ function normalizeImgUrl(u) {
   } catch (e) { return u; }
 }
 
+// 只在真正启用 Bing 壁纸时建连，保持默认关闭时首屏零外部请求
+function ensureWallpaperPreconnect() {
+  if (wallpaperPreconnected) return;
+  wallpaperPreconnected = true;
+  [['https://bing.biturl.top', true], ['https://cn.bing.com', false]].forEach(([href, cross]) => {
+    if (document.querySelector(`link[rel="preconnect"][href="${href}"]`)) return;
+    const l = document.createElement('link');
+    l.rel = 'preconnect';
+    l.href = href;
+    if (cross) l.crossOrigin = 'anonymous';
+    document.head.appendChild(l);
+  });
+}
+
 function loadWallpaper() {
   const bg = document.getElementById('wallpaperBg'), img = document.getElementById('wallpaperImg');
   if (!img) return;
+  ensureWallpaperPreconnect();
   const seq = ++wallpaperLoadSeq;
   const fail = (err) => {
     if (seq !== wallpaperLoadSeq) return;
@@ -141,13 +180,18 @@ function loadWallpaper() {
     const t = document.getElementById('wallpaperToggle');
     if (t && t.checked) { setBgOff(); }
   };
-  const setImg = (src, onFail) => {
+  const setImg = (src, onFail, onOk) => {
     const timer = setTimeout(() => {
       img.onload = null; img.onerror = null;
       console.error('[wallpaper] 图片加载超时:', src);
       onFail();
     }, WALLPAPER_TIMEOUT);
-    img.onload = () => { clearTimeout(timer); if (seq === wallpaperLoadSeq) bg.classList.add('show'); };
+    img.onload = () => {
+      clearTimeout(timer);
+      if (seq !== wallpaperLoadSeq) return;
+      bg.classList.add('show');
+      if (onOk) onOk();
+    };
     img.onerror = () => { clearTimeout(timer); if (seq === wallpaperLoadSeq) { console.error('[wallpaper] 图片加载失败:', src); onFail(); } };
     img.src = normalizeImgUrl(src);
   };
@@ -155,14 +199,15 @@ function loadWallpaper() {
     if (seq !== wallpaperLoadSeq) return;
     if (i >= WALLPAPER_SOURCES.length) { fail(new Error('exhausted')); return; }
     const s = WALLPAPER_SOURCES[i];
+    if (s.type === 'image') { setImg(s.url, () => tryIndex(i + 1)); return; }
     fetch(s.url, { signal: AbortSignal.timeout(WALLPAPER_TIMEOUT) })
       .then(r => (r.ok ? r.json() : Promise.reject(new Error('bad status ' + r.status))))
       .then(d => {
         if (seq !== wallpaperLoadSeq) return;
         const u = (d && d.url) || (d && d.data && d.data.url);
         if (!u) throw new Error('no url');
-        if (i === 0) saveBgUrlCache(u); // 缓存当日 Bing 图 URL，同日再打开免请求
-        setImg(u, () => tryIndex(i + 1));
+        // 图片真正加载成功后再缓存，避免把失效 URL 存一天
+        setImg(u, () => tryIndex(i + 1), () => { if (i === 0) saveBgUrlCache(u); });
       })
       .catch(err => { if (seq === wallpaperLoadSeq) { console.error('[wallpaper] fetch 失败:', s.url, err); tryIndex(i + 1); } });
   };
@@ -406,6 +451,7 @@ function refreshWallpaper() {
   if (currentBg() === 'custom') { randomCustomWallpaper(); return; }
   const bg = document.getElementById('wallpaperBg'), img = document.getElementById('wallpaperImg');
   if (!img) return;
+  ensureWallpaperPreconnect();
   const btn = document.getElementById('wallpaperRefresh');
   if (btn) btn.classList.add('spinning');
   const seq = ++wallpaperLoadSeq;
