@@ -1,0 +1,41 @@
+<div class="step-block">
+    <h2 style="margin-top: 0; color: #111827; font-size: 1.4rem; display: flex; align-items: center; gap: 10px;">
+        v153.5.0-1
+        <span style="font-size: 0.8rem; background: #dbeafe; color: var(--vantage-blue); padding: 3px 8px; border-radius: 12px; font-weight: normal;">最新版本</span>
+    </h2>
+    <div class="step-content">
+
+        <p style="margin-bottom: 24px; padding-left: 12px; border-left: 3px solid #e5e7eb; color: var(--text-sub);">
+            内核升级：Firefox ESR 153.4 -> ESR 153.5（含 2026-10 安全修复，见 MFSA 2026-108）。<br>
+            不是哥们为啥10月底了长三角这边还能有蚊子啊！
+        </p>
+
+        <h3 style="font-size: 1.25em; border-bottom: 1px solid #eaecef; padding-bottom: 0.3em; margin-top: 24px; margin-bottom: 16px;">新功能</h3>
+        <ul>
+            <li><strong>侧栏悬停自动弹出</strong> — 鼠标移到窗口左侧边缘，侧栏以浮层弹出：盖在网页上、不推挤页面；点侧栏外或按 Esc 收起，移开鼠标不会收起
+                <ul style="margin-top: 8px; margin-bottom: 8px;">
+                    <li>支持经典侧栏与新版侧栏；新侧栏收起时会记住当前内容页，下次恢复同一页</li>
+                    <li>可在 设置 -> AI 侧边栏 开启（默认关闭）；开启后侧栏固定在左侧，暂不支持移到右侧</li>
+                </ul>
+            </li>
+        </ul>
+
+        <h3 style="font-size: 1.25em; border-bottom: 1px solid #eaecef; padding-bottom: 0.3em; margin-top: 24px; margin-bottom: 16px;">修复</h3>
+        <ul>
+            <li><strong>悬停侧栏显示问题</strong> — 收起后不再残留工具条宽度的左侧空白；修复新侧栏 + 竖排标签时面板错位、网页被顶；使用第三方主题时仍保持半透明浮层外观</li>
+            <li><strong>悬停开关切换无效</strong> — 修复开关状态未写入配置、行为与开关不一致的问题</li>
+            <li><strong>Windows MSIX 包信息</strong> — 发布者去掉多余标识，显示名称改为「Vantage浏览器」，版本号按 release 生成</li>
+        </ul>
+
+        <h3 style="font-size: 1.25em; border-bottom: 1px solid #eaecef; padding-bottom: 0.3em; margin-top: 24px; margin-bottom: 16px;">发布</h3>
+        <ul>
+            <li><strong>内核升级 Firefox ESR 153.5</strong> — 修复多项高危安全漏洞（详见 Mozilla 安全公告 MFSA 2026-108）</li>
+            <li><strong>macOS 版本仍未签名</strong> — 安装包无法直接运行，需手动解除隔离后才能打开（见「关于代码签名」文档）</li>
+        </ul>
+
+        <p style="color: var(--text-sub); margin-bottom: 20px; margin-top: 30px;">如果觉得好用，麻烦点个star吧！</p>
+        <div style="margin-top: 25px;">
+            <a href="https://github.com/asystech-chen/Vantage/releases/tag/v153.5.0-1" target="_blank" class="docs-link">🔗 在 GitHub 查看完整 Release 页面</a>
+        </div>
+    </div>
+</div>
