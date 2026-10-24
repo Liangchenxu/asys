@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vantage Lite 更新日志 - ASYS 科技</title>
+    <meta name="description" content="Vantage Lite 更新日志：0.16.3 到 0.22.0 的功能、修复与版本说明。">
+    <link rel="icon" type="image/svg+xml" href="../../img/vantage-lite.svg">
+    <link rel="stylesheet" href="../../css/global.css">
+    <script src="../../js/global.js?v=202610202325" defer></script>
+    <style>
+        .cl-hero { padding: 72px 20px 36px; text-align: center; background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%); }
+        .cl-kicker { font-size: 12px; font-weight: 700; letter-spacing: 0.14em; color: #64748b; margin-bottom: 12px; }
+        .cl-hero h1 { font-size: 2.4rem; font-weight: 800; color: #0f172a; margin-bottom: 10px; }
+        .cl-sub { color: #64748b; font-size: 0.95rem; }
+        .cl-actions { display: flex; justify-content: center; align-items: center; gap: 18px; flex-wrap: wrap; margin-top: 26px; }
+        .cl-actions a { font-weight: 600; color: var(--vantage-blue); }
+        .cl-list { max-width: 860px; padding-top: 8px; padding-bottom: 20px; }
+        .cl-release { background: #fff; border: 1px solid var(--border); border-radius: 14px; padding: 24px 28px; margin-bottom: 16px; box-shadow: 0 4px 20px -8px rgba(15, 23, 42, 0.08); }
+        .cl-release.current { border-color: #bfdbfe; box-shadow: 0 8px 28px -10px rgba(0, 120, 212, 0.18); }
+        .cl-head { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+        .cl-head h2 { font-size: 1.25rem; font-weight: 700; color: #0f172a; }
+        .cl-tag { display: inline-block; padding: 2px 8px; border-radius: 999px; background: #eff6ff; border: 1px solid #bfdbfe; color: #1d4ed8; font-size: 11px; font-weight: 700; }
+        .cl-release ul { margin: 0; padding-left: 18px; color: #334155; }
+        .cl-release li { margin: 7px 0; line-height: 1.65; }
+        .cl-release strong { color: #0f172a; }
+        .cl-note { color: #64748b; font-size: 0.9rem; margin-top: 12px; }
+        @media (max-width: 640px) {
+            .cl-hero { padding: 52px 16px 28px; }
+            .cl-hero h1 { font-size: 2rem; }
+            .cl-release { padding: 20px 18px; }
+        }
+    </style>
+</head>
+<body class="site-vantage page-vantage-home page-vantage-lite">
+    <div id="app-header"></div>
+
+    <section class="cl-hero">
+        <p class="cl-kicker">VANTAGE LITE</p>
+        <h1>更新日志</h1>
+        <p class="cl-sub">当前版本 0.22.0 · 2026-10-24 · Windows x64</p>
+        <div class="cl-actions">
+            <a class="btn-download" href="download/VantageLite-0.22.0-x64.exe" download>下载 0.22.0</a>
+            <a href="./">返回 Vantage Lite</a>
+        </div>
+    </section>
+
+    <main class="container cl-list">
+        <article class="cl-release current">
+            <div class="cl-head"><h2>0.22.0</h2><span class="cl-tag">最新</span></div>
+            <ul>
+                <li><strong>下载项增强</strong>：下载面板与下载管理页支持复制下载链接、打开来源页、删除磁盘文件（与删除记录分开）。</li>
+                <li><strong>完成角标</strong>：下载完成后工具栏下载按钮显示小圆点，打开下载面板后清除。</li>
+                <li><strong>还原按钮</strong>：工具栏右侧新增「重新打开关闭的标签页」按钮，与 <code>Ctrl+Shift+T</code> 等效。</li>
+                <li><strong>问题修复</strong>：修复页面焦点下 <code>Ctrl+Shift+T</code> 被 WebView2 吞掉；修复活动标签顶部指示条未覆盖关闭按钮区域；下载管理页图标提示改为主题化浮层。</li>
+            </ul>
+        </article>
+
+        <article class="cl-release">
+            <div class="cl-head"><h2>0.21.0</h2></div>
+            <ul>
+                <li><strong>历史按日期分组</strong>：分为「今天 / 昨天 / 更早」，与时间范围筛选、关键词搜索联动，空分组自动隐藏。</li>
+            </ul>
+        </article>
+
+        <article class="cl-release">
+            <div class="cl-head"><h2>0.20.0</h2></div>
+            <ul>
+                <li><strong>书签网址编辑</strong>：书签管理器与书签栏右键可直接修改网址。</li>
+                <li><strong>网址规范化</strong>：省略协议自动补 <code>https://</code>，支持 http / https / ftp / file / mailto。</li>
+                <li><strong>校验</strong>：拒绝无效协议与重复网址，标题原本等于旧网址时同步更新。</li>
+            </ul>
+        </article>
+
+        <article class="cl-release">
+            <div class="cl-head"><h2>0.19.2</h2></div>
+            <ul>
+                <li><strong>书签导入归类</strong>：浏览器书签栏内容并入「书签工具栏」，其他书签并入「其他书签」，移动设备书签保留为文件夹。</li>
+                <li><strong>HTML 导入</strong>：识别 Firefox 的 <code>PERSONAL_TOOLBAR_FOLDER</code> 和常见书签栏名称，不再生成额外的日期文件夹。</li>
+                <li><strong>合并与去重</strong>：同名文件夹递归合并，URL 按忽略大小写去重。</li>
+            </ul>
+        </article>
+
+        <article class="cl-release">
+            <div class="cl-head"><h2>0.19.1</h2></div>
+            <ul>
+                <li><strong>标签顶部点击</strong>：修复活动标签顶部指示线拦截鼠标点击的问题。</li>
+                <li><strong>设置板块重排</strong>：按使用频率调整顺序。</li>
+                <li><strong>菜单尺寸</strong>：原生弹出菜单固定宽度、限制最大高度，超长文字省略并支持滚动。</li>
+            </ul>
+        </article>
+
+        <article class="cl-release">
+            <div class="cl-head"><h2>0.19.0</h2></div>
+            <ul>
+                <li><strong>从已安装浏览器导入书签</strong>：支持 Chrome、Edge、Brave、Vivaldi、Chromium、Yandex、QQ 浏览器、360 极速、Opera、Opera GX、Firefox、Vantage、LibreWolf、Waterfox，可多选。</li>
+                <li><strong>HTML / .url 导入</strong>：支持 Netscape HTML 书签和 Windows 快捷方式文件。</li>
+                <li><strong>设置入口</strong>：设置 → 书签 → 导入书签。</li>
+            </ul>
+        </article>
+
+        <article class="cl-release">
+            <div class="cl-head"><h2>0.18.0</h2></div>
+            <ul>
+                <li><strong>隐私浏览工作区</strong>：InPrivate Profile，不写历史、会话和下载记录，退出时清理并恢复普通工作区。</li>
+                <li><strong>隐私模式内存回收</strong>：停留 5 分钟后回收普通工作区空闲标签。</li>
+                <li><strong>隐私模式外观</strong>：Vantage 蓝绿配色、提示条与隐私新标签页。</li>
+                <li><strong>标签增强</strong>：标签右键菜单、拖拽排序、<code>Ctrl+Shift+T</code> 重新打开关闭的标签。</li>
+                <li><strong>默认不恢复上次标签页</strong>：新配置默认关闭，已有配置保持原值。</li>
+            </ul>
+        </article>
+
+        <article class="cl-release">
+            <div class="cl-head"><h2>0.16.3</h2></div>
+            <ul>
+                <li>地址栏显示 HTTPS / HTTP 锁图标。</li>
+                <li>无协议域名自动补全，HTTPS 失败时尝试 www 和 HTTP，证书错误不降级。</li>
+                <li>修复标题栏最顶部 5px 拖动区域吞掉标签点击的问题。</li>
+            </ul>
+            <p class="cl-note">更早版本请查看项目仓库的 CHANGELOG.md。</p>
+        </article>
+    </main>
+
+    <div id="app-footer"></div>
+</body>
+</html>
