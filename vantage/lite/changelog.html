@@ -14,7 +14,10 @@
         .page-vantage-lite .docs-content { max-width: 780px; padding: 40px 48px; }
         .cl-version { display: none; }
         .cl-version.active { display: block; }
-        .cl-version h1 { display: flex; align-items: center; gap: 10px; }
+        .cl-version h2 { display: flex; align-items: center; gap: 10px; }
+        .cl-page-head { margin-bottom: 28px; }
+        .cl-page-head h1 { margin-bottom: 6px; }
+        .cl-page-head p { margin: 0; color: #64748b; }
         .cl-tag { display: inline-block; padding: 2px 8px; border-radius: 999px; background: #eff6ff; border: 1px solid #bfdbfe; color: #1d4ed8; font-size: 11px; font-weight: 700; letter-spacing: 0; }
         .cl-date { color: #64748b; font-size: 0.9rem; margin: -6px 0 18px; }
         .cl-version li { line-height: 1.75; }
@@ -49,8 +52,13 @@
         </aside>
 
         <main class="docs-content" id="clContent">
+            <div class="cl-page-head">
+                <h1>Vantage Lite 更新日志</h1>
+                <p>按版本查看功能、修复与发布说明</p>
+            </div>
+
             <section class="cl-version" data-version="0.23.0">
-                <h1>0.23.0 <span class="cl-tag">最新</span></h1>
+                <h2>0.23.0 <span class="cl-tag">最新</span></h2>
                 <p class="cl-date">2026-10-27</p>
                 <ul>
                     <li><strong>标签音频提示</strong>：正在播放声音或已静音的标签显示喇叭图标，点击图标即可切换静音；标签右键菜单也提供「静音标签页 / 取消静音」。</li>
@@ -63,7 +71,7 @@
             </section>
 
             <section class="cl-version" data-version="0.22.1">
-                <h1>0.22.1</h1>
+                <h2>0.22.1</h2>
                 <p class="cl-date">2026-10-27</p>
                 <ul>
                     <li><strong>新标签页布局</strong>：logo 与搜索框整体垂直居中，不再贴着页面顶部；搜索框加宽到 1000px 上限，窗口变小时跟随收窄。</li>
@@ -71,7 +79,7 @@
             </section>
 
             <section class="cl-version" data-version="0.22.0">
-                <h1>0.22.0</h1>
+                <h2>0.22.0</h2>
                 <p class="cl-date">2026-10-24</p>
                 <ul>
                     <li><strong>下载项增强</strong>：下载面板与下载管理页支持复制下载链接、打开来源页、删除磁盘文件（与删除记录分开）。</li>
@@ -82,7 +90,7 @@
             </section>
 
             <section class="cl-version" data-version="0.21.0">
-                <h1>0.21.0</h1>
+                <h2>0.21.0</h2>
                 <p class="cl-date">2026-10-24</p>
                 <ul>
                     <li><strong>历史按日期分组</strong>：分为「今天 / 昨天 / 更早」，与时间范围筛选、关键词搜索联动，空分组自动隐藏。</li>
@@ -90,7 +98,7 @@
             </section>
 
             <section class="cl-version" data-version="0.20.0">
-                <h1>0.20.0</h1>
+                <h2>0.20.0</h2>
                 <p class="cl-date">2026-10-24</p>
                 <ul>
                     <li><strong>书签网址编辑</strong>：书签管理器与书签栏右键可直接修改网址。</li>
@@ -100,7 +108,7 @@
             </section>
 
             <section class="cl-version" data-version="0.19.2">
-                <h1>0.19.2</h1>
+                <h2>0.19.2</h2>
                 <p class="cl-date">2026-10-24</p>
                 <ul>
                     <li><strong>书签导入归类</strong>：浏览器书签栏内容并入「书签工具栏」，其他书签并入「其他书签」，移动设备书签保留为文件夹。</li>
@@ -110,7 +118,7 @@
             </section>
 
             <section class="cl-version" data-version="0.19.1">
-                <h1>0.19.1</h1>
+                <h2>0.19.1</h2>
                 <p class="cl-date">2026-10-24</p>
                 <ul>
                     <li><strong>标签顶部点击</strong>：修复活动标签顶部指示线拦截鼠标点击的问题。</li>
@@ -120,7 +128,7 @@
             </section>
 
             <section class="cl-version" data-version="0.19.0">
-                <h1>0.19.0</h1>
+                <h2>0.19.0</h2>
                 <p class="cl-date">2026-10-24</p>
                 <ul>
                     <li><strong>从已安装浏览器导入书签</strong>：支持 Chrome、Edge、Brave、Vivaldi、Chromium、Yandex、QQ 浏览器、360 极速、Opera、Opera GX、Firefox、Vantage、LibreWolf、Waterfox，可多选。</li>
@@ -130,7 +138,7 @@
             </section>
 
             <section class="cl-version" data-version="0.18.0">
-                <h1>0.18.0</h1>
+                <h2>0.18.0</h2>
                 <p class="cl-date">2026-10-24</p>
                 <ul>
                     <li><strong>隐私浏览工作区</strong>：InPrivate Profile，不写历史、会话和下载记录，退出时清理并恢复普通工作区。</li>
@@ -142,7 +150,7 @@
             </section>
 
             <section class="cl-version" data-version="0.16.3">
-                <h1>0.16.3</h1>
+                <h2>0.16.3</h2>
                 <p class="cl-date">2026-10-20</p>
                 <ul>
                     <li>地址栏显示 HTTPS / HTTP 锁图标。</li>
