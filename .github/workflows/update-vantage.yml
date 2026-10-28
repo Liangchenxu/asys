@@ -1,0 +1,45 @@
+name: 自动同步 Vantage 官网与 R2
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: '指定版本号 (如 153.5.0-1；留空则自动拉取师傅仓库最新发布的版本，含 Pre-release)'
+        required: false
+        default: ''
+
+permissions:
+  contents: write
+
+jobs:
+  sync-vantage:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 1. 检出官网仓库代码
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+
+      - name: 2. 安装 Python 与 S3 依赖
+        run: pip install boto3
+
+      - name: 3. 拉取安装包传 R2 并更新网页与 JSON
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          INPUT_VERSION: ${{ github.event.inputs.version }}
+          R2_ENDPOINT_URL: ${{ secrets.R2_ENDPOINT_URL }}
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+        run: python update_vantage.py
+
+      - name: 4. 自动提交并推送到官网仓库
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add vantage/vd.json vantage/releases.json vantage/SHA256SUMS vdocs/docs-config.json vud/
+          if git diff --staged --quiet; then
+            echo "没有文件发生变化，无需提交。"
+          else
+            git commit -m "chore(vantage): 自动更新 Vantage 新版本资源与日志"
+            git push origin gh-pages
+          fi
