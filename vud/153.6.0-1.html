@@ -1,0 +1,35 @@
+<div class="step-block">
+    <h2 style="margin-top: 0; color: #111827; font-size: 1.4rem; display: flex; align-items: center; gap: 10px;">
+        v153.6.0-1
+        <span style="font-size: 0.8rem; background: #dbeafe; color: var(--vantage-blue); padding: 3px 8px; border-radius: 12px; font-weight: normal;">最新版本</span>
+    </h2>
+    <div class="step-content">
+
+        <p style="margin-bottom: 24px; padding-left: 12px; border-left: 3px solid #e5e7eb; color: var(--text-sub);">
+            内核升级：Firefox ESR 153.5 -> ESR 153.6（含 2026-10 安全修复，见 MFSA 2026-112、MFSA 2026-120）。<br>
+            看见更新日志里面有这句话我都想报警。
+        </p>
+
+        <h3 style="font-size: 1.25em; border-bottom: 1px solid #eaecef; padding-bottom: 0.3em; margin-top: 24px; margin-bottom: 16px;">预装扩展调整</h3>
+        <ul>
+            <li><strong>暂停预装 uBlock Origin</strong> — 新安装不再自动附带；已安装 uBlock 的用户不受影响，视频平台豁免规则继续生效</li>
+            <li><strong>暂停提供「安全防护」扩展</strong> — 已安装的会在升级后自动卸载，后续重构完成再返场</li>
+        </ul>
+
+        <h3 style="font-size: 1.25em; border-bottom: 1px solid #eaecef; padding-bottom: 0.3em; margin-top: 24px; margin-bottom: 16px;">修复</h3>
+        <ul>
+            <li><strong>语言包部分文案不生效</strong> — 修复同名界面文本覆盖失败的问题，自定义语言包的翻译现在能正确替换上游原文</li>
+        </ul>
+
+        <h3 style="font-size: 1.25em; border-bottom: 1px solid #eaecef; padding-bottom: 0.3em; margin-top: 24px; margin-bottom: 16px;">发布</h3>
+        <ul>
+            <li><strong>内核升级 Firefox ESR 153.6</strong> — 修复多项高危安全漏洞（详见 MFSA 2026-112、MFSA 2026-120）</li>
+            <li><strong>macOS 版本尚未签名</strong> — 安装包无法直接运行，需手动解除隔离后才能打开（见「关于代码签名」文档）</li>
+        </ul>
+
+        <p style="color: var(--text-sub); margin-bottom: 20px; margin-top: 30px;">如果觉得好用，麻烦点个star吧！</p>
+        <div style="margin-top: 25px;">
+            <a href="https://github.com/asystech-chen/Vantage/releases/tag/v153.6.0-1" target="_blank" class="docs-link">🔗 在 GitHub 查看完整 Release 页面</a>
+        </div>
+    </div>
+</div>
