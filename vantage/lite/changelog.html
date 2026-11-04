@@ -33,7 +33,8 @@
             <div class="doc-cat open">
                 <div class="doc-cat-header">Vantage Lite 更新日志</div>
                 <ul class="doc-cat-items">
-                    <li><a href="#0.23.0" data-version="0.23.0" class="active">0.23.0</a></li>
+                    <li><a href="#0.23.1" data-version="0.23.1" class="active">0.23.1</a></li>
+                    <li><a href="#0.23.0" data-version="0.23.0">0.23.0</a></li>
                     <li><a href="#0.22.1" data-version="0.22.1">0.22.1</a></li>
                     <li><a href="#0.22.0" data-version="0.22.0">0.22.0</a></li>
                     <li><a href="#0.21.0" data-version="0.21.0">0.21.0</a></li>
@@ -49,8 +50,21 @@
         </aside>
 
         <main class="docs-content" id="clContent">
+            <section class="cl-version" data-version="0.23.1">
+                <h1>0.23.1 <span class="cl-tag">最新</span></h1>
+                <p class="cl-date">2026-11-04</p>
+                <ul>
+                    <li><strong>高 DPI 缩放</strong>：界面缩放统一取自 WebView2 的 <code>RasterizationScale</code>（显示器 DPI × 文本缩放），修复高分辨率开启缩放时控件不跟随放大的问题。</li>
+                    <li><strong>文本缩放</strong>：标签标题、地址栏、书签栏、菜单与下载面板改用像素字体，跟随界面缩放。</li>
+                    <li><strong>窗口尺寸</strong>：初始尺寸与最小尺寸按缩放系数换算；跨显示器拖动、系统文本大小变化后重新排版。</li>
+                    <li><strong>新标签页抖动</strong>：忽略 WebView2 初始化时的瞬时缩放值并做去抖，打开新标签页时界面不再抖动。</li>
+                    <li><strong>标签指示条</strong>：改为铺满标签顶部整个宽度并保持最前，不再被关闭按钮遮挡。</li>
+                    <li><strong>书签管理器</strong>：接入 DPI 缩放。</li>
+                </ul>
+            </section>
+
             <section class="cl-version" data-version="0.23.0">
-                <h1>0.23.0 <span class="cl-tag">最新</span></h1>
+                <h1>0.23.0</h1>
                 <p class="cl-date">2026-10-27</p>
                 <ul>
                     <li><strong>标签音频提示</strong>：正在播放声音或已静音的标签显示喇叭图标，点击图标即可切换静音；标签右键菜单也提供「静音标签页 / 取消静音」。</li>
@@ -160,7 +174,7 @@
         (function () {
             var links = Array.prototype.slice.call(document.querySelectorAll('#clSidebar a[data-version]'));
             var sections = Array.prototype.slice.call(document.querySelectorAll('.cl-version'));
-            var fallback = '0.23.0';
+            var fallback = '0.23.1';
 
             function current() {
                 var value = decodeURIComponent((location.hash || '').replace(/^#/, ''));
