@@ -33,7 +33,9 @@
             <div class="doc-cat open">
                 <div class="doc-cat-header">Vantage Lite 更新日志</div>
                 <ul class="doc-cat-items">
-                    <li><a href="#0.23.1" data-version="0.23.1" class="active">0.23.1</a></li>
+                    <li><a href="#0.24.0" data-version="0.24.0" class="active">0.24.0</a></li>
+                    <li><a href="#0.23.2" data-version="0.23.2">0.23.2</a></li>
+                    <li><a href="#0.23.1" data-version="0.23.1">0.23.1</a></li>
                     <li><a href="#0.23.0" data-version="0.23.0">0.23.0</a></li>
                     <li><a href="#0.22.1" data-version="0.22.1">0.22.1</a></li>
                     <li><a href="#0.22.0" data-version="0.22.0">0.22.0</a></li>
@@ -50,8 +52,29 @@
         </aside>
 
         <main class="docs-content" id="clContent">
+            <section class="cl-version active" data-version="0.24.0">
+                <h1>0.24.0 <span class="cl-tag">最新</span></h1>
+                <p class="cl-date">2026-11-10</p>
+                <ul>
+                    <li><strong>会话定时快照</strong>：每 15 秒在标签变化后保存一次会话，崩溃、强杀或断电后仍能恢复到最近的标签页（需开启「启动时恢复上次标签页」）。</li>
+                    <li><strong>崩溃恢复提示</strong>：检测到上次未正常退出时，启动后提示已恢复的标签页数量；正常退出不提示。</li>
+                    <li><strong>默认缩放设置</strong>：设置页可指定全局默认页面缩放比例，新标签页与导航后自动应用。</li>
+                    <li><strong>缩放控件</strong>：地址栏右侧可显示 <code>− / 比例 / +</code> 控件（设置页开关）；关闭时仅在缩放与默认比例不同时显示百分比，点击恢复默认比例。</li>
+                </ul>
+            </section>
+
+            <section class="cl-version" data-version="0.23.2">
+                <h1>0.23.2</h1>
+                <p class="cl-date">2026-11-09</p>
+                <ul>
+                    <li><strong>全屏还原</strong>：退出网页视频全屏后，窗口不再停在「介于最大化与还原之间」的状态；从最大化进入全屏再退出时能回到原尺寸，最大化按钮状态同步刷新。</li>
+                    <li><strong>全屏白边</strong>：去掉 Windows 11 全屏窗口的圆角与 1px 边框，四周不再出现细白边。</li>
+                    <li><strong>F11 全屏</strong>：页面获得焦点时 F11 也能进入/退出全屏；视频全屏时按 F11 会先退出网页全屏。</li>
+                </ul>
+            </section>
+
             <section class="cl-version" data-version="0.23.1">
-                <h1>0.23.1 <span class="cl-tag">最新</span></h1>
+                <h1>0.23.1</h1>
                 <p class="cl-date">2026-11-04</p>
                 <ul>
                     <li><strong>高 DPI 缩放</strong>：界面缩放统一取自 WebView2 的 <code>RasterizationScale</code>（显示器 DPI × 文本缩放），修复高分辨率开启缩放时控件不跟随放大的问题。</li>
