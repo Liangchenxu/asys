@@ -1,0 +1,366 @@
+/* =========================================================
+   ASYS 主站 - 企业冷静风（方向 E）
+   作用域：仅 .site-asys，不影响 Vantage / 起始页
+   特征：白底、深蓝、4px 圆角、细边框、零阴影
+   ========================================================= */
+
+.site-asys {
+    --e-ink: #0f172a;
+    --e-muted: #64748b;
+    --e-line: #dbe2ea;
+    --e-bg: #f7f8fa;
+    --e-blue: #1e40af;
+    --e-blue-dark: #1e3a8a;
+    --e-blue-soft: #eff6ff;
+    background: var(--e-bg) !important;
+    color: var(--e-ink);
+    border-top: 4px solid var(--e-blue);
+}
+
+/* 统一去掉阴影 */
+.site-asys *,
+.site-asys *::before,
+.site-asys *::after {
+    box-shadow: none !important;
+}
+
+.site-asys ::selection { background: var(--e-blue); color: #fff; }
+
+/* 标题与分区 */
+.site-asys h1,
+.site-asys h2,
+.site-asys h3,
+.site-asys h4 {
+    letter-spacing: -0.02em;
+    color: var(--e-ink);
+}
+.site-asys h1 { font-weight: 800 !important; }
+.site-asys .section-title {
+    text-align: left !important;
+    font-size: 1.6rem !important;
+    font-weight: 700 !important;
+    border-left: 3px solid var(--e-blue);
+    padding-left: 12px;
+    margin-bottom: 26px !important;
+}
+.site-asys section { padding: 56px 0; }
+
+/* 导航 */
+.site-asys header {
+    background: #fff !important;
+    border-bottom: 1px solid var(--e-line) !important;
+}
+.site-asys .debian-nav-links a,
+.site-asys .nav-links a {
+    color: #475569 !important;
+    font-weight: 600;
+}
+.site-asys .debian-nav-links a:hover,
+.site-asys .debian-nav-links a.active,
+.site-asys .nav-links a:hover,
+.site-asys .nav-links a.active {
+    color: var(--e-blue) !important;
+}
+.site-asys .debian-nav-links a.active::after,
+.site-asys .nav-links a.active::after {
+    background: var(--e-blue) !important;
+    height: 2px !important;
+}
+
+/* Hero：纯白，左对齐 */
+.site-asys .hero-section,
+.site-asys .page-header,
+.site-asys .hero {
+    background: #fff !important;
+    background-image: none !important;
+    border-bottom: 1px solid var(--e-line) !important;
+    text-align: left !important;
+    padding: 78px 0 64px !important;
+}
+.site-asys .hero-section .container::before,
+.site-asys .page-header .container::before {
+    content: none;
+}
+.site-asys .hero-section h1,
+.site-asys .page-header h1,
+.site-asys .hero h1 {
+    font-size: 3.2rem !important;
+    font-weight: 800 !important;
+    letter-spacing: -0.03em !important;
+}
+.site-asys .hero-section p,
+.site-asys .page-header p,
+.site-asys .hero p {
+    margin-left: 0 !important;
+    margin-right: auto !important;
+    color: var(--e-muted) !important;
+}
+.site-asys .hero-badge {
+    border: 1px solid #c7d2fe !important;
+    background: var(--e-blue-soft) !important;
+    color: var(--e-blue) !important;
+    border-radius: 4px !important;
+    letter-spacing: 0.06em !important;
+}
+
+/* 卡片 */
+.site-asys .product-card,
+.site-asys .category-card,
+.site-asys .service-block,
+.site-asys .tool-item,
+.site-asys .tutorial-sidebar,
+.site-asys .tutorial-content,
+.site-asys .f-card,
+.site-asys .dp-card,
+.site-asys .dp-content-block,
+.site-asys .dp-highlight,
+.site-asys .dp-loong,
+.site-asys .os-card,
+.site-asys .info-card,
+.site-asys .feature-card,
+.site-asys .step-card,
+.site-asys .note-card,
+.site-asys .contact-card,
+.site-asys .about-content,
+.site-asys .news-banner,
+.site-asys .announcement-box {
+    background: #fff !important;
+    border: 1px solid var(--e-line) !important;
+    border-radius: 4px !important;
+    box-shadow: none !important;
+}
+.site-asys .product-card:hover,
+.site-asys .category-card:hover,
+.site-asys .tool-item:hover,
+.site-asys .f-card:hover,
+.site-asys .dp-card:hover,
+.site-asys .os-card:hover,
+.site-asys .feature-card:hover {
+    transform: none !important;
+    border-color: var(--e-blue) !important;
+    box-shadow: none !important;
+}
+.site-asys .product-card:hover .product-image img { transform: none !important; }
+.site-asys .product-image {
+    background: #fff !important;
+    border-bottom: 1px solid var(--e-line);
+}
+
+/* 自助服务 */
+.site-asys.page-service .category-grid {
+    margin-top: 36px !important;
+    padding-bottom: 72px !important;
+}
+.site-asys .cat-icon {
+    width: 64px !important;
+    height: 64px !important;
+    background: #fff !important;
+    border: 1px solid var(--e-line) !important;
+    border-radius: 4px !important;
+    color: var(--e-blue) !important;
+}
+.site-asys .category-card:hover .cat-icon {
+    background: var(--e-blue-soft) !important;
+    border-color: var(--e-blue) !important;
+    transform: none !important;
+}
+
+/* 按钮 */
+.site-asys .btn-primary,
+.site-asys .primary-btn,
+.site-asys .btn-download,
+.site-asys .btn-smart,
+.site-asys .dp-btn,
+.site-asys .buy-button,
+.site-asys .dp-loong-buy,
+.site-asys .dp-tag-buy {
+    background: var(--e-blue) !important;
+    color: #fff !important;
+    border: 1px solid var(--e-blue) !important;
+    border-radius: 4px !important;
+    font-weight: 700 !important;
+    text-align: center !important;
+}
+.site-asys .btn-primary:hover,
+.site-asys .primary-btn:hover,
+.site-asys .btn-download:hover,
+.site-asys .btn-smart:hover,
+.site-asys .dp-btn:hover,
+.site-asys .buy-button:hover,
+.site-asys .dp-loong-buy:hover {
+    background: var(--e-blue-dark) !important;
+    border-color: var(--e-blue-dark) !important;
+    transform: none !important;
+}
+.site-asys .btn-ghost,
+.site-asys .secondary-btn,
+.site-asys .btn-outline,
+.site-asys .contact-button,
+.site-asys .dp-tag-contact,
+.site-asys .start-btn {
+    background: #fff !important;
+    color: var(--e-blue) !important;
+    border: 1px solid #c7d2fe !important;
+    border-radius: 4px !important;
+    font-weight: 700 !important;
+    text-align: center !important;
+}
+.site-asys .btn-ghost:hover,
+.site-asys .secondary-btn:hover,
+.site-asys .btn-outline:hover,
+.site-asys .contact-button:hover,
+.site-asys .dp-tag-contact:hover,
+.site-asys .start-btn:hover {
+    background: var(--e-blue-soft) !important;
+    border-color: var(--e-blue) !important;
+    color: var(--e-blue) !important;
+    transform: none !important;
+}
+
+/* 搜索与筛选 */
+.site-asys input[type="text"],
+.site-asys input[type="search"] {
+    background: #fff !important;
+    border: 1px solid #cbd5e1 !important;
+    border-radius: 4px !important;
+    color: var(--e-ink) !important;
+}
+.site-asys input:focus {
+    outline: none !important;
+    border-color: var(--e-blue) !important;
+}
+.site-asys .filter-btn {
+    background: #fff !important;
+    border: 1px solid var(--e-line) !important;
+    border-radius: 4px !important;
+    color: var(--e-muted) !important;
+    font-weight: 600 !important;
+}
+.site-asys .filter-btn:hover {
+    border-color: var(--e-blue) !important;
+    color: var(--e-blue) !important;
+}
+.site-asys .filter-btn.active {
+    background: var(--e-blue) !important;
+    border-color: var(--e-blue) !important;
+    color: #fff !important;
+}
+
+/* 页脚 */
+.site-asys footer {
+    background: #fff !important;
+    border-top: 1px solid var(--e-line) !important;
+    color: var(--e-muted) !important;
+}
+
+/* OfficeGO 编号图标 */
+.site-asys .feature-icon {
+    width: 42px !important;
+    height: 42px !important;
+    background: var(--e-blue-soft) !important;
+    border: 1px solid #c7d2fe !important;
+    border-radius: 4px !important;
+    color: var(--e-blue) !important;
+    font-family: ui-monospace, 'Cascadia Mono', Consolas, monospace;
+    font-size: 0.85rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.08em;
+}
+
+/* OfficeGO 主图标：浅蓝底 + 柔和阴影 */
+.site-asys.page-officego .hero-section {
+    text-align: center !important;
+    background-image: none !important;
+    background-color: #fff !important;
+}
+.site-asys.page-officego .hero-section p {
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+.site-asys.page-officego .hero-icon {
+    width: 96px !important;
+    height: 96px !important;
+    margin: 0 auto 26px !important;
+    padding: 0;
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    filter: drop-shadow(0 16px 28px rgba(15, 23, 42, 0.20)) !important;
+}
+.site-asys.page-officego .hero-actions {
+    justify-content: center !important;
+}
+
+/* 圆角统一到 4px（含内联样式） */
+.site-asys [style*="border-radius"] { border-radius: 4px !important; }
+
+/* 兜底：内联渐变 / 阴影 */
+.site-asys [style*="linear-gradient"] { background-image: none !important; }
+.site-asys [style*="box-shadow"] { box-shadow: none !important; }
+
+/* OfficeGO 界面预览 */
+.site-asys.page-officego .shots-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 320px) minmax(0, 360px) minmax(0, 1fr);
+    gap: 20px;
+    align-items: start;
+}
+.site-asys.page-officego .shot {
+    margin: 0;
+    background: #fff;
+    border: 1px solid var(--e-line);
+    border-radius: 4px;
+    padding: 12px;
+}
+.site-asys.page-officego .shot a { display: block; }
+.site-asys.page-officego .shot img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border: 1px solid #e5e7eb;
+    border-radius: 2px;
+    background: #fff;
+}
+.site-asys.page-officego .shot figcaption {
+    margin-top: 10px;
+    font-size: 0.86rem;
+    color: var(--e-muted);
+    line-height: 1.5;
+}
+.site-asys.page-officego .shot-notes {
+    background: #fff;
+    border: 1px solid var(--e-line);
+    border-radius: 4px;
+    padding: 24px;
+}
+.site-asys.page-officego .shot-notes p {
+    color: var(--e-muted);
+    font-size: 0.95rem;
+    line-height: 1.7;
+    margin-bottom: 12px;
+}
+.site-asys.page-officego .shot-notes li {
+    position: relative;
+    padding-left: 16px;
+    color: var(--e-muted);
+    font-size: 0.93rem;
+    line-height: 1.8;
+}
+.site-asys.page-officego .shot-notes li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 11px;
+    width: 6px;
+    height: 6px;
+    background: var(--e-blue);
+}
+@media (max-width: 1100px) {
+    .site-asys.page-officego .shots-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+    .site-asys.page-officego .shot-notes { grid-column: 1 / -1; }
+}
+@media (max-width: 700px) {
+    .site-asys.page-officego .shots-grid { grid-template-columns: 1fr; }
+    .site-asys.page-officego .shot-notes { grid-column: auto; }
+}
+

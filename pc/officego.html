@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OfficeGO - Office 一键安装器 - 赛思科技 工作室</title>
-    <meta name="description" content="OfficeGO 是 ASYS 自研的 Office 安装器，离线优先、在线兜底，自动匹配产品与版本，单文件免安装。">
+    <title>OfficeGO - Office 安装器 - 赛思科技 工作室</title>
+    <meta name="description" content="OfficeGO 是 ASYS 自研的 Office 安装器，解决下载难、安装烦、配置麻烦：官方源下载、调用 Click-to-Run 安装，产品与组件可按需选择。">
     <link rel="shortcut icon" href="../img/asys.ico" type="image/x-icon">
     <link rel="stylesheet" href="../css/global.css?v=202611122115">
+    <link rel="stylesheet" href="../css/hard.css?v=202611122215">
 </head>
 <body class="site-asys page-officego">
 
@@ -35,13 +36,12 @@
             <div class="hero-badge">ASYS 自研工具</div>
             <img class="hero-icon" src="../img/officego.svg" alt="OfficeGO 图标">
             <h1 class="hero-title">OfficeGO</h1>
-            <p class="hero-sub">Office 一键安装，离线优先</p>
-            <p class="hero-desc">自动匹配产品与版本，从微软官方 CDN 下载，或直接使用本地离线包。单文件运行，无需安装。</p>
+            <p class="hero-sub">下载、安装、配置，一次搞定</p>
+            <p class="hero-desc">从微软官方 CDN 下载官方原版文件，调用微软官方 Click-to-Run 安装；产品、架构、组件和语言都可以自己选，不用再折腾 ODT 和配置文件。</p>
             <div class="hero-actions">
-                <span class="btn-primary btn-disabled" aria-disabled="true">下载即将开放</span>
-                <a class="btn-ghost" href="office.html">查看 Office 原版 ISO</a>
+                <a class="btn-primary" href="https://pan.quark.cn/s/d123e74cca4d" target="_blank" rel="noopener noreferrer">前往网盘下载</a>
             </div>
-            <p class="hero-meta">Windows 10 1903+ / Windows 11 · 单文件 322 KB · 免安装</p>
+            <p class="hero-meta">单文件 322 KB · 免安装 · 无需 ODT</p>
         </div>
     </section>
 
@@ -62,8 +62,8 @@
                         <div class="value">2026-11-12</div>
                     </div>
                     <div class="info-item">
-                        <div class="label">运行环境</div>
-                        <div class="value">Windows 10 / 11 / 7 SP1</div>
+                        <div class="label">安装引擎</div>
+                        <div class="value">Office Click-to-Run</div>
                     </div>
                 </div>
                 <div class="sha-row">
@@ -77,35 +77,63 @@
 
     <section>
         <div class="container">
-            <h2 class="section-title">为什么用 OfficeGO</h2>
+            <h2 class="section-title">界面预览</h2>
+            <div class="shots-grid">
+                <figure class="shot">
+                    <a href="../img/officego-config.png" target="_blank" rel="noopener">
+                        <img src="../img/officego-config.png" alt="OfficeGO 配置窗口" loading="lazy">
+                    </a>
+                    <figcaption>配置窗口：产品、架构、组件与语言逐层选择</figcaption>
+                </figure>
+                <figure class="shot">
+                    <a href="../img/officego-official-install.png" target="_blank" rel="noopener">
+                        <img src="../img/officego-official-install.png" alt="微软官方 Office 安装界面" loading="lazy">
+                    </a>
+                    <figcaption>安装阶段：微软官方 Click-to-Run 安装界面</figcaption>
+                </figure>
+                <div class="shot-notes">
+                    <p>下载由 OfficeGO 完成，安装交给微软官方的 Click-to-Run 引擎，安装过程与官方原版一致。</p>
+                    <ul>
+                        <li>安装文件来自微软官方 CDN</li>
+                        <li>不修改、不重新打包 Office 安装文件</li>
+                        <li>安装进度由微软官方安装界面显示</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <h2 class="section-title">它解决什么问题</h2>
             <div class="feature-grid">
                 <div class="feature-card">
-                    <div class="feature-icon">📦</div>
-                    <h3>离线优先，在线兜底</h3>
-                    <p>本地已有安装包时直接使用；缺文件时从微软 CDN 补齐，支持断点续传。</p>
+                    <div class="feature-icon">01</div>
+                    <h3>下载不折腾</h3>
+                    <p>直接从微软官方 CDN 下载官方原版文件，支持多线程分段和断点续传；也可以预下载完整安装包，拷到别的电脑直接安装。</p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">⚡</div>
-                    <h3>8 线程分段下载</h3>
-                    <p>大文件分块并发下载，实时显示速度和进度，失败自动重试并回退单线程。</p>
+                    <div class="feature-icon">02</div>
+                    <h3>安装不折腾</h3>
+                    <p>不依赖 ODT 的 setup.exe，直接调用微软官方的 Click-to-Run 引擎，安装的就是微软官方原版 Office。</p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">💾</div>
-                    <h3>完整离线包</h3>
-                    <p>配置窗口可预下载完整安装包，整个文件夹拷走即可在没有网络的电脑上安装。</p>
+                    <div class="feature-icon">03</div>
+                    <h3>配置不折腾</h3>
+                    <p>产品、架构、组件、语言逐层选择；常用组合可以保存为 INI，下次直接复用。</p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">🗂️</div>
+                    <div class="feature-icon">04</div>
                     <h3>116 个 SKU</h3>
-                    <p>Microsoft 365 / 2024 / 2021 / 2019 / 2016 / Mondo，含 Visio 与 Project。</p>
+                    <p>Microsoft 365 / 2024 / 2021 / 2019 / 2016 / Mondo，套件与单产品均可选，Visio 与 Project 也能一并装。</p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">🎯</div>
-                    <h3>三件套一键装</h3>
-                    <p>不想研究版本和组件？一个按钮装好 Office 2024 家庭版与 Word、Excel、PowerPoint。</p>
+                    <div class="feature-icon">05</div>
+                    <h3>组件按需勾选</h3>
+                    <p>Word、Excel、PowerPoint、Outlook 等按需选择，不用的组件不装，省空间也省时间。</p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">🔑</div>
+                    <div class="feature-icon">06</div>
                     <h3>密钥识别</h3>
                     <p>粘贴产品密钥离线识别版本，自动匹配产品与更新通道，不做任何授权绕过。</p>
                 </div>
@@ -124,13 +152,13 @@
                 </div>
                 <div class="step-card">
                     <div class="step-num">2</div>
-                    <h3>选择产品</h3>
-                    <p>按 Windows 平台、架构、产品、组件和语言逐层选择；也可以直接用顶部的快捷按钮。</p>
+                    <h3>选择配置</h3>
+                    <p>按架构、产品类别、版本、组件和语言逐层选择，也可以把配置保存为 INI，下次直接复用。</p>
                 </div>
                 <div class="step-card">
                     <div class="step-num">3</div>
                     <h3>开始安装</h3>
-                    <p>在线下载或使用本地离线包，调用 Office 自带的 Click-to-Run 完成安装。</p>
+                    <p>OfficeGO 自动下载所需文件，调用 Office 自带的 Click-to-Run 完成安装。</p>
                 </div>
             </div>
         </div>
@@ -140,16 +168,15 @@
         <div class="container">
             <div class="note-grid">
                 <div class="note-card">
-                    <h3>🖥️ 运行要求</h3>
+                    <h3>运行要求</h3>
                     <ul>
-                        <li><strong>Windows 10 1903+ / Windows 11</strong>：系统自带 .NET Framework 4.8</li>
-                        <li><strong>Windows 7 SP1</strong>：需预先安装 .NET Framework 4.8，并支持 TLS 1.2</li>
+                        <li><strong>Windows 10 1903+ / Windows 11</strong> 自带 .NET Framework 4.8；<strong>Windows 7 SP1</strong> 需另装 .NET Framework 4.8 并支持 TLS 1.2</li>
                         <li>架构：x64 / x86 / arm64</li>
                         <li>安装过程需要管理员权限</li>
                     </ul>
                 </div>
                 <div class="note-card">
-                    <h3>📄 说明</h3>
+                    <h3>说明</h3>
                     <p><strong>未签名提示：</strong>当前 exe 未做代码签名，SmartScreen 可能提示。点「更多信息」→「仍要运行」即可。</p>
                     <p style="margin-top:10px;"><strong>授权说明：</strong>OfficeGO 不包含任何激活或授权绕过逻辑。Microsoft 365 订阅仍需登录账号；KMS 必须是你有权使用的服务器。Office 是微软的商业软件，请自备合法授权。</p>
                     <p style="margin-top:10px;"><strong>文件来源：</strong>安装文件来自微软官方 CDN（officecdn.microsoft.com）。</p>
