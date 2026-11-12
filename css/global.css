@@ -302,6 +302,61 @@ img { max-width: 100%; display: block; }
 .page-products .product-features li { padding: 8px 0; color: #64748b; position: relative; padding-left: 20px; }
 .page-products .product-features li:before { content: "✓"; position: absolute; left: 0; color: #10b981; font-weight: bold; }
 
+/* --- ASYS OfficeGO 产品页 --- */
+.page-officego .hero-section { background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 58%, #e0e7ff 100%); text-align: center; padding: 80px 0 90px; border-bottom: 1px solid #bae6fd; }
+.page-officego .hero-badge { display: inline-block; padding: 6px 16px; margin-bottom: 26px; border-radius: 999px; background: #fff; border: 1px solid #c7d2fe; color: var(--asys-blue); font-size: 0.85rem; font-weight: 600; letter-spacing: 0.04em; }
+.page-officego .hero-icon { width: 96px; height: 96px; margin: 0 auto 26px; filter: drop-shadow(0 12px 22px rgba(12, 74, 110, 0.18)); }
+.page-officego .hero-title { font-size: 3.4rem; line-height: 1.15; color: #0f172a; font-weight: 700; margin-bottom: 14px; }
+.page-officego .hero-sub { font-size: 1.35rem; color: #334155; font-weight: 600; margin-bottom: 12px; }
+.page-officego .hero-desc { font-size: 1rem; color: #64748b; max-width: 620px; margin: 0 auto 34px; }
+.page-officego .hero-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+.page-officego .btn-primary { display: inline-block; padding: 15px 44px; border-radius: 10px; background: var(--asys-blue); color: #fff; font-size: 1.1rem; font-weight: 600; box-shadow: 0 8px 20px -6px rgba(79, 70, 229, 0.55); transition: all 0.25s ease; }
+.page-officego .btn-primary:hover { background: #4338ca; transform: translateY(-2px); box-shadow: 0 12px 26px -6px rgba(79, 70, 229, 0.6); }
+.page-officego .btn-disabled { opacity: 0.55; cursor: not-allowed; box-shadow: none; pointer-events: none; }
+.page-officego .btn-ghost { display: inline-block; padding: 15px 34px; border-radius: 10px; background: #fff; border: 1px solid #cbd5e1; color: #475569; font-size: 1.05rem; font-weight: 600; transition: all 0.25s ease; }
+.page-officego .btn-ghost:hover { border-color: var(--asys-blue); color: var(--asys-blue); }
+.page-officego .hero-meta { margin-top: 22px; color: #64748b; font-size: 0.92rem; }
+.page-officego .info-card { background: #fff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 28px 32px; box-shadow: 0 10px 25px -10px rgba(15, 23, 42, 0.12); }
+.page-officego .info-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+.page-officego .info-item .label { color: #94a3b8; font-size: 0.82rem; margin-bottom: 6px; }
+.page-officego .info-item .value { color: #0f172a; font-weight: 600; font-size: 1.02rem; word-break: break-all; }
+.page-officego .sha-row { margin-top: 22px; padding-top: 20px; border-top: 1px dashed #e2e8f0; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.page-officego .sha-row .label { color: #94a3b8; font-size: 0.82rem; }
+.page-officego .sha-row code { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 8px 12px; font-size: 0.82rem; color: #334155; word-break: break-all; }
+.page-officego .copy-btn { padding: 8px 16px; border-radius: 8px; border: 1px solid #c7d2fe; background: #eef2ff; color: var(--asys-blue); font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+.page-officego .copy-btn:hover { background: #e0e7ff; }
+.page-officego .feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.page-officego .feature-card { background: #fff; border: 1px solid #e2e8f0; border-radius: 14px; padding: 28px; transition: all 0.25s ease; }
+.page-officego .feature-card:hover { transform: translateY(-4px); box-shadow: 0 16px 30px -16px rgba(15, 23, 42, 0.18); border-color: #c7d2fe; }
+.page-officego .feature-icon { width: 46px; height: 46px; border-radius: 12px; background: #eef2ff; color: var(--asys-blue); display: flex; align-items: center; justify-content: center; font-size: 1.35rem; margin-bottom: 18px; }
+.page-officego .feature-card h3 { font-size: 1.12rem; color: #0f172a; margin-bottom: 10px; }
+.page-officego .feature-card p { color: #64748b; font-size: 0.95rem; line-height: 1.65; }
+.page-officego .step-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.page-officego .step-card { background: #fff; border: 1px solid #e2e8f0; border-radius: 14px; padding: 30px; }
+.page-officego .step-num { width: 38px; height: 38px; border-radius: 50%; background: var(--asys-blue); color: #fff; font-weight: 700; display: flex; align-items: center; justify-content: center; margin-bottom: 18px; }
+.page-officego .step-card h3 { font-size: 1.1rem; color: #0f172a; margin-bottom: 10px; }
+.page-officego .step-card p { color: #64748b; font-size: 0.95rem; line-height: 1.65; }
+.page-officego .note-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+.page-officego .note-card { background: #fff; border: 1px solid #e2e8f0; border-radius: 14px; padding: 28px 30px; }
+.page-officego .note-card h3 { font-size: 1.05rem; color: #0f172a; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+.page-officego .note-card ul { list-style: none; }
+.page-officego .note-card li { position: relative; padding-left: 18px; color: #64748b; font-size: 0.93rem; line-height: 1.7; margin-bottom: 6px; }
+.page-officego .note-card li:before { content: ""; position: absolute; left: 0; top: 11px; width: 6px; height: 6px; border-radius: 50%; background: #a5b4fc; }
+.page-officego .note-card p { color: #64748b; font-size: 0.93rem; line-height: 1.7; }
+.page-officego .note-card strong { color: #334155; }
+@media (max-width: 900px) {
+    .page-officego .hero-title { font-size: 2.5rem; }
+    .page-officego .info-grid { grid-template-columns: repeat(2, 1fr); }
+    .page-officego .feature-grid, .page-officego .step-grid, .page-officego .note-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 560px) {
+    .page-officego .hero-section { padding: 60px 0 60px; }
+    .page-officego .hero-title { font-size: 2.1rem; }
+    .page-officego .info-card { padding: 22px; }
+    .page-officego .info-grid { grid-template-columns: 1fr; }
+    .page-officego .btn-primary, .page-officego .btn-ghost { width: 100%; }
+}
+
 /* --- ASYS 自助服务 --- */
 .page-service .hero-section { background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); padding: 100px 0; border-bottom: 1px solid #bae6fd; text-align: center;}
 .page-service .category-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin-top: -60px; padding-bottom: 80px; position: relative; z-index: 10; }

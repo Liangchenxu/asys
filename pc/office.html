@@ -139,10 +139,21 @@
                 <a href="service-guide.html" style="color: #64748b; text-decoration: none;">&lt; 返回自助服务中心</a>
             </div>
 
+            <div style="background: linear-gradient(135deg, #eef2ff 0%, #e0f2fe 100%); border: 1px solid #c7d2fe; border-radius: 14px; padding: 22px 26px; margin-bottom: 24px; display: flex; align-items: center; justify-content: space-between; gap: 18px; flex-wrap: wrap;">
+                <div style="display: flex; align-items: center; gap: 16px;">
+                    <img src="../img/officego.svg" alt="OfficeGO" style="width: 46px; height: 46px; flex-shrink: 0;">
+                    <div>
+                        <div style="font-weight: 700; color: #1e293b; font-size: 1.05rem; margin-bottom: 2px;">不想手动挑 ISO？</div>
+                        <div style="color: #475569; font-size: 0.95rem;">OfficeGO 自动匹配产品与版本，离线优先，一键安装。</div>
+                    </div>
+                </div>
+                <a href="officego.html" style="background: #4f46e5; color: #fff; padding: 11px 24px; border-radius: 8px; font-weight: 600; white-space: nowrap;">了解 OfficeGO →</a>
+            </div>
+
             <div class="service-block">
                 <div class="block-header">
-                    <img src="../img/windows11.png" style="width:30px; height:30px; margin-right:5px;" alt="windows">
-                    <img src="../img/apple.svg" style="width:30px; height:30px;" alt="apple">
+                    <img src="../img/windows-11.svg" style="height:30px; width:auto; margin-right:5px;" alt="windows">
+                    <img src="../img/apple.svg?v=202611122200" style="height:30px; width:auto;" alt="apple">
                     <div class="block-title" style="margin-left: 10px;">版本列表</div>
                 </div>
 
@@ -190,7 +201,7 @@
                 title: "Microsoft 365 商业版(Windows)",
                 desc: "适用于企业，包含 Word, Excel, PowerPoint 等最新版组件。按订阅持续更新（原 Office 365）。",
                 category: "m365",
-                iconImg: "../img/copilot.png", // 读取同一目录下的 windows11.png
+                iconImg: "../img/365.svg",
                 downloadUrl: "https://officecdn.microsoft.com/db/492350f6-3a01-4f97-b9c0-c7c6ddf67d60/media/zh-cn/O365ProPlusRetail.img",
                 tutorialUrl: "",
                 keywords: ["m365", "365", "windows", "最新"]
@@ -199,7 +210,7 @@
                 title: "Microsoft 365 家庭/个人版(Windows)",
                 desc: "适用于家庭和个人包含 Word, Excel, PowerPoint 等最新版组件。按订阅持续更新（原 Office 365）。",
                 category: "m365",
-                iconImg: "../img/copilot.png", // 读取同一目录下的 windows11.png
+                iconImg: "../img/365.svg",
                 downloadUrl: "https://officecdn.microsoft.com/db/492350f6-3a01-4f97-b9c0-c7c6ddf67d60/media/zh-cn/O365HomePremRetail.img",
                 tutorialUrl: "",
                 keywords: ["m365", "365", "windows", "最新"]
@@ -208,7 +219,7 @@
                 title: "Office 2024 专业增强版 (Windows)",
                 desc: "最新的买断制版本，Office 2024 Professional Plus 官方原版安装包（包含 Retail/Volume 版）。",
                 category: "2024",
-                iconImg: "../img/365.png",
+                iconImg: "../img/office2019-2024.svg",
                 downloadUrl: "https://officecdn.microsoft.com/db/492350f6-3a01-4f97-b9c0-c7c6ddf67d60/media/zh-cn/ProPlus2024Retail.img",
                 tutorialUrl: "",
                 keywords: ["2024", "pro plus", "windows", "专业版"]
@@ -217,7 +228,7 @@
                 title: "Office 2021 专业增强版 (Windows)",
                 desc: "Office 2021 Professional Plus 官方原版安装包。",
                 category: "2021",
-                iconImg: "../img/o19.png",
+                iconImg: "../img/office2019-2024.svg",
                 downloadUrl: "https://officecdn.microsoft.com/db/492350f6-3a01-4f97-b9c0-c7c6ddf67d60/media/zh-cn/ProPlus2021Retail.img",
                 tutorialUrl: "",
                 keywords: ["2021", "pro plus", "windows", "专业版"]
@@ -226,7 +237,7 @@
                 title: "Office 2019 专业增强版 (Windows)",
                 desc: "Office 2019 Professional Plus 官方原版安装包。已经停止支持，建议切换到Office 2021或者Office 2024。",
                 category: "2019",
-                iconImg: "../img/o19.png",
+                iconImg: "../img/office2019-2024.svg",
                 downloadUrl: "https://officecdn.microsoft.com/db/492350f6-3a01-4f97-b9c0-c7c6ddf67d60/media/zh-cn/ProPlus2019Retail.img",
                 tutorialUrl: "",
                 keywords: ["2019", "pro plus", "windows", "专业版"]
@@ -235,7 +246,7 @@
                 title: "Office 2016 专业增强版 (Windows)",
                 desc: "Office 2016 Professional Plus 官方原版安装包，也是最后一个支持Windows 7/8/8.1的版本，同时也是最后一个支持MSI安装程序，可以自定义安装位置的版本。已停止支持。",
                 category: "2016",
-                iconImg: "../img/o16.png",
+                iconImg: "../img/office2013-2016.svg",
                 downloadUrl: "https://officecdn.microsoft.com/db/492350f6-3a01-4f97-b9c0-c7c6ddf67d60/media/zh-cn/ProPlusRetail.img",
                 tutorialUrl: "",
                 keywords: ["2016", "pro plus", "windows", "专业版", "老电脑"]
@@ -244,7 +255,7 @@
                 title: "Office 2013 专业版 (Windows)",
                 desc: "Office 2013 Professional 官方原版安装包。已停止支持。",
                 category: "2013",
-                iconImg: "../img/o16.png",
+                iconImg: "../img/office2013-2016.svg",
                 downloadUrl: "https://officecdn.microsoft.com/db/39168d7e-077b-48e7-872c-b232c3e72675/media/zh-cn/ProfessionalRetail.img",
                 tutorialUrl: "",
                 keywords: ["2013", "pro plus", "windows", "专业版", "老电脑"]
@@ -253,7 +264,7 @@
                 title: "Office 2010 专业增强版 (Windows)",
                 desc: "Office 2010 Professional Plus 官方原版安装包，同时也是最后一个支持Windows XP和Windows Vista的版本。已停止支持。此处仅提供32位(x86)版本下载。",
                 category: "2010",
-                iconImg: "../img/o10.png",
+                iconImg: "../img/office2010.svg",
                 downloadUrl: "https://buzzheavier.com/qgas55t4r8jy",
                 tutorialUrl: "",
                 keywords: ["2013", "pro plus", "windows", "专业版", "老电脑","xp"]
@@ -264,7 +275,7 @@
                 title: "Office for Mac 最新版 (适用于 macOS 13 及以上)",
                 desc: "这是微软官方随时保持最新的通用安装包。安装后可根据账号激活为 365 或 2024。适用于 macOS Ventura (13), Sonoma (14), Sequoia (15) 等最新系统。",
                 category: "mac",
-                iconImg: "../img/apple.svg", // 读取同一目录下的 apple.svg
+                iconImg: "../img/apple.svg?v=202611122200", // 读取同一目录下的 apple.svg
                 // 这个是微软官网永久获取 Mac 最新版 Office 的直链
                 downloadUrl: "https://go.microsoft.com/fwlink/?linkid=2009112",
                 tutorialUrl: "",
@@ -274,7 +285,7 @@
                 title: "Office for Mac (macOS 12 Monterey 专属版)",
                 desc: "这是 macOS 12 Monterey 系统所能支持的最终版本 (16.89)。由于微软停更策略，此系统无法安装更高版本的 Office。",
                 category: "mac",
-                iconImg: "../img/apple.svg",
+                iconImg: "../img/apple.svg?v=202611122200",
                 // 提取自微软官方最终版历史记录的 16.89 独立安装包
                 downloadUrl: "https://officecdn.microsoft.com/pr/C1297A47-86C4-4C1F-97FA-950631F94777/MacAutoupdate/Microsoft_365_and_Office_16.89.24091630_BusinessPro_Installer.pkg",
                 tutorialUrl: "",
@@ -284,7 +295,7 @@
                 title: "Office for Mac (macOS 11 Big Sur 专属版)",
                 desc: "这是 macOS 11 Big Sur 老系统所能支持的最终版本 (16.77)。此安装包专为无法升级系统的老 Mac 准备。",
                 category: "mac",
-                iconImg: "../img/apple.svg",
+                iconImg: "../img/apple.svg?v=202611122200",
                 // 提取自微软官方最终版历史记录的 16.77 独立安装包
                 downloadUrl: "https://officecdn.microsoft.com/pr/C1297A47-86C4-4C1F-97FA-950631F94777/MacAutoupdate/Microsoft_Office_16.77.23091003_BusinessPro_Installer.pkg",
                 tutorialUrl: "",

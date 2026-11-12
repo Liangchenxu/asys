@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 32 32">
+  <defs>
+    <linearGradient id="sq" x1="4.494" y1="7.914" x2="13.832" y2="24.086" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#F25022"/><stop offset="0.55" stop-color="#E03C00"/>
+      <stop offset="1" stop-color="#B62C00"/>
+    </linearGradient>
+    <linearGradient id="gl" x1="0" y1="3" x2="0" y2="29" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.4"/>
+      <stop offset="0.20" stop-color="#FFFFFF" stop-opacity="0.088"/>
+      <stop offset="0.50" stop-color="#FFFFFF" stop-opacity="0"/>
+      <stop offset="0.50" stop-color="#000000" stop-opacity="0"/>
+      <stop offset="0.78" stop-color="#000000" stop-opacity="0.136"/>
+      <stop offset="1" stop-color="#000000" stop-opacity="0.34"/>
+    </linearGradient>
+    <clipPath id="sheetClip"><rect x="8.512" y="3" width="21.488" height="26" rx="1.192"/></clipPath>
+    <filter id="sqShadow" x="-25%" y="-25%" width="150%" height="150%">
+      <feDropShadow dx="0.5" dy="0.65" stdDeviation="0.55" flood-color="#000000" flood-opacity="0.30"/>
+    </filter>
+  </defs>
+  <path d="M9.704 3 H19.316 V9.56 H8.512 V4.192 A1.192 1.192 0 0 1 9.704 3 Z" fill="#2B7CD3"/>
+  <path d="M19.256 3 H28.808 A1.192 1.192 0 0 1 30 4.192 V9.56 H19.256 V3 Z" fill="#E8471C"/>
+  <path d="M8.512 9.5 H19.316 V16.06 H8.512 V9.5 Z" fill="#21A366"/>
+  <path d="M19.256 9.5 H30 V16.06 H19.256 V9.5 Z" fill="#FFC400"/>
+  <path d="M8.512 16 H19.316 V22.56 H8.512 V16 Z" fill="#B12334"/>
+  <path d="M19.256 16 H30 V22.56 H19.256 V16 Z" fill="#0078D4"/>
+  <path d="M8.512 22.5 H19.316 V29 H9.704 A1.192 1.192 0 0 1 8.512 27.808 V22.5 Z" fill="#9A40D6"/>
+  <path d="M19.256 22.5 H30 V27.808 A1.192 1.192 0 0 1 28.808 29 H19.256 V22.5 Z" fill="#077467"/>
+  <rect x="8.512" y="3" width="21.488" height="26" fill="url(#gl)" clip-path="url(#sheetClip)"/>
+  <path d="M3.194 8.85H15.132a1.193 1.193 0 0 1 1.194 1.191V21.959a1.193 1.193 0 0 1-1.194 1.191H3.194A1.192 1.192 0 0 1 2 21.959V10.041A1.192 1.192 0 0 1 3.194 8.85Z" fill="url(#sq)" filter="url(#sqShadow)"/>
+  <path d="M 5.905 18.419 Q 6.38 18.419 6.826 18.255 Q 7.272 18.091 7.515 17.836 L 7.515 16.881 L 6.095 16.881 L 6.095 15.814 L 8.63 15.814 L 8.63 18.351 Q 8.168 18.914 7.427 19.232 Q 6.686 19.55 5.872 19.55 Q 4.452 19.55 3.689 18.617 Q 2.925 17.685 2.925 15.971 Q 2.925 14.266 3.693 13.358 Q 4.461 12.45 5.901 12.45 Q 7.949 12.45 8.506 14.247 L 7.383 14.648 Q 7.202 14.124 6.814 13.855 Q 6.426 13.586 5.901 13.586 Q 5.043 13.586 4.597 14.203 Q 4.151 14.82 4.151 15.971 Q 4.151 17.141 4.611 17.78 Q 5.072 18.419 5.905 18.419 Z M 15.375 15.971 Q 15.375 17.048 15.016 17.866 Q 14.657 18.684 13.988 19.117 Q 13.319 19.55 12.428 19.55 Q 11.057 19.55 10.279 18.593 Q 9.501 17.636 9.501 15.971 Q 9.501 14.311 10.277 13.38 Q 11.053 12.45 12.436 12.45 Q 13.819 12.45 14.597 13.39 Q 15.375 14.33 15.375 15.971 Z M 14.132 15.971 Q 14.132 14.854 13.687 14.22 Q 13.241 13.586 12.436 13.586 Q 11.619 13.586 11.173 14.215 Q 10.727 14.844 10.727 15.971 Q 10.727 17.107 11.183 17.761 Q 11.639 18.414 12.428 18.414 Q 13.245 18.414 13.689 17.778 Q 14.132 17.141 14.132 15.971 Z" fill="#FFFFFF"/>
+</svg>
