@@ -1,0 +1,46 @@
+<div class="step-block">
+    <h2 style="margin-top: 0; color: #111827; font-size: 1.4rem; display: flex; align-items: center; gap: 10px;">
+        v153.8.0-1
+        <span style="font-size: 0.8rem; background: #dbeafe; color: var(--vantage-blue); padding: 3px 8px; border-radius: 12px; font-weight: normal;">最新版本</span>
+    </h2>
+    <div class="step-content">
+
+        <p style="margin-bottom: 24px; padding-left: 12px; border-left: 3px solid #e5e7eb; color: var(--text-sub);">
+            内核升级：Firefox ESR 153.7 -> ESR 153.8（含 2026-11 安全修复，见 MFSA 2026-133）。<br>
+            本软件由 蓝色大肥鱼 提供开发支持
+        </p>
+
+        <h3 style="font-size: 1.25em; border-bottom: 1px solid #eaecef; padding-bottom: 0.3em; margin-top: 24px; margin-bottom: 16px;">新功能</h3>
+        <ul>
+            <li><strong>网站兼容</strong> — 地址栏新增「网站兼容」按钮，可为当前站点伪装成 Chromium；再次点击恢复
+                <ul style="margin-top: 8px; margin-bottom: 8px;">
+                    <li>右键菜单新增「在 Chromium 浏览器中打开」，支持页面、链接和标签页；装有多个浏览器时以子菜单选择</li>
+                </ul>
+            </li>
+        </ul>
+
+        <h3 style="font-size: 1.25em; border-bottom: 1px solid #eaecef; padding-bottom: 0.3em; margin-top: 24px; margin-bottom: 16px;">改进</h3>
+        <ul>
+            <li><strong>任务栏标签页</strong> — 地址栏的「添加到任务栏」按钮默认关闭，可在 设置 -> Vantage -> 标签页 开启（Windows）</li>
+            <li><strong>密码框不安全提示</strong> — 默认只在公网 HTTP 页面提示；内网页面（含 IP 与本地主机名）不再提示，可在 设置 -> Vantage -> 隐私 恢复</li>
+            <li><strong>自动更新不再打扰</strong> — 检查、下载、安装和更新完成都不再弹出提示，仅在出错时提示；同一版本不会反复提示或重复下载；手动检查时以托盘图标显示进度</li>
+        </ul>
+
+        <h3 style="font-size: 1.25em; border-bottom: 1px solid #eaecef; padding-bottom: 0.3em; margin-top: 24px; margin-bottom: 16px;">修复</h3>
+        <ul>
+            <li><strong>旧发行版无法安装 RPM 包</strong> — 过滤 libonnxruntime 的 GLIBCXX_3.4.30 自动依赖</li>
+            <li><strong>设置页分组重复显示</strong> — 「密码」和「默认搜索引擎」不再重复出现</li>
+        </ul>
+
+        <h3 style="font-size: 1.25em; border-bottom: 1px solid #eaecef; padding-bottom: 0.3em; margin-top: 24px; margin-bottom: 16px;">发布</h3>
+        <ul>
+            <li><strong>内核升级 Firefox ESR 153.8</strong> — 修复安全漏洞（详见 MFSA 2026-133）</li>
+            <li><strong>macOS 版本尚未签名</strong> — 安装包无法直接运行，需手动解除隔离后才能打开（见「关于代码签名」文档）</li>
+        </ul>
+
+        <p style="color: var(--text-sub); margin-bottom: 20px; margin-top: 30px;">如果觉得好用，麻烦点个star吧！</p>
+        <div style="margin-top: 25px;">
+            <a href="https://github.com/asystech-chen/Vantage/releases/tag/v153.8.0-1" target="_blank" class="docs-link">🔗 在 GitHub 查看完整 Release 页面</a>
+        </div>
+    </div>
+</div>
