@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light-neutral">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="shortcut icon" href="../../../img/asys.ico" type="image/x-icon">
+  <title>图片 ⇄ Base64 - ASYS 工具箱</title>
+  <link rel="stylesheet" href="../css/tools.css?v=202609192243">
+  <style>
+    .drop-zone { border: 2px dashed var(--border-color); border-radius: 12px; padding: 18px 14px; text-align: center; color: var(--text-secondary); font-size: 0.86rem; cursor: pointer; transition: all 0.2s ease; line-height: 1.7; }
+    .drop-zone:hover, .drop-zone.drag { border-color: var(--accent); color: var(--accent); background: var(--input-bg); }
+    .drop-zone input { display: none; }
+    .drop-zone .big { display: block; font-size: 0.95rem; font-weight: 600; color: var(--text-primary); margin-bottom: 2px; }
+    .preview-box { min-height: 120px; border: 1px solid var(--border-color); border-radius: 12px; background: var(--input-bg); display: flex; align-items: center; justify-content: center; padding: 10px; }
+    .preview-box img { max-width: 100%; max-height: 220px; display: block; }
+    .preview-box .empty { color: var(--text-secondary); font-size: 0.84rem; }
+    .out-box { width: 100%; min-height: 120px; max-height: 260px; padding: 10px 12px; border: 1px solid var(--border-color); border-radius: 10px; background: var(--input-bg); color: var(--text-primary); font-family: 'SF Mono', Consolas, 'Courier New', monospace; font-size: 0.75rem; line-height: 1.55; white-space: pre-wrap; word-break: break-all; overflow: auto; }
+    .meta { font-size: 0.8rem; color: var(--text-secondary); word-break: break-all; line-height: 1.7; }
+    .status { font-size: 0.82rem; min-height: 1.2em; color: var(--text-secondary); }
+    .status.err { color: #e11d48; }
+    .status.ok { color: #059669; }
+    .check { display: flex; align-items: center; gap: 6px; font-size: 0.82rem; color: var(--text-secondary); cursor: pointer; }
+    .check input { accent-color: var(--accent); }
+    .hint { font-size: 0.75rem; color: var(--text-secondary); opacity: 0.85; line-height: 1.6; }
+    .dl-link { display: none; }
+    .dl-link.show { display: inline-flex; }
+  </style>
+</head>
+<body>
+  <header>
+    <a class="back-btn" href="../../index.html" title="返回起始页">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+      <span>起始页</span>
+    </a>
+    <h1>图片 ⇄ Base64</h1>
+  </header>
+
+  <main>
+    <div class="tabs">
+      <button class="tab active" data-tab="encode">图片 → Base64</button>
+      <button class="tab" data-tab="decode">Base64 → 图片</button>
+    </div>
+
+    <!-- 图片 → Base64 -->
+    <div class="tab-pane show" id="pane-encode">
+      <div class="card glass">
+        <label class="drop-zone" id="dropZone">
+          <input type="file" id="fileInput" accept="image/*,.svg">
+          <span class="big">点击选择图片，或拖拽到此处</span>
+          支持 PNG / JPEG / WebP / GIF / SVG，本地转换
+        </label>
+        <div class="preview-box" id="encPreview"><span class="empty">选择图片后在这里预览</span></div>
+        <div class="meta" id="encMeta"></div>
+        <label class="check"><input type="checkbox" id="withPrefix" checked> 输出完整 Data URL（<code>data:image/...;base64,</code>）</label>
+        <div class="row">
+          <button class="btn" id="copyBtn" type="button">复制结果</button>
+          <button class="btn secondary" id="clearEncBtn" type="button">清空</button>
+        </div>
+        <textarea class="out-box" id="encOut" readonly placeholder="转换结果会显示在这里"></textarea>
+        <div class="status" id="encStatus" aria-live="polite"></div>
+      </div>
+    </div>
+
+    <!-- Base64 → 图片 -->
+    <div class="tab-pane" id="pane-decode">
+      <div class="card glass">
+        <textarea class="input" id="decInput" rows="7" spellcheck="false" placeholder="粘贴 Base64 或完整 Data URL（data:image/png;base64,...）"></textarea>
+        <div class="row">
+          <button class="btn" id="decodeBtn" type="button">解析预览</button>
+          <button class="btn secondary" id="clearDecBtn" type="button">清空</button>
+        </div>
+        <div class="preview-box" id="decPreview"><span class="empty">解析后在这里预览</span></div>
+        <div class="meta" id="decMeta"></div>
+        <a class="btn secondary dl-link" id="dlBtn" href="#" download="image.png">下载图片</a>
+        <div class="status" id="status" aria-live="polite"></div>
+      </div>
+    </div>
+
+    <div class="card glass">
+      <div class="hint">全部处理都在本地完成，图片不会上传。Base64 会让体积增加约 33%。</div>
+    </div>
+  </main>
+
+  <footer>ASYS 科技 搜索起始页 版权所有</footer>
+
+  <script>
+    const $ = (id) => document.getElementById(id);
+    let encUrl = '';
+    let decUrl = '';
+    let encDataUrl = '';
+
+    function setStatus(msg, type, id) {
+      const el = $(id || 'status');
+      if (!el) return;
+      el.textContent = msg || '';
+      el.className = 'status' + (type ? ' ' + type : '');
+    }
+    function fmtBytes(n) {
+      if (n < 1024) return n + ' B';
+      if (n < 1024 * 1024) return (n / 1024).toFixed(1) + ' KB';
+      return (n / 1024 / 1024).toFixed(2) + ' MB';
+    }
+
+    // ---------- 图片 → Base64 ----------
+    $('fileInput').addEventListener('change', (e) => {
+      const f = e.target.files && e.target.files[0];
+      if (f) encodeFile(f);
+      e.target.value = '';
+    });
+    const dropZone = $('dropZone');
+    ['dragenter', 'dragover'].forEach((ev) => dropZone.addEventListener(ev, (e) => {
+      e.preventDefault(); dropZone.classList.add('drag');
+    }));
+    ['dragleave', 'drop'].forEach((ev) => dropZone.addEventListener(ev, (e) => {
+      e.preventDefault(); dropZone.classList.remove('drag');
+    }));
+    dropZone.addEventListener('drop', (e) => {
+      const f = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
+      if (f) encodeFile(f);
+    });
+    window.addEventListener('dragover', (e) => e.preventDefault());
+    window.addEventListener('drop', (e) => e.preventDefault());
+
+    function encodeFile(file) {
+      if (file.size > 4 * 1024 * 1024) { setStatus('❌ 文件超过 4 MB，建议先压缩', 'err', 'encStatus'); return; }
+      const reader = new FileReader();
+      reader.onload = () => {
+        if (encUrl) URL.revokeObjectURL(encUrl);
+        const dataUrl = encDataUrl = String(reader.result);
+        const b64 = dataUrl.split(',')[1] || '';
+        encUrl = URL.createObjectURL(file);
+        $('encPreview').innerHTML = '';
+        const img = document.createElement('img');
+        img.src = encUrl;
+        img.alt = file.name;
+        $('encPreview').appendChild(img);
+        $('encMeta').textContent = file.name + ' · ' + fmtBytes(file.size) + ' · ' + (file.type || '未知类型') + ' · Base64 ' + fmtBytes(b64.length);
+        $('encOut').value = $('withPrefix').checked ? dataUrl : b64;
+        setStatus('✅ 已转换，点「复制结果」使用', 'ok', 'encStatus');
+      };
+      reader.onerror = () => setStatus('❌ 读取文件失败', 'err', 'encStatus');
+      reader.readAsDataURL(file);
+    }
+    $('withPrefix').addEventListener('change', () => {
+      const v = $('encOut').value;
+      if (!v || !encDataUrl) return;
+      $('encOut').value = $('withPrefix').checked ? encDataUrl : (encDataUrl.split(',')[1] || '');
+    });
+    $('copyBtn').addEventListener('click', async () => {
+      const v = $('encOut').value;
+      if (!v) { setStatus('还没有结果', 'err', 'encStatus'); return; }
+      try {
+        await navigator.clipboard.writeText(v);
+        setStatus('✅ 已复制 Base64', 'ok', 'encStatus');
+      } catch (e) {
+        $('encOut').select();
+        document.execCommand('copy');
+        setStatus('✅ 已复制 Base64', 'ok', 'encStatus');
+      }
+    });
+    $('clearEncBtn').addEventListener('click', () => {
+      if (encUrl) { URL.revokeObjectURL(encUrl); encUrl = ''; }
+      $('encPreview').innerHTML = '<span class="empty">选择图片后在这里预览</span>';
+      $('encMeta').textContent = '';
+      $('encOut').value = '';
+      encDataUrl = '';
+      setStatus('', null, 'encStatus');
+    });
+
+    // ---------- Base64 → 图片 ----------
+    function guessMime(bytes) {
+      const h = Array.from(bytes.slice(0, 12)).map((b) => b.toString(16).padStart(2, '0')).join('');
+      if (h.startsWith('89504e47')) return 'image/png';
+      if (h.startsWith('ffd8ff')) return 'image/jpeg';
+      if (h.startsWith('47494638')) return 'image/gif';
+      if (h.startsWith('52494646') && h.slice(16, 24) === '57454250') return 'image/webp';
+      if (h.startsWith('424d')) return 'image/bmp';
+      const text = new TextDecoder('utf-8', { fatal: false }).decode(bytes.slice(0, 300)).trim();
+      if (/^<svg[\s>]/i.test(text) || text.indexOf('<?xml') === 0) return 'image/svg+xml';
+      return 'application/octet-stream';
+    }
+    const EXT = { 'image/png': 'png', 'image/jpeg': 'jpg', 'image/gif': 'gif', 'image/webp': 'webp', 'image/bmp': 'bmp', 'image/svg+xml': 'svg' };
+
+    $('decodeBtn').addEventListener('click', () => {
+      let raw = $('decInput').value.trim();
+      if (!raw) { setStatus('请粘贴 Base64 或 Data URL', 'err'); return; }
+      let mime = '';
+      const m = raw.match(/^data:([^;,]+)?(;base64)?,/i);
+      if (m) {
+        mime = (m[1] || '').toLowerCase();
+        raw = raw.slice(m[0].length);
+      }
+      raw = raw.replace(/\s+/g, '');
+      if (!/^[A-Za-z0-9+/=_-]+$/.test(raw)) { setStatus('❌ 含有非 Base64 字符', 'err'); return; }
+      let bin;
+      try {
+        raw = raw.replace(/-/g, '+').replace(/_/g, '/');
+        const pad = raw.length % 4 ? '='.repeat(4 - (raw.length % 4)) : '';
+        bin = atob(raw + pad);
+      } catch (e) {
+        setStatus('❌ Base64 解码失败', 'err'); return;
+      }
+      const bytes = new Uint8Array(bin.length);
+      for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+      if (!mime || mime === 'application/octet-stream') mime = guessMime(bytes);
+      const blob = new Blob([bytes], { type: mime });
+      const ext = EXT[mime] || 'bin';
+
+      if (decUrl) URL.revokeObjectURL(decUrl);
+      decUrl = URL.createObjectURL(blob);
+      $('decPreview').innerHTML = '';
+      const img = document.createElement('img');
+      img.src = decUrl;
+      img.alt = '解析结果';
+      img.onerror = () => { setStatus('⚠️ 解码成功，但浏览器无法预览该格式（仍可下载）', null); };
+      $('decPreview').appendChild(img);
+      $('decMeta').textContent = (EXT[mime] ? mime : '未知类型') + ' · ' + fmtBytes(blob.size) + ' · 建议后缀 .' + ext;
+      $('dlBtn').href = decUrl;
+      $('dlBtn').download = 'image.' + ext;
+      $('dlBtn').classList.add('show');
+      setStatus('✅ 解析完成', 'ok');
+    });
+    $('clearDecBtn').addEventListener('click', () => {
+      $('decInput').value = '';
+      if (decUrl) { URL.revokeObjectURL(decUrl); decUrl = ''; }
+      $('decPreview').innerHTML = '<span class="empty">解析后在这里预览</span>';
+      $('decMeta').textContent = '';
+      $('dlBtn').classList.remove('show');
+      setStatus('');
+    });
+
+    // 标签页
+    document.querySelectorAll('.tab').forEach((t) => {
+      t.addEventListener('click', () => {
+        document.querySelectorAll('.tab').forEach((x) => x.classList.toggle('active', x === t));
+        document.querySelectorAll('.tab-pane').forEach((p) => p.classList.toggle('show', p.id === 'pane-' + t.dataset.tab));
+      });
+    });
+  </script>
+  <script src="../theme.js?v=202609192243"></script>
+</body>
+</html>

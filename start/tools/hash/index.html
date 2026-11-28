@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light-neutral">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="shortcut icon" href="../../../img/asys.ico" type="image/x-icon">
+  <title>哈希校验 - ASYS 工具箱</title>
+  <link rel="stylesheet" href="../css/tools.css?v=202609192243">
+  <style>
+    .drop-zone { border: 2px dashed var(--border-color); border-radius: 12px; padding: 22px 14px; text-align: center; color: var(--text-secondary); font-size: 0.88rem; cursor: pointer; transition: all 0.2s ease; line-height: 1.7; }
+    .drop-zone:hover, .drop-zone.drag { border-color: var(--accent); color: var(--accent); background: var(--input-bg); }
+    .drop-zone input { display: none; }
+    .drop-zone .big { display: block; font-size: 0.95rem; font-weight: 600; color: var(--text-primary); margin-bottom: 2px; }
+    .file-info { font-size: 0.82rem; color: var(--text-secondary); word-break: break-all; }
+    .hash-row { display: flex; flex-direction: column; gap: 4px; padding: 9px 10px; border: 1px solid var(--border-color); border-radius: 10px; background: var(--input-bg); }
+    .hash-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+    .hash-algo { font-size: 0.78rem; font-weight: 600; color: var(--text-secondary); letter-spacing: 0.5px; }
+    .hash-value { font-family: 'SF Mono', Consolas, 'Courier New', monospace; font-size: 0.74rem; line-height: 1.55; word-break: break-all; color: var(--text-primary); user-select: all; }
+    .hash-row.match { border-color: rgba(5, 150, 105, 0.55); }
+    .hash-row.mismatch { border-color: rgba(225, 29, 72, 0.55); }
+    .badge { font-size: 0.7rem; padding: 1px 7px; border-radius: 20px; display: none; }
+    .badge.ok { display: inline-block; background: rgba(5, 150, 105, 0.12); color: #059669; }
+    .badge.no { display: inline-block; background: rgba(225, 29, 72, 0.12); color: #e11d48; }
+    .status { font-size: 0.82rem; min-height: 1.2em; color: var(--text-secondary); }
+    .status.err { color: #e11d48; }
+    .status.ok { color: #059669; }
+    .mini { padding: 2px 9px; font-size: 0.72rem; border: 1px solid var(--border-color); border-radius: 20px; background: var(--input-bg); color: var(--text-secondary); cursor: pointer; font-family: inherit; white-space: nowrap; }
+    .mini:hover { border-color: var(--accent); color: var(--accent); }
+    .results { display: flex; flex-direction: column; gap: 8px; }
+    .hint { font-size: 0.75rem; color: var(--text-secondary); opacity: 0.85; line-height: 1.6; }
+  </style>
+</head>
+<body>
+  <header>
+    <a class="back-btn" href="../../index.html" title="返回起始页">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+      <span>起始页</span>
+    </a>
+    <h1>哈希校验</h1>
+  </header>
+
+  <main>
+    <div class="tabs">
+      <button class="tab active" data-tab="file">文件</button>
+      <button class="tab" data-tab="text">文本</button>
+    </div>
+
+    <div class="tab-pane show" id="pane-file">
+      <div class="card glass">
+        <label class="drop-zone" id="dropZone">
+          <input type="file" id="fileInput">
+          <span class="big">点击选择文件，或拖拽到此处</span>
+          本地计算，文件不会上传；支持任意类型
+        </label>
+        <div class="file-info" id="fileInfo"></div>
+        <div class="row">
+          <button class="btn" id="calcBtn" type="button">计算哈希</button>
+          <button class="btn secondary" id="resetBtn" type="button">清空</button>
+        </div>
+        <div class="status" id="status" aria-live="polite"></div>
+      </div>
+    </div>
+
+    <div class="tab-pane" id="pane-text">
+      <div class="card glass">
+        <textarea class="input" id="textInput" rows="7" placeholder="输入要计算哈希的文本（按 UTF-8 编码）"></textarea>
+        <div class="row">
+          <button class="btn" id="textCalcBtn" type="button">计算哈希</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card glass">
+      <span class="label">结果</span>
+      <div class="results" id="results">
+        <span class="hint">还没有结果。</span>
+      </div>
+    </div>
+
+    <div class="card glass">
+      <span class="label">校对（可选）</span>
+      <input class="input" id="expect" placeholder="粘贴官方给出的 SHA-256 / SHA-1 / SHA-512，自动比对">
+      <div class="status" id="expectStatus" aria-live="polite"></div>
+      <div class="hint">也支持直接粘贴 <code>sha256sum</code> 输出（哈希后面带文件名）。</div>
+    </div>
+  </main>
+
+  <footer>ASYS 科技 搜索起始页 版权所有</footer>
+
+  <script>
+    const $ = (id) => document.getElementById(id);
+    const ALGOS = [['SHA-256', 64], ['SHA-1', 40], ['SHA-512', 128]];
+    let results = {};   // algo -> hex
+    let currentFile = null;
+
+    function setStatus(msg, ok) {
+      $('status').textContent = msg || '';
+      $('status').className = 'status' + (ok === true ? ' ok' : ok === false ? ' err' : '');
+    }
+    function fmtBytes(n) {
+      if (n < 1024) return n + ' B';
+      if (n < 1024 * 1024) return (n / 1024).toFixed(1) + ' KB';
+      if (n < 1024 * 1024 * 1024) return (n / 1024 / 1024).toFixed(2) + ' MB';
+      return (n / 1024 / 1024 / 1024).toFixed(2) + ' GB';
+    }
+    function toHex(buf) {
+      return Array.from(new Uint8Array(buf)).map((b) => b.toString(16).padStart(2, '0')).join('');
+    }
+    async function hashBuffer(buf) {
+      const out = {};
+      for (const [algo] of ALGOS) out[algo] = toHex(await crypto.subtle.digest(algo, buf));
+      return out;
+    }
+
+    function renderResults() {
+      const box = $('results');
+      box.innerHTML = '';
+      if (!Object.keys(results).length) {
+        box.innerHTML = '<span class="hint">还没有结果。</span>';
+        return;
+      }
+      ALGOS.forEach(([algo]) => {
+        const val = results[algo] || '';
+        const row = document.createElement('div');
+        row.className = 'hash-row';
+        row.dataset.algo = algo;
+        row.innerHTML =
+          '<div class="hash-head"><span class="hash-algo">' + algo + '</span>' +
+          '<button class="mini" type="button" data-copy="' + algo + '">复制</button></div>' +
+          '<div class="hash-value"></div>' +
+          '<span class="badge"></span>';
+        row.querySelector('.hash-value').textContent = val;
+        box.appendChild(row);
+      });
+      box.querySelectorAll('[data-copy]').forEach((b) => {
+        b.addEventListener('click', async () => {
+          try {
+            await navigator.clipboard.writeText(results[b.dataset.copy]);
+            const t = b.textContent; b.textContent = '已复制 ✓';
+            setTimeout(() => (b.textContent = t), 1200);
+          } catch (e) {}
+        });
+      });
+      compare();
+    }
+
+    function compare() {
+      const el = $('expect');
+      const raw = (el.value || '').trim().toLowerCase();
+      const st = $('expectStatus');
+      document.querySelectorAll('.hash-row').forEach((r) => {
+        r.classList.remove('match', 'mismatch');
+        const b = r.querySelector('.badge');
+        b.className = 'badge';
+        b.textContent = '';
+      });
+      if (!raw || !Object.keys(results).length) { st.textContent = ''; st.className = 'status'; return; }
+      // 取第一个连续十六进制串（兼容 sha256sum 输出）
+      const m = raw.match(/([0-9a-f]{40,128})/);
+      if (!m) { st.textContent = '看起来不是哈希值'; st.className = 'status err'; return; }
+      const target = m[1];
+      const algo = ALGOS.find(([, len]) => len === target.length);
+      if (!algo) { st.textContent = '长度不匹配任何支持的算法（40 / 64 / 128）'; st.className = 'status err'; return; }
+      const row = document.querySelector('.hash-row[data-algo="' + algo[0] + '"]');
+      const ok = results[algo[0]] === target;
+      row.classList.add(ok ? 'match' : 'mismatch');
+      const badge = row.querySelector('.badge');
+      badge.className = 'badge ' + (ok ? 'ok' : 'no');
+      badge.textContent = ok ? '✓ 一致' : '✗ 不一致';
+      st.textContent = ok ? '✅ ' + algo[0] + ' 与填写值一致' : '❌ ' + algo[0] + ' 与填写值不一致';
+      st.className = 'status ' + (ok ? 'ok' : 'err');
+    }
+
+    async function calcBuffer(buf) {
+      if (!crypto.subtle) { setStatus('❌ 当前环境不支持 Web Crypto（需要 HTTPS）', false); return; }
+      setStatus('计算中…');
+      try {
+        results = await hashBuffer(buf);
+        renderResults();
+        setStatus('✅ 计算完成', true);
+      } catch (e) {
+        setStatus('❌ 计算失败：' + e.message, false);
+      }
+    }
+
+    // 文件选择 / 拖拽
+    const dropZone = $('dropZone');
+    $('fileInput').addEventListener('change', (e) => {
+      const f = e.target.files && e.target.files[0];
+      if (f) pickFile(f);
+      e.target.value = '';
+    });
+    function pickFile(file) {
+      currentFile = file;
+      results = {};
+      renderResults();
+      $('fileInfo').textContent = file.name + ' · ' + fmtBytes(file.size) + (file.type ? ' · ' + file.type : '');
+      setStatus('已选择文件，点「计算哈希」开始', null);
+    }
+    ['dragenter', 'dragover'].forEach((ev) => dropZone.addEventListener(ev, (e) => {
+      e.preventDefault(); dropZone.classList.add('drag');
+    }));
+    ['dragleave', 'drop'].forEach((ev) => dropZone.addEventListener(ev, (e) => {
+      e.preventDefault(); dropZone.classList.remove('drag');
+    }));
+    dropZone.addEventListener('drop', (e) => {
+      const f = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
+      if (f) pickFile(f);
+    });
+    window.addEventListener('dragover', (e) => e.preventDefault());
+    window.addEventListener('drop', (e) => e.preventDefault());
+
+    $('calcBtn').addEventListener('click', async () => {
+      if (!currentFile) { setStatus('请先选择文件', false); return; }
+      if (currentFile.size > 2 * 1024 * 1024 * 1024) { setStatus('❌ 文件超过 2 GB，浏览器内存可能不足', false); return; }
+      setStatus('读取文件…');
+      try {
+        await calcBuffer(await currentFile.arrayBuffer());
+      } catch (e) {
+        setStatus('❌ 读取失败：' + e.message, false);
+      }
+    });
+    $('resetBtn').addEventListener('click', () => {
+      currentFile = null; results = {};
+      $('fileInfo').textContent = '';
+      $('expect').value = '';
+      renderResults();
+      setStatus('已清空');
+    });
+
+    // 文本
+    $('textCalcBtn').addEventListener('click', () => {
+      const text = $('textInput').value;
+      if (!text) { setStatus('请输入文本', false); return; }
+      calcBuffer(new TextEncoder().encode(text).buffer);
+    });
+
+    $('expect').addEventListener('input', compare);
+
+    // 标签页
+    document.querySelectorAll('.tab').forEach((t) => {
+      t.addEventListener('click', () => {
+        document.querySelectorAll('.tab').forEach((x) => x.classList.toggle('active', x === t));
+        document.querySelectorAll('.tab-pane').forEach((p) => p.classList.toggle('show', p.id === 'pane-' + t.dataset.tab));
+      });
+    });
+
+    renderResults();
+  </script>
+  <script src="../theme.js?v=202609192243"></script>
+</body>
+</html>

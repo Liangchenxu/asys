@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light-neutral">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="shortcut icon" href="../../../img/asys.ico" type="image/x-icon">
+  <title>颜色工具箱 - ASYS 工具箱</title>
+  <link rel="stylesheet" href="../css/tools.css?v=202609192243">
+  <style>
+    .swatch { width: 100%; height: 76px; border-radius: 12px; border: 1px solid var(--border-color); }
+    .color-line { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    input[type="color"] { width: 46px; height: 38px; padding: 0; border: 1px solid var(--border-color); border-radius: 10px; background: var(--input-bg); cursor: pointer; }
+    .mono { font-family: 'SF Mono', Consolas, 'Courier New', monospace; font-size: 0.84rem; user-select: all; word-break: break-all; }
+    .copy-row { display: flex; align-items: center; gap: 8px; padding: 8px 10px; border: 1px solid var(--border-color); border-radius: 10px; background: var(--input-bg); }
+    .copy-row .label { min-width: 46px; }
+    .copy-row .val { flex: 1; min-width: 0; }
+    .mini { padding: 2px 9px; font-size: 0.72rem; border: 1px solid var(--border-color); border-radius: 20px; background: var(--input-bg); color: var(--text-secondary); cursor: pointer; font-family: inherit; white-space: nowrap; }
+    .mini:hover { border-color: var(--accent); color: var(--accent); }
+    .palette { display: grid; grid-template-columns: repeat(11, minmax(0, 1fr)); gap: 4px; }
+    .palette button { height: 38px; border-radius: 6px; border: 1px solid rgba(0,0,0,0.06); cursor: pointer; padding: 0; transition: transform 0.12s; }
+    .palette button:hover { transform: translateY(-2px); }
+    .contrast-preview { padding: 16px; border-radius: 12px; border: 1px solid var(--border-color); text-align: center; font-size: 1.05rem; font-weight: 600; }
+    .ratio { font-size: 1.6rem; font-weight: 700; color: var(--text-primary); line-height: 1.2; }
+    .badges { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 6px; }
+    .badge { font-size: 0.74rem; padding: 2px 9px; border-radius: 20px; background: var(--input-bg); border: 1px solid var(--border-color); color: var(--text-secondary); }
+    .badge.pass { border-color: rgba(5, 150, 105, 0.5); color: #059669; }
+    .badge.fail { border-color: rgba(225, 29, 72, 0.5); color: #e11d48; }
+    .hint { font-size: 0.75rem; color: var(--text-secondary); opacity: 0.85; line-height: 1.6; }
+    @media (max-width: 640px) { .palette { grid-template-columns: repeat(6, minmax(0, 1fr)); } }
+  </style>
+</head>
+<body>
+  <header>
+    <a class="back-btn" href="../../index.html" title="返回起始页">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+      <span>起始页</span>
+    </a>
+    <h1>颜色工具箱</h1>
+  </header>
+
+  <main>
+    <div class="card glass">
+      <div class="color-line">
+        <input type="color" id="picker" value="#3b82f6" aria-label="选择颜色">
+        <input class="input grow" id="hexInput" value="#3b82f6" spellcheck="false" aria-label="HEX 颜色值">
+        <button class="btn small secondary" id="eyeBtn" type="button" hidden>屏幕取色</button>
+      </div>
+      <div class="swatch" id="swatch"></div>
+      <div class="copy-row"><span class="label">HEX</span><span class="mono grow" id="outHex">#3b82f6</span><button class="mini" data-copy="outHex">复制</button></div>
+      <div class="copy-row"><span class="label">RGB</span><span class="mono grow" id="outRgb">—</span><button class="mini" data-copy="outRgb">复制</button></div>
+      <div class="copy-row"><span class="label">HSL</span><span class="mono grow" id="outHsl">—</span><button class="mini" data-copy="outHsl">复制</button></div>
+      <div class="copy-row"><span class="label">HSV</span><span class="mono grow" id="outHsv">—</span><button class="mini" data-copy="outHsv">复制</button></div>
+    </div>
+
+    <div class="card glass">
+      <span class="label">对比度（WCAG）</span>
+      <div class="contrast-preview" id="contrastPreview">示例文字 Sample Text</div>
+      <div class="row">
+        <span class="label">文字色</span>
+        <input type="color" id="fgPicker" value="#ffffff" aria-label="文字颜色">
+        <button class="btn small secondary" id="swapBtn" type="button">与背景互换</button>
+      </div>
+      <div class="ratio" id="ratio">—</div>
+      <div class="badges">
+        <span class="badge" id="aaNormal">AA 普通文本 —</span>
+        <span class="badge" id="aaaNormal">AAA 普通文本 —</span>
+        <span class="badge" id="aaLarge">AA 大文本 —</span>
+        <span class="badge" id="aaaLarge">AAA 大文本 —</span>
+      </div>
+      <div class="hint">背景色取自上面选择的颜色；AA 普通文本要求 ≥ 4.5，AA 大文本要求 ≥ 3，AAA 分别是 7 和 4.5。</div>
+    </div>
+
+    <div class="card glass">
+      <div class="row between">
+        <span class="label">色阶（点击复制 HEX）</span>
+        <span class="hint" id="paletteHint"></span>
+      </div>
+      <div class="palette" id="palette"></div>
+    </div>
+  </main>
+
+  <footer>ASYS 科技 搜索起始页 版权所有</footer>
+
+  <script>
+    const $ = (id) => document.getElementById(id);
+    let rgb = { r: 59, g: 130, b: 246 };
+
+    function clamp(n, min, max) { return Math.min(max, Math.max(min, n)); }
+    function hexToRgb(hex) {
+      let s = (hex || '').trim().replace(/^#/, '');
+      if (/^[0-9a-f]{3}$/i.test(s)) s = s.split('').map((c) => c + c).join('');
+      if (!/^[0-9a-f]{6}$/i.test(s)) return null;
+      return { r: parseInt(s.slice(0, 2), 16), g: parseInt(s.slice(2, 4), 16), b: parseInt(s.slice(4, 6), 16) };
+    }
+    function rgbToHex({ r, g, b }) {
+      return '#' + [r, g, b].map((v) => clamp(Math.round(v), 0, 255).toString(16).padStart(2, '0')).join('');
+    }
+    function rgbToHsl({ r, g, b }) {
+      r /= 255; g /= 255; b /= 255;
+      const max = Math.max(r, g, b), min = Math.min(r, g, b);
+      const l = (max + min) / 2;
+      let h = 0, s = 0;
+      if (max !== min) {
+        const d = max - min;
+        s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+        if (max === r) h = (g - b) / d + (g < b ? 6 : 0);
+        else if (max === g) h = (b - r) / d + 2;
+        else h = (r - g) / d + 4;
+        h *= 60;
+      }
+      return { h: Math.round(h), s: Math.round(s * 100), l: Math.round(l * 100) };
+    }
+    function rgbToHsv({ r, g, b }) {
+      r /= 255; g /= 255; b /= 255;
+      const max = Math.max(r, g, b), min = Math.min(r, g, b), d = max - min;
+      let h = 0;
+      if (d) {
+        if (max === r) h = ((g - b) / d) % 6;
+        else if (max === g) h = (b - r) / d + 2;
+        else h = (r - g) / d + 4;
+        h *= 60;
+        if (h < 0) h += 360;
+      }
+      return { h: Math.round(h), s: Math.round((max ? d / max : 0) * 100), v: Math.round(max * 100) };
+    }
+    function srgbChannel(v) {
+      v /= 255;
+      return v <= 0.04045 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
+    }
+    function luminance({ r, g, b }) {
+      return 0.2126 * srgbChannel(r) + 0.7152 * srgbChannel(g) + 0.0722 * srgbChannel(b);
+    }
+    function contrast(a, b) {
+      const la = luminance(a), lb = luminance(b);
+      return (Math.max(la, lb) + 0.05) / (Math.min(la, lb) + 0.05);
+    }
+
+    function render() {
+      const hex = rgbToHex(rgb);
+      const hsl = rgbToHsl(rgb), hsv = rgbToHsv(rgb);
+      $('swatch').style.background = hex;
+      $('outHex').textContent = hex;
+      $('outRgb').textContent = 'rgb(' + rgb.r + ', ' + rgb.g + ', ' + rgb.b + ')';
+      $('outHsl').textContent = 'hsl(' + hsl.h + ', ' + hsl.s + '%, ' + hsl.l + '%)';
+      $('outHsv').textContent = 'hsv(' + hsv.h + ', ' + hsv.s + '%, ' + hsv.v + '%)';
+      $('hexInput').value = hex;
+      document.documentElement.style.setProperty('--accent-sample', hex);
+      renderContrast();
+      renderPalette();
+    }
+
+    function renderContrast() {
+      const fg = hexToRgb($('fgPicker').value) || { r: 255, g: 255, b: 255 };
+      const bg = rgb;
+      $('contrastPreview').style.color = rgbToHex(fg);
+      $('contrastPreview').style.background = rgbToHex(bg);
+      const c = contrast(fg, bg);
+      $('ratio').textContent = c.toFixed(2) + ' : 1';
+      const set = (id, pass, text) => {
+        const el = $(id);
+        el.className = 'badge ' + (pass ? 'pass' : 'fail');
+        el.textContent = text + (pass ? ' ✓' : ' ✗');
+      };
+      set('aaNormal', c >= 4.5, 'AA 普通文本');
+      set('aaaNormal', c >= 7, 'AAA 普通文本');
+      set('aaLarge', c >= 3, 'AA 大文本');
+      set('aaaLarge', c >= 4.5, 'AAA 大文本');
+    }
+
+    function mix(c, target, t) {
+      return {
+        r: Math.round(c.r + (target - c.r) * t),
+        g: Math.round(c.g + (target - c.g) * t),
+        b: Math.round(c.b + (target - c.b) * t)
+      };
+    }
+    function renderPalette() {
+      const box = $('palette');
+      box.innerHTML = '';
+      const steps = [];
+      for (let i = 5; i >= 1; i--) steps.push(mix(rgb, 0, i / 6));       // 深
+      steps.push({ ...rgb });                                            // 原色
+      for (let i = 1; i <= 5; i++) steps.push(mix(rgb, 255, i / 6));     // 浅
+      steps.forEach((c, i) => {
+        const hex = rgbToHex(c);
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.style.background = hex;
+        b.title = hex + '（点击复制）';
+        b.setAttribute('aria-label', '复制 ' + hex);
+        b.addEventListener('click', async () => {
+          try {
+            await navigator.clipboard.writeText(hex);
+            $('paletteHint').textContent = '已复制 ' + hex;
+            setTimeout(() => ($('paletteHint').textContent = ''), 1500);
+          } catch (e) {}
+        });
+        box.appendChild(b);
+      });
+    }
+
+    function setFromHex(hex, syncPicker) {
+      const c = hexToRgb(hex);
+      if (!c) return false;
+      rgb = c;
+      if (syncPicker) $('picker').value = rgbToHex(c);
+      render();
+      return true;
+    }
+
+    $('picker').addEventListener('input', () => setFromHex($('picker').value, false));
+    $('hexInput').addEventListener('input', () => {
+      const v = $('hexInput').value.trim();
+      if (/^#?[0-9a-f]{3}$/i.test(v) || /^#?[0-9a-f]{6}$/i.test(v)) setFromHex(v, true);
+    });
+    $('hexInput').addEventListener('blur', () => { $('hexInput').value = rgbToHex(rgb); });
+    $('fgPicker').addEventListener('input', renderContrast);
+    $('swapBtn').addEventListener('click', () => {
+      const fg = hexToRgb($('fgPicker').value) || { r: 255, g: 255, b: 255 };
+      $('fgPicker').value = rgbToHex(rgb);
+      rgb = fg;
+      $('picker').value = rgbToHex(rgb);
+      render();
+    });
+
+    // 屏幕取色（支持时显示）
+    if ('EyeDropper' in window) {
+      $('eyeBtn').hidden = false;
+      $('eyeBtn').addEventListener('click', async () => {
+        try {
+          const res = await new EyeDropper().open();
+          setFromHex(res.sRGBHex, true);
+        } catch (e) {}
+      });
+    }
+
+    document.querySelectorAll('[data-copy]').forEach((b) => {
+      b.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText($(b.dataset.copy).textContent);
+          const t = b.textContent; b.textContent = '已复制 ✓';
+          setTimeout(() => (b.textContent = t), 1200);
+        } catch (e) {}
+      });
+    });
+
+    render();
+  </script>
+  <script src="../theme.js?v=202609192243"></script>
+</body>
+</html>

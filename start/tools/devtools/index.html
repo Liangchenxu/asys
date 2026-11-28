@@ -24,6 +24,7 @@
     .regex-flags input { accent-color: var(--accent); }
     .match-item { padding: 5px 10px; border-radius: 6px; background: rgba(0,0,0,0.04); font-size: 0.8rem; font-family: Consolas, monospace; word-break: break-all; margin-bottom: 4px; }
     [data-theme*="dark"] .match-item { background: rgba(255,255,255,0.06); }
+    .hint { font-size: 0.75rem; color: var(--text-secondary); opacity: 0.85; line-height: 1.6; }
   </style>
 </head>
 <body>
@@ -42,6 +43,8 @@
       <button class="tab" data-tab="url">URL</button>
       <button class="tab" data-tab="ts">时间戳</button>
       <button class="tab" data-tab="regex">正则</button>
+      <button class="tab" data-tab="uuid">UUID</button>
+      <button class="tab" data-tab="jwt">JWT</button>
     </div>
 
     <!-- JSON -->
@@ -118,6 +121,36 @@
             <span class="ts-result" id="tsResult2">—</span>
           </div>
         </div>
+      </div>
+    </div>
+
+    <!-- UUID -->
+    <div class="tab-pane" id="pane-uuid">
+      <div class="card glass dev-card">
+        <div class="row">
+          <span class="label">数量</span>
+          <input class="input" id="uuidCount" type="number" min="1" max="100" value="5" style="width:90px">
+          <label class="regex-flags"><input type="checkbox" id="uuidUpper"> 大写</label>
+          <button class="btn" id="uuidGen" type="button">生成</button>
+        </div>
+        <span class="out-label">结果 <button class="copy-mini" data-copy="uuidOutput" type="button">复制</button></span>
+        <div class="output-box" id="uuidOutput"></div>
+        <div class="hint">使用浏览器加密级随机数（crypto.randomUUID）。</div>
+      </div>
+    </div>
+
+    <!-- JWT -->
+    <div class="tab-pane" id="pane-jwt">
+      <div class="card glass dev-card">
+        <textarea class="input" id="jwtInput" rows="5" spellcheck="false" placeholder="粘贴 JWT（三段，点号分隔）"></textarea>
+        <div class="dev-actions">
+          <button class="btn" id="jwtDecode" type="button">解码</button>
+        </div>
+        <span class="out-label">Header</span>
+        <div class="output-box" id="jwtHeader"></div>
+        <span class="out-label">Payload</span>
+        <div class="output-box" id="jwtPayload"></div>
+        <div class="hint">只解码内容，不校验签名，也不发送到任何服务器。</div>
       </div>
     </div>
 
@@ -287,6 +320,65 @@ const $ = id => document.getElementById(id);
         count.textContent = '';
       }
     });
+
+    // ---------- UUID ----------
+    function uuidv4() {
+      if (crypto.randomUUID) return crypto.randomUUID();
+      const b = crypto.getRandomValues(new Uint8Array(16));
+      b[6] = (b[6] & 0x0f) | 0x40;
+      b[8] = (b[8] & 0x3f) | 0x80;
+      const h = Array.from(b).map((x) => x.toString(16).padStart(2, '0')).join('');
+      return h.slice(0, 8) + '-' + h.slice(8, 12) + '-' + h.slice(12, 16) + '-' + h.slice(16, 20) + '-' + h.slice(20);
+    }
+    const uuidGen = $('uuidGen');
+    if (uuidGen) {
+      uuidGen.addEventListener('click', () => {
+        const n = Math.max(1, Math.min(100, parseInt($('uuidCount').value) || 1));
+        $('uuidCount').value = n;
+        const upper = $('uuidUpper').checked;
+        const list = Array.from({ length: n }, () => {
+          const u = uuidv4();
+          return upper ? u.toUpperCase() : u;
+        });
+        setOut('uuidOutput', list.join('\n'), true);
+      });
+    }
+
+    // ---------- JWT ----------
+    function b64urlJson(part) {
+      let s = part.replace(/-/g, '+').replace(/_/g, '/');
+      if (s.length % 4) s += '='.repeat(4 - (s.length % 4));
+      const bin = atob(s);
+      const bytes = new Uint8Array(bin.length);
+      for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+      return JSON.parse(new TextDecoder().decode(bytes));
+    }
+    const jwtDecode = $('jwtDecode');
+    if (jwtDecode) {
+      jwtDecode.addEventListener('click', () => {
+        const raw = ($('jwtInput').value || '').trim();
+        if (!raw) { setOut('jwtHeader', '请粘贴 JWT', false); setOut('jwtPayload', '', false); return; }
+        const parts = raw.split('.');
+        if (parts.length < 2) { setOut('jwtHeader', '❌ 不是有效的 JWT（至少需要两段）', false); setOut('jwtPayload', '', false); return; }
+        let header, payload;
+        try { header = b64urlJson(parts[0]); }
+        catch (e) { setOut('jwtHeader', '❌ Header 解码失败：' + e.message, false); setOut('jwtPayload', '', false); return; }
+        try { payload = b64urlJson(parts[1]); }
+        catch (e) { setOut('jwtHeader', JSON.stringify(header, null, 2), true); setOut('jwtPayload', '❌ Payload 解码失败：' + e.message, false); return; }
+
+        setOut('jwtHeader', JSON.stringify(header, null, 2), true);
+        let text = JSON.stringify(payload, null, 2);
+        if (typeof payload.exp === 'number') {
+          const d = new Date(payload.exp * 1000);
+          const expired = d.getTime() < Date.now();
+          text += '\n\n// exp: ' + d.toLocaleString() + (expired ? '（已过期）' : '（仍然有效）');
+        }
+        if (typeof payload.iat === 'number') {
+          text += '\n// iat: ' + new Date(payload.iat * 1000).toLocaleString();
+        }
+        setOut('jwtPayload', text, true);
+      });
+    }
   </script>
   <script src="../theme.js?v=202609192243"></script>
 </body>

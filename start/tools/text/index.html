@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light-neutral">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="shortcut icon" href="../../../img/asys.ico" type="image/x-icon">
+  <title>文本工具箱 - ASYS 工具箱</title>
+  <link rel="stylesheet" href="../css/tools.css?v=202609192243">
+  <style>
+    .ops { display: flex; gap: 6px; flex-wrap: wrap; }
+    .ops .btn { padding: 6px 12px; font-size: 0.8rem; border-radius: 8px; }
+    .out { width: 100%; min-height: 140px; max-height: 320px; overflow: auto; padding: 12px; border: 1px solid var(--border-color); border-radius: 10px; background: var(--input-bg); font-family: 'SF Mono', Consolas, 'Courier New', monospace; font-size: 0.82rem; line-height: 1.6; white-space: pre-wrap; word-break: break-word; user-select: text; }
+    .stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px 14px; font-size: 0.82rem; color: var(--text-secondary); }
+    .stats b { color: var(--text-primary); font-weight: 600; }
+    .status { font-size: 0.8rem; min-height: 1.2em; color: var(--text-secondary); }
+    .status.err { color: #e11d48; }
+    .status.ok { color: #059669; }
+    .hint { font-size: 0.75rem; color: var(--text-secondary); opacity: 0.85; line-height: 1.6; }
+    @media (max-width: 480px) { .stats { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <header>
+    <a class="back-btn" href="../../index.html" title="返回起始页">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+      <span>起始页</span>
+    </a>
+    <h1>文本工具箱</h1>
+  </header>
+
+  <main>
+    <div class="card glass">
+      <div class="row between">
+        <span class="label">输入</span>
+        <button class="btn small secondary" id="clearBtn" type="button">清空</button>
+      </div>
+      <textarea class="input" id="input" rows="8" placeholder="粘贴文本，每行一条"></textarea>
+      <div class="stats" id="inStats"></div>
+    </div>
+
+    <div class="card glass">
+      <span class="label">行操作</span>
+      <div class="ops">
+        <button class="btn" data-op="dedupe" type="button">去重</button>
+        <button class="btn secondary" data-op="trim" type="button">去首尾空格</button>
+        <button class="btn secondary" data-op="noempty" type="button">去空行</button>
+        <button class="btn secondary" data-op="sort" type="button">排序 A→Z</button>
+        <button class="btn secondary" data-op="rsort" type="button">排序 Z→A</button>
+        <button class="btn secondary" data-op="reverse" type="button">反转行序</button>
+        <button class="btn secondary" data-op="number" type="button">加行号</button>
+        <button class="btn secondary" data-op="unnumber" type="button">去行号</button>
+      </div>
+      <span class="label">大小写</span>
+      <div class="ops">
+        <button class="btn secondary" data-op="upper" type="button">全部大写</button>
+        <button class="btn secondary" data-op="lower" type="button">全部小写</button>
+        <button class="btn secondary" data-op="title" type="button">每词首字母大写</button>
+      </div>
+      <div class="status" id="status" aria-live="polite"></div>
+    </div>
+
+    <div class="card glass">
+      <span class="label">正则替换</span>
+      <div class="row">
+        <input class="input grow" id="pattern" placeholder="正则表达式，如 \d+" spellcheck="false">
+        <input class="input" id="flags" value="g" style="width:80px" placeholder="flags" spellcheck="false">
+      </div>
+      <input class="input" id="replacement" placeholder="替换为（支持 $1 捕获组）" spellcheck="false">
+      <div class="row">
+        <button class="btn" id="replaceBtn" type="button">执行替换</button>
+        <span class="status" id="regexStatus"></span>
+      </div>
+    </div>
+
+    <div class="card glass">
+      <div class="row between">
+        <span class="label">结果</span>
+        <div class="row">
+          <button class="btn small secondary" id="copyBtn" type="button">复制结果</button>
+          <button class="btn small secondary" id="applyBtn" type="button">用结果替换输入</button>
+        </div>
+      </div>
+      <div class="out" id="output"></div>
+      <div class="stats" id="outStats"></div>
+      <div class="hint">所有处理都在本地完成，不会上传任何内容。</div>
+    </div>
+  </main>
+
+  <footer>ASYS 科技 搜索起始页 版权所有</footer>
+
+  <script>
+    const $ = (id) => document.getElementById(id);
+    let result = '';
+
+    function setStatus(el, msg, type) {
+      el.textContent = msg || '';
+      el.className = 'status' + (type ? ' ' + type : '');
+    }
+    function stats(text) {
+      const lines = text ? text.split('\n').length : 0;
+      const words = (text.trim().match(/\S+/g) || []).length;
+      return {
+        chars: text.length,
+        charsNoSpace: text.replace(/\s/g, '').length,
+        lines,
+        words,
+        bytes: new TextEncoder().encode(text).length
+      };
+    }
+    function renderStats(el, text) {
+      const s = stats(text);
+      el.innerHTML =
+        '<span>字符 <b>' + s.chars + '</b>（不含空白 <b>' + s.charsNoSpace + '</b>）</span>' +
+        '<span>行 <b>' + s.lines + '</b></span>' +
+        '<span>词 <b>' + s.words + '</b></span>' +
+        '<span>UTF-8 <b>' + s.bytes + '</b> 字节</span>';
+    }
+    function setResult(text, note) {
+      result = text;
+      $('output').textContent = text;
+      renderStats($('outStats'), text);
+      if (note) setStatus($('status'), note, 'ok');
+    }
+    function inputLines() {
+      return $('input').value.split('\n');
+    }
+
+    const OPS = {
+      dedupe: (lines) => {
+        const seen = new Set();
+        return lines.filter((l) => (seen.has(l) ? false : (seen.add(l), true)));
+      },
+      trim: (lines) => lines.map((l) => l.trim()),
+      noempty: (lines) => lines.filter((l) => l.trim() !== ''),
+      sort: (lines) => [...lines].sort((a, b) => a.localeCompare(b, 'zh-Hans-CN', { numeric: true })),
+      rsort: (lines) => [...lines].sort((a, b) => b.localeCompare(a, 'zh-Hans-CN', { numeric: true })),
+      reverse: (lines) => [...lines].reverse(),
+      number: (lines) => lines.map((l, i) => (i + 1) + '. ' + l),
+      unnumber: (lines) => lines.map((l) => l.replace(/^\s*\d+[.、)]\s?/, '')),
+      upper: (lines) => lines.map((l) => l.toUpperCase()),
+      lower: (lines) => lines.map((l) => l.toLowerCase()),
+      title: (lines) => lines.map((l) => l.replace(/\S+/g, (w) => w.charAt(0).toUpperCase() + w.slice(1)))
+    };
+    const NAMES = {
+      dedupe: '已去重', trim: '已去首尾空格', noempty: '已去空行', sort: '已按 A→Z 排序',
+      rsort: '已按 Z→A 排序', reverse: '已反转行序', number: '已加行号', unnumber: '已去行号',
+      upper: '已转大写', lower: '已转小写', title: '已转首字母大写'
+    };
+
+    document.querySelectorAll('[data-op]').forEach((b) => {
+      b.addEventListener('click', () => {
+        const op = b.dataset.op;
+        const lines = inputLines();
+        const before = lines.length;
+        const after = OPS[op](lines);
+        setResult(after.join('\n'), NAMES[op] + '（' + before + ' → ' + after.length + ' 行）');
+      });
+    });
+
+    $('replaceBtn').addEventListener('click', () => {
+      const p = $('pattern').value;
+      if (!p) { setStatus($('regexStatus'), '请输入正则', 'err'); return; }
+      let re;
+      try { re = new RegExp(p, $('flags').value.trim()); }
+      catch (e) { setStatus($('regexStatus'), '❌ ' + e.message, 'err'); return; }
+      const src = $('input').value;
+      const out = src.replace(re, $('replacement').value);
+      setResult(out, '');
+      const flags = $('flags').value.trim();
+      const n = flags.includes('g')
+        ? (src.match(new RegExp(p, flags)) || []).length
+        : (new RegExp(p, flags).test(src) ? 1 : 0);
+      setStatus($('regexStatus'), '完成，匹配 ' + n + ' 处', 'ok');
+    });
+
+    $('copyBtn').addEventListener('click', async () => {
+      if (!result) { setStatus($('status'), '还没有结果', 'err'); return; }
+      try {
+        await navigator.clipboard.writeText(result);
+        setStatus($('status'), '✅ 已复制结果', 'ok');
+      } catch (e) {
+        const ta = document.createElement('textarea');
+        ta.value = result; document.body.appendChild(ta); ta.select();
+        try { document.execCommand('copy'); setStatus($('status'), '✅ 已复制结果', 'ok'); }
+        catch (e2) { setStatus($('status'), '❌ 复制失败', 'err'); }
+        ta.remove();
+      }
+    });
+    $('applyBtn').addEventListener('click', () => {
+      if (!result) { setStatus($('status'), '还没有结果', 'err'); return; }
+      $('input').value = result;
+      updateInputStats();
+      setStatus($('status'), '已用结果替换输入', 'ok');
+    });
+    $('clearBtn').addEventListener('click', () => {
+      $('input').value = '';
+      setResult('');
+      setStatus($('status'), '已清空');
+      updateInputStats();
+    });
+
+    function updateInputStats() { renderStats($('inStats'), $('input').value); }
+    $('input').addEventListener('input', updateInputStats);
+    updateInputStats();
+    setResult('');
+  </script>
+  <script src="../theme.js?v=202609192243"></script>
+</body>
+</html>

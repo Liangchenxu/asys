@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light-neutral">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="shortcut icon" href="../../../img/asys.ico" type="image/x-icon">
+  <title>SVG 工具箱 - ASYS 工具箱</title>
+  <link rel="stylesheet" href="../css/tools.css?v=202609192243">
+  <style>
+    main { max-width: 1080px; }
+    .svg-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 1rem; align-items: start; }
+    @media (max-width: 900px) { .svg-grid { grid-template-columns: 1fr; } }
+    .drop-zone { border: 2px dashed var(--border-color); border-radius: 12px; padding: 14px; text-align: center; color: var(--text-secondary); font-size: 0.85rem; cursor: pointer; transition: all 0.2s ease; }
+    .drop-zone:hover, .drop-zone.drag { border-color: var(--accent); color: var(--accent); background: var(--input-bg); }
+    .drop-zone input { display: none; }
+    .code-wrap { display: flex; height: 380px; border: 1px solid var(--input-border); border-radius: 10px; background: var(--input-bg); overflow: hidden; transition: border-color 0.2s, box-shadow 0.2s; }
+    .code-wrap:focus-within { border-color: var(--input-focus); box-shadow: 0 0 0 3px rgba(107, 114, 128, 0.12); }
+    .gutter { flex-shrink: 0; min-width: 46px; padding: 10px 8px 10px 10px; text-align: right; font-family: 'SF Mono', Consolas, 'Courier New', monospace; font-size: 0.78rem; line-height: 1.55; color: var(--text-secondary); opacity: 0.65; background: rgba(0, 0, 0, 0.025); border-right: 1px solid var(--border-color); overflow: hidden; user-select: none; white-space: pre; }
+    [data-theme*="dark"] .gutter { background: rgba(255, 255, 255, 0.035); }
+    .editor { flex: 1; min-width: 0; height: 100%; min-height: 0; padding: 10px 12px; border: none; border-radius: 0; background: transparent; box-shadow: none !important; font-family: 'SF Mono', Consolas, 'Courier New', monospace; font-size: 0.78rem; line-height: 1.55; tab-size: 2; white-space: pre; overflow: auto; resize: none; }
+    @media (max-width: 640px) { .code-wrap { height: 300px; } }
+    .preview-stage { border-radius: 12px; border: 1px solid var(--border-color); min-height: 280px; display: flex; align-items: center; justify-content: center; overflow: hidden; padding: 14px; transition: background 0.2s ease; }
+    .preview-stage.checker { background-color: var(--input-bg); background-image: linear-gradient(45deg, rgba(0,0,0,0.07) 25%, transparent 25%), linear-gradient(-45deg, rgba(0,0,0,0.07) 25%, transparent 25%), linear-gradient(45deg, transparent 75%, rgba(0,0,0,0.07) 75%), linear-gradient(-45deg, transparent 75%, rgba(0,0,0,0.07) 75%); background-size: 16px 16px; background-position: 0 0, 0 8px, 8px -8px, -8px 0; }
+    [data-theme*="dark"] .preview-stage.checker { background-image: linear-gradient(45deg, rgba(255,255,255,0.08) 25%, transparent 25%), linear-gradient(-45deg, rgba(255,255,255,0.08) 25%, transparent 25%), linear-gradient(45deg, transparent 75%, rgba(255,255,255,0.08) 75%), linear-gradient(-45deg, transparent 75%, rgba(255,255,255,0.08) 75%); }
+    .preview-stage img { max-width: 100%; max-height: 340px; display: block; }
+    .preview-stage .empty { color: var(--text-secondary); font-size: 0.85rem; text-align: center; line-height: 1.8; }
+    .meta { font-size: 0.78rem; color: var(--text-secondary); display: flex; gap: 14px; flex-wrap: wrap; }
+    .status { font-size: 0.82rem; min-height: 1.2em; color: var(--text-secondary); }
+    .status.err { color: #e11d48; }
+    .status.ok { color: #059669; }
+    .field { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .field .label { min-width: 58px; }
+    .num { width: 104px; }
+    .quality-wrap { display: flex; align-items: center; gap: 8px; flex: 1; min-width: 180px; }
+    .quality-wrap .range { flex: 1; }
+    .thumb-wrap { display: none; align-items: center; gap: 12px; }
+    .thumb-wrap.show { display: flex; }
+    .thumb { width: 64px; height: 64px; object-fit: contain; border: 1px solid var(--border-color); border-radius: 8px; background: var(--input-bg); flex-shrink: 0; }
+    .hint { font-size: 0.75rem; color: var(--text-secondary); opacity: 0.85; line-height: 1.6; }
+    .actions { display: flex; gap: 8px; flex-wrap: wrap; }
+  </style>
+</head>
+<body>
+  <header>
+    <a class="back-btn" href="../../index.html" title="返回起始页">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+      <span>起始页</span>
+    </a>
+    <h1>SVG 工具箱</h1>
+  </header>
+
+  <main>
+    <div class="svg-grid">
+      <!-- 左：输入 -->
+      <div class="card glass">
+        <div class="row between">
+          <span class="label">SVG 代码</span>
+          <div class="actions">
+            <button class="btn small secondary" id="sampleBtn" type="button">示例</button>
+            <button class="btn small secondary" id="clearBtn" type="button">清空</button>
+          </div>
+        </div>
+        <div class="code-wrap">
+          <div class="gutter" id="gutter" aria-hidden="true">1</div>
+          <textarea class="input editor" id="svgInput" spellcheck="false" wrap="off" placeholder="粘贴 SVG 源码，或把 .svg 文件拖到下面的区域"></textarea>
+        </div>
+        <label class="drop-zone" id="dropZone">
+          <input type="file" id="fileInput" accept=".svg,image/svg+xml">
+          <span id="dropText">点击选择 .svg 文件，或拖拽到此处</span>
+        </label>
+        <div class="row">
+          <button class="btn" id="loadBtn" type="button">载入预览</button>
+          <button class="btn secondary" id="copyBtn" type="button">复制源码</button>
+          <button class="btn secondary" id="dlSvgBtn" type="button">下载 SVG</button>
+        </div>
+        <div class="status" id="status" aria-live="polite"></div>
+      </div>
+
+      <!-- 右：预览 + 转位图 -->
+      <div class="card glass">
+        <div class="row between">
+          <span class="label">预览</span>
+          <div class="field">
+            <label class="label" for="stageBg" style="min-width:auto;">背景</label>
+            <select class="input" id="stageBg" style="width:auto;padding:6px 10px;">
+              <option value="checker">棋盘格</option>
+              <option value="white">白色</option>
+              <option value="dark">深色</option>
+            </select>
+          </div>
+        </div>
+        <div class="preview-stage checker" id="stage">
+          <span class="empty" id="emptyHint">载入 SVG 后在这里预览</span>
+          <img id="previewImg" alt="SVG 预览" hidden>
+        </div>
+        <div class="meta">
+          <span id="metaSize">尺寸：—</span>
+          <span id="metaBytes">源码：—</span>
+          <span id="metaNodes">元素：—</span>
+        </div>
+
+        <hr style="border:none;border-top:1px solid var(--border-color);margin:2px 0;">
+
+        <span class="label">转换为位图</span>
+        <div class="field">
+          <label class="label" for="fmt">格式</label>
+          <select class="input" id="fmt" style="width:auto;padding:7px 10px;">
+            <option value="png">PNG</option>
+            <option value="jpeg">JPEG</option>
+            <option value="webp">WebP</option>
+          </select>
+        </div>
+        <div class="field">
+          <label class="label" for="sizeMode">尺寸</label>
+          <select class="input" id="sizeMode" style="width:auto;padding:7px 10px;">
+            <option value="scale">按倍率</option>
+            <option value="width">指定宽度</option>
+          </select>
+          <select class="input" id="scale" style="width:auto;padding:7px 10px;">
+            <option value="1">1x</option>
+            <option value="2" selected>2x</option>
+            <option value="3">3x</option>
+            <option value="4">4x</option>
+          </select>
+          <input class="input num" id="outWidth" type="number" min="1" max="8192" step="1" value="800" hidden>
+          <span class="label" id="outSize" style="min-width:auto;">输出：—</span>
+        </div>
+        <div class="field">
+          <label class="label" for="bgMode">底色</label>
+          <select class="input" id="bgMode" style="width:auto;padding:7px 10px;">
+            <option value="transparent">透明</option>
+            <option value="white">白色</option>
+            <option value="custom">自定义</option>
+          </select>
+          <input type="color" id="bgColor" value="#ffffff" hidden style="width:36px;height:32px;padding:0;border:1px solid var(--border-color);border-radius:8px;background:var(--input-bg);cursor:pointer;">
+        </div>
+        <div class="field quality-wrap" id="qualityWrap">
+          <label class="label" for="quality" style="min-width:auto;">质量</label>
+          <input class="range" id="quality" type="range" min="0.3" max="1" step="0.01" value="0.92">
+          <span class="label" id="qualityVal" style="min-width:2.4em;">0.92</span>
+        </div>
+        <div class="row">
+          <button class="btn" id="convertBtn" type="button">转换位图</button>
+          <a class="btn secondary" id="dlRasterBtn" href="#" download style="display:none;text-decoration:none;text-align:center;">下载位图</a>
+        </div>
+        <div class="thumb-wrap" id="thumbWrap">
+          <img class="thumb" id="thumb" alt="位图预览">
+          <span class="status" id="rasterInfo"></span>
+        </div>
+        <div class="hint">SVG 里的外部图片、外部字体不会加载（浏览器对 &lt;img&gt; 内 SVG 的限制）；载入时会移除脚本、事件属性、foreignObject 和 javascript: 链接。</div>
+      </div>
+    </div>
+  </main>
+
+  <footer>ASYS 科技 搜索起始页 版权所有</footer>
+
+  <script>
+    const $ = (id) => document.getElementById(id);
+
+    let current = { text: '', doc: null, img: null, w: 0, h: 0, name: 'image' };
+    let objectUrl = '';
+    let rasterUrl = '';
+    let loadSeq = 0;
+
+    const SAMPLE = `<svg xmlns="http://www.w3.org/2000/svg" width="320" height="200" viewBox="0 0 320 200">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0ea5e9"/>
+      <stop offset="1" stop-color="#7c3aed"/>
+    </linearGradient>
+  </defs>
+  <rect width="320" height="200" rx="24" fill="url(#g)"/>
+  <circle cx="256" cy="52" r="34" fill="#ffffff" opacity="0.22"/>
+  <text x="32" y="112" font-family="Segoe UI, sans-serif" font-size="40" font-weight="700" fill="#ffffff">SVG</text>
+  <text x="32" y="148" font-family="Segoe UI, sans-serif" font-size="16" fill="#ffffff" opacity="0.85">预览 · 转位图 · 下载</text>
+</svg>`;
+
+    function setStatus(msg, type) {
+      const el = $('status');
+      el.textContent = msg || '';
+      el.className = 'status' + (type ? ' ' + type : '');
+    }
+
+    function updateGutter() {
+      const ta = $('svgInput');
+      const g = $('gutter');
+      const n = ta.value.split('\n').length;
+      if (g.dataset.lines !== String(n)) {
+        let s = '';
+        for (let i = 1; i <= n; i++) s += i + '\n';
+        g.textContent = s.slice(0, -1);
+        g.dataset.lines = String(n);
+      }
+      g.scrollTop = ta.scrollTop;
+    }
+
+    function setEditorText(text) {
+      $('svgInput').value = text;
+      updateGutter();
+      $('svgInput').scrollTop = 0;
+      $('gutter').scrollTop = 0;
+    }
+
+    function fmtBytes(n) {
+      if (!isFinite(n) || n < 0) return '—';
+      if (n < 1024) return n + ' B';
+      if (n < 1024 * 1024) return (n / 1024).toFixed(1) + ' KB';
+      return (n / 1024 / 1024).toFixed(2) + ' MB';
+    }
+
+    function ensureXmlns(text) {
+      const i = text.search(/<svg[\s>]/i);
+      if (i < 0) return text;
+      const headEnd = text.indexOf('>', i);
+      if (headEnd < 0) return text;
+      const head = text.slice(i, headEnd + 1);
+      if (/xmlns\s*=/.test(head)) return text;
+      return text.slice(0, i) + head.replace(/<svg/i, '<svg xmlns="http://www.w3.org/2000/svg"') + text.slice(headEnd + 1);
+    }
+
+    // 移除脚本、外来命名空间和事件属性，避免直接预览时执行代码
+    function sanitize(doc) {
+      doc.querySelectorAll('script, foreignObject, iframe, object, embed').forEach((n) => n.remove());
+      doc.querySelectorAll('*').forEach((el) => {
+        Array.from(el.attributes).forEach((attr) => {
+          const name = attr.name.toLowerCase();
+          const value = attr.value.trim();
+          if (name.indexOf('on') === 0) {
+            el.removeAttribute(attr.name);
+          } else if ((name === 'href' || name === 'xlink:href') && /^(javascript:|data:text\/html)/i.test(value)) {
+            el.removeAttribute(attr.name);
+          } else if (name === 'style' && /(javascript:|@import)/i.test(value)) {
+            el.removeAttribute(attr.name);
+          }
+        });
+      });
+    }
+
+    function parseLength(v) {
+      if (!v) return 0;
+      const m = String(v).trim().match(/^(-?[\d.]+)\s*(px|pt|pc|mm|cm|in|%)?$/i);
+      if (!m) return 0;
+      const n = parseFloat(m[1]);
+      if (!isFinite(n) || n <= 0) return 0;
+      const unit = (m[2] || 'px').toLowerCase();
+      const factor = { px: 1, pt: 96 / 72, pc: 16, mm: 96 / 25.4, cm: 96 / 2.54, in: 96 }[unit];
+      return factor ? n * factor : 0; // 百分比无法静态换算，交给 viewBox
+    }
+
+    function svgSize(doc) {
+      const root = doc.documentElement;
+      let w = parseLength(root.getAttribute('width'));
+      let h = parseLength(root.getAttribute('height'));
+      const vb = (root.getAttribute('viewBox') || '').trim().split(/[\s,]+/).map(Number);
+      const hasVb = vb.length === 4 && vb.every((n) => isFinite(n)) && vb[2] > 0 && vb[3] > 0;
+      if ((!w || !h) && hasVb) {
+        if (!w && !h) { w = vb[2]; h = vb[3]; }
+        else if (!w) w = h * vb[2] / vb[3];
+        else h = w * vb[3] / vb[2];
+      }
+      if (!w || !h) { w = 300; h = 150; }
+      return { w: Math.round(w), h: Math.round(h) };
+    }
+
+    function releaseObjectUrl() {
+      if (objectUrl) { URL.revokeObjectURL(objectUrl); objectUrl = ''; }
+    }
+
+    function updateMeta(extra) {
+      $('metaSize').textContent = '尺寸：' + (current.w ? current.w + ' × ' + current.h + ' px' : '—');
+      $('metaBytes').textContent = '源码：' + (current.text ? fmtBytes(new Blob([current.text]).size) : '—');
+      $('metaNodes').textContent = '元素：' + (current.doc ? current.doc.querySelectorAll('*').length : '—');
+      updateOutSize();
+    }
+
+    function updateOutSize() {
+      if (!current.w) { $('outSize').textContent = '输出：—'; return; }
+      const { w, h } = targetSize();
+      $('outSize').textContent = '输出：' + w + ' × ' + h;
+    }
+
+    function targetSize() {
+      const mode = $('sizeMode').value;
+      let w;
+      if (mode === 'width') {
+        w = Math.max(1, Math.min(8192, Math.round(parseFloat($('outWidth').value) || current.w)));
+      } else {
+        w = Math.max(1, Math.round(current.w * (parseFloat($('scale').value) || 1)));
+      }
+      const h = Math.max(1, Math.round(w * current.h / current.w));
+      return { w, h };
+    }
+
+    function clearPreview() {
+      releaseObjectUrl();
+      $('previewImg').hidden = true;
+      $('previewImg').removeAttribute('src');
+      $('emptyHint').hidden = false;
+      current = { text: '', doc: null, img: null, w: 0, h: 0, name: 'image' };
+      updateMeta();
+      $('dlRasterBtn').style.display = 'none';
+      $('thumbWrap').classList.remove('show');
+      if (rasterUrl) { URL.revokeObjectURL(rasterUrl); rasterUrl = ''; }
+    }
+
+    function loadSvgText(text, name) {
+      const raw = (text || '').trim();
+      if (!raw) {
+        clearPreview();
+        setStatus('请先粘贴 SVG 源码或选择文件', 'err');
+        return;
+      }
+      const doc = new DOMParser().parseFromString(ensureXmlns(raw), 'image/svg+xml');
+      const err = doc.querySelector('parsererror');
+      if (err || !doc.documentElement || doc.documentElement.nodeName.toLowerCase() !== 'svg') {
+        clearPreview();
+        setStatus('❌ 不是有效的 SVG：' + (err ? err.textContent.split('\n')[0].trim() : '根节点不是 <svg>'), 'err');
+        return;
+      }
+
+      sanitize(doc);
+      const text2 = new XMLSerializer().serializeToString(doc.documentElement);
+      const { w, h } = svgSize(doc);
+
+      current.text = text2;
+      current.doc = doc;
+      current.w = w;
+      current.h = h;
+      current.name = (name || 'image').replace(/\.svg$/i, '') || 'image';
+
+      releaseObjectUrl();
+      objectUrl = URL.createObjectURL(new Blob([text2], { type: 'image/svg+xml' }));
+      const seq = ++loadSeq;
+      const img = new Image();
+      img.onload = () => {
+        if (seq !== loadSeq) return;
+        current.img = img;
+        $('previewImg').src = objectUrl;
+        $('previewImg').hidden = false;
+        $('emptyHint').hidden = true;
+        updateMeta();
+        setStatus('✅ 已载入' + (name ? '：' + name : ''), 'ok');
+      };
+      img.onerror = () => {
+        if (seq !== loadSeq) return;
+        current.img = null;
+        $('previewImg').hidden = true;
+        $('emptyHint').hidden = false;
+        setStatus('❌ 预览失败：SVG 可能引用了无法加载的外部资源', 'err');
+      };
+      img.src = objectUrl;
+      updateMeta();
+      setStatus('解析中…');
+    }
+
+    function download(blob, filename) {
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 4000);
+    }
+
+    // ---- 事件绑定 ----
+    $('loadBtn').addEventListener('click', () => loadSvgText($('svgInput').value, current.name));
+    $('sampleBtn').addEventListener('click', () => {
+      setEditorText(SAMPLE);
+      loadSvgText(SAMPLE, 'sample.svg');
+    });
+    $('clearBtn').addEventListener('click', () => {
+      setEditorText('');
+      clearPreview();
+      setStatus('已清空');
+    });
+
+    $('copyBtn').addEventListener('click', async () => {
+      if (!current.text) { setStatus('没有可复制的源码', 'err'); return; }
+      try {
+        await navigator.clipboard.writeText(current.text);
+        setStatus('✅ 源码已复制', 'ok');
+      } catch (e) {
+        const ta = document.createElement('textarea');
+        ta.value = current.text;
+        document.body.appendChild(ta);
+        ta.select();
+        try { document.execCommand('copy'); setStatus('✅ 源码已复制', 'ok'); }
+        catch (e2) { setStatus('❌ 复制失败，请手动选择', 'err'); }
+        ta.remove();
+      }
+    });
+
+    $('dlSvgBtn').addEventListener('click', () => {
+      if (!current.text) { setStatus('没有可下载的 SVG', 'err'); return; }
+      download(new Blob([current.text], { type: 'image/svg+xml' }), current.name + '.svg');
+    });
+
+    // 文件选择 / 拖拽
+    const dropZone = $('dropZone');
+    $('fileInput').addEventListener('change', (e) => {
+      const file = e.target.files && e.target.files[0];
+      if (file) readFile(file);
+      e.target.value = '';
+    });
+    function readFile(file) {
+      if (file.size > 4 * 1024 * 1024) { setStatus('❌ 文件超过 4 MB', 'err'); return; }
+      const reader = new FileReader();
+      reader.onload = () => {
+        setEditorText(reader.result);
+        loadSvgText(reader.result, file.name);
+      };
+      reader.onerror = () => setStatus('❌ 读取文件失败', 'err');
+      reader.readAsText(file);
+    }
+    ['dragenter', 'dragover'].forEach((ev) => dropZone.addEventListener(ev, (e) => {
+      e.preventDefault(); dropZone.classList.add('drag');
+    }));
+    ['dragleave', 'drop'].forEach((ev) => dropZone.addEventListener(ev, (e) => {
+      e.preventDefault(); dropZone.classList.remove('drag');
+    }));
+    dropZone.addEventListener('drop', (e) => {
+      const file = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
+      if (file) readFile(file);
+    });
+    // 防止拖到页面其它地方时浏览器直接打开文件（输入框和拖拽区保留原生行为）
+    const isEditorDrop = (e) => e.target && e.target.closest && e.target.closest('#dropZone, #svgInput');
+    window.addEventListener('dragover', (e) => { if (!isEditorDrop(e)) e.preventDefault(); });
+    window.addEventListener('drop', (e) => { if (!isEditorDrop(e)) e.preventDefault(); });
+
+    // 预览背景
+    $('stageBg').addEventListener('change', () => {
+      const stage = $('stage');
+      const v = $('stageBg').value;
+      stage.style.background = v === 'white' ? '#ffffff' : v === 'dark' ? '#111827' : '';
+      stage.classList.toggle('checker', v === 'checker');
+    });
+
+    // 尺寸 / 格式联动
+    $('sizeMode').addEventListener('change', () => {
+      const byWidth = $('sizeMode').value === 'width';
+      $('scale').hidden = byWidth;
+      $('outWidth').hidden = !byWidth;
+      if (byWidth) $('outWidth').value = $('outWidth').value || current.w || 800;
+      updateOutSize();
+    });
+    ['scale', 'outWidth'].forEach((id) => $(id).addEventListener('input', updateOutSize));
+    $('fmt').addEventListener('change', () => {
+      const fmt = $('fmt').value;
+      $('qualityWrap').style.display = fmt === 'png' ? 'none' : 'flex';
+      // JPEG 不支持透明，自动切到白色
+      if (fmt === 'jpeg' && $('bgMode').value === 'transparent') {
+        $('bgMode').value = 'white';
+        $('bgColor').hidden = true;
+      }
+    });
+    $('bgMode').addEventListener('change', () => {
+      $('bgColor').hidden = $('bgMode').value !== 'custom';
+    });
+    $('quality').addEventListener('input', () => { $('qualityVal').textContent = Number($('quality').value).toFixed(2); });
+
+    // 转位图
+    $('convertBtn').addEventListener('click', () => {
+      if (!current.doc || !current.img) { setStatus('请先载入有效的 SVG', 'err'); return; }
+      const fmt = $('fmt').value;
+      const mime = { png: 'image/png', jpeg: 'image/jpeg', webp: 'image/webp' }[fmt];
+      const { w, h } = targetSize();
+      if (w > 8192 || h > 8192) { setStatus('❌ 输出尺寸超过 8192 px', 'err'); return; }
+
+      const canvas = document.createElement('canvas');
+      canvas.width = w;
+      canvas.height = h;
+      const ctx = canvas.getContext('2d');
+      const bgMode = $('bgMode').value;
+      if (fmt === 'jpeg' || bgMode !== 'transparent') {
+        ctx.fillStyle = bgMode === 'custom' ? $('bgColor').value : '#ffffff';
+        ctx.fillRect(0, 0, w, h);
+      }
+      try {
+        ctx.drawImage(current.img, 0, 0, w, h);
+      } catch (e) {
+        setStatus('❌ 绘制失败：' + e.message, 'err');
+        return;
+      }
+
+      const quality = fmt === 'png' ? undefined : Number($('quality').value);
+      canvas.toBlob((blob) => {
+        if (!blob) { setStatus('❌ 转换失败，浏览器可能不支持该格式', 'err'); return; }
+        if (rasterUrl) URL.revokeObjectURL(rasterUrl);
+        rasterUrl = URL.createObjectURL(blob);
+        $('thumb').src = rasterUrl;
+        $('thumbWrap').classList.add('show');
+        $('dlRasterBtn').href = rasterUrl;
+        $('dlRasterBtn').download = current.name + '-' + w + 'x' + h + '.' + fmt;
+        $('dlRasterBtn').style.display = 'inline-block';
+        $('rasterInfo').textContent = w + ' × ' + h + ' · ' + fmt.toUpperCase() + ' · ' + fmtBytes(blob.size);
+        setStatus('✅ 已生成位图，可点击「下载位图」保存', 'ok');
+      }, mime, quality);
+    });
+
+    // 行号同步
+    const editor = $('svgInput');
+    editor.addEventListener('input', updateGutter);
+    editor.addEventListener('scroll', () => { $('gutter').scrollTop = editor.scrollTop; });
+
+    // 快捷键：Ctrl/Cmd + Enter 载入；Tab 缩进两个空格
+    editor.addEventListener('keydown', (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+        e.preventDefault();
+        loadSvgText(editor.value, current.name);
+        return;
+      }
+      if (e.key === 'Tab' && !e.ctrlKey && !e.metaKey && !e.altKey) {
+        e.preventDefault();
+        const start = editor.selectionStart;
+        const end = editor.selectionEnd;
+        editor.setRangeText('  ', start, end, 'end');
+        updateGutter();
+      }
+    });
+
+    // 初始示例
+    setEditorText(SAMPLE);
+    loadSvgText(SAMPLE, 'sample.svg');
+  </script>
+  <script src="../theme.js?v=202609192243"></script>
+</body>
+</html>
