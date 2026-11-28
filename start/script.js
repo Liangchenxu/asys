@@ -303,6 +303,12 @@ function bindEvents() {
   }
   themePanel.addEventListener('animationend', (e) => { if (e.animationName !== 'slideDown' && e.animationName !== 'slideUp') return; const active = document.querySelector('.color-btn.active'); if (active) moveColorIndicator(active, false); const ind = document.getElementById('colorIndicator'); if (ind) ind.style.opacity = '1'; });
   document.addEventListener('click', (e) => { if (!themeToggle.contains(e.target) && !themePanel.contains(e.target)) { themePanel.classList.remove('show'); themeToggle.setAttribute('aria-expanded', 'false'); } if (toolboxToggle && toolboxPanel && !toolboxToggle.contains(e.target) && !toolboxPanel.contains(e.target)) { toolboxPanel.classList.remove('show'); toolboxToggle.setAttribute('aria-expanded', 'false'); } if (!searchInput.contains(e.target) && !suggestionsContainer.contains(e.target)) hideSuggestions(); });
+  // Esc 关闭主题面板与工具箱
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Escape') return;
+    if (themePanel.classList.contains('show')) { themePanel.classList.remove('show'); themeToggle.setAttribute('aria-expanded', 'false'); }
+    if (toolboxPanel && toolboxPanel.classList.contains('show')) { toolboxPanel.classList.remove('show'); toolboxToggle.setAttribute('aria-expanded', 'false'); }
+  });
   darkModeToggle.addEventListener('change', (e) => { if (autoThemeMode !== 'off') return; const mode = e.target.checked ? 'dark' : 'light'; applyTheme(mode, getCurrentColor()); savePreferences(mode, getCurrentColor()); if (wallpaperToggle.checked) updateWallpaperBrightness(); });
   wallpaperToggle.addEventListener('change', (e) => { onBgToggle(wallpaperToggle); });
   const customBgToggle = document.getElementById('customBgToggle');

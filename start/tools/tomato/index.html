@@ -102,7 +102,7 @@ const $ = id => document.getElementById(id);
     let phase = 'work';           // work / break / long
     let totalSec = 25 * 60;
     let remainSec = totalSec;
-    let running = false, timerId = null;
+    let running = false, timerId = null, endAt = 0;
     let roundInCycle = 1;
     let prefs = { work: 25, brk: 5, long: 15, rounds: 4, sound: 'classic' };
     try { Object.assign(prefs, JSON.parse(localStorage.getItem('asys_tomato') || '{}')); } catch (e) {}
@@ -130,6 +130,7 @@ const $ = id => document.getElementById(id);
       fg.classList.toggle('work', p === 'work');
       fg.classList.toggle('break', p !== 'work');
       updateDisplay();
+      if (keepRunning && running) endAt = Date.now() + remainSec * 1000;
       if (!keepRunning && running) toggleRun(false);
     }
 
@@ -142,8 +143,9 @@ const $ = id => document.getElementById(id);
       document.title = (running ? '⏱ ' : '') + $('timeDisplay').textContent + ' · 番茄钟';
     }
 
+    // 按结束时间戳计算剩余，避免后台标签页 setInterval 被节流导致计时变慢
     function tick() {
-      remainSec--;
+      remainSec = Math.max(0, Math.ceil((endAt - Date.now()) / 1000));
       if (remainSec <= 0) {
         remainSec = 0;
         updateDisplay();
@@ -306,7 +308,8 @@ const $ = id => document.getElementById(id);
       running = target;
       $('startLabel').textContent = running ? '暂停' : '继续';
       if (running) {
-        timerId = setInterval(tick, 1000);
+        endAt = Date.now() + remainSec * 1000;
+        timerId = setInterval(tick, 250);
       } else {
         if (timerId) clearInterval(timerId);
         timerId = null;
@@ -363,6 +366,11 @@ const $ = id => document.getElementById(id);
     $('soundTestBtn').addEventListener('click', () => { ensureAudio(); previewSound(); });
 
     applyPhase('work', false);
+
+    // 切回页面时按真实时间校正（后台被节流也能立即对齐）
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden && running) tick();
+    });
 
     // 切走页面时标题恢复
     window.addEventListener('beforeunload', () => { document.title = '番茄钟 - ASYS 工具箱'; });
