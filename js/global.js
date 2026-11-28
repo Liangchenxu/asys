@@ -392,12 +392,12 @@ function injectCommonComponents() {
     if (footerContainer) {
         footerContainer.innerHTML = isVantageSite ? `
             <footer>
-                <p>&copy; 2026 ASYS 科技 - Vantage 浏览器项目</p>
+                <p>&copy; 2026 ASYS 科技 - Vantage 浏览器项目 · <a href="${vBase}../pc/privacy.html" style="color:inherit;text-decoration:none;border-bottom:1px solid currentColor;">隐私声明</a></p>
             </footer>
         ` : `
             <footer>
                 <div class="container">
-                    <p>© 2026 赛思科技. 保留所有权利。</p>
+                    <p>© 2026 赛思科技. 保留所有权利。 · <a href="privacy.html" style="color:inherit;text-decoration:none;border-bottom:1px solid currentColor;">隐私声明</a></p>
                 </div>
             </footer>
         `;
