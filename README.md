@@ -17,7 +17,7 @@
 | `start/` | 搜索起始页（含工具箱工具页） |
 | `css/` | 全站样式：`global.css`（全站）、`docs.css`（文档页专用）、`highlight-github.min.css`（代码高亮主题） |
 | `js/` | `global.js`（全站逻辑 + 文档树/代码块运行时功能）、`highlight.min.js`（highlight.js） |
-| `img/` `exe/` | 静态资源、可执行文件 |
+| `img/` | 静态资源（图片、图标等） |
 | `deb-donation/` `tools/` `jc/` | Debian 捐赠页、工具清单、教程 |
 
 ## 文档系统（vdocs + docs.html）
